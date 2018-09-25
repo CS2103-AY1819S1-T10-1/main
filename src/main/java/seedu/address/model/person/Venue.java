@@ -4,12 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Represents a Event's address in the schedule.
+ * Guarantees: immutable; is valid as declared in {@link #isValidVenue(String)}
  */
-public class Address {
+public class Venue {
 
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+    public static final String MESSAGE_VENUE_CONSTRAINTS =
             "Addresses can take any values, and it should not be blank";
 
     /*
@@ -21,20 +21,20 @@ public class Address {
     public final String value;
 
     /**
-     * Constructs an {@code Address}.
+     * Constructs an {@code Venue}.
      *
      * @param address A valid address.
      */
-    public Address(String address) {
+    public Venue(String address) {
         requireNonNull(address);
-        checkArgument(isValidAddress(address), MESSAGE_ADDRESS_CONSTRAINTS);
+        checkArgument(isValidVenue(address), MESSAGE_VENUE_CONSTRAINTS);
         value = address;
     }
 
     /**
      * Returns true if a given string is a valid email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidVenue(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
@@ -46,8 +46,8 @@ public class Address {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && value.equals(((Address) other).value)); // state check
+                || (other instanceof Venue // instanceof handles nulls
+                && value.equals(((Venue) other).value)); // state check
     }
 
     @Override

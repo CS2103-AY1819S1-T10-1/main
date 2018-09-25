@@ -1,85 +1,82 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MIDTERM;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_MIDTERM;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_MIDTERM;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_MIDTERM;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_WORKSHOP;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_DIFFICULT;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_IMPORTANT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIME_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_WORKSHOP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_DIFFICULT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_IMPORTANT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.MIDTERM;
+import static seedu.address.testutil.TypicalPersons.WORKSHOP;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
+import seedu.address.model.person.Event;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.EventBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
+        Event expectedEvent = new EventBuilder(WORKSHOP).withTags(VALID_TAG_DIFFICULT).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP
+                + VENUE_DESC_WORKSHOP + TAG_DESC_DIFFICULT, new AddCommand(expectedEvent));
 
         // multiple names - last name accepted
-        assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_MIDTERM + NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP
+                + VENUE_DESC_WORKSHOP + TAG_DESC_DIFFICULT, new AddCommand(expectedEvent));
 
         // multiple phones - last phone accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_WORKSHOP + DATE_DESC_MIDTERM + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP
+                + VENUE_DESC_WORKSHOP + TAG_DESC_DIFFICULT, new AddCommand(expectedEvent));
 
         // multiple emails - last email accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_MIDTERM + TIME_DESC_WORKSHOP
+                + VENUE_DESC_WORKSHOP + TAG_DESC_DIFFICULT, new AddCommand(expectedEvent));
 
         // multiple addresses - last address accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_MIDTERM
+                + VENUE_DESC_WORKSHOP + TAG_DESC_DIFFICULT, new AddCommand(expectedEvent));
 
         // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+        Event expectedEventMultipleTags = new EventBuilder(WORKSHOP).withTags(VALID_TAG_DIFFICULT, VALID_TAG_IMPORTANT)
                 .build();
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleTags));
+        assertParseSuccess(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP
+                + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT, new AddCommand(expectedEventMultipleTags));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
-                new AddCommand(expectedPerson));
+        Event expectedEvent = new EventBuilder(MIDTERM).withTags().build();
+        assertParseSuccess(parser, NAME_DESC_MIDTERM + DATE_DESC_MIDTERM + TIME_DESC_MIDTERM + VENUE_DESC_MIDTERM,
+                new AddCommand(expectedEvent));
     }
 
     @Test
@@ -87,55 +84,55 @@ public class AddCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, VALID_NAME_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP,
                 expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + VALID_DATE_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP,
                 expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + VALID_TIME_WORKSHOP + VENUE_DESC_WORKSHOP,
                 expectedMessage);
 
         // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VALID_VENUE_WORKSHOP,
                 expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
+        assertParseFailure(parser, VALID_NAME_WORKSHOP + VALID_DATE_WORKSHOP + VALID_TIME_WORKSHOP + VALID_VENUE_WORKSHOP,
                 expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_NAME_DESC + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP
+                + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid phone
-        assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + INVALID_DATE_DESC + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP
+                + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT, Date.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + INVALID_TIME_DESC + VENUE_DESC_WORKSHOP
+                + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT, Time.MESSAGE_TIME_CONSTRAINTS);
 
         // invalid address
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + INVALID_VENUE_DESC
+                + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT, Venue.MESSAGE_VENUE_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + VENUE_DESC_WORKSHOP
+                + INVALID_TAG_DESC + VALID_TAG_DIFFICULT, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC,
+        assertParseFailure(parser, INVALID_NAME_DESC + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP + INVALID_VENUE_DESC,
                 Name.MESSAGE_NAME_CONSTRAINTS);
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_WORKSHOP + DATE_DESC_WORKSHOP + TIME_DESC_WORKSHOP
+                + VENUE_DESC_WORKSHOP + TAG_DESC_IMPORTANT + TAG_DESC_DIFFICULT,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

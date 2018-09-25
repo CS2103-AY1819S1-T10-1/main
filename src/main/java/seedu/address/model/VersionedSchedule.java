@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@code AddressBook} that keeps track of its own history.
+ * {@code Schedule} that keeps track of its own history.
  */
-public class VersionedAddressBook extends AddressBook {
+public class VersionedSchedule extends Schedule {
 
-    private final List<ReadOnlyAddressBook> addressBookStateList;
+    private final List<ReadOnlySchedule> addressBookStateList;
     private int currentStatePointer;
 
-    public VersionedAddressBook(ReadOnlyAddressBook initialState) {
+    public VersionedSchedule(ReadOnlySchedule initialState) {
         super(initialState);
 
         addressBookStateList = new ArrayList<>();
-        addressBookStateList.add(new AddressBook(initialState));
+        addressBookStateList.add(new Schedule(initialState));
         currentStatePointer = 0;
     }
 
     /**
-     * Saves a copy of the current {@code AddressBook} state at the end of the state list.
+     * Saves a copy of the current {@code Schedule} state at the end of the state list.
      * Undone states are removed from the state list.
      */
     public void commit() {
         removeStatesAfterCurrentPointer();
-        addressBookStateList.add(new AddressBook(this));
+        addressBookStateList.add(new Schedule(this));
         currentStatePointer++;
     }
 
@@ -34,7 +34,7 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Restores the address book to its previous state.
+     * Restores the schedule to its previous state.
      */
     public void undo() {
         if (!canUndo()) {
@@ -45,7 +45,7 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Restores the address book to its previously undone state.
+     * Restores the schedule to its previously undone state.
      */
     public void redo() {
         if (!canRedo()) {
@@ -56,14 +56,14 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Returns true if {@code undo()} has address book states to undo.
+     * Returns true if {@code undo()} has schedule states to undo.
      */
     public boolean canUndo() {
         return currentStatePointer > 0;
     }
 
     /**
-     * Returns true if {@code redo()} has address book states to redo.
+     * Returns true if {@code redo()} has schedule states to redo.
      */
     public boolean canRedo() {
         return currentStatePointer < addressBookStateList.size() - 1;
@@ -77,11 +77,11 @@ public class VersionedAddressBook extends AddressBook {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof VersionedAddressBook)) {
+        if (!(other instanceof VersionedSchedule)) {
             return false;
         }
 
-        VersionedAddressBook otherVersionedAddressBook = (VersionedAddressBook) other;
+        VersionedSchedule otherVersionedAddressBook = (VersionedSchedule) other;
 
         // state check
         return super.equals(otherVersionedAddressBook)

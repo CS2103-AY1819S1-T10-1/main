@@ -1,19 +1,19 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
 
-/** Indicates the AddressBook in the model has changed*/
+/** Indicates the Schedule in the model has changed*/
 public class AddressBookChangedEvent extends BaseEvent {
 
-    public final ReadOnlyAddressBook data;
+    public final ReadOnlySchedule data;
 
-    public AddressBookChangedEvent(ReadOnlyAddressBook data) {
+    public AddressBookChangedEvent(ReadOnlySchedule data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "number of persons " + data.getPersonList().size();
+        return "number of events " + data.getEventList().size();
     }
 }

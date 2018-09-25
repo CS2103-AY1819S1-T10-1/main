@@ -4,32 +4,32 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Represents a Event's phone number in the schedule.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class Phone {
+public class Date {
 
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date numbers should only contain numbers, and it should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
     /**
-     * Constructs a {@code Phone}.
+     * Constructs a {@code Date}.
      *
      * @param phone A valid phone number.
      */
-    public Phone(String phone) {
+    public Date(String phone) {
         requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_PHONE_CONSTRAINTS);
+        checkArgument(isValidDate(phone), MESSAGE_DATE_CONSTRAINTS);
         value = phone;
     }
 
     /**
      * Returns true if a given string is a valid phone number.
      */
-    public static boolean isValidPhone(String test) {
+    public static boolean isValidDate(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
@@ -41,8 +41,8 @@ public class Phone {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Phone // instanceof handles nulls
-                && value.equals(((Phone) other).value)); // state check
+                || (other instanceof Date // instanceof handles nulls
+                && value.equals(((Date) other).value)); // state check
     }
 
     @Override

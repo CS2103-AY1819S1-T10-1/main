@@ -3,76 +3,76 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Event;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlySchedule newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the Schedule */
+    ReadOnlySchedule getSchedule();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a event with the same identity as {@code event} exists in the schedule.
      */
-    boolean hasPerson(Person person);
+    boolean hasEvent(Event event);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given event.
+     * The event must exist in the schedule.
      */
-    void deletePerson(Person target);
+    void deleteEvent(Event target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given event.
+     * {@code event} must not already exist in the schedule.
      */
-    void addPerson(Person person);
+    void addEvent(Event event);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given event {@code target} with {@code editedEvent}.
+     * {@code target} must exist in the schedule.
+     * The event identity of {@code editedEvent} must not be the same as another existing event in the schedule.
      */
-    void updatePerson(Person target, Person editedPerson);
+    void updateEvent(Event target, Event editedEvent);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered event list */
+    ObservableList<Event> getFilteredEventList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredEventList(Predicate<Event> predicate);
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous schedule states to restore.
      */
-    boolean canUndoAddressBook();
+    boolean canUndoSchedule();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone schedule states to restore.
      */
-    boolean canRedoAddressBook();
+    boolean canRedoSchedule();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's schedule to its previous state.
      */
-    void undoAddressBook();
+    void undoSchedule();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's schedule to its previously undone state.
      */
-    void redoAddressBook();
+    void redoSchedule();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current schedule state for undo/redo.
      */
-    void commitAddressBook();
+    void commitSchedule();
 }
