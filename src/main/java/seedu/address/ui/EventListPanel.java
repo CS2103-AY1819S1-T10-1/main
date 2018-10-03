@@ -23,6 +23,8 @@ public class EventListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML
+    private ListView<CalendarEvent> eventListView;
+
     public EventListPanel(ObservableList<CalendarEvent> calendarEventList) {
         super(FXML);
         setConnections(calendarEventList);
@@ -62,11 +64,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-<<<<<<< HEAD:src/main/java/seedu/address/ui/PersonListPanel.java
-     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code PersonCard}.
-=======
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code EventCard}.
->>>>>>> 4320692fa672f660392df74f27b3c8e238cb81ce:src/main/java/seedu/address/ui/EventListPanel.java
+     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code EventCard}.
      */
     class PersonListViewCell extends ListCell<CalendarEvent> {
         @Override

@@ -12,10 +12,10 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import guitests.guihandles.EventCardHandle;
+import guitests.guihandles.EventListPanelHandle;
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -34,16 +34,16 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
 
-    private PersonListPanelHandle personListPanelHandle;
+    private EventListPanelHandle eventListPanelHandle;
 
     @Test
     public void display() {
         initUi(TYPICAL_CALENDAR_EVENTS);
 
         for (int i = 0; i < TYPICAL_CALENDAR_EVENTS.size(); i++) {
-            personListPanelHandle.navigateToCard(TYPICAL_CALENDAR_EVENTS.get(i));
+            eventListPanelHandle.navigateToCard(TYPICAL_CALENDAR_EVENTS.get(i));
             CalendarEvent expectedCalendarEvent = TYPICAL_CALENDAR_EVENTS.get(i);
-            PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
+            EventCardHandle actualCard = eventListPanelHandle.getEventCardHandle(i);
 
             assertCardDisplaysPerson(expectedCalendarEvent, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -56,9 +56,9 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        PersonCardHandle expectedPerson = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedPerson = personListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedPerson, selectedPerson);
+        EventCardHandle expectedEvent = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        EventCardHandle selectedEvent = eventListPanelHandle.getHandleToSelectedCard();
+        assertCardEquals(expectedEvent, selectedEvent);
     }
 
     /**
@@ -72,7 +72,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         assertTimeoutPreemptively(ofMillis(CARD_CREATION_AND_DELETION_TIMEOUT), () -> {
             initUi(backingList);
             guiRobot.interact(backingList::clear);
-        }, "Creation and deletion of calendarEvent cards exceeded time limit");
+        }, "Creation and deletion of event cards exceeded time limit");
     }
 
     /**
@@ -111,14 +111,14 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Initializes {@code personListPanelHandle} with a {@code PersonListPanel} backed by {@code backingList}.
+     * Initializes {@code eventListPanelHandle} with a {@code PersonListPanel} backed by {@code backingList}.
      * Also shows the {@code Stage} that displays only {@code PersonListPanel}.
      */
     private void initUi(ObservableList<CalendarEvent> backingList) {
-        PersonListPanel personListPanel = new PersonListPanel(backingList);
-        uiPartRule.setUiPart(personListPanel);
+        EventListPanel eventListPanel = new EventListPanel(backingList);
+        uiPartRule.setUiPart(eventListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
-                PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        eventListPanelHandle = new EventListPanelHandle(getChildNode(eventListPanel.getRoot(),
+                EventListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 }

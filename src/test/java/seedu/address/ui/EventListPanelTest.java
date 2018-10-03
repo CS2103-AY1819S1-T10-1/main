@@ -12,20 +12,20 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import guitests.guihandles.EventCardHandle;
+import guitests.guihandles.EventListPanelHandle;
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.person.Person;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.storage.XmlSerializableScheduler;
 
 public class EventListPanelTest extends GuiUnitTest {
-    private static final ObservableList<Person> TYPICAL_PERSONS =
+    private static final ObservableList<CalendarEvent> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
@@ -34,16 +34,16 @@ public class EventListPanelTest extends GuiUnitTest {
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
 
-    private PersonListPanelHandle personListPanelHandle;
+    private EventListPanelHandle eventListPanelHandle;
 
     @Test
     public void display() {
         initUi(TYPICAL_PERSONS);
 
         for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
-            personListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
-            Person expectedPerson = TYPICAL_PERSONS.get(i);
-            PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
+            eventListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
+            CalendarEvent expectedPerson = TYPICAL_PERSONS.get(i);
+            EventCardHandle actualCard = eventListPanelHandle.getEventCardHandle(i);
 
             assertCardDisplaysPerson(expectedPerson, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -56,8 +56,8 @@ public class EventListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        PersonCardHandle expectedPerson = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedPerson = personListPanelHandle.getHandleToSelectedCard();
+        EventCardHandle expectedPerson = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        EventCardHandle selectedPerson = eventListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedPerson, selectedPerson);
     }
 
@@ -67,7 +67,7 @@ public class EventListPanelTest extends GuiUnitTest {
      */
     @Test
     public void performanceTest() throws Exception {
-        ObservableList<Person> backingList = createBackingList(10000);
+        ObservableList<CalendarEvent> backingList = createBackingList(10000);
 
         assertTimeoutPreemptively(ofMillis(CARD_CREATION_AND_DELETION_TIMEOUT), () -> {
             initUi(backingList);
@@ -79,11 +79,11 @@ public class EventListPanelTest extends GuiUnitTest {
      * Returns a list of persons containing {@code personCount} persons that is used to populate the
      * {@code EventListPanel}.
      */
-    private ObservableList<Person> createBackingList(int personCount) throws Exception {
+    private ObservableList<CalendarEvent> createBackingList(int personCount) throws Exception {
         Path xmlFile = createXmlFileWithPersons(personCount);
-        XmlSerializableAddressBook xmlAddressBook =
-                XmlUtil.getDataFromFile(xmlFile, XmlSerializableAddressBook.class);
-        return FXCollections.observableArrayList(xmlAddressBook.toModelType().getPersonList());
+        XmlSerializableScheduler xmlAddressBook =
+                XmlUtil.getDataFromFile(xmlFile, XmlSerializableScheduler.class);
+        return FXCollections.observableArrayList(xmlAddressBook.toModelType().getCalendarEventList());
     }
 
     /**
@@ -111,14 +111,14 @@ public class EventListPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Initializes {@code personListPanelHandle} with a {@code EventListPanel} backed by {@code backingList}.
+     * Initializes {@code eventListPanelHandle} with a {@code EventListPanel} backed by {@code backingList}.
      * Also shows the {@code Stage} that displays only {@code EventListPanel}.
      */
-    private void initUi(ObservableList<Person> backingList) {
+    private void initUi(ObservableList<CalendarEvent> backingList) {
         EventListPanel eventListPanel = new EventListPanel(backingList);
         uiPartRule.setUiPart(eventListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(eventListPanel.getRoot(),
-                PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        eventListPanelHandle = new EventListPanelHandle(getChildNode(eventListPanel.getRoot(),
+                EventListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 }
