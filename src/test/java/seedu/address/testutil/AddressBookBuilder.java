@@ -1,34 +1,34 @@
 package seedu.address.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.Scheduler;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code Scheduler ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
  */
 public class AddressBookBuilder {
 
-    private AddressBook addressBook;
+    private Scheduler scheduler;
 
     public AddressBookBuilder() {
-        addressBook = new AddressBook();
+        scheduler = new Scheduler();
     }
 
-    public AddressBookBuilder(AddressBook addressBook) {
-        this.addressBook = addressBook;
+    public AddressBookBuilder(Scheduler scheduler) {
+        this.scheduler = scheduler;
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code CalendarEvent} to the {@code Scheduler} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
-        addressBook.addPerson(person);
+    public AddressBookBuilder withPerson(CalendarEvent calendarEvent) {
+        scheduler.addCalendarEvent(calendarEvent);
         return this;
     }
 
-    public AddressBook build() {
-        return addressBook;
+    public Scheduler build() {
+        return scheduler;
     }
 }
