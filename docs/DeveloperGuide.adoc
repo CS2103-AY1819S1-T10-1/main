@@ -815,13 +815,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* is a tech-savvy university student
+* wants to manage significant number of tasks/events - e.g. courses, deadlines, homework - in one place
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage university related tasks fast in a CLI driven application
 
 [appendix]
 == User Stories
@@ -831,17 +832,24 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the app
 
-|`* * *` |user |add a new calendarEvent |
+|`* * *` |user |add an event to my calendar |maintain my schedule through the calendar
 
-|`* * *` |user |delete a calendarEvent |remove entries that I no longer need
+|`* * *` |user |delete an event in my calendar|remove events that are outdated or which I no longer am going for
 
-|`* * *` |user |find a calendarEvent by name |locate details of calendarEvents without having to go through the entire list
+|`* * *` |user |edit the details of an event |update my event if it changes
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |search for an event |find them quickly instead of having to manually search on the gui
 
-|`*` |user with many calendarEvents in the address book |sort calendarEvents by name |locate a calendarEvent easily
+|`* *` |user |tag an event |categorize my events by its nature, subject or purpose
+
+|`* *` |user |set a reminder for an event|be reminded of it and not forget the event
+
+|`*` |user |synchronise this calendar with other online calendars|have the flexibility of having multiple calendar applications without doing double work of maintaining two separately
+
+|`*` |user |change the color scheme of my application |personalize it for myself, and make it look aesthetically pleasing for me
+
 |=======================================================================
 
 _{More to be added}_
@@ -883,8 +891,14 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 calendarEvents without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Events should be color coded by category or tag.
+.  System should respond in less than 1 second.
+.  The project is expected to be tested every week.
+.  Data should be stored in a human readable file.
+.  A new user should be able to learn the basics of the application in less than one hour.
+.  System should be able to work with user-inputted dates in any format.
 
 _{More to be added}_
 
@@ -893,9 +907,6 @@ _{More to be added}_
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
 
 [appendix]
 == Product Survey

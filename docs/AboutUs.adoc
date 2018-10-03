@@ -11,46 +11,42 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Vighnesh Ramesh Iyer
+image::vig42.png[width="150", align="left"]
+{empty}[https://github.com/vig42] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Team Lead, Developer +
+Responsibilities: Dev Ops, Integration, Travis expert +
+In Charge Of: Main, Commons
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Pang Jia Hao
+image::pangjiahao.png[width="150", align="left"]
+{empty}[https://github.com/pangjiahao] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Testing, Scheduling and tracking, JavaFX expert +
+In Charge Of: UI
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Li Yixin
+image::sleepysanjinli.png[width="150", align="left"]
+{empty}[https://github.com/SleepySanjinLi] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Code Quality, Deliverables and deadlines, Gradle expert +
+In Charge Of: Logic
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Bryan Wong Wei Heng
+image::bryanwongweiheng.png[width="150", align="left"]
+{empty}[http://github.com/bryanwongweiheng] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Documentation, git expert +
+In Charge Of: Model, Storage
 
 '''
