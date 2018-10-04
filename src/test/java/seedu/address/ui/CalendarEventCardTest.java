@@ -5,13 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
-import guitests.guihandles.EventCardHandle;
 import org.junit.Test;
 
-<<<<<<< HEAD
-=======
 import guitests.guihandles.CalendarEventCardHandle;
->>>>>>> edit
 import seedu.address.model.calendarEvent.CalendarEvent;
 import seedu.address.testutil.PersonBuilder;
 

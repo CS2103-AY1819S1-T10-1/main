@@ -5,13 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD
-import guitests.guihandles.EventCardHandle;
-import guitests.guihandles.EventListPanelHandle;
-=======
 import guitests.guihandles.CalendarEventCardHandle;
 import guitests.guihandles.CalendarEventListPanelHandle;
->>>>>>> edit
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.calendarEvent.CalendarEvent;
 

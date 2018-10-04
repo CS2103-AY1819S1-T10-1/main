@@ -18,11 +18,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
-import guitests.guihandles.EventListPanelHandle;
-=======
 import guitests.guihandles.CalendarEventListPanelHandle;
->>>>>>> edit
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
