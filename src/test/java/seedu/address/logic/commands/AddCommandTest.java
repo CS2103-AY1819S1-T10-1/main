@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
@@ -14,13 +14,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-import seedu.address.model.Model;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.testutil.PersonBuilder;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.logic.commands.exceptions.CommandException;
+import seedu.scheduler.model.ReadOnlyScheduler;
+import seedu.scheduler.model.Scheduler;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
@@ -168,7 +168,7 @@ public class AddCommandTest {
         @Override
         public boolean hasCalendarEvent(CalendarEvent calendarEvent) {
             requireNonNull(calendarEvent);
-            return this.calendarEvent.isSamePerson(calendarEvent);
+            return this.calendarEvent.isSameCalendarEvent(calendarEvent);
         }
     }
 
@@ -181,7 +181,7 @@ public class AddCommandTest {
         @Override
         public boolean hasCalendarEvent(CalendarEvent calendarEvent) {
             requireNonNull(calendarEvent);
-            return personsAdded.stream().anyMatch(calendarEvent::isSamePerson);
+            return personsAdded.stream().anyMatch(calendarEvent::isSameCalendarEvent);
         }
 
         @Override

@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import java.util.logging.Logger;
 
@@ -12,13 +12,13 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.logic.Logic;
-import seedu.address.model.UserPrefs;
+import seedu.scheduler.commons.core.Config;
+import seedu.scheduler.commons.core.GuiSettings;
+import seedu.scheduler.commons.core.LogsCenter;
+import seedu.scheduler.commons.events.ui.ExitAppRequestEvent;
+import seedu.scheduler.commons.events.ui.ShowHelpRequestEvent;
+import seedu.scheduler.logic.Logic;
+import seedu.scheduler.model.UserPrefs;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private CalendarEventListPanel calendarEventListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -122,8 +122,8 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        calendarEventListPanel = new CalendarEventListPanel(logic.getFilteredCalendarEventList());
+        personListPanelPlaceholder.getChildren().add(calendarEventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -187,8 +187,8 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public CalendarEventListPanel getCalendarEventListPanel() {
+        return calendarEventListPanel;
     }
 
     void releaseResources() {

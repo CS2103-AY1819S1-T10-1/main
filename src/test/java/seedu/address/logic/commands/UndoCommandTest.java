@@ -1,17 +1,17 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.scheduler.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.scheduler.testutil.TypicalPersons.getTypicalScheduler;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.ModelManager;
+import seedu.scheduler.model.UserPrefs;
 
 public class UndoCommandTest {
 

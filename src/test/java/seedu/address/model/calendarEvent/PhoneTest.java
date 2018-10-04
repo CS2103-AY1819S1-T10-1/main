@@ -1,11 +1,11 @@
-package seedu.address.model.calendarEvent;
+package seedu.scheduler.model.calendarEvent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.testutil.Assert;
+import seedu.scheduler.testutil.Assert;
 
 public class PhoneTest {
 

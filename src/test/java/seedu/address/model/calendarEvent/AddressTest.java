@@ -1,11 +1,11 @@
-package seedu.address.model.calendarEvent;
+package seedu.scheduler.model.calendarEvent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.testutil.Assert;
+import seedu.scheduler.testutil.Assert;
 
 public class AddressTest {
 
@@ -22,7 +22,7 @@ public class AddressTest {
 
     @Test
     public void isValidAddress() {
-        // null address
+        // null scheduler
         Assert.assertThrows(NullPointerException.class, () -> Address.isValidAddress(null));
 
         // invalid addresses
@@ -32,6 +32,6 @@ public class AddressTest {
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
         assertTrue(Address.isValidAddress("-")); // one character
-        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long scheduler
     }
 }

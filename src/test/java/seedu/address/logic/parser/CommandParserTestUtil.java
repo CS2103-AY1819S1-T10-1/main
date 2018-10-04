@@ -1,9 +1,9 @@
-package seedu.address.logic.parser;
+package seedu.scheduler.logic.parser;
 
 import static org.junit.Assert.assertEquals;
 
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.scheduler.logic.commands.Command;
+import seedu.scheduler.logic.parser.exceptions.ParseException;
 
 /**
  * Contains helper methods for testing command parsers.

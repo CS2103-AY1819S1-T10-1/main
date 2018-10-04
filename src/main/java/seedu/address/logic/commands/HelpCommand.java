@@ -1,9 +1,9 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
+import seedu.scheduler.commons.core.EventsCenter;
+import seedu.scheduler.commons.events.ui.ShowHelpRequestEvent;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.model.Model;
 
 /**
  * Format full help instructions for every command for display.

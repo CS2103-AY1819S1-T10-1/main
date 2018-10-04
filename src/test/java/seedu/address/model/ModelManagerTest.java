@@ -1,10 +1,10 @@
-package seedu.address.model;
+package seedu.scheduler.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.scheduler.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
+import static seedu.scheduler.testutil.TypicalPersons.ALICE;
+import static seedu.scheduler.testutil.TypicalPersons.BENSON;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -13,8 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.calendarEvent.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.scheduler.model.calendarEvent.NameContainsKeywordsPredicate;
+import seedu.scheduler.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -74,7 +74,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(scheduler, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

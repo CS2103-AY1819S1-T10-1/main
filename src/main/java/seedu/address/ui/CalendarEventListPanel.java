@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import java.util.logging.Logger;
 
@@ -10,22 +10,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.commons.core.LogsCenter;
+import seedu.scheduler.commons.events.ui.JumpToListRequestEvent;
+import seedu.scheduler.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of calendar events.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class CalendarEventListPanel extends UiPart<Region> {
+    private static final String FXML = "CalendarEventListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(CalendarEventListPanel.class);
 
     @FXML
     private ListView<CalendarEvent> personListView;
 
-    public PersonListPanel(ObservableList<CalendarEvent> calendarEventList) {
+    public CalendarEventListPanel(ObservableList<CalendarEvent> calendarEventList) {
         super(FXML);
         setConnections(calendarEventList);
         registerAsAnEventHandler(this);
@@ -48,7 +48,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code CalendarEventCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -64,7 +64,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code CalendarEventCard}.
      */
     class PersonListViewCell extends ListCell<CalendarEvent> {
         @Override
@@ -75,7 +75,7 @@ public class PersonListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(calendarEvent, getIndex() + 1).getRoot());
+                setGraphic(new CalendarEventCard(calendarEvent, getIndex() + 1).getRoot());
             }
         }
     }

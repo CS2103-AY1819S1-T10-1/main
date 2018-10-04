@@ -1,12 +1,12 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.ModelManager;
 
 public class HistoryCommandTest {
     private CommandHistory history = new CommandHistory();

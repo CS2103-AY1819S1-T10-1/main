@@ -46,7 +46,7 @@ public class XmlSerializableSchedulerTest {
         XmlSerializableScheduler dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_CALENDAR_EVENTS_FILE,
                 XmlSerializableScheduler.class);
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(XmlSerializableScheduler.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(XmlSerializableScheduler.MESSAGE_DUPLICATE_CALENDAR_EVENT);
         dataFromFile.toModelType();
     }
 

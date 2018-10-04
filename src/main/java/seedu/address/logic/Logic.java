@@ -1,10 +1,10 @@
-package seedu.address.logic;
+package seedu.scheduler.logic;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.logic.commands.CommandResult;
+import seedu.scheduler.logic.commands.exceptions.CommandException;
+import seedu.scheduler.logic.parser.exceptions.ParseException;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
 
 /**
  * API of the Logic component
@@ -19,8 +19,8 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<CalendarEvent> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of calendar events */
+    ObservableList<CalendarEvent> getFilteredCalendarEventList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

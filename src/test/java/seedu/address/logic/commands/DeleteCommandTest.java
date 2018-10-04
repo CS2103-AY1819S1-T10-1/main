@@ -1,24 +1,24 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.scheduler.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.scheduler.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.scheduler.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.scheduler.testutil.TypicalPersons.getTypicalScheduler;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.commons.core.Messages;
+import seedu.scheduler.commons.core.index.Index;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.ModelManager;
+import seedu.scheduler.model.UserPrefs;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -34,7 +34,7 @@ public class DeleteCommandTest {
         CalendarEvent calendarEventToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, calendarEventToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, calendarEventToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
@@ -58,7 +58,7 @@ public class DeleteCommandTest {
         CalendarEvent calendarEventToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, calendarEventToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, calendarEventToDelete);
 
         Model expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
@@ -73,7 +73,7 @@ public class DeleteCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of scheduler book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getScheduler().getCalendarEventList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
@@ -106,10 +106,10 @@ public class DeleteCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
-        // execution failed -> address book state not added into model
+        // execution failed -> scheduler book state not added into model
         assertCommandFailure(deleteCommand, model, commandHistory, Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 
-        // single address book state in model -> undoCommand and redoCommand fail
+        // single scheduler book state in model -> undoCommand and redoCommand fail
         assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
         assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
     }

@@ -1,7 +1,7 @@
-package seedu.address.model.tag;
+package seedu.scheduler.model.tag;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.scheduler.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Tag in the scheduler.

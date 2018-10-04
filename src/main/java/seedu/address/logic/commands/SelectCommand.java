@@ -1,31 +1,31 @@
-package seedu.address.logic.commands;
+package seedu.scheduler.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.commons.core.EventsCenter;
+import seedu.scheduler.commons.core.Messages;
+import seedu.scheduler.commons.core.index.Index;
+import seedu.scheduler.commons.events.ui.JumpToListRequestEvent;
+import seedu.scheduler.logic.CommandHistory;
+import seedu.scheduler.logic.commands.exceptions.CommandException;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
 
 /**
- * Selects a calendarEvent identified using it's displayed index from the address book.
+ * Selects a calendar event identified using its displayed index from the scheduler.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the calendarEvent identified by the index number used in the displayed calendarEvent list.\n"
+            + ": Selects the event identified by the index number used in the displayed event list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected CalendarEvent: %1$s";
+    public static final String MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS = "Selected Event: %1$s";
 
     private final Index targetIndex;
 
@@ -44,7 +44,7 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS, targetIndex.getOneBased()));
 
     }
 

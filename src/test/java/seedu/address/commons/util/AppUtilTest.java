@@ -1,4 +1,4 @@
-package seedu.address.commons.util;
+package seedu.scheduler.commons.util;
 
 import static org.junit.Assert.assertNotNull;
 

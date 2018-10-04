@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,14 +28,14 @@ import seedu.address.model.calendarEvent.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing calendarEvent in the address book.
+ * Edits the details of an existing calendar event in the scheduler.
  */
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the calendarEvent identified "
-            + "by the index number used in the displayed calendarEvent list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
+            + "by the index number used in the displayed event list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
@@ -47,23 +47,23 @@ public class EditCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited CalendarEvent: %1$s";
+    public static final String MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This calendarEvent already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_CALENDAR_EVENT = "This event already exists in the scheduler.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditCalendarEventDescriptor editCalendarEventDescriptor;
 
     /**
-     * @param index of the calendarEvent in the filtered calendarEvent list to edit
-     * @param editPersonDescriptor details to edit the calendarEvent with
+     * @param index of the calendar event in the filtered calendar event list to edit
+     * @param editCalendarEventDescriptor details to edit the calendar event with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditCalendarEventDescriptor editCalendarEventDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editCalendarEventDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editCalendarEventDescriptor = new EditCalendarEventDescriptor(editCalendarEventDescriptor);
     }
 
     @Override
@@ -76,30 +76,30 @@ public class EditCommand extends Command {
         }
 
         CalendarEvent calendarEventToEdit = lastShownList.get(index.getZeroBased());
-        CalendarEvent editedCalendarEvent = createEditedPerson(calendarEventToEdit, editPersonDescriptor);
+        CalendarEvent editedCalendarEvent = createEditedCalendarEvent(calendarEventToEdit, editCalendarEventDescriptor);
 
-        if (!calendarEventToEdit.isSamePerson(editedCalendarEvent) && model.hasCalendarEvent(editedCalendarEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!calendarEventToEdit.isSameCalendarEvent(editedCalendarEvent) && model.hasCalendarEvent(editedCalendarEvent)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CALENDAR_EVENT);
         }
 
         model.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
         model.commitScheduler();
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedCalendarEvent));
+        return new CommandResult(String.format(MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent));
     }
 
     /**
      * Creates and returns a {@code CalendarEvent} with the details of {@code calendarEventToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code editCalendarEventDescriptor}.
      */
-    private static CalendarEvent createEditedPerson(CalendarEvent calendarEventToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit, EditCalendarEventDescriptor editCalendarEventDescriptor) {
         assert calendarEventToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(calendarEventToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(calendarEventToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(calendarEventToEdit.getTags());
+        Name updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());
+        Phone updatedPhone = editCalendarEventDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
+        Email updatedEmail = editCalendarEventDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
+        Address updatedAddress = editCalendarEventDescriptor.getAddress().orElse(calendarEventToEdit.getAddress());
+        Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
 
         return new CalendarEvent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
@@ -119,27 +119,27 @@ public class EditCommand extends Command {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+                && editCalendarEventDescriptor.equals(e.editCalendarEventDescriptor);
     }
 
     /**
-     * Stores the details to edit the calendarEvent with. Each non-empty field value will replace the
-     * corresponding field value of the calendarEvent.
+     * Stores the details to edit the calendar event with. Each non-empty field value will replace the
+     * corresponding field value of the calendar event.
      */
-    public static class EditPersonDescriptor {
+    public static class EditCalendarEventDescriptor {
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditCalendarEventDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditCalendarEventDescriptor(EditCalendarEventDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
@@ -211,12 +211,12 @@ public class EditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditCalendarEventDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditCalendarEventDescriptor e = (EditCalendarEventDescriptor) other;
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())

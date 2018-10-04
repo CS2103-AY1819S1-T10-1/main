@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import java.net.URL;
 import java.util.logging.Logger;
@@ -10,10 +10,10 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
-import seedu.address.MainApp;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.scheduler.MainApp;
+import seedu.scheduler.commons.core.LogsCenter;
+import seedu.scheduler.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.scheduler.model.calendarEvent.CalendarEvent;
 
 /**
  * The Browser Panel of the App.

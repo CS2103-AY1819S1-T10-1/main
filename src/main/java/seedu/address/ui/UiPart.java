@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
-import seedu.address.MainApp;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.BaseEvent;
+import seedu.scheduler.MainApp;
+import seedu.scheduler.commons.core.EventsCenter;
+import seedu.scheduler.commons.events.BaseEvent;
 
 /**
  * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.

@@ -1,9 +1,9 @@
-package seedu.address.storage;
+package seedu.scheduler.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.scheduler.testutil.TypicalPersons.getTypicalScheduler;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,12 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.address.commons.events.model.SchedulerChangedEvent;
-import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-import seedu.address.model.UserPrefs;
-import seedu.address.ui.testutil.EventsCollectorRule;
+import seedu.scheduler.commons.events.model.SchedulerChangedEvent;
+import seedu.scheduler.commons.events.storage.DataSavingExceptionEvent;
+import seedu.scheduler.model.ReadOnlyScheduler;
+import seedu.scheduler.model.Scheduler;
+import seedu.scheduler.model.UserPrefs;
+import seedu.scheduler.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
 
@@ -79,7 +79,7 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlSchedulerStorageExceptionThrowingStub(Paths.get("dummy")),
                                              new JsonUserPrefsStorage(Paths.get("dummy")));
-        storage.handleAddressBookChangedEvent(new SchedulerChangedEvent(new Scheduler()));
+        storage.handleSchedulerChangedEvent(new SchedulerChangedEvent(new Scheduler()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 

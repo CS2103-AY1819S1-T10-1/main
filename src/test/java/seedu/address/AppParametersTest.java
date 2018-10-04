@@ -1,4 +1,4 @@
-package seedu.address;
+package seedu.scheduler;
 
 import static org.junit.Assert.assertEquals;
 

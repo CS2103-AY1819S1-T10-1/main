@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,11 +9,11 @@ import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
-import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
+import seedu.scheduler.logic.Logic;
+import seedu.scheduler.logic.LogicManager;
+import seedu.scheduler.logic.commands.ListCommand;
+import seedu.scheduler.model.Model;
+import seedu.scheduler.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
