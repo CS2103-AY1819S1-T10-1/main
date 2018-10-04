@@ -1,15 +1,16 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 public class ClearCommandSystemTest extends SchedulerSystemTest {
 
@@ -35,13 +36,13 @@ public class ClearCommandSystemTest extends SchedulerSystemTest {
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
-        /* Case: selects first card in calendarevent list and clears address book -> cleared and no card selected */
+        /* Case: selects first card in calendarEvent list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
-        /* Case: filters the calendarevent list before clearing -> entire address book cleared */
+        /* Case: filters the calendarEvent list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);

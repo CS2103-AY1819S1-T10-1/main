@@ -1,9 +1,9 @@
-package seedu.address.model.calendarevent;
-
-import seedu.address.commons.util.StringUtil;
+package seedu.address.model.calendarEvent;
 
 import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code CalendarEvent}'s {@code Name} matches any of the keywords given.

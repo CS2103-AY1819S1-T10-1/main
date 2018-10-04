@@ -1,10 +1,11 @@
-package seedu.address.model.calendarevent;
-
-import org.junit.Test;
-import seedu.address.testutil.Assert;
+package seedu.address.model.calendarEvent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
 
 public class NameTest {
 

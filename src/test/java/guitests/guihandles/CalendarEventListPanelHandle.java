@@ -1,12 +1,12 @@
 package guitests.guihandles;
 
-import javafx.scene.Node;
-import javafx.scene.control.ListView;
-import seedu.address.model.calendarevent.CalendarEvent;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * Provides a handle for {@code CalendarEventListPanel} containing the list of {@code CalendarEventCard}.
@@ -63,7 +63,7 @@ public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEv
     }
 
     /**
-     * Navigates the listview to display {@code calendarevent}.
+     * Navigates the listview to display {@code calendarEvent}.
      */
     public void navigateToCard(CalendarEvent calendarEvent) {
         if (!getRootNode().getItems().contains(calendarEvent)) {
@@ -98,7 +98,7 @@ public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEv
     }
 
     /**
-     * Returns the calendarevent card handle of a calendarevent associated with the {@code index} in the list.
+     * Returns the calendarEvent card handle of a calendarEvent associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
     public CalendarEventCardHandle getPersonCardHandle(int index) {

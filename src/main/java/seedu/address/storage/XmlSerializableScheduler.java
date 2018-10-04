@@ -1,15 +1,16 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-import seedu.address.model.calendarevent.CalendarEvent;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Scheduler;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * An Immutable Scheduler that is serializable to XML format
@@ -35,8 +36,7 @@ public class XmlSerializableScheduler {
      */
     public XmlSerializableScheduler(ReadOnlyScheduler src) {
         this();
-        calendarEvents.addAll(
-                src.getCalendarEventList().stream().map(XmlAdaptedCalendarEvent::new).collect(Collectors.toList()));
+        calendarEvents.addAll(src.getCalendarEventList().stream().map(XmlAdaptedCalendarEvent::new).collect(Collectors.toList()));
     }
 
     /**

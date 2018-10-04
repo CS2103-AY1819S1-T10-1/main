@@ -1,12 +1,12 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
 
 /**
  * Represents a storage for {@link Scheduler}.

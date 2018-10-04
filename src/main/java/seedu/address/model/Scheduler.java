@@ -1,12 +1,12 @@
 package seedu.address.model;
 
-import javafx.collections.ObservableList;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.UniqueCalendarEventList;
+import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.ObservableList;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.UniqueCalendarEventList;
 
 /**
  * Wraps all data at the scheduler level
@@ -56,10 +56,10 @@ public class Scheduler implements ReadOnlyScheduler {
         setCalendarEvents(newData.getCalendarEventList());
     }
 
-    //// calendarevent-level operations
+    //// calendarEvent-level operations
 
     /**
-     * Returns true if a calendar event with the same identity as {@code calendarevent} exists in the scheduler
+     * Returns true if a calendar event with the same identity as {@code calendarEvent} exists in the scheduler
      *
      * .
      */
@@ -83,8 +83,7 @@ public class Scheduler implements ReadOnlyScheduler {
     /**
      * Replaces the given calendar event {@code target} in the list with {@code editedCalendarEvent}.
      * {@code target} must exist in the scheduler.
-     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another
-     * existing calendar event in the scheduler
+     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another existing calendar event in the scheduler
      *
      * .
      */

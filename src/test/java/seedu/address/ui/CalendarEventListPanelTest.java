@@ -1,19 +1,5 @@
 package seedu.address.ui;
 
-import guitests.guihandles.CalendarEventCardHandle;
-import guitests.guihandles.CalendarEventListPanelHandle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.Test;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.util.FileUtil;
-import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.storage.XmlSerializableScheduler;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
@@ -22,6 +8,21 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalCalendarEvents;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import guitests.guihandles.CalendarEventCardHandle;
+import guitests.guihandles.CalendarEventListPanelHandle;
+import org.junit.Test;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.storage.XmlSerializableScheduler;
 
 public class CalendarEventListPanelTest extends GuiUnitTest {
     private static final ObservableList<CalendarEvent> TYPICAL_CALENDAR_EVENTS =

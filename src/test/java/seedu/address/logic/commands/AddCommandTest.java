@@ -1,25 +1,26 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.testutil.PersonBuilder;
+import static java.util.Objects.requireNonNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.ObservableList;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
@@ -79,7 +80,7 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different calendarevent -> returns false
+        // different calendarEvent -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -154,7 +155,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that contains a single calendarevent.
+     * A Model stub that contains a single calendarEvent.
      */
     private class ModelStubWithPerson extends ModelStub {
         private final CalendarEvent calendarEvent;
@@ -172,7 +173,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the calendarevent being added.
+     * A Model stub that always accept the calendarEvent being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<CalendarEvent> personsAdded = new ArrayList<>();

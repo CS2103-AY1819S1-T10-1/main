@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.calendarevent.NameContainsKeywordsPredicate;
-
-import static java.util.Objects.requireNonNull;
+import seedu.address.model.calendarEvent.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all calendar events in scheduler whose name contains any of the argument keywords.
@@ -31,8 +31,7 @@ public class FindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredCalendarEventList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW,
-                                model.getFilteredCalendarEventList().size()));
+                String.format(Messages.MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, model.getFilteredCalendarEventList().size()));
     }
 
     @Override

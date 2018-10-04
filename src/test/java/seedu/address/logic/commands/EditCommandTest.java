@@ -1,18 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.Scheduler;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,6 +14,20 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
+import seedu.address.model.Scheduler;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -117,7 +118,7 @@ public class EditCommandTest {
     public void execute_duplicatePersonFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        // edit calendarevent in filtered list into a duplicate in address book
+        // edit calendarEvent in filtered list into a duplicate in address book
         CalendarEvent calendarEventInList = model.getScheduler().getCalendarEventList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(calendarEventInList).build());
@@ -161,14 +162,14 @@ public class EditCommandTest {
         expectedModel.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
         expectedModel.commitScheduler();
 
-        // edit -> first calendarevent edited
+        // edit -> first calendarEvent edited
         editCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered calendarevent list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered calendarEvent list to show all persons
         expectedModel.undoScheduler();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first calendarevent edited again
+        // redo -> same first calendarEvent edited again
         expectedModel.redoScheduler();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -190,9 +191,9 @@ public class EditCommandTest {
     /**
      * 1. Edits a {@code CalendarEvent} from a filtered list.
      * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited calendarevent in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited calendarEvent in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the calendarevent object regardless of indexing.
+     * 4. Redo the edit. This ensures {@code RedoCommand} edits the calendarEvent object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
@@ -206,15 +207,15 @@ public class EditCommandTest {
         expectedModel.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
         expectedModel.commitScheduler();
 
-        // edit -> edits second calendarevent in unfiltered calendarevent list / first calendarevent in filtered calendarevent list
+        // edit -> edits second calendarEvent in unfiltered calendarEvent list / first calendarEvent in filtered calendarEvent list
         editCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered calendarevent list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered calendarEvent list to show all persons
         expectedModel.undoScheduler();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased()), calendarEventToEdit);
-        // redo -> edits same second calendarevent in unfiltered calendarevent list
+        // redo -> edits same second calendarEvent in unfiltered calendarEvent list
         expectedModel.redoScheduler();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }

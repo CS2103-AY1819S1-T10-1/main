@@ -1,12 +1,9 @@
 package seedu.address.ui;
 
-import guitests.guihandles.StatusBarFooterHandle;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import seedu.address.commons.events.model.SchedulerChangedEvent;
-import seedu.address.model.Scheduler;
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,10 +12,14 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import guitests.guihandles.StatusBarFooterHandle;
+import seedu.address.commons.events.model.SchedulerChangedEvent;
+import seedu.address.model.Scheduler;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 

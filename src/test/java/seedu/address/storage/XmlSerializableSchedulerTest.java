@@ -1,17 +1,18 @@
 package seedu.address.storage;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.Scheduler;
-import seedu.address.testutil.TypicalPersons;
+import static org.junit.Assert.assertEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.Scheduler;
+import seedu.address.testutil.TypicalPersons;
 
 public class XmlSerializableSchedulerTest {
 

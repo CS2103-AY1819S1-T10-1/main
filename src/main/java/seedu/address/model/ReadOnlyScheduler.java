@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * Unmodifiable view of an scheduler

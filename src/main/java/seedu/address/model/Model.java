@@ -1,9 +1,9 @@
 package seedu.address.model;
 
-import javafx.collections.ObservableList;
-import seedu.address.model.calendarevent.CalendarEvent;
-
 import java.util.function.Predicate;
+
+import javafx.collections.ObservableList;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * The API of the Model component.
@@ -19,7 +19,7 @@ public interface Model {
     ReadOnlyScheduler getScheduler();
 
     /**
-     * Returns true if a calendar event with the same identity as {@code calendarevent} exists in the scheduler.
+     * Returns true if a calendar event with the same identity as {@code calendarEvent} exists in the scheduler.
      */
     boolean hasCalendarEvent(CalendarEvent calendarEvent);
 
@@ -31,15 +31,14 @@ public interface Model {
 
     /**
      * Adds the given calendar event.
-     * {@code calendarevent} must not already exist in the scheduler.
+     * {@code calendarEvent} must not already exist in the scheduler.
      */
     void addCalendarEvent(CalendarEvent calendarEvent);
 
     /**
      * Replaces the given calendar event {@code target} with {@code editedCalendarEvent}.
      * {@code target} must exist in the scheduler.
-     * The calendar event identity of {@code editedCalendarEvent} must not be the same
-     * as another existing calendar event in the scheduler.
+     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another existing calendar event in the scheduler.
      */
     void updateCalendarEvent(CalendarEvent target, CalendarEvent editedCalendarEvent);
 

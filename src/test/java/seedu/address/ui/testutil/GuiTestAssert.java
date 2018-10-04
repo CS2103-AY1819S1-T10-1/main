@@ -1,14 +1,14 @@
 package seedu.address.ui.testutil;
 
-import guitests.guihandles.CalendarEventCardHandle;
-import guitests.guihandles.CalendarEventListPanelHandle;
-import guitests.guihandles.ResultDisplayHandle;
-import seedu.address.model.calendarevent.CalendarEvent;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
+import guitests.guihandles.CalendarEventCardHandle;
+import guitests.guihandles.CalendarEventListPanelHandle;
+import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * A set of assertion methods useful for writing GUI tests.

@@ -1,15 +1,4 @@
-package seedu.address.model.calendarevent;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.model.calendarevent.exceptions.CalendarEventNotFoundException;
-import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
-import seedu.address.testutil.PersonBuilder;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+package seedu.address.model.calendarEvent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,6 +7,18 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
+import seedu.address.testutil.PersonBuilder;
 
 public class UniqueCalendarEventListTest {
     @Rule

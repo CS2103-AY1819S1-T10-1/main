@@ -1,17 +1,17 @@
 package seedu.address.model.util;
 
-import seedu.address.model.ReadOnlyScheduler;
-import seedu.address.model.Scheduler;
-import seedu.address.model.calendarevent.Address;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Name;
-import seedu.address.model.calendarevent.Phone;
-import seedu.address.model.tag.Tag;
-
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+import seedu.address.model.calendarEvent.Address;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.Email;
+import seedu.address.model.calendarEvent.Name;
+import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods for populating {@code Scheduler} with sample data.
