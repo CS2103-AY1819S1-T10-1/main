@@ -15,10 +15,10 @@ import seedu.address.model.calendarEvent.CalendarEvent;
 /**
  * An Immutable Scheduler that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "scheduler")
 public class XmlSerializableScheduler {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Calendar Events list contains duplicate event(s).";
+    public static final String MESSAGE_DUPLICATE_CALENDAR_EVENT = "Calendar Events list contains duplicate event(s).";
 
     @XmlElement
     private List<XmlAdaptedCalendarEvent> calendarEvents;
@@ -50,7 +50,7 @@ public class XmlSerializableScheduler {
         for (XmlAdaptedCalendarEvent p : calendarEvents) {
             CalendarEvent calendarEvent = p.toModelType();
             if (scheduler.hasCalendarEvent(calendarEvent)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_CALENDAR_EVENT);
             }
             scheduler.addCalendarEvent(calendarEvent);
         }

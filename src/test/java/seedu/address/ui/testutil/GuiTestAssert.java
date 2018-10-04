@@ -5,8 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+<<<<<<< HEAD
 import guitests.guihandles.EventCardHandle;
 import guitests.guihandles.EventListPanelHandle;
+=======
+import guitests.guihandles.CalendarEventCardHandle;
+import guitests.guihandles.CalendarEventListPanelHandle;
+>>>>>>> edit
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
@@ -17,7 +22,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+    public static void assertCardEquals(CalendarEventCardHandle expectedCard, CalendarEventCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
@@ -29,7 +34,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedCalendarEvent}.
      */
-    public static void assertCardDisplaysPerson(CalendarEvent expectedCalendarEvent, EventCardHandle actualCard) {
+    public static void assertCardDisplaysPerson(CalendarEvent expectedCalendarEvent, CalendarEventCardHandle actualCard) {
         assertEquals(expectedCalendarEvent.getName().fullName, actualCard.getName());
         assertEquals(expectedCalendarEvent.getPhone().value, actualCard.getPhone());
         assertEquals(expectedCalendarEvent.getEmail().value, actualCard.getEmail());
@@ -39,29 +44,29 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that the list in {@code eventListPanelHandle} displays the details of {@code calendarEvents} correctly and
+     * Asserts that the list in {@code calendarEventListPanelHandle} displays the details of {@code calendarEvents} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(EventListPanelHandle eventListPanelHandle, CalendarEvent... calendarEvents) {
+    public static void assertListMatching(CalendarEventListPanelHandle calendarEventListPanelHandle, CalendarEvent... calendarEvents) {
         for (int i = 0; i < calendarEvents.length; i++) {
-            eventListPanelHandle.navigateToCard(i);
-            assertCardDisplaysPerson(calendarEvents[i], eventListPanelHandle.getEventCardHandle(i));
+            calendarEventListPanelHandle.navigateToCard(i);
+            assertCardDisplaysPerson(calendarEvents[i], calendarEventListPanelHandle.getPersonCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code eventListPanelHandle} displays the details of {@code calendarEvents} correctly and
+     * Asserts that the list in {@code calendarEventListPanelHandle} displays the details of {@code calendarEvents} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(EventListPanelHandle eventListPanelHandle, List<CalendarEvent> calendarEvents) {
-        assertListMatching(eventListPanelHandle, calendarEvents.toArray(new CalendarEvent[0]));
+    public static void assertListMatching(CalendarEventListPanelHandle calendarEventListPanelHandle, List<CalendarEvent> calendarEvents) {
+        assertListMatching(calendarEventListPanelHandle, calendarEvents.toArray(new CalendarEvent[0]));
     }
 
     /**
-     * Asserts the size of the list in {@code eventListPanelHandle} equals to {@code size}.
+     * Asserts the size of the list in {@code calendarEventListPanelHandle} equals to {@code size}.
      */
-    public static void assertListSize(EventListPanelHandle eventListPanelHandle, int size) {
-        int numberOfPeople = eventListPanelHandle.getListSize();
+    public static void assertListSize(CalendarEventListPanelHandle calendarEventListPanelHandle, int size) {
+        int numberOfPeople = calendarEventListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
 

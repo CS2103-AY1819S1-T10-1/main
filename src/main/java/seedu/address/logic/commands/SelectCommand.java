@@ -14,18 +14,18 @@ import seedu.address.model.Model;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Selects a calendarEvent identified using it's displayed index from the address book.
+ * Selects a calendar event identified using its displayed index from the scheduler.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the calendarEvent identified by the index number used in the displayed calendarEvent list.\n"
+            + ": Selects the event identified by the index number used in the displayed event list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected CalendarEvent: %1$s";
+    public static final String MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS = "Selected Event: %1$s";
 
     private final Index targetIndex;
 
@@ -44,7 +44,7 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS, targetIndex.getOneBased()));
 
     }
 

@@ -34,7 +34,7 @@ public class DeleteCommandTest {
         CalendarEvent calendarEventToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, calendarEventToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, calendarEventToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
@@ -58,7 +58,7 @@ public class DeleteCommandTest {
         CalendarEvent calendarEventToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, calendarEventToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, calendarEventToDelete);
 
         Model expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);

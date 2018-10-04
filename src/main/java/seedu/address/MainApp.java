@@ -89,7 +89,7 @@ public class MainApp extends Application {
             if (!schedulerOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample Scheduler");
             }
-            initialData = schedulerOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = schedulerOptional.orElseGet(SampleDataUtil::getSampleScheduler);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Scheduler");
             initialData = new Scheduler();

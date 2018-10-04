@@ -10,7 +10,7 @@ import seedu.address.model.calendarEvent.UniqueCalendarEventList;
 
 /**
  * Wraps all data at the scheduler level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Duplicates are not allowed (by .isSameCalendarEvent comparison)
  */
 public class Scheduler implements ReadOnlyScheduler {
 
@@ -30,7 +30,7 @@ public class Scheduler implements ReadOnlyScheduler {
     public Scheduler() {}
 
     /**
-     * Creates an Scheduler using the Persons in the {@code toBeCopied}
+     * Creates an Scheduler using the Calendar Events in the {@code toBeCopied}
      */
     public Scheduler(ReadOnlyScheduler toBeCopied) {
         this();
@@ -40,7 +40,7 @@ public class Scheduler implements ReadOnlyScheduler {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the calendarEvent list with {@code calendarEvents}.
+     * Replaces the contents of the calendar event list with {@code calendarEvents}.
      * {@code calendarEvents} must not contain duplicate calendarEvents.
      */
     public void setCalendarEvents(List<CalendarEvent> calendarEvents) {
@@ -59,7 +59,7 @@ public class Scheduler implements ReadOnlyScheduler {
     //// calendarEvent-level operations
 
     /**
-     * Returns true if a calendarEvent with the same identity as {@code calendarEvent} exists in the scheduler
+     * Returns true if a calendar event with the same identity as {@code calendarEvent} exists in the scheduler
      *
      * .
      */
@@ -69,10 +69,10 @@ public class Scheduler implements ReadOnlyScheduler {
     }
 
     /**
-     * Adds a calendarEvent to the scheduler
+     * Adds a calendar event to the scheduler
      *
      * .
-     * The calendarEvent must not already exist in the scheduler
+     * The calendar event must not already exist in the scheduler
      *
      * .
      */
@@ -81,9 +81,9 @@ public class Scheduler implements ReadOnlyScheduler {
     }
 
     /**
-     * Replaces the given calendarEvent {@code target} in the list with {@code editedCalendarEvent}.
+     * Replaces the given calendar event {@code target} in the list with {@code editedCalendarEvent}.
      * {@code target} must exist in the scheduler.
-     * The calendarEvent identity of {@code editedCalendarEvent} must not be the same as another existing calendarEvent in the scheduler
+     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another existing calendar event in the scheduler
      *
      * .
      */

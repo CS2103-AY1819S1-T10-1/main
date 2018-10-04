@@ -68,20 +68,20 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void saveScheduler(ReadOnlyScheduler addressBook) throws IOException {
-        saveScheduler(addressBook, schedulerStorage.getSchedulerFilePath());
+    public void saveScheduler(ReadOnlyScheduler scheduler) throws IOException {
+        saveScheduler(scheduler, schedulerStorage.getSchedulerFilePath());
     }
 
     @Override
-    public void saveScheduler(ReadOnlyScheduler addressBook, Path filePath) throws IOException {
+    public void saveScheduler(ReadOnlyScheduler scheduler, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        schedulerStorage.saveScheduler(addressBook, filePath);
+        schedulerStorage.saveScheduler(scheduler, filePath);
     }
 
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(SchedulerChangedEvent event) {
+    public void handleSchedulerChangedEvent(SchedulerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveScheduler(event.data);

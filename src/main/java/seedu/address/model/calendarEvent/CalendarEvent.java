@@ -10,7 +10,7 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a CalendarEvent in the address book.
+ * Represents a Calendar Event in the scheduler.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class CalendarEvent {
@@ -64,7 +64,7 @@ public class CalendarEvent {
      * Returns true if both calendar events of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two calendar events.
      */
-    public boolean isSamePerson(CalendarEvent otherCalendarEvent) {
+    public boolean isSameCalendarEvent(CalendarEvent otherCalendarEvent) {
         if (otherCalendarEvent == this) {
             return true;
         }

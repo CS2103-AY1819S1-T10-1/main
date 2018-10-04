@@ -40,7 +40,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyScheduler getSampleAddressBook() {
+    public static ReadOnlyScheduler getSampleScheduler() {
         Scheduler sampleScheduler = new Scheduler();
         for (CalendarEvent sampleCalendarEvent : getSampleCalendarEvents()) {
             sampleScheduler.addCalendarEvent(sampleCalendarEvent);

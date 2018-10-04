@@ -10,9 +10,9 @@ import seedu.address.model.calendarEvent.CalendarEvent;
 /**
  * An UI component that displays information of a {@code CalendarEvent}.
  */
-public class EventCard extends UiPart<Region> {
+public class CalendarEventCard extends UiPart<Region> {
 
-    private static final String FXML = "EventListCard.fxml";
+    private static final String FXML = "CalendarEventListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -39,7 +39,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public EventCard(CalendarEvent calendarEvent, int displayedIndex) {
+    public CalendarEventCard(CalendarEvent calendarEvent, int displayedIndex) {
         super(FXML);
         this.calendarEvent = calendarEvent;
         id.setText(displayedIndex + ". ");
@@ -58,12 +58,12 @@ public class EventCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EventCard)) {
+        if (!(other instanceof CalendarEventCard)) {
             return false;
         }
 
         // state check
-        EventCard card = (EventCard) other;
+        CalendarEventCard card = (CalendarEventCard) other;
         return id.getText().equals(card.id.getText())
                 && calendarEvent.equals(card.calendarEvent);
     }

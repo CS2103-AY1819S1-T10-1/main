@@ -54,7 +54,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a calendarEvent without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a calendar event without tags to a non-empty scheduler, command with leading spaces and trailing spaces
          * -> added
          */
         CalendarEvent toAdd = AMY;
@@ -73,13 +73,13 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a calendarEvent with all fields same as another calendarEvent in the address book except name -> added */
+        /* Case: add a calendar event with all fields same as another calendar event in the scheduler except name -> added */
         toAdd = new PersonBuilder(AMY).withName(VALID_NAME_BOB).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a calendarEvent with all fields same as another calendarEvent in the address book except phone and email
+        /* Case: add a calendar event with all fields same as another calendar event in the scheduler except phone and email
          * -> added
          */
         toAdd = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
@@ -184,7 +184,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing {@code AddCommand} with the details of
      * {@code toAdd}.<br>
-     * 4. {@code Storage} and {@code EventListPanel} equal to the corresponding components in
+     * 4. {@code Storage} and {@code CalendarEventListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
@@ -213,7 +213,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, CalendarEvent)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
-     * 2. {@code Storage} and {@code EventListPanel} equal to the corresponding components in
+     * 2. {@code Storage} and {@code CalendarEventListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
      * @see AddCommandSystemTest#assertCommandSuccess(String, CalendarEvent)
      */
@@ -230,7 +230,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
-     * 4. {@code Storage} and {@code EventListPanel} remain unchanged.<br>
+     * 4. {@code Storage} and {@code CalendarEventListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code SchedulerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

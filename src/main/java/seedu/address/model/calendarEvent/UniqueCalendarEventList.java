@@ -8,72 +8,72 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.calendarEvent.exceptions.DuplicatePersonException;
-import seedu.address.model.calendarEvent.exceptions.PersonNotFoundException;
+import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A calendarEvent is considered unique by comparing using {@code CalendarEvent#isSamePerson(CalendarEvent)}. As such, adding and updating of
- * persons uses CalendarEvent#isSamePerson(CalendarEvent) for equality so as to ensure that the calendarEvent being added or updated is
- * unique in terms of identity in the UniqueCalendarEventList. However, the removal of a calendarEvent uses CalendarEvent#equals(Object) so
- * as to ensure that the calendarEvent with exactly the same fields will be removed.
+ * A calendar event is considered unique by comparing using {@code CalendarEvent#isSameCalendarEvent(CalendarEvent)}. As such, adding and updating of
+ * persons uses CalendarEvent#isSameCalendarEvent(CalendarEvent) for equality so as to ensure that the calendar event being added or updated is
+ * unique in terms of identity in the UniqueCalendarEventList. However, the removal of a calendar event uses CalendarEvent#equals(Object) so
+ * as to ensure that the calendar event with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see CalendarEvent#isSamePerson(CalendarEvent)
+ * @see CalendarEvent#isSameCalendarEvent(CalendarEvent)
  */
 public class UniqueCalendarEventList implements Iterable<CalendarEvent> {
 
     private final ObservableList<CalendarEvent> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent calendarEvent as the given argument.
+     * Returns true if the list contains an equivalent calendar event as the given argument.
      */
     public boolean contains(CalendarEvent toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameCalendarEvent);
     }
 
     /**
-     * Adds a calendarEvent to the list.
-     * The calendarEvent must not already exist in the list.
+     * Adds a calendar event to the list.
+     * The calendar event must not already exist in the list.
      */
     public void add(CalendarEvent toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateCalendarEventException();
         }
         internalList.add(toAdd);
     }
 
     /**
-     * Replaces the calendarEvent {@code target} in the list with {@code editedCalendarEvent}.
+     * Replaces the calendar event {@code target} in the list with {@code editedCalendarEvent}.
      * {@code target} must exist in the list.
-     * The calendarEvent identity of {@code editedCalendarEvent} must not be the same as another existing calendarEvent in the list.
+     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another existing calendar event in the list.
      */
     public void setCalendarEvent(CalendarEvent target, CalendarEvent editedCalendarEvent) {
         requireAllNonNull(target, editedCalendarEvent);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new CalendarEventNotFoundException();
         }
 
-        if (!target.isSamePerson(editedCalendarEvent) && contains(editedCalendarEvent)) {
-            throw new DuplicatePersonException();
+        if (!target.isSameCalendarEvent(editedCalendarEvent) && contains(editedCalendarEvent)) {
+            throw new DuplicateCalendarEventException();
         }
 
         internalList.set(index, editedCalendarEvent);
     }
 
     /**
-     * Removes the equivalent calendarEvent from the list.
-     * The calendarEvent must exist in the list.
+     * Removes the equivalent calendar event from the list.
+     * The calendar event must exist in the list.
      */
     public void remove(CalendarEvent toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new CalendarEventNotFoundException();
         }
     }
 
@@ -84,12 +84,12 @@ public class UniqueCalendarEventList implements Iterable<CalendarEvent> {
 
     /**
      * Replaces the contents of this list with {@code calendarEvents}.
-     * {@code calendarEvents} must not contain duplicate calendarEvents.
+     * {@code calendarEvents} must not contain duplicate calendar events.
      */
     public void setCalendarEvents(List<CalendarEvent> calendarEvents) {
         requireAllNonNull(calendarEvents);
-        if (!personsAreUnique(calendarEvents)) {
-            throw new DuplicatePersonException();
+        if (!calendarEventsAreUnique(calendarEvents)) {
+            throw new DuplicateCalendarEventException();
         }
 
         internalList.setAll(calendarEvents);
@@ -120,12 +120,12 @@ public class UniqueCalendarEventList implements Iterable<CalendarEvent> {
     }
 
     /**
-     * Returns true if {@code calendarEvents} contains only unique calendarEvents.
+     * Returns true if {@code calendarEvents} contains only unique calendar events.
      */
-    private boolean personsAreUnique(List<CalendarEvent> calendarEvents) {
+    private boolean calendarEventsAreUnique(List<CalendarEvent> calendarEvents) {
         for (int i = 0; i < calendarEvents.size() - 1; i++) {
             for (int j = i + 1; j < calendarEvents.size(); j++) {
-                if (calendarEvents.get(i).isSamePerson(calendarEvents.get(j))) {
+                if (calendarEvents.get(i).isSameCalendarEvent(calendarEvents.get(j))) {
                     return false;
                 }
             }

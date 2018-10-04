@@ -11,9 +11,9 @@ import javafx.scene.layout.Region;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Provides a handle to a calendarEvent card in the calendarEvent list panel.
+ * Provides a handle to a calendar event card in the calendar event list panel.
  */
-public class EventCardHandle extends NodeHandle<Node> {
+public class CalendarEventCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
@@ -28,7 +28,7 @@ public class EventCardHandle extends NodeHandle<Node> {
     private final Label emailLabel;
     private final List<Label> tagLabels;
 
-    public EventCardHandle(Node cardNode) {
+    public CalendarEventCardHandle(Node cardNode) {
         super(cardNode);
 
         idLabel = getChildNode(ID_FIELD_ID);

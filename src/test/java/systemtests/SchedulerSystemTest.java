@@ -18,7 +18,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< HEAD
 import guitests.guihandles.EventListPanelHandle;
+=======
+import guitests.guihandles.CalendarEventListPanelHandle;
+>>>>>>> edit
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -103,8 +107,8 @@ public abstract class SchedulerSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    public EventListPanelHandle getPersonListPanel() {
-        return mainWindowHandle.getPersonListPanel();
+    public CalendarEventListPanelHandle getPersonListPanel() {
+        return mainWindowHandle.getCalendarEventListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -184,7 +188,7 @@ public abstract class SchedulerSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code EventListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code BrowserPanelHandle}, {@code CalendarEventListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
@@ -209,7 +213,7 @@ public abstract class SchedulerSystemTest {
      * Asserts that the browser's url is changed to display the details of the calendarEvent in the calendarEvent list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see EventListPanelHandle#isSelectedPersonCardChanged()
+     * @see CalendarEventListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         getPersonListPanel().navigateToCard(getPersonListPanel().getSelectedCardIndex());
@@ -228,7 +232,7 @@ public abstract class SchedulerSystemTest {
     /**
      * Asserts that the browser's url and the selected card in the calendarEvent list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see EventListPanelHandle#isSelectedPersonCardChanged()
+     * @see CalendarEventListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());

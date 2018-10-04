@@ -64,13 +64,13 @@ public class TypicalPersons {
      */
     public static Scheduler getTypicalScheduler() {
         Scheduler ab = new Scheduler();
-        for (CalendarEvent calendarEvent : getTypicalPersons()) {
+        for (CalendarEvent calendarEvent : getTypicalCalendarEvents()) {
             ab.addCalendarEvent(calendarEvent);
         }
         return ab;
     }
 
-    public static List<CalendarEvent> getTypicalPersons() {
+    public static List<CalendarEvent> getTypicalCalendarEvents() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

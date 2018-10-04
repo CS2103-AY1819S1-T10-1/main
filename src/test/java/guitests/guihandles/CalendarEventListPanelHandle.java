@@ -9,26 +9,26 @@ import javafx.scene.control.ListView;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
+ * Provides a handle for {@code CalendarEventListPanel} containing the list of {@code CalendarEventCard}.
  */
-public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
+    public static final String CALENDAR_EVENT_LIST_VIEW_ID = "#personListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
     private Optional<CalendarEvent> lastRememberedSelectedPersonCard;
 
-    public EventListPanelHandle(ListView<CalendarEvent> personListPanelNode) {
+    public CalendarEventListPanelHandle(ListView<CalendarEvent> personListPanelNode) {
         super(personListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code EventCardHandle}.
+     * Returns a handle to the selected {@code CalendarEventCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public EventCardHandle getHandleToSelectedCard() {
+    public CalendarEventCardHandle getHandleToSelectedCard() {
         List<CalendarEvent> selectedCalendarEventList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCalendarEventList.size() != 1) {
@@ -36,7 +36,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
         }
 
         return getAllCardNodes().stream()
-                .map(EventCardHandle::new)
+                .map(CalendarEventCardHandle::new)
                 .filter(handle -> handle.equals(selectedCalendarEventList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
@@ -91,7 +91,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
     }
 
     /**
-     * Selects the {@code EventCard} at {@code index} in the list.
+     * Selects the {@code CalendarEventCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
@@ -101,9 +101,9 @@ public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
      * Returns the calendarEvent card handle of a calendarEvent associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public EventCardHandle getEventCardHandle(int index) {
+    public CalendarEventCardHandle getPersonCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(EventCardHandle::new)
+                .map(CalendarEventCardHandle::new)
                 .filter(handle -> handle.equals(getPerson(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
@@ -123,7 +123,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
     }
 
     /**
-     * Remembers the selected {@code EventCard} in the list.
+     * Remembers the selected {@code CalendarEventCard} in the list.
      */
     public void rememberSelectedPersonCard() {
         List<CalendarEvent> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
@@ -136,7 +136,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
     }
 
     /**
-     * Returns true if the selected {@code EventCard} is different from the value remembered by the most recent
+     * Returns true if the selected {@code CalendarEventCard} is different from the value remembered by the most recent
      * {@code rememberSelectedPersonCard()} call.
      */
     public boolean isSelectedPersonCardChanged() {

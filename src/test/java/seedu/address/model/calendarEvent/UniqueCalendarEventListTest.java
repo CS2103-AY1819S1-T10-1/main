@@ -16,8 +16,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.calendarEvent.exceptions.DuplicatePersonException;
-import seedu.address.model.calendarEvent.exceptions.PersonNotFoundException;
+import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class UniqueCalendarEventListTest {
@@ -60,7 +60,7 @@ public class UniqueCalendarEventListTest {
     @Test
     public void add_duplicatePerson_throwsDuplicatePersonException() {
         uniqueCalendarEventList.add(ALICE);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateCalendarEventException.class);
         uniqueCalendarEventList.add(ALICE);
     }
 
@@ -78,7 +78,7 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
-        thrown.expect(PersonNotFoundException.class);
+        thrown.expect(CalendarEventNotFoundException.class);
         uniqueCalendarEventList.setCalendarEvent(ALICE, ALICE);
     }
 
@@ -115,7 +115,7 @@ public class UniqueCalendarEventListTest {
     public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
         uniqueCalendarEventList.add(ALICE);
         uniqueCalendarEventList.add(BOB);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateCalendarEventException.class);
         uniqueCalendarEventList.setCalendarEvent(ALICE, BOB);
     }
 
@@ -127,7 +127,7 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void remove_personDoesNotExist_throwsPersonNotFoundException() {
-        thrown.expect(PersonNotFoundException.class);
+        thrown.expect(CalendarEventNotFoundException.class);
         uniqueCalendarEventList.remove(ALICE);
     }
 
@@ -173,7 +173,7 @@ public class UniqueCalendarEventListTest {
     @Test
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<CalendarEvent> listWithDuplicateCalendarEvents = Arrays.asList(ALICE, ALICE);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateCalendarEventException.class);
         uniqueCalendarEventList.setCalendarEvents(listWithDuplicateCalendarEvents);
     }
 

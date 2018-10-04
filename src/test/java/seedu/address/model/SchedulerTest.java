@@ -20,7 +20,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.exceptions.DuplicatePersonException;
+import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
 import seedu.address.testutil.PersonBuilder;
 
 public class SchedulerTest {
@@ -56,7 +56,7 @@ public class SchedulerTest {
         List<CalendarEvent> newCalendarEvents = Arrays.asList(ALICE, editedAlice);
         SchedulerStub newData = new SchedulerStub(newCalendarEvents);
 
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateCalendarEventException.class);
         scheduler.resetData(newData);
     }
 

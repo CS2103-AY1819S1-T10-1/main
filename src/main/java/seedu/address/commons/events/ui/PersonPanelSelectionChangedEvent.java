@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Represents a selection change in the CalendarEvent List Panel
+ * Represents a selection change in the Calendar Event List Panel
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 

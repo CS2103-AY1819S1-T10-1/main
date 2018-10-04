@@ -5,15 +5,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalPersons.getTypicalCalendarEvents;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import guitests.guihandles.EventCardHandle;
-import guitests.guihandles.EventListPanelHandle;
+import guitests.guihandles.CalendarEventCardHandle;
+import guitests.guihandles.CalendarEventListPanelHandle;
 import org.junit.Test;
 
 import javafx.collections.FXCollections;
@@ -26,7 +26,7 @@ import seedu.address.storage.XmlSerializableScheduler;
 
 public class CalendarEventListPanelTest extends GuiUnitTest {
     private static final ObservableList<CalendarEvent> TYPICAL_CALENDAR_EVENTS =
-            FXCollections.observableList(getTypicalPersons());
+            FXCollections.observableList(getTypicalCalendarEvents());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
@@ -34,16 +34,16 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
 
-    private EventListPanelHandle eventListPanelHandle;
+    private CalendarEventListPanelHandle calendarEventListPanelHandle;
 
     @Test
     public void display() {
         initUi(TYPICAL_CALENDAR_EVENTS);
 
         for (int i = 0; i < TYPICAL_CALENDAR_EVENTS.size(); i++) {
-            eventListPanelHandle.navigateToCard(TYPICAL_CALENDAR_EVENTS.get(i));
+            calendarEventListPanelHandle.navigateToCard(TYPICAL_CALENDAR_EVENTS.get(i));
             CalendarEvent expectedCalendarEvent = TYPICAL_CALENDAR_EVENTS.get(i);
-            EventCardHandle actualCard = eventListPanelHandle.getEventCardHandle(i);
+            CalendarEventCardHandle actualCard = calendarEventListPanelHandle.getPersonCardHandle(i);
 
             assertCardDisplaysPerson(expectedCalendarEvent, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -56,13 +56,13 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        EventCardHandle expectedEvent = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        EventCardHandle selectedEvent = eventListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedEvent, selectedEvent);
+        CalendarEventCardHandle expectedPerson = calendarEventListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        CalendarEventCardHandle selectedPerson = calendarEventListPanelHandle.getHandleToSelectedCard();
+        assertCardEquals(expectedPerson, selectedPerson);
     }
 
     /**
-     * Verifies that creating and deleting large number of persons in {@code PersonListPanel} requires lesser than
+     * Verifies that creating and deleting large number of calendar events in {@code CalendarEventListPanel} requires lesser than
      * {@code CARD_CREATION_AND_DELETION_TIMEOUT} milliseconds to execute.
      */
     @Test
@@ -76,49 +76,49 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Returns a list of persons containing {@code personCount} persons that is used to populate the
-     * {@code PersonListPanel}.
+     * Returns a list of calendar events containing {@code calendarEventCount} calendar events that is used to populate the
+     * {@code CalendarEventListPanel}.
      */
-    private ObservableList<CalendarEvent> createBackingList(int personCount) throws Exception {
-        Path xmlFile = createXmlFileWithPersons(personCount);
-        XmlSerializableScheduler xmlAddressBook =
+    private ObservableList<CalendarEvent> createBackingList(int calendarEventCount) throws Exception {
+        Path xmlFile = createXmlFileWithCalendarEvents(calendarEventCount);
+        XmlSerializableScheduler xmlScheduler =
                 XmlUtil.getDataFromFile(xmlFile, XmlSerializableScheduler.class);
-        return FXCollections.observableArrayList(xmlAddressBook.toModelType().getCalendarEventList());
+        return FXCollections.observableArrayList(xmlScheduler.toModelType().getCalendarEventList());
     }
 
     /**
-     * Returns a .xml file containing {@code personCount} persons. This file will be deleted when the JVM terminates.
+     * Returns a .xml file containing {@code calendarEventCount} calendar events. This file will be deleted when the JVM terminates.
      */
-    private Path createXmlFileWithPersons(int personCount) throws Exception {
+    private Path createXmlFileWithCalendarEvents(int calendarEventCount) throws Exception {
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-        builder.append("<addressbook>\n");
-        for (int i = 0; i < personCount; i++) {
-            builder.append("<persons>\n");
+        builder.append("<scheduler>\n");
+        for (int i = 0; i < calendarEventCount; i++) {
+            builder.append("<calendarEvents>\n");
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
             builder.append("<address>a</address>\n");
-            builder.append("</persons>\n");
+            builder.append("</calendarEvents>\n");
         }
-        builder.append("</addressbook>\n");
+        builder.append("</scheduler>\n");
 
-        Path manyPersonsFile = Paths.get(TEST_DATA_FOLDER + "manyPersons.xml");
-        FileUtil.createFile(manyPersonsFile);
-        FileUtil.writeToFile(manyPersonsFile, builder.toString());
-        manyPersonsFile.toFile().deleteOnExit();
-        return manyPersonsFile;
+        Path manyCalendarEventsFile = Paths.get(TEST_DATA_FOLDER + "manyCalendarEvents.xml");
+        FileUtil.createFile(manyCalendarEventsFile);
+        FileUtil.writeToFile(manyCalendarEventsFile, builder.toString());
+        manyCalendarEventsFile.toFile().deleteOnExit();
+        return manyCalendarEventsFile;
     }
 
     /**
-     * Initializes {@code eventListPanelHandle} with a {@code PersonListPanel} backed by {@code backingList}.
-     * Also shows the {@code Stage} that displays only {@code PersonListPanel}.
+     * Initializes {@code calendarEventListPanelHandle} with a {@code CalendarEventListPanel} backed by {@code backingList}.
+     * Also shows the {@code Stage} that displays only {@code CalendarEventListPanel}.
      */
     private void initUi(ObservableList<CalendarEvent> backingList) {
-        EventListPanel eventListPanel = new EventListPanel(backingList);
-        uiPartRule.setUiPart(eventListPanel);
+        CalendarEventListPanel calendarEventListPanel = new CalendarEventListPanel(backingList);
+        uiPartRule.setUiPart(calendarEventListPanel);
 
-        eventListPanelHandle = new EventListPanelHandle(getChildNode(eventListPanel.getRoot(),
-                EventListPanelHandle.PERSON_LIST_VIEW_ID));
+        calendarEventListPanelHandle = new CalendarEventListPanelHandle(getChildNode(calendarEventListPanel.getRoot(),
+                CalendarEventListPanelHandle.CALENDAR_EVENT_LIST_VIEW_ID));
     }
 }

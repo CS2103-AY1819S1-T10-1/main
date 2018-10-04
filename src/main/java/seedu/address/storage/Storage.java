@@ -35,5 +35,5 @@ public interface Storage extends SchedulerStorage, UserPrefsStorage {
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleAddressBookChangedEvent(SchedulerChangedEvent sce);
+    void handleSchedulerChangedEvent(SchedulerChangedEvent sce);
 }

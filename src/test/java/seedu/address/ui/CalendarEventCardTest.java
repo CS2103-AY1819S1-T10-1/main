@@ -8,6 +8,10 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import guitests.guihandles.EventCardHandle;
 import org.junit.Test;
 
+<<<<<<< HEAD
+=======
+import guitests.guihandles.CalendarEventCardHandle;
+>>>>>>> edit
 import seedu.address.model.calendarEvent.CalendarEvent;
 import seedu.address.testutil.PersonBuilder;
 
@@ -17,56 +21,56 @@ public class CalendarEventCardTest extends GuiUnitTest {
     public void display() {
         // no tags
         CalendarEvent calendarEventWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        EventCard personCard = new EventCard(calendarEventWithNoTags, 1);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, calendarEventWithNoTags, 1);
+        CalendarEventCard calendarEventCard = new CalendarEventCard(calendarEventWithNoTags, 1);
+        uiPartRule.setUiPart(calendarEventCard);
+        assertCardDisplay(calendarEventCard, calendarEventWithNoTags, 1);
 
         // with tags
         CalendarEvent calendarEventWithTags = new PersonBuilder().build();
-        personCard = new EventCard(calendarEventWithTags, 2);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, calendarEventWithTags, 2);
+        calendarEventCard = new CalendarEventCard(calendarEventWithTags, 2);
+        uiPartRule.setUiPart(calendarEventCard);
+        assertCardDisplay(calendarEventCard, calendarEventWithTags, 2);
     }
 
     @Test
     public void equals() {
         CalendarEvent calendarEvent = new PersonBuilder().build();
-        EventCard personCard = new EventCard(calendarEvent, 0);
+        CalendarEventCard calendarEventCard = new CalendarEventCard(calendarEvent, 0);
 
         // same calendarEvent, same index -> returns true
-        EventCard copy = new EventCard(calendarEvent, 0);
-        assertTrue(personCard.equals(copy));
+        CalendarEventCard copy = new CalendarEventCard(calendarEvent, 0);
+        assertTrue(calendarEventCard.equals(copy));
 
         // same object -> returns true
-        assertTrue(personCard.equals(personCard));
+        assertTrue(calendarEventCard.equals(calendarEventCard));
 
         // null -> returns false
-        assertFalse(personCard.equals(null));
+        assertFalse(calendarEventCard.equals(null));
 
         // different types -> returns false
-        assertFalse(personCard.equals(0));
+        assertFalse(calendarEventCard.equals(0));
 
         // different calendarEvent, same index -> returns false
         CalendarEvent differentCalendarEvent = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new EventCard(differentCalendarEvent, 0)));
+        assertFalse(calendarEventCard.equals(new CalendarEventCard(differentCalendarEvent, 0)));
 
         // same calendarEvent, different index -> returns false
-        assertFalse(personCard.equals(new EventCard(calendarEvent, 1)));
+        assertFalse(calendarEventCard.equals(new CalendarEventCard(calendarEvent, 1)));
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedCalendarEvent} correctly and matches
+     * Asserts that {@code calendarEventCard} displays the details of {@code expectedCalendarEvent} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(EventCard personCard, CalendarEvent expectedCalendarEvent, int expectedId) {
+    private void assertCardDisplay(CalendarEventCard calendarEventCard, CalendarEvent expectedCalendarEvent, int expectedId) {
         guiRobot.pauseForHuman();
 
-        EventCardHandle eventCardHandle = new EventCardHandle(personCard.getRoot());
+        CalendarEventCardHandle calendarEventCardHandle = new CalendarEventCardHandle(calendarEventCard.getRoot());
 
         // verify id is displayed correctly
-        assertEquals(Integer.toString(expectedId) + ". ", eventCardHandle.getId());
+        assertEquals(Integer.toString(expectedId) + ". ", calendarEventCardHandle.getId());
 
         // verify calendarEvent details are displayed correctly
-        assertCardDisplaysPerson(expectedCalendarEvent, eventCardHandle);
+        assertCardDisplaysPerson(expectedCalendarEvent, calendarEventCardHandle);
     }
 }

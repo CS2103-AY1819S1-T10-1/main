@@ -4,13 +4,13 @@ import javafx.collections.ObservableList;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of an scheduler
  */
 public interface ReadOnlyScheduler {
 
     /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * Returns an unmodifiable view of the calendar event list.
+     * This list will not contain any duplicate calendar events.
      */
     ObservableList<CalendarEvent> getCalendarEventList();
 

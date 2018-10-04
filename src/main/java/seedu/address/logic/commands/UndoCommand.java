@@ -1,14 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * Reverts the {@code model}'s address book to its previous state.
+ * Reverts the {@code model}'s scheduler to its previous state.
  */
 public class UndoCommand extends Command {
 
@@ -25,7 +25,7 @@ public class UndoCommand extends Command {
         }
 
         model.undoScheduler();
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

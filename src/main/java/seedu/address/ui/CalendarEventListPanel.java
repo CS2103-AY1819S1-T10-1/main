@@ -16,29 +16,29 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of calendar events.
  */
-public class EventListPanel extends UiPart<Region> {
-    private static final String FXML = "EventListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
+public class CalendarEventListPanel extends UiPart<Region> {
+    private static final String FXML = "CalendarEventListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(CalendarEventListPanel.class);
 
     @FXML
-    private ListView<CalendarEvent> eventListView;
+    private ListView<CalendarEvent> personListView;
 
-    public EventListPanel(ObservableList<CalendarEvent> calendarEventList) {
+    public CalendarEventListPanel(ObservableList<CalendarEvent> calendarEventList) {
         super(FXML);
         setConnections(calendarEventList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<CalendarEvent> calendarEventList) {
-        eventListView.setItems(calendarEventList);
-        eventListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setItems(calendarEventList);
+        personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        eventListView.getSelectionModel().selectedItemProperty()
+        personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in calendarEvent list panel changed to : '" + newValue + "'");
@@ -48,12 +48,12 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code EventCard} at the {@code index} and selects it.
+     * Scrolls to the {@code CalendarEventCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            eventListView.scrollTo(index);
-            eventListView.getSelectionModel().clearAndSelect(index);
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
@@ -64,7 +64,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code EventCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code CalendarEventCard}.
      */
     class PersonListViewCell extends ListCell<CalendarEvent> {
         @Override
@@ -75,7 +75,7 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new EventCard(calendarEvent, getIndex() + 1).getRoot());
+                setGraphic(new CalendarEventCard(calendarEvent, getIndex() + 1).getRoot());
             }
         }
     }
