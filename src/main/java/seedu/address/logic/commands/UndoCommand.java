@@ -1,11 +1,11 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.scheduler.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.model.Model;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 
 /**
  * Reverts the {@code model}'s scheduler to its previous state.

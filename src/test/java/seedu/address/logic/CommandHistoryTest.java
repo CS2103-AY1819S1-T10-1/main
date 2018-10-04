@@ -1,4 +1,4 @@
-package seedu.scheduler.logic;
+package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

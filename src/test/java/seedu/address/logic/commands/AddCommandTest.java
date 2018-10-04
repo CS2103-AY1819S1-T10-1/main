@@ -1,4 +1,4 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
@@ -14,13 +14,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.model.ReadOnlyScheduler;
-import seedu.scheduler.model.Scheduler;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.testutil.PersonBuilder;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 

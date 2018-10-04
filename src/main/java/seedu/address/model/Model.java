@@ -1,9 +1,9 @@
-package seedu.scheduler.model;
+package seedu.address.model;
 
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * The API of the Model component.

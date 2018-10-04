@@ -1,11 +1,11 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import seedu.scheduler.commons.core.LogsCenter;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Controller for a help page

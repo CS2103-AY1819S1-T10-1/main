@@ -1,11 +1,11 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.scheduler.commons.core.Messages;
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.calendarEvent.NameContainsKeywordsPredicate;
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.CommandHistory;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all calendar events in scheduler whose name contains any of the argument keywords.

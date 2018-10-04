@@ -1,9 +1,9 @@
-package seedu.scheduler.storage;
+package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static seedu.scheduler.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,12 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.scheduler.commons.events.model.SchedulerChangedEvent;
-import seedu.scheduler.commons.events.storage.DataSavingExceptionEvent;
-import seedu.scheduler.model.ReadOnlyScheduler;
-import seedu.scheduler.model.Scheduler;
-import seedu.scheduler.model.UserPrefs;
-import seedu.scheduler.ui.testutil.EventsCollectorRule;
+import seedu.address.commons.events.model.SchedulerChangedEvent;
+import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
 

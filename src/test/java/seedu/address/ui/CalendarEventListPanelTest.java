@@ -1,28 +1,28 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
-import static seedu.scheduler.testutil.EventsUtil.postNow;
-import static seedu.scheduler.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.scheduler.testutil.TypicalPersons.getTypicalCalendarEvents;
-import static seedu.scheduler.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
-import static seedu.scheduler.ui.testutil.GuiTestAssert.assertCardEquals;
+import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalCalendarEvents;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import guitests.guihandles.CalendarEventCardHandle;
+import guitests.guihandles.CalendarEventListPanelHandle;
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.scheduler.commons.events.ui.JumpToListRequestEvent;
-import seedu.scheduler.commons.util.FileUtil;
-import seedu.scheduler.commons.util.XmlUtil;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.storage.XmlSerializableScheduler;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.storage.XmlSerializableScheduler;
 
 public class CalendarEventListPanelTest extends GuiUnitTest {
     private static final ObservableList<CalendarEvent> TYPICAL_CALENDAR_EVENTS =
@@ -34,7 +34,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
 
-    private PersonListPanelHandle calendarEventListPanelHandle;
+    private CalendarEventListPanelHandle calendarEventListPanelHandle;
 
     @Test
     public void display() {
@@ -43,7 +43,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         for (int i = 0; i < TYPICAL_CALENDAR_EVENTS.size(); i++) {
             calendarEventListPanelHandle.navigateToCard(TYPICAL_CALENDAR_EVENTS.get(i));
             CalendarEvent expectedCalendarEvent = TYPICAL_CALENDAR_EVENTS.get(i);
-            PersonCardHandle actualCard = calendarEventListPanelHandle.getPersonCardHandle(i);
+            CalendarEventCardHandle actualCard = calendarEventListPanelHandle.getPersonCardHandle(i);
 
             assertCardDisplaysPerson(expectedCalendarEvent, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -56,8 +56,8 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        PersonCardHandle expectedPerson = calendarEventListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedPerson = calendarEventListPanelHandle.getHandleToSelectedCard();
+        CalendarEventCardHandle expectedPerson = calendarEventListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        CalendarEventCardHandle selectedPerson = calendarEventListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedPerson, selectedPerson);
     }
 
@@ -98,7 +98,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
-            builder.append("<scheduler>a</scheduler>\n");
+            builder.append("<address>a</address>\n");
             builder.append("</calendarEvents>\n");
         }
         builder.append("</scheduler>\n");
@@ -118,7 +118,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         CalendarEventListPanel calendarEventListPanel = new CalendarEventListPanel(backingList);
         uiPartRule.setUiPart(calendarEventListPanel);
 
-        calendarEventListPanelHandle = new PersonListPanelHandle(getChildNode(calendarEventListPanel.getRoot(),
-                PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        calendarEventListPanelHandle = new CalendarEventListPanelHandle(getChildNode(calendarEventListPanel.getRoot(),
+                CalendarEventListPanelHandle.CALENDAR_EVENT_LIST_VIEW_ID));
     }
 }

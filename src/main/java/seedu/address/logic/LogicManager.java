@@ -1,17 +1,17 @@
-package seedu.scheduler.logic;
+package seedu.address.logic;
 
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
-import seedu.scheduler.commons.core.ComponentManager;
-import seedu.scheduler.commons.core.LogsCenter;
-import seedu.scheduler.logic.commands.Command;
-import seedu.scheduler.logic.commands.CommandResult;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.logic.parser.SchedulerParser;
-import seedu.scheduler.logic.parser.exceptions.ParseException;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.SchedulerParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * The main LogicManager of the app.

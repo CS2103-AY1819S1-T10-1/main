@@ -1,15 +1,15 @@
-package seedu.scheduler.testutil;
+package seedu.address.testutil;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.scheduler.model.calendarEvent.Address;
-import seedu.scheduler.model.calendarEvent.Email;
-import seedu.scheduler.model.calendarEvent.Name;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.model.calendarEvent.Phone;
-import seedu.scheduler.model.tag.Tag;
-import seedu.scheduler.model.util.SampleDataUtil;
+import seedu.address.model.calendarEvent.Address;
+import seedu.address.model.calendarEvent.Email;
+import seedu.address.model.calendarEvent.Name;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building CalendarEvent objects.

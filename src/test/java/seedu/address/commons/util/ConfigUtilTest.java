@@ -1,4 +1,4 @@
-package seedu.scheduler.commons.util;
+package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.scheduler.commons.core.Config;
-import seedu.scheduler.commons.exceptions.DataConversionException;
+import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 
 public class ConfigUtilTest {
 

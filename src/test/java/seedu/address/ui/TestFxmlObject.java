@@ -1,4 +1,4 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import javafx.beans.DefaultProperty;
 

@@ -1,4 +1,4 @@
-package seedu.scheduler.commons.util;
+package seedu.address.commons.util;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -15,7 +15,7 @@ public class AppUtilTest {
 
     @Test
     public void getImage_exitingImage() {
-        assertNotNull(AppUtil.getImage("/images/address_book_32.png"));
+        assertNotNull(AppUtil.getImage("/images/calendar.png"));
     }
 
 

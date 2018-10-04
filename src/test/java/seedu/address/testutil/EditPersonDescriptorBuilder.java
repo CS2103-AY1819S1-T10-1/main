@@ -1,16 +1,16 @@
-package seedu.scheduler.testutil;
+package seedu.address.testutil;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.scheduler.logic.commands.EditCommand.EditCalendarEventDescriptor;
-import seedu.scheduler.model.calendarEvent.Address;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.model.calendarEvent.Email;
-import seedu.scheduler.model.calendarEvent.Name;
-import seedu.scheduler.model.calendarEvent.Phone;
-import seedu.scheduler.model.tag.Tag;
+import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
+import seedu.address.model.calendarEvent.Address;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.Email;
+import seedu.address.model.calendarEvent.Name;
+import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.tag.Tag;
 
 /**
  * A utility class to help with building EditCalendarEventDescriptor objects.

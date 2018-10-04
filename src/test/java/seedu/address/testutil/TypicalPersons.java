@@ -1,22 +1,22 @@
-package seedu.scheduler.testutil;
+package seedu.address.testutil;
 
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.scheduler.model.Scheduler;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.model.Scheduler;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * A utility class containing a list of {@code CalendarEvent} objects to be used in tests.

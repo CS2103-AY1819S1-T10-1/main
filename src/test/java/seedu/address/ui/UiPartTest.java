@@ -1,4 +1,4 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,8 +11,8 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import javafx.fxml.FXML;
-import seedu.scheduler.MainApp;
-import seedu.scheduler.testutil.Assert;
+import seedu.address.MainApp;
+import seedu.address.testutil.Assert;
 
 public class UiPartTest {
 

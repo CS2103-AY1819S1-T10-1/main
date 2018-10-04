@@ -1,15 +1,15 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.scheduler.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.testutil.PersonBuilder;
+import guitests.guihandles.CalendarEventCardHandle;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.testutil.PersonBuilder;
 
 public class CalendarEventCardTest extends GuiUnitTest {
 
@@ -61,12 +61,12 @@ public class CalendarEventCardTest extends GuiUnitTest {
     private void assertCardDisplay(CalendarEventCard calendarEventCard, CalendarEvent expectedCalendarEvent, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(calendarEventCard.getRoot());
+        CalendarEventCardHandle calendarEventCardHandle = new CalendarEventCardHandle(calendarEventCard.getRoot());
 
         // verify id is displayed correctly
-        assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
+        assertEquals(Integer.toString(expectedId) + ". ", calendarEventCardHandle.getId());
 
         // verify calendarEvent details are displayed correctly
-        assertCardDisplaysPerson(expectedCalendarEvent, personCardHandle);
+        assertCardDisplaysPerson(expectedCalendarEvent, calendarEventCardHandle);
     }
 }

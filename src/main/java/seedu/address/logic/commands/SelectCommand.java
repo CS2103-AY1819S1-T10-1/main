@@ -1,17 +1,17 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import seedu.scheduler.commons.core.EventsCenter;
-import seedu.scheduler.commons.core.Messages;
-import seedu.scheduler.commons.core.index.Index;
-import seedu.scheduler.commons.events.ui.JumpToListRequestEvent;
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * Selects a calendar event identified using its displayed index from the scheduler.

@@ -1,4 +1,4 @@
-package seedu.scheduler.ui;
+package seedu.address.ui;
 
 import java.util.logging.Logger;
 
@@ -10,10 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.scheduler.commons.core.LogsCenter;
-import seedu.scheduler.commons.events.ui.JumpToListRequestEvent;
-import seedu.scheduler.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * Panel containing the list of calendar events.

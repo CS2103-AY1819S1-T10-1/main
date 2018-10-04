@@ -1,12 +1,12 @@
-package seedu.scheduler.model;
+package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.scheduler.testutil.TypicalPersons.ALICE;
-import static seedu.scheduler.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,9 +19,9 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.model.calendarEvent.exceptions.DuplicateCalendarEventException;
-import seedu.scheduler.testutil.PersonBuilder;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
+import seedu.address.testutil.PersonBuilder;
 
 public class SchedulerTest {
 

@@ -1,4 +1,4 @@
-package seedu.scheduler.testutil;
+package seedu.address.testutil;
 
 /**
  * A set of assertion methods useful for writing tests.

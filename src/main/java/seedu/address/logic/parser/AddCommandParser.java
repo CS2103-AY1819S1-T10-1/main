@@ -1,23 +1,23 @@
-package seedu.scheduler.logic.parser;
+package seedu.address.logic.parser;
 
-import static seedu.scheduler.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
-import seedu.scheduler.logic.commands.AddCommand;
-import seedu.scheduler.logic.parser.exceptions.ParseException;
-import seedu.scheduler.model.calendarEvent.Address;
-import seedu.scheduler.model.calendarEvent.Email;
-import seedu.scheduler.model.calendarEvent.Name;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
-import seedu.scheduler.model.calendarEvent.Phone;
-import seedu.scheduler.model.tag.Tag;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendarEvent.Address;
+import seedu.address.model.calendarEvent.Email;
+import seedu.address.model.calendarEvent.Name;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object

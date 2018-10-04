@@ -1,11 +1,11 @@
-package seedu.scheduler.commons.util;
+package seedu.address.commons.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.scheduler.testutil.Assert;
+import seedu.address.testutil.Assert;
 
 public class FileUtilTest {
 

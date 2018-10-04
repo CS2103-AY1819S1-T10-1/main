@@ -1,4 +1,4 @@
-package seedu.scheduler.logic.parser;
+package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;

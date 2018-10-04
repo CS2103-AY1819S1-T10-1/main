@@ -1,4 +1,4 @@
-package seedu.scheduler;
+package seedu.address;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,19 +6,19 @@ import java.util.function.Supplier;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import seedu.scheduler.commons.core.Config;
-import seedu.scheduler.commons.core.GuiSettings;
-import seedu.scheduler.commons.exceptions.DataConversionException;
-import seedu.scheduler.commons.util.FileUtil;
-import seedu.scheduler.commons.util.XmlUtil;
-import seedu.scheduler.model.ReadOnlyScheduler;
-import seedu.scheduler.model.Scheduler;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.ModelManager;
-import seedu.scheduler.model.UserPrefs;
-import seedu.scheduler.storage.UserPrefsStorage;
-import seedu.scheduler.storage.XmlSerializableScheduler;
-import seedu.scheduler.testutil.TestUtil;
+import seedu.address.commons.core.Config;
+import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlSerializableScheduler;
+import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
 /**
@@ -69,7 +69,7 @@ public class TestApp extends MainApp {
     }
 
     /**
-     * Returns a defensive copy of the scheduler book data stored inside the storage file.
+     * Returns a defensive copy of the address book data stored inside the storage file.
      */
     public Scheduler readStorageAddressBook() {
         try {

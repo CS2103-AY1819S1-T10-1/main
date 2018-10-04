@@ -1,20 +1,20 @@
-package seedu.scheduler.model.calendarEvent;
+package seedu.address.model.calendarEvent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.scheduler.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.scheduler.testutil.TypicalPersons.ALICE;
-import static seedu.scheduler.testutil.TypicalPersons.BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.scheduler.testutil.PersonBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class CalendarEventTest {
     @Rule
@@ -88,7 +88,7 @@ public class CalendarEventTest {
         editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different scheduler -> returns false
+        // different address -> returns false
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 

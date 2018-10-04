@@ -11,24 +11,24 @@ import seedu.address.model.calendarEvent.CalendarEvent;
 /**
  * Provides a handle for {@code CalendarEventListPanel} containing the list of {@code CalendarEventCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
+    public static final String CALENDAR_EVENT_LIST_VIEW_ID = "#personListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
     private Optional<CalendarEvent> lastRememberedSelectedPersonCard;
 
-    public PersonListPanelHandle(ListView<CalendarEvent> personListPanelNode) {
+    public CalendarEventListPanelHandle(ListView<CalendarEvent> personListPanelNode) {
         super(personListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code CalendarEventCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
+    public CalendarEventCardHandle getHandleToSelectedCard() {
         List<CalendarEvent> selectedCalendarEventList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCalendarEventList.size() != 1) {
@@ -36,7 +36,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
         }
 
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
+                .map(CalendarEventCardHandle::new)
                 .filter(handle -> handle.equals(selectedCalendarEventList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
@@ -101,9 +101,9 @@ public class PersonListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
      * Returns the calendarEvent card handle of a calendarEvent associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getPersonCardHandle(int index) {
+    public CalendarEventCardHandle getPersonCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
+                .map(CalendarEventCardHandle::new)
                 .filter(handle -> handle.equals(getPerson(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);

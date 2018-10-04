@@ -1,10 +1,10 @@
-package seedu.scheduler.logic;
+package seedu.address.logic;
 
 import javafx.collections.ObservableList;
-import seedu.scheduler.logic.commands.CommandResult;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.logic.parser.exceptions.ParseException;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * API of the Logic component

@@ -1,17 +1,17 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.scheduler.logic.commands.ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT;
+import static seedu.address.logic.commands.ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT;
 
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.scheduler.commons.events.ui.ExitAppRequestEvent;
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.ModelManager;
-import seedu.scheduler.ui.testutil.EventsCollectorRule;
+import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class ExitCommandTest {
     @Rule

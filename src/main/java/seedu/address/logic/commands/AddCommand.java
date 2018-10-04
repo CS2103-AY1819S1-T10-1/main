@@ -1,16 +1,16 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.scheduler.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.logic.commands.exceptions.CommandException;
-import seedu.scheduler.model.Model;
-import seedu.scheduler.model.calendarEvent.CalendarEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.calendarEvent.CalendarEvent;
 
 /**
  * Adds a calendar event to the scheduler.

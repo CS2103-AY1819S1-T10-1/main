@@ -1,4 +1,4 @@
-package seedu.scheduler.commons.util;
+package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;

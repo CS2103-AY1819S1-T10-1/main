@@ -1,8 +1,8 @@
-package seedu.scheduler.storage;
+package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.scheduler.storage.XmlAdaptedCalendarEvent.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.scheduler.testutil.TypicalPersons.BENSON;
+import static seedu.address.storage.XmlAdaptedCalendarEvent.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import seedu.scheduler.commons.exceptions.IllegalValueException;
-import seedu.scheduler.model.calendarEvent.Address;
-import seedu.scheduler.model.calendarEvent.Email;
-import seedu.scheduler.model.calendarEvent.Name;
-import seedu.scheduler.model.calendarEvent.Phone;
-import seedu.scheduler.testutil.Assert;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.calendarEvent.Address;
+import seedu.address.model.calendarEvent.Email;
+import seedu.address.model.calendarEvent.Name;
+import seedu.address.model.calendarEvent.Phone;
+import seedu.address.testutil.Assert;
 
 public class XmlAdaptedCalendarEventTest {
     private static final String INVALID_NAME = "R@chel";

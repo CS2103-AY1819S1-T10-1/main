@@ -1,10 +1,10 @@
-package seedu.scheduler.logic.commands;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.scheduler.logic.CommandHistory;
-import seedu.scheduler.model.Scheduler;
-import seedu.scheduler.model.Model;
+import seedu.address.logic.CommandHistory;
+import seedu.address.model.Scheduler;
+import seedu.address.model.Model;
 
 /**
  * Clears the scheduler.
