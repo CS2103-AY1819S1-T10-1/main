@@ -1,5 +1,16 @@
 package seedu.address.logic.commands;
 
+import org.junit.Rule;
+import org.junit.Test;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -10,18 +21,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
-
-import org.junit.Rule;
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.logic.CommandHistory;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
@@ -88,7 +87,7 @@ public class SelectCommandTest {
         // null -> returns false
         assertFalse(selectFirstCommand.equals(null));
 
-        // different calendarEvent -> returns false
+        // different calendarevent -> returns false
         assertFalse(selectFirstCommand.equals(selectSecondCommand));
     }
 

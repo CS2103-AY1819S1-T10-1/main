@@ -1,15 +1,14 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import seedu.address.testutil.PersonBuilder;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class NameContainsKeywordsPredicateTest {
 
@@ -34,7 +33,7 @@ public class NameContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different calendarEvent -> returns false
+        // different calendarevent -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 

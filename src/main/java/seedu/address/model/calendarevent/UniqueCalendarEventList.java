@@ -1,21 +1,22 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.calendarevent.exceptions.CalendarEventNotFoundException;
+import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
 
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
-import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A calendar event is considered unique by comparing using {@code CalendarEvent#isSameCalendarEvent(CalendarEvent)}. As such, adding and updating of
- * persons uses CalendarEvent#isSameCalendarEvent(CalendarEvent) for equality so as to ensure that the calendar event being added or updated is
- * unique in terms of identity in the UniqueCalendarEventList. However, the removal of a calendar event uses CalendarEvent#equals(Object) so
+ * A calendar event is considered unique by comparing using {@code CalendarEvent#isSameCalendarEvent(CalendarEvent)}.
+ * As such, adding and updating of calendar events uses CalendarEvent#isSameCalendarEvent(CalendarEvent) for equality
+ * so as to ensure that the calendar event being added or updated is unique in terms of identity in the
+ * UniqueCalendarEventList. However, the removal of a calendar event uses CalendarEvent#equals(Object) so
  * as to ensure that the calendar event with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
@@ -49,7 +50,8 @@ public class UniqueCalendarEventList implements Iterable<CalendarEvent> {
     /**
      * Replaces the calendar event {@code target} in the list with {@code editedCalendarEvent}.
      * {@code target} must exist in the list.
-     * The calendar event identity of {@code editedCalendarEvent} must not be the same as another existing calendar event in the list.
+     * The calendar event identity of {@code editedCalendarEvent} must not be the same as
+     * another existing calendar event in the list.
      */
     public void setCalendarEvent(CalendarEvent target, CalendarEvent editedCalendarEvent) {
         requireAllNonNull(target, editedCalendarEvent);

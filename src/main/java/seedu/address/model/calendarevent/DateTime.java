@@ -5,9 +5,12 @@ import java.time.LocalDateTime;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+/*
+ * Wrapper class for LocalDateTime
+ */
 public class DateTime {
 
-    public LocalDateTime date;
+    private LocalDateTime date;
     /**
      * Constructs a {@code DateTime}
      * Wrapper class for LocalDateTime
@@ -70,7 +73,15 @@ public class DateTime {
     public String toString() {
         return date.toString();
     }
-
+    /**
+     * Returns true if input year, month, day, hour and minute correspond to a valid date and time
+     *
+     * @param year A year
+     * @param month A month
+     * @param day A day
+     * @param hour A hour
+     * @param minute A minute
+     */
     public static boolean isValidDateTime(int year, int month, int day, int hour, int minute) {
         try {
             DateTime dateTime = new DateTime(year, month, day, hour, minute);

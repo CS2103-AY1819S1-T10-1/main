@@ -1,24 +1,23 @@
 package seedu.address.storage;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.Scheduler;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
-
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.Scheduler;
-import seedu.address.model.ReadOnlyScheduler;
 
 public class XmlSchedulerStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlSchedulerStorageTest");

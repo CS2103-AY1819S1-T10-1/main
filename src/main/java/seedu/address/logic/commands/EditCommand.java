@@ -1,12 +1,17 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.calendarevent.Address;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Name;
+import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.tag.Tag;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,18 +19,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.calendarEvent.Address;
-import seedu.address.model.calendarEvent.Email;
-import seedu.address.model.calendarEvent.Name;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.Phone;
-import seedu.address.model.tag.Tag;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 /**
  * Edits the details of an existing calendar event in the scheduler.
@@ -78,7 +78,8 @@ public class EditCommand extends Command {
         CalendarEvent calendarEventToEdit = lastShownList.get(index.getZeroBased());
         CalendarEvent editedCalendarEvent = createEditedCalendarEvent(calendarEventToEdit, editCalendarEventDescriptor);
 
-        if (!calendarEventToEdit.isSameCalendarEvent(editedCalendarEvent) && model.hasCalendarEvent(editedCalendarEvent)) {
+        if (!calendarEventToEdit.isSameCalendarEvent(editedCalendarEvent)
+                && model.hasCalendarEvent(editedCalendarEvent)) {
             throw new CommandException(MESSAGE_DUPLICATE_CALENDAR_EVENT);
         }
 
@@ -92,7 +93,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code CalendarEvent} with the details of {@code calendarEventToEdit}
      * edited with {@code editCalendarEventDescriptor}.
      */
-    private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit, EditCalendarEventDescriptor editCalendarEventDescriptor) {
+    private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit,
+                                                           EditCalendarEventDescriptor editCalendarEventDescriptor) {
         assert calendarEventToEdit != null;
 
         Name updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());

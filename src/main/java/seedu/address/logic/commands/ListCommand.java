@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 /**
  * Lists all calendar events in the scheduler to the user.

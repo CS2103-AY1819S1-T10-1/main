@@ -1,14 +1,13 @@
 package guitests.guihandles;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.ImmutableMultiset;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Provides a handle to a calendar event card in the calendar event list panel.
@@ -73,7 +72,7 @@ public class CalendarEventCardHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Returns true if this handle contains {@code calendarEvent}.
+     * Returns true if this handle contains {@code calendarevent}.
      */
     public boolean equals(CalendarEvent calendarEvent) {
         return getName().equals(calendarEvent.getName().fullName)

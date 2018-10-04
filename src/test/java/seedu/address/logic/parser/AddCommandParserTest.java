@@ -1,5 +1,15 @@
 package seedu.address.logic.parser;
 
+import org.junit.Test;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.model.calendarevent.Address;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Name;
+import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -28,17 +38,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.calendarEvent.Address;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.Email;
-import seedu.address.model.calendarEvent.Name;
-import seedu.address.model.calendarEvent.Phone;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();

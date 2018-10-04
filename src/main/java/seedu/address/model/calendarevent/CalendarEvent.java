@@ -1,13 +1,13 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.model.tag.Tag;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Calendar Event in the scheduler.
@@ -71,7 +71,8 @@ public class CalendarEvent {
 
         return otherCalendarEvent != null
                 && otherCalendarEvent.getName().equals(getName())
-                && (otherCalendarEvent.getPhone().equals(getPhone()) || otherCalendarEvent.getEmail().equals(getEmail()));
+                && (otherCalendarEvent.getPhone().equals(getPhone())
+                    || otherCalendarEvent.getEmail().equals(getEmail()));
     }
 
     /**
