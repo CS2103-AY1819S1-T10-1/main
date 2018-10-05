@@ -21,7 +21,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.storage.XmlSerializableScheduler;
 
 public class CalendarEventListPanelTest extends GuiUnitTest {

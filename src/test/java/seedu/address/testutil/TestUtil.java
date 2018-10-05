@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
 
 /**
  * A utility class for test cases.
@@ -33,21 +33,21 @@ public class TestUtil {
     }
 
     /**
-     * Returns the middle index of the calendarEvent in the {@code model}'s calendarEvent list.
+     * Returns the middle index of the calendarevent in the {@code model}'s calendarevent list.
      */
     public static Index getMidIndex(Model model) {
         return Index.fromOneBased(model.getFilteredCalendarEventList().size() / 2);
     }
 
     /**
-     * Returns the last index of the calendarEvent in the {@code model}'s calendarEvent list.
+     * Returns the last index of the calendarevent in the {@code model}'s calendarevent list.
      */
     public static Index getLastIndex(Model model) {
         return Index.fromOneBased(model.getFilteredCalendarEventList().size());
     }
 
     /**
-     * Returns the calendarEvent in the {@code model}'s calendarEvent list at {@code index}.
+     * Returns the calendarevent in the {@code model}'s calendarevent list at {@code index}.
      */
     public static CalendarEvent getPerson(Model model, Index index) {
         return model.getFilteredCalendarEventList().get(index.getZeroBased());

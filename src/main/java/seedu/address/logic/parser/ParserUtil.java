@@ -9,10 +9,10 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.calendarEvent.Address;
-import seedu.address.model.calendarEvent.Email;
-import seedu.address.model.calendarEvent.Name;
-import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.calendarevent.Address;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Name;
+import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.tag.Tag;
 
 /**

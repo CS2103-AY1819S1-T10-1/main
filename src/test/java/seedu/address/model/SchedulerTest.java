@@ -19,8 +19,8 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
 import seedu.address.testutil.PersonBuilder;
 
 public class SchedulerTest {

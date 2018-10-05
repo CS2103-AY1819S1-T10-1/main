@@ -1,4 +1,4 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
-import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
+import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarevent.exceptions.CalendarEventNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.

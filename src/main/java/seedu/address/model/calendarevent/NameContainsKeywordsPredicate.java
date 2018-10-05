@@ -1,4 +1,4 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import java.util.List;
 import java.util.function.Predicate;

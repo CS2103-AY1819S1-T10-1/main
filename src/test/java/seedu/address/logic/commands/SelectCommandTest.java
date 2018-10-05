@@ -88,7 +88,7 @@ public class SelectCommandTest {
         // null -> returns false
         assertFalse(selectFirstCommand.equals(null));
 
-        // different calendarEvent -> returns false
+        // different calendarevent -> returns false
         assertFalse(selectFirstCommand.equals(selectSecondCommand));
     }
 

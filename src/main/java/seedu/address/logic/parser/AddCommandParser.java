@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.calendarEvent.Address;
-import seedu.address.model.calendarEvent.Email;
-import seedu.address.model.calendarEvent.Name;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.calendarevent.Address;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Name;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.tag.Tag;
 
 /**

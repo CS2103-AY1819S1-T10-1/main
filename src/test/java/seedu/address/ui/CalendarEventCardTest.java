@@ -8,7 +8,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import org.junit.Test;
 
 import guitests.guihandles.CalendarEventCardHandle;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.testutil.PersonBuilder;
 
 public class CalendarEventCardTest extends GuiUnitTest {
@@ -33,7 +33,7 @@ public class CalendarEventCardTest extends GuiUnitTest {
         CalendarEvent calendarEvent = new PersonBuilder().build();
         CalendarEventCard calendarEventCard = new CalendarEventCard(calendarEvent, 0);
 
-        // same calendarEvent, same index -> returns true
+        // same calendarevent, same index -> returns true
         CalendarEventCard copy = new CalendarEventCard(calendarEvent, 0);
         assertTrue(calendarEventCard.equals(copy));
 
@@ -46,11 +46,11 @@ public class CalendarEventCardTest extends GuiUnitTest {
         // different types -> returns false
         assertFalse(calendarEventCard.equals(0));
 
-        // different calendarEvent, same index -> returns false
+        // different calendarevent, same index -> returns false
         CalendarEvent differentCalendarEvent = new PersonBuilder().withName("differentName").build();
         assertFalse(calendarEventCard.equals(new CalendarEventCard(differentCalendarEvent, 0)));
 
-        // same calendarEvent, different index -> returns false
+        // same calendarevent, different index -> returns false
         assertFalse(calendarEventCard.equals(new CalendarEventCard(calendarEvent, 1)));
     }
 
@@ -66,7 +66,7 @@ public class CalendarEventCardTest extends GuiUnitTest {
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", calendarEventCardHandle.getId());
 
-        // verify calendarEvent details are displayed correctly
+        // verify calendarevent details are displayed correctly
         assertCardDisplaysPerson(expectedCalendarEvent, calendarEventCardHandle);
     }
 }

@@ -1,4 +1,4 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,8 +16,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.calendarEvent.exceptions.DuplicateCalendarEventException;
-import seedu.address.model.calendarEvent.exceptions.CalendarEventNotFoundException;
+import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
+import seedu.address.model.calendarevent.exceptions.CalendarEventNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class UniqueCalendarEventListTest {

@@ -6,7 +6,7 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
 
 /**
  * Provides a handle for {@code CalendarEventListPanel} containing the list of {@code CalendarEventCard}.
@@ -63,7 +63,7 @@ public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEv
     }
 
     /**
-     * Navigates the listview to display {@code calendarEvent}.
+     * Navigates the listview to display {@code calendarevent}.
      */
     public void navigateToCard(CalendarEvent calendarEvent) {
         if (!getRootNode().getItems().contains(calendarEvent)) {
@@ -98,7 +98,7 @@ public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEv
     }
 
     /**
-     * Returns the calendarEvent card handle of a calendarEvent associated with the {@code index} in the list.
+     * Returns the calendarevent card handle of a calendarevent associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
     public CalendarEventCardHandle getPersonCardHandle(int index) {

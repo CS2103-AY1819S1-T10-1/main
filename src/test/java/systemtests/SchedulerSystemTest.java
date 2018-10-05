@@ -155,7 +155,7 @@ public abstract class SchedulerSystemTest {
     }
 
     /**
-     * Selects the calendarEvent at {@code index} of the displayed list.
+     * Selects the calendarevent at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
@@ -172,8 +172,8 @@ public abstract class SchedulerSystemTest {
 
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the storage contains the same calendarEvent objects as {@code expectedModel}
-     * and the calendarEvent list panel displays the persons in the model correctly.
+     * {@code expectedResultMessage}, the storage contains the same calendarevent objects as {@code expectedModel}
+     * and the calendarevent list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -197,7 +197,7 @@ public abstract class SchedulerSystemTest {
 
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected calendarEvent.
+     * of the previously selected calendarevent.
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
@@ -206,7 +206,7 @@ public abstract class SchedulerSystemTest {
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the calendarEvent in the calendarEvent list panel at
+     * Asserts that the browser's url is changed to display the details of the calendarevent in the calendarevent list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see BrowserPanelHandle#isUrlChanged()
      * @see CalendarEventListPanelHandle#isSelectedPersonCardChanged()
@@ -226,7 +226,7 @@ public abstract class SchedulerSystemTest {
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the calendarEvent list panel remain unchanged.
+     * Asserts that the browser's url and the selected card in the calendarevent list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
      * @see CalendarEventListPanelHandle#isSelectedPersonCardChanged()
      */

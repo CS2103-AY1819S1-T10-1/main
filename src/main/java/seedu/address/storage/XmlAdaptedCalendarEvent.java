@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.calendarEvent.Address;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.Email;
-import seedu.address.model.calendarEvent.Name;
-import seedu.address.model.calendarEvent.Phone;
+import seedu.address.model.calendarevent.Address;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Name;
+import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -71,7 +71,7 @@ public class XmlAdaptedCalendarEvent {
     }
 
     /**
-     * Converts this jaxb-friendly adapted calendarEvent object into the model's CalendarEvent object.
+     * Converts this jaxb-friendly adapted calendarevent object into the model's CalendarEvent object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted calendar event
      */

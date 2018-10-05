@@ -1,4 +1,4 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

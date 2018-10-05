@@ -1,4 +1,4 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -73,7 +73,7 @@ public class CalendarEventTest {
         // different type -> returns false
         assertFalse(ALICE.equals(5));
 
-        // different calendarEvent -> returns false
+        // different calendarevent -> returns false
         assertFalse(ALICE.equals(BOB));
 
         // different name -> returns false

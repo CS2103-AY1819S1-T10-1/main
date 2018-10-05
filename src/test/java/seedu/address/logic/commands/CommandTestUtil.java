@@ -17,8 +17,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Scheduler;
 import seedu.address.model.Model;
-import seedu.address.model.calendarEvent.NameContainsKeywordsPredicate;
-import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarevent.NameContainsKeywordsPredicate;
+import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -92,7 +92,7 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered calendarEvent list in the {@code actualModel} remain unchanged <br>
+     * - the address book and the filtered calendarevent list in the {@code actualModel} remain unchanged <br>
      * - {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
@@ -116,7 +116,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the calendarEvent at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered list to show only the calendarevent at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
@@ -130,7 +130,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first calendarEvent in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first calendarevent in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
         CalendarEvent firstCalendarEvent = model.getFilteredCalendarEventList().get(0);

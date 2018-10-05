@@ -23,13 +23,13 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
-        /* Case: select the first card in the calendarEvent list, command with leading spaces and trailing spaces
+        /* Case: select the first card in the calendarevent list, command with leading spaces and trailing spaces
          * -> selected
          */
         String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_PERSON);
 
-        /* Case: select the last card in the calendarEvent list -> selected */
+        /* Case: select the last card in the calendarevent list -> selected */
         Index personCount = getLastIndex(getModel());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
@@ -44,7 +44,7 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: select the middle card in the calendarEvent list -> selected */
+        /* Case: select the middle card in the calendarevent list -> selected */
         Index middleIndex = getMidIndex(getModel());
         command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
@@ -54,14 +54,14 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered calendarEvent list, select index within bounds of address book but out of bounds of calendarEvent list
+        /* Case: filtered calendarevent list, select index within bounds of address book but out of bounds of calendarevent list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getScheduler().getCalendarEventList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 
-        /* Case: filtered calendarEvent list, select index within bounds of address book and calendarEvent list -> selected */
+        /* Case: filtered calendarevent list, select index within bounds of address book and calendarevent list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredCalendarEventList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
@@ -103,7 +103,7 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
-     * {@code expectedSelectedCardIndex} of the selected calendarEvent.<br>
+     * {@code expectedSelectedCardIndex} of the selected calendarevent.<br>
      * 4. {@code Storage} and {@code CalendarEventListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
