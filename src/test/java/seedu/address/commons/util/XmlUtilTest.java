@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class XmlUtilTest {
     private static final String VALID_NAME = "Hans Muster";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
+    private static final LocalDateTime VALID_DATETIME = LocalDateTime.of(2018,10,07,18,00);
     private static final String VALID_LOCATION = "4th street";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
@@ -82,7 +84,7 @@ public class XmlUtilTest {
         XmlAdaptedCalendarEvent actualCalendarEvent = XmlUtil.getDataFromFile(
             MISSING_CALENDAR_EVENT_FIELD_FILE, XmlAdaptedCalendarEventWithRootElement.class);
         XmlAdaptedCalendarEvent expectedCalendarEvent = new XmlAdaptedCalendarEvent(
-            null, VALID_PHONE, VALID_EMAIL, VALID_LOCATION, VALID_TAGS);
+            null, VALID_PHONE, VALID_EMAIL, VALID_DATETIME, VALID_LOCATION, VALID_TAGS);
         assertEquals(expectedCalendarEvent, actualCalendarEvent);
     }
 
@@ -91,7 +93,7 @@ public class XmlUtilTest {
         XmlAdaptedCalendarEvent actualCalendarEvent =
             XmlUtil.getDataFromFile(INVALID_CALENDAR_EVENT_FIELD_FILE, XmlAdaptedCalendarEventWithRootElement.class);
         XmlAdaptedCalendarEvent expectedCalendarEvent = new XmlAdaptedCalendarEvent(
-            VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_LOCATION, VALID_TAGS);
+            VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_DATETIME, VALID_LOCATION, VALID_TAGS);
         assertEquals(expectedCalendarEvent, actualCalendarEvent);
     }
 
@@ -100,7 +102,7 @@ public class XmlUtilTest {
         XmlAdaptedCalendarEvent actualCalendarEvent = XmlUtil.getDataFromFile(
             VALID_CALENDAR_EVENT_FILE, XmlAdaptedCalendarEventWithRootElement.class);
         XmlAdaptedCalendarEvent expectedCalendarEvent = new XmlAdaptedCalendarEvent(
-            VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_LOCATION, VALID_TAGS);
+            VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DATETIME, VALID_LOCATION, VALID_TAGS);
         assertEquals(expectedCalendarEvent, actualCalendarEvent);
     }
 

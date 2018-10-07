@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,11 +11,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Name;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +28,8 @@ public class XmlAdaptedCalendarEvent {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
+    private LocalDateTime dateTime;
+    @XmlElement(required = true)
     private String location;
 
     @XmlElement
@@ -46,11 +45,12 @@ public class XmlAdaptedCalendarEvent {
     /**
      * Constructs an {@code XmlAdaptedCalendarEvent} with the given calendar event details.
      */
-    public XmlAdaptedCalendarEvent(String name, String phone, String email, String location,
+    public XmlAdaptedCalendarEvent(String name, String phone, String email, LocalDateTime dateTime, String location,
                                    List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.dateTime = dateTime;
         this.location = location;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
@@ -66,6 +66,7 @@ public class XmlAdaptedCalendarEvent {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        dateTime = source.getDateTime().localDateTime;
         location = source.getLocation().value;
         tagged = source.getTags().stream()
             .map(XmlAdaptedTag::new)
@@ -107,6 +108,13 @@ public class XmlAdaptedCalendarEvent {
         }
         final Email modelEmail = new Email(email);
 
+        if(dateTime == null) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
+        }
+        if(!(DateTime.isValidDateTime(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute())));
+
+        final DateTime moderDateTime = new DateTime(dateTime);
+
         if (location == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 Location.class.getSimpleName()));
@@ -117,7 +125,7 @@ public class XmlAdaptedCalendarEvent {
         final Location modelLocation = new Location(location);
 
         final Set<Tag> modelTags = new HashSet<>(calendarEventTags);
-        return new CalendarEvent(modelName, modelPhone, modelEmail, modelLocation, modelTags);
+        return new CalendarEvent(modelName, modelPhone, modelEmail,moderDateTime, modelLocation, modelTags);
     }
 
     @Override

@@ -20,11 +20,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Name;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -100,10 +96,11 @@ public class EditCommand extends Command {
         Name updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());
         Phone updatedPhone = editCalendarEventDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
         Email updatedEmail = editCalendarEventDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
+        DateTime updatedDateTime = editCalendarEventDescriptor.getDateName().orElse(calendarEventToEdit.getDateTime());
         Location updatedLocation = editCalendarEventDescriptor.getLocation().orElse(calendarEventToEdit.getLocation());
         Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
 
-        return new CalendarEvent(updatedName, updatedPhone, updatedEmail, updatedLocation, updatedTags);
+        return new CalendarEvent(updatedName, updatedPhone, updatedEmail,updatedDateTime, updatedLocation, updatedTags);
     }
 
     @Override
@@ -132,6 +129,7 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
+        private DateTime dateTime;
         private Location location;
         private Set<Tag> tags;
 
@@ -180,6 +178,10 @@ public class EditCommand extends Command {
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
+
+        public Optional<DateTime> getDateName() { return Optional.ofNullable(dateTime); }
+
+        public void setDateTime(DateTime dateTime) { this.dateTime = dateTime; }
 
         public void setLocation(Location location) {
             this.location = location;

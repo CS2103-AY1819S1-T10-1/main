@@ -11,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,7 @@ public class TypicalPersons {
     public static final CalendarEvent BENSON = new CalendarEventBuilder().withName("Benson Meier")
         .withLocation("311, Clementi Ave 2, #02-25")
         .withEmail("johnd@example.com").withPhone("98765432")
+        .withDateTime(LocalDateTime.of(2018,10,07,18,00))
         .withTags("owesMoney", "friends").build();
     public static final CalendarEvent CARL = new CalendarEventBuilder().withName("Carl Kurz").withPhone("95352563")
         .withEmail("heinz@example.com").withLocation("wall street").build();

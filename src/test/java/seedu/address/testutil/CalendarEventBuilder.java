@@ -1,13 +1,10 @@
 package seedu.address.testutil;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Name;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -19,11 +16,13 @@ public class CalendarEventBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final LocalDateTime DEFAULT_DATETIME = LocalDateTime.of(2018,10,07,18,00);
     public static final String DEFAULT_LOCATION = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
     private Phone phone;
     private Email email;
+    private DateTime dateTime;
     private Location location;
     private Set<Tag> tags;
 
@@ -31,6 +30,7 @@ public class CalendarEventBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+        dateTime = new DateTime(DEFAULT_DATETIME);
         location = new Location(DEFAULT_LOCATION);
         tags = new HashSet<>();
     }
@@ -42,6 +42,7 @@ public class CalendarEventBuilder {
         name = calendarEventToCopy.getName();
         phone = calendarEventToCopy.getPhone();
         email = calendarEventToCopy.getEmail();
+        dateTime = calendarEventToCopy.getDateTime();
         location = calendarEventToCopy.getLocation();
         tags = new HashSet<>(calendarEventToCopy.getTags());
     }
@@ -86,8 +87,16 @@ public class CalendarEventBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DateTime} of the {@code CalendarEvent} that we are building.
+     */
+    public CalendarEventBuilder withDateTime(LocalDateTime dateTime) {
+        this.dateTime = new DateTime(dateTime);
+        return this;
+    }
+
     public CalendarEvent build() {
-        return new CalendarEvent(name, phone, email, location, tags);
+        return new CalendarEvent(name, phone, email, dateTime, location, tags);
     }
 
 }

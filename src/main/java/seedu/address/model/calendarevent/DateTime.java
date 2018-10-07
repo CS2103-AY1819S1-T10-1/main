@@ -11,69 +11,84 @@ import java.time.LocalDateTime;
  */
 public class DateTime {
 
-    private LocalDateTime date;
+    public static final String MESSAGE_DATETIME_CONSTRAINTS =
+            "The valid input will be year-month-localDateTime hour:minute";
+
+    public LocalDateTime date;
+    public final LocalDateTime localDateTime;
+    public final int year;
+    public final int month;
+    public final int day;
+    public final int hour;
+    public final int minute;
 
     /**
      * Constructs a {@code DateTime}
      * Wrapper class for LocalDateTime
      *
-     * @param year   A valid year
-     * @param month  A valid month
-     * @param day    A valid day
-     * @param hour   A valid hour
-     * @param minute A valid minute
+     * @param localDateTime   A valid localDateTime
+     //* @param month  A valid month
+     //* @param day    A valid day
+     //* @param hour   A valid hour
+     //* @param minute A valid minute
      */
-    public DateTime(int year, int month, int day, int hour, int minute) throws DateTimeException {
+    public DateTime(LocalDateTime localDateTime) throws DateTimeException {
+        this.localDateTime = localDateTime;
+        this.year = localDateTime.getYear();
+        this.month = localDateTime.getMonthValue();
+        this.day = localDateTime.getDayOfMonth();
+        this.hour = localDateTime.getHour();
+        this.minute = localDateTime.getMinute();
+
         requireAllNonNull(year, month, day, hour, minute);
         if (year <= 0) {
             throw new DateTimeException("Invalid year");
         }
-        date = LocalDateTime.of(year, month, day, hour, minute);
     }
 
     public int getYear() {
-        return date.getYear();
+        return localDateTime.getYear();
     }
 
     public int getMonth() {
-        return date.getMonthValue();
+        return localDateTime.getMonthValue();
     }
 
     public int getDay() {
-        return date.getDayOfMonth();
+        return localDateTime.getDayOfMonth();
     }
 
     public int getHour() {
-        return date.getHour();
+        return localDateTime.getHour();
     }
 
     public int getMinute() {
-        return date.getMinute();
+        return localDateTime.getMinute();
     }
 
     public void setYear(int year) throws DateTimeException {
-        date = date.withYear(year);
+        date = localDateTime.withYear(year);
     }
 
     public void setMonth(int month) throws DateTimeException {
-        date = date.withMonth(month);
+        date = localDateTime.withMonth(month);
     }
 
     public void setDay(int day) throws DateTimeException {
-        date = date.withDayOfMonth(day);
+        date = localDateTime.withDayOfMonth(day);
     }
 
     public void setHour(int hour) throws DateTimeException {
-        date = date.withHour(hour);
+        date = localDateTime.withHour(hour);
     }
 
     public void setMinute(int minute) {
-        date = date.withMinute(minute);
+        date = localDateTime.withMinute(minute);
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return localDateTime.toString();
     }
 
     /**
@@ -81,7 +96,8 @@ public class DateTime {
      */
     public static boolean isValidDateTime(int year, int month, int day, int hour, int minute) {
         try {
-            DateTime dateTime = new DateTime(year, month, day, hour, minute);
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, minute);
+            DateTime dateTime1 = new DateTime(dateTime);
             return true;
         } catch (DateTimeException e) {
             return false;

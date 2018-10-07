@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,10 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Name;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -94,6 +92,20 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_EMAIL_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code DateTime dateTime} into an {@code DateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code dateTime} is invalid.
+     */
+    public static DateTime parseDateTime(LocalDateTime dateTime) throws ParseException {
+        requireNonNull(dateTime);
+        if (!DateTime.isValidDateTime(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute())) {
+            throw new ParseException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
+        }
+        return new DateTime(dateTime);
     }
 
     /**

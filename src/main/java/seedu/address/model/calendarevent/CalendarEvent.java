@@ -19,6 +19,7 @@ public class CalendarEvent {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final DateTime dateTime;
 
     // Data fields
     private final Location location;
@@ -27,11 +28,12 @@ public class CalendarEvent {
     /**
      * Every field must be present and not null.
      */
-    public CalendarEvent(Name name, Phone phone, Email email, Location location, Set<Tag> tags) {
+    public CalendarEvent(Name name, Phone phone, Email email,DateTime dateTime, Location location, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, location, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.dateTime = dateTime;
         this.location = location;
         this.tags.addAll(tags);
     }
@@ -47,6 +49,8 @@ public class CalendarEvent {
     public Email getEmail() {
         return email;
     }
+
+    public DateTime getDateTime() {return dateTime; }
 
     public Location getLocation() {
         return location;
@@ -72,7 +76,8 @@ public class CalendarEvent {
         return otherCalendarEvent != null
             && otherCalendarEvent.getName().equals(getName())
             && (otherCalendarEvent.getPhone().equals(getPhone())
-            || otherCalendarEvent.getEmail().equals(getEmail()));
+            || otherCalendarEvent.getEmail().equals(getEmail()))
+            ||otherCalendarEvent.getDateTime().equals(getDateTime());
     }
 
     /**
@@ -93,6 +98,7 @@ public class CalendarEvent {
         return otherCalendarEvent.getName().equals(getName())
             && otherCalendarEvent.getPhone().equals(getPhone())
             && otherCalendarEvent.getEmail().equals(getEmail())
+            && otherCalendarEvent.getDateTime().equals(getDateTime())
             && otherCalendarEvent.getLocation().equals(getLocation())
             && otherCalendarEvent.getTags().equals(getTags());
     }
@@ -100,7 +106,7 @@ public class CalendarEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, location, tags);
+        return Objects.hash(name, phone, email,dateTime, location, tags);
     }
 
     @Override
@@ -111,6 +117,8 @@ public class CalendarEvent {
             .append(getPhone())
             .append(" Email: ")
             .append(getEmail())
+            .append(" DateTime: ")
+            .append(getDateTime())
             .append(" Location: ")
             .append(getLocation())
             .append(" Tags: ");
