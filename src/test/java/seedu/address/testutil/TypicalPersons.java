@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -10,7 +12,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.List;
 import seedu.address.model.Scheduler;
 import seedu.address.model.calendarevent.CalendarEvent;
 
+
 /**
  * A utility class containing a list of {@code CalendarEvent} objects to be used in tests.
  */
@@ -26,6 +28,7 @@ public class TypicalPersons {
 
     public static final CalendarEvent ALICE = new CalendarEventBuilder().withName("Alice Pauline")
         .withLocation("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+        .withDateTime(LocalDateTime.of(2018,10,13,23,28))
         .withPhone("94351253")
         .withTags("friends").build();
     public static final CalendarEvent BENSON = new CalendarEventBuilder().withName("Benson Meier")
@@ -34,30 +37,38 @@ public class TypicalPersons {
         .withDateTime(LocalDateTime.of(2018,10,07,18,00))
         .withTags("owesMoney", "friends").build();
     public static final CalendarEvent CARL = new CalendarEventBuilder().withName("Carl Kurz").withPhone("95352563")
-        .withEmail("heinz@example.com").withLocation("wall street").build();
+        .withEmail("heinz@example.com").withDateTime(LocalDateTime.of(2019,01,01,12,30))
+            .withLocation("wall street").build();
     public static final CalendarEvent DANIEL = new CalendarEventBuilder().withName("Daniel Meier").withPhone("87652533")
-        .withEmail("cornelia@example.com").withLocation("10th street").withTags("friends").build();
+        .withEmail("cornelia@example.com").withDateTime(LocalDateTime.of(2017,10,11,11,20))
+            .withLocation("10th street").withTags("friends").build();
     public static final CalendarEvent ELLE = new CalendarEventBuilder().withName("Elle Meyer").withPhone("9482224")
-        .withEmail("werner@example.com").withLocation("michegan ave").build();
+        .withEmail("werner@example.com").withDateTime(LocalDateTime.of(2019,10,20,23,22))
+            .withLocation("michegan ave").build();
     public static final CalendarEvent FIONA = new CalendarEventBuilder().withName("Fiona Kunz").withPhone("9482427")
-        .withEmail("lydia@example.com").withLocation("little tokyo").build();
+        .withEmail("lydia@example.com").withDateTime(LocalDateTime.of(2019,2,20,16,00))
+            .withLocation("little tokyo").build();
     public static final CalendarEvent GEORGE = new CalendarEventBuilder().withName("George Best").withPhone("9482442")
-        .withEmail("anna@example.com").withLocation("4th street").build();
+        .withEmail("anna@example.com").withDateTime(LocalDateTime.of(2018,12,25,23,59))
+            .withLocation("4th street").build();
 
     // Manually added
     public static final CalendarEvent HOON = new CalendarEventBuilder().withName("Hoon Meier").withPhone("8482424")
-        .withEmail("stefan@example.com").withLocation("little india").build();
+        .withEmail("stefan@example.com").withDateTime(LocalDateTime.of(2018,3,19,19,25))
+            .withLocation("little india").build();
     public static final CalendarEvent IDA = new CalendarEventBuilder().withName("Ida Mueller").withPhone("8482131")
-        .withEmail("hans@example.com").withLocation("chicago ave").build();
+        .withEmail("hans@example.com").withDateTime(LocalDateTime.of(2018,10,29,13,20))
+            .withLocation("chicago ave").build();
 
     // Manually added - CalendarEvent's details found in {@code CommandTestUtil}
     public static final CalendarEvent AMY =
         new CalendarEventBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withLocation(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withEmail(VALID_EMAIL_AMY).withDateTime(VALID_DATETIME_AMY)
+                .withLocation(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
     public static final CalendarEvent BOB =
         new CalendarEventBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND,
-            VALID_TAG_FRIEND)
+            .withEmail(VALID_EMAIL_BOB).withDateTime(VALID_DATETIME_BOB)
+                .withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
