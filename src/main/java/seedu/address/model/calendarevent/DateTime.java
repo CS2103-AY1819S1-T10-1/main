@@ -86,11 +86,6 @@ public class DateTime {
         date = localDateTime.withMinute(minute);
     }
 
-    @Override
-    public String toString() {
-        return localDateTime.toString();
-    }
-
     /**
      * Returns if a given datetime is a valid datetime.
      */
@@ -102,5 +97,22 @@ public class DateTime {
         } catch (DateTimeException e) {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return localDateTime.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateTime // instanceof handles nulls
+                && localDateTime.equals(((DateTime) other).localDateTime)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return localDateTime.hashCode();
     }
 }
