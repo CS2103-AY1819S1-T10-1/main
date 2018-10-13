@@ -16,7 +16,7 @@ public class CalendarEventBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final LocalDateTime DEFAULT_DATETIME = LocalDateTime.of(2018,10,07,18,00);
+    public static final LocalDateTime DEFAULT_DATETIME = LocalDateTime.of(2018,10,13,23,28);
     public static final String DEFAULT_LOCATION = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
