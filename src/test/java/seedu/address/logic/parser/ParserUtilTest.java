@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendarevent.DateTime;
 import seedu.address.model.calendarevent.Email;
 import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Name;
@@ -27,12 +29,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final LocalDateTime INVALID_DATETIME = LocalDateTime.of(-1,10,13,23,02);
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final LocalDateTime VALID_DATETIME = LocalDateTime.of(2018,10,13,23,02);
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -146,6 +150,29 @@ public class ParserUtilTest {
     public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
+    }
+
+    /*@Test
+    public void parseDateTime_validValueWithWhitespace_returnsTrimmedDatetime() throws Exception {
+        LocalDateTime DatetimeWithWhitespace = LocalDateTime.of(2018,10,13,23,12);
+        DateTime expectedDatetime = new DateTime(VALID_DATETIME);
+        assertEquals(expectedDatetime, ParserUtil.parseDateTime(DatetimeWithWhitespace));
+    }*/
+
+    @Test
+    public void parseDateTime_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateTime((LocalDateTime) null));
+    }
+
+    @Test
+    public void parseDateTime_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parseDateTime(INVALID_DATETIME));
+    }
+
+    @Test
+    public void parseDateTime_validValueWithoutWhitespace_returnsDateTime() throws Exception {
+        DateTime expectedDateTime = new DateTime(VALID_DATETIME);
+        assertEquals(expectedDateTime, ParserUtil.parseDateTime(VALID_DATETIME));
     }
 
     @Test
