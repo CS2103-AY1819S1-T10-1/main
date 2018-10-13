@@ -1,11 +1,13 @@
 package seedu.address.testutil;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.DateTime;
 import seedu.address.model.calendarevent.Email;
 import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Name;
@@ -60,6 +62,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateTime} of the {@code EditCalendarEventDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDateTime(LocalDateTime dateTime) {
+        descriptor.setDateTime(new DateTime(dateTime));
         return this;
     }
 
