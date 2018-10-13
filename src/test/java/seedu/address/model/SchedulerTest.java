@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
@@ -52,7 +53,7 @@ public class SchedulerTest {
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two calendarEvents with the same identity fields
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(ALICE).withDateTime(VALID_DATETIME_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<CalendarEvent> newCalendarEvents = Arrays.asList(ALICE, editedAlice);
         SchedulerStub newData = new SchedulerStub(newCalendarEvents);
@@ -82,7 +83,7 @@ public class SchedulerTest {
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         scheduler.addCalendarEvent(ALICE);
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(ALICE).withDateTime(VALID_DATETIME_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(scheduler.hasCalendarEvent(editedAlice));
     }
