@@ -108,12 +108,13 @@ public class XmlAdaptedCalendarEvent {
         }
         final Email modelEmail = new Email(email);
 
-        if(dateTime == null) {
+        if (dateTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName()));
+        }
+        if (!DateTime.isValidDateTime(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute())) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
-        if(!(DateTime.isValidDateTime(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute())));
-
-        final DateTime moderDateTime = new DateTime(dateTime);
+        final DateTime modelDateTime = new DateTime(dateTime);
 
         if (location == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -125,7 +126,7 @@ public class XmlAdaptedCalendarEvent {
         final Location modelLocation = new Location(location);
 
         final Set<Tag> modelTags = new HashSet<>(calendarEventTags);
-        return new CalendarEvent(modelName, modelPhone, modelEmail,moderDateTime, modelLocation, modelTags);
+        return new CalendarEvent(modelName, modelPhone, modelEmail, modelDateTime, modelLocation, modelTags);
     }
 
     @Override
@@ -142,6 +143,7 @@ public class XmlAdaptedCalendarEvent {
         return Objects.equals(name, otherCalendarEvent.name)
             && Objects.equals(phone, otherCalendarEvent.phone)
             && Objects.equals(email, otherCalendarEvent.email)
+            && Objects.equals(dateTime, otherCalendarEvent.dateTime)
             && Objects.equals(location, otherCalendarEvent.location)
             && tagged.equals(otherCalendarEvent.tagged);
     }
