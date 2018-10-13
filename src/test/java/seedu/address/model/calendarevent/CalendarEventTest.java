@@ -2,11 +2,7 @@ package seedu.address.model.calendarevent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
@@ -35,9 +31,9 @@ public class CalendarEventTest {
         // null -> returns false
         assertFalse(ALICE.isSameCalendarEvent(null));
 
-        // different phone and email -> returns false
+        // different phone, email and dateTime -> returns false
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+            new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withDateTime(VALID_DATETIME_BOB).build();
         assertFalse(ALICE.isSameCalendarEvent(editedAlice));
 
         // different name -> returns false
@@ -45,18 +41,38 @@ public class CalendarEventTest {
         assertFalse(ALICE.isSameCalendarEvent(editedAlice));
 
         // same name, same phone, different attributes -> returns true
-        editedAlice = new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB)
+        editedAlice = new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withDateTime(VALID_DATETIME_BOB).withLocation(VALID_ADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
 
         // same name, same email, different attributes -> returns true
-        editedAlice = new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withLocation(VALID_ADDRESS_BOB)
+        editedAlice = new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withDateTime(VALID_DATETIME_BOB).withLocation(VALID_ADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
 
-        // same name, same phone, same email, different attributes -> returns true
+        // same name, same dateTime, different attributes -> returns true
+        editedAlice = new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSameCalendarEvent(editedAlice));
+
+        // same name, same phone, same email different attributes -> returns true
         editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+            new CalendarEventBuilder(ALICE).withDateTime(VALID_DATETIME_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSameCalendarEvent(editedAlice));
+
+        // same name, same phone, same dateTime different attributes -> returns true
+        editedAlice =
+                new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSameCalendarEvent(editedAlice));
+
+        // same name, same dateTime, same email different attributes -> returns true
+        editedAlice =
+                new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSameCalendarEvent(editedAlice));
+
+        // same name, same phone, same email, same dateTime different attributes -> returns true
+        editedAlice =
+                new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
     }
 
@@ -88,6 +104,10 @@ public class CalendarEventTest {
 
         // different email -> returns false
         editedAlice = new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different dateTime -> returns false
+        editedAlice = new CalendarEventBuilder(ALICE).withDateTime(VALID_DATETIME_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different address -> returns false
