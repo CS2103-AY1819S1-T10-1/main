@@ -13,6 +13,11 @@ import seedu.address.testutil.Assert;
 public class DateTimeTest {
 
     @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new DateTime(null));
+    }
+
+    @Test
     public void constructor_invalidDateTime_throwsIllegalArgumentException() {
         LocalDateTime invalidDate;
         int invalidYear = -1;
@@ -33,10 +38,12 @@ public class DateTimeTest {
         assertFalse(DateTime.isValidDateTime(2018, 4, 31, 1, 1)); // invalid day (30-day)
         assertFalse(DateTime.isValidDateTime(2018, 2, 29, 1, 1)); // non-leap year
         assertFalse(DateTime.isValidDateTime(2018, 1, 1, 25, 1)); // invalid hour
-        assertFalse(DateTime.isValidDateTime(2018, 1, 1, 1, 61)); // invalid day
+        assertFalse(DateTime.isValidDateTime(2018, 1, 1, 1, 61)); // invalid minute
 
         // valid DateTime
         assertTrue(DateTime.isValidDateTime(2018, 1, 1, 1, 1)); // typical day
         assertTrue(DateTime.isValidDateTime(2020, 2, 29, 1, 1)); // leap year
     }
+
+
 }
