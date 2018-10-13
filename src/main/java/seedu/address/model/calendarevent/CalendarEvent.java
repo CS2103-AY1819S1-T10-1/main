@@ -50,7 +50,9 @@ public class CalendarEvent {
         return email;
     }
 
-    public DateTime getDateTime() {return dateTime; }
+    public DateTime getDateTime() {
+        return dateTime;
+    }
 
     public Location getLocation() {
         return location;
@@ -76,8 +78,8 @@ public class CalendarEvent {
         return otherCalendarEvent != null
             && otherCalendarEvent.getName().equals(getName())
             && (otherCalendarEvent.getPhone().equals(getPhone())
-            || otherCalendarEvent.getEmail().equals(getEmail()))
-            ||otherCalendarEvent.getDateTime().equals(getDateTime());
+            || otherCalendarEvent.getEmail().equals(getEmail())
+            ||otherCalendarEvent.getDateTime().equals(getDateTime()));
     }
 
     /**
