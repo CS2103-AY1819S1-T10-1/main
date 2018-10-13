@@ -96,7 +96,7 @@ public class EditCommand extends Command {
         Name updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());
         Phone updatedPhone = editCalendarEventDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
         Email updatedEmail = editCalendarEventDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
-        DateTime updatedDateTime = editCalendarEventDescriptor.getDateName().orElse(calendarEventToEdit.getDateTime());
+        DateTime updatedDateTime = editCalendarEventDescriptor.getDateTime().orElse(calendarEventToEdit.getDateTime());
         Location updatedLocation = editCalendarEventDescriptor.getLocation().orElse(calendarEventToEdit.getLocation());
         Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
 
@@ -144,6 +144,7 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
+            setDateTime(toCopy.dateTime);
             setLocation(toCopy.location);
             setTags(toCopy.tags);
         }
@@ -152,7 +153,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, location, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, dateTime, location, tags);
         }
 
         public void setName(Name name) {
@@ -179,9 +180,9 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public Optional<DateTime> getDateName() { return Optional.ofNullable(dateTime); }
-
         public void setDateTime(DateTime dateTime) { this.dateTime = dateTime; }
+
+        public Optional<DateTime> getDateTime() { return Optional.ofNullable(dateTime); }
 
         public void setLocation(Location location) {
             this.location = location;
@@ -226,6 +227,7 @@ public class EditCommand extends Command {
             return getName().equals(e.getName())
                 && getPhone().equals(e.getPhone())
                 && getEmail().equals(e.getEmail())
+                && getDateTime().equals(e.getDateTime())
                 && getLocation().equals(e.getLocation())
                 && getTags().equals(e.getTags());
         }
