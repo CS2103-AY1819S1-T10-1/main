@@ -5,11 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
-import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.*;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,7 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(calendarEvent.getName());
         descriptor.setPhone(calendarEvent.getPhone());
         descriptor.setEmail(calendarEvent.getEmail());
-        descriptor.setLocation(calendarEvent.getLocation());
+        descriptor.setVenue(calendarEvent.getVenue());
         descriptor.setTags(calendarEvent.getTags());
     }
 
@@ -64,10 +61,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Location} of the {@code EditCalendarEventDescriptor} that we are building.
+     * Sets the {@code Venue} of the {@code EditCalendarEventDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setLocation(new Location(address));
+        descriptor.setVenue(new Venue(address));
         return this;
     }
 

@@ -102,7 +102,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
-            builder.append("<location>a</location>\n");
+            builder.append("<venue>a</venue>\n");
             builder.append("</calendarEvents>\n");
         }
         builder.append("</scheduler>\n");

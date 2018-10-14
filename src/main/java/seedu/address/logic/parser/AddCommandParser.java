@@ -14,7 +14,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
 import seedu.address.model.tag.Tag;
@@ -42,10 +42,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         Title name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Location location = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Venue venue = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        CalendarEvent calendarEvent = new CalendarEvent(name, phone, email, location, tagList);
+        CalendarEvent calendarEvent = new CalendarEvent(name, phone, email, venue, tagList);
 
         return new AddCommand(calendarEvent);
     }

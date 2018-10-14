@@ -34,7 +34,7 @@ public class GuiTestAssert {
         assertEquals(expectedCalendarEvent.getName().fullTitle, actualCard.getName());
         assertEquals(expectedCalendarEvent.getPhone().value, actualCard.getPhone());
         assertEquals(expectedCalendarEvent.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedCalendarEvent.getLocation().value, actualCard.getAddress());
+        assertEquals(expectedCalendarEvent.getVenue().value, actualCard.getAddress());
         assertEquals(expectedCalendarEvent.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
             actualCard.getTags());
     }

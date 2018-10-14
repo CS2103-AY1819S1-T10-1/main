@@ -5,7 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
 import seedu.address.model.tag.Tag;
@@ -24,14 +24,14 @@ public class CalendarEventBuilder {
     private Title name;
     private Phone phone;
     private Email email;
-    private Location location;
+    private Venue venue;
     private Set<Tag> tags;
 
     public CalendarEventBuilder() {
         name = new Title(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        location = new Location(DEFAULT_LOCATION);
+        venue = new Venue(DEFAULT_LOCATION);
         tags = new HashSet<>();
     }
 
@@ -42,7 +42,7 @@ public class CalendarEventBuilder {
         name = calendarEventToCopy.getName();
         phone = calendarEventToCopy.getPhone();
         email = calendarEventToCopy.getEmail();
-        location = calendarEventToCopy.getLocation();
+        venue = calendarEventToCopy.getVenue();
         tags = new HashSet<>(calendarEventToCopy.getTags());
     }
 
@@ -63,10 +63,10 @@ public class CalendarEventBuilder {
     }
 
     /**
-     * Sets the {@code Location} of the {@code CalendarEvent} that we are building.
+     * Sets the {@code Venue} of the {@code CalendarEvent} that we are building.
      */
     public CalendarEventBuilder withLocation(String location) {
-        this.location = new Location(location);
+        this.venue = new Venue(location);
         return this;
     }
 
@@ -87,7 +87,7 @@ public class CalendarEventBuilder {
     }
 
     public CalendarEvent build() {
-        return new CalendarEvent(name, phone, email, location, tags);
+        return new CalendarEvent(name, phone, email, venue, tags);
     }
 
 }

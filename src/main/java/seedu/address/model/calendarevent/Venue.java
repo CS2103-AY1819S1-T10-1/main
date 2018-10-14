@@ -5,9 +5,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Calendar Event's location in the scheduler.
- * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidVenue(String)}
  */
-public class Location {
+public class Venue {
 
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
         "Locations can take any values, and it should not be blank";
@@ -21,20 +21,20 @@ public class Location {
     public final String value;
 
     /**
-     * Constructs an {@code Location}.
+     * Constructs an {@code Venue}.
      *
      * @param location A valid location.
      */
-    public Location(String location) {
+    public Venue(String location) {
         requireNonNull(location);
-        checkArgument(isValidLocation(location), MESSAGE_LOCATION_CONSTRAINTS);
+        checkArgument(isValidVenue(location), MESSAGE_LOCATION_CONSTRAINTS);
         value = location;
     }
 
     /**
      * Returns true if a given string is a valid email.
      */
-    public static boolean isValidLocation(String test) {
+    public static boolean isValidVenue(String test) {
         return test.matches(LOCATION_VALIDATION_REGEX);
     }
 
@@ -46,8 +46,8 @@ public class Location {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-            || (other instanceof Location // instanceof handles nulls
-            && value.equals(((Location) other).value)); // state check
+            || (other instanceof Venue // instanceof handles nulls
+            && value.equals(((Venue) other).value)); // state check
     }
 
     @Override

@@ -45,7 +45,7 @@ public class CalendarEventCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(calendarEvent.getName().fullTitle);
         phone.setText(calendarEvent.getPhone().value);
-        venue.setText(calendarEvent.getLocation().value);
+        venue.setText(calendarEvent.getVenue().value);
         email.setText(calendarEvent.getEmail().value);
         calendarEvent.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }

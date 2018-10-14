@@ -5,6 +5,6 @@
         <name> Ha!ns Mu@ster</name>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
 </scheduler>

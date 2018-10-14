@@ -10,11 +10,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
-import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.*;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +28,7 @@ public class XmlAdaptedCalendarEvent {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
-    private String location;
+    private String venue;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -46,12 +43,12 @@ public class XmlAdaptedCalendarEvent {
     /**
      * Constructs an {@code XmlAdaptedCalendarEvent} with the given calendar event details.
      */
-    public XmlAdaptedCalendarEvent(String name, String phone, String email, String location,
+    public XmlAdaptedCalendarEvent(String name, String phone, String email, String venue,
                                    List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.location = location;
+        this.venue = venue;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -66,7 +63,7 @@ public class XmlAdaptedCalendarEvent {
         name = source.getName().fullTitle;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        location = source.getLocation().value;
+        venue = source.getVenue().value;
         tagged = source.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
@@ -107,17 +104,17 @@ public class XmlAdaptedCalendarEvent {
         }
         final Email modelEmail = new Email(email);
 
-        if (location == null) {
+        if (venue == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                Location.class.getSimpleName()));
+                Venue.class.getSimpleName()));
         }
-        if (!Location.isValidLocation(location)) {
-            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        if (!Venue.isValidVenue(venue)) {
+            throw new IllegalValueException(Venue.MESSAGE_LOCATION_CONSTRAINTS);
         }
-        final Location modelLocation = new Location(location);
+        final Venue modelVenue = new Venue(venue);
 
         final Set<Tag> modelTags = new HashSet<>(calendarEventTags);
-        return new CalendarEvent(modelName, modelPhone, modelEmail, modelLocation, modelTags);
+        return new CalendarEvent(modelName, modelPhone, modelEmail, modelVenue, modelTags);
     }
 
     @Override
@@ -134,7 +131,7 @@ public class XmlAdaptedCalendarEvent {
         return Objects.equals(name, otherCalendarEvent.name)
             && Objects.equals(phone, otherCalendarEvent.phone)
             && Objects.equals(email, otherCalendarEvent.email)
-            && Objects.equals(location, otherCalendarEvent.location)
+            && Objects.equals(venue, otherCalendarEvent.venue)
             && tagged.equals(otherCalendarEvent.tagged);
     }
 }

@@ -41,7 +41,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
 import seedu.address.model.tag.Tag;
@@ -183,7 +183,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: invalid address -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
-            Location.MESSAGE_LOCATION_CONSTRAINTS);
+            Venue.MESSAGE_LOCATION_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,

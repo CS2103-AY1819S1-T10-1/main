@@ -10,7 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
 import seedu.address.model.tag.Tag;
@@ -67,18 +67,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String address} into an {@code Location}.
+     * Parses a {@code String address} into an {@code Venue}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code address} is invalid.
      */
-    public static Location parseAddress(String address) throws ParseException {
+    public static Venue parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!Location.isValidLocation(trimmedAddress)) {
-            throw new ParseException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        if (!Venue.isValidVenue(trimmedAddress)) {
+            throw new ParseException(Venue.MESSAGE_LOCATION_CONSTRAINTS);
         }
-        return new Location(trimmedAddress);
+        return new Venue(trimmedAddress);
     }
 
     /**

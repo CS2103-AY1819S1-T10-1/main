@@ -21,18 +21,18 @@ public class CalendarEvent {
     private final Email email;
 
     // Data fields
-    private final Location location;
+    private final Venue venue;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public CalendarEvent(Title name, Phone phone, Email email, Location location, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, location, tags);
+    public CalendarEvent(Title name, Phone phone, Email email, Venue venue, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, venue, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.location = location;
+        this.venue = venue;
         this.tags.addAll(tags);
     }
 
@@ -48,8 +48,8 @@ public class CalendarEvent {
         return email;
     }
 
-    public Location getLocation() {
-        return location;
+    public Venue getVenue() {
+        return venue;
     }
 
     /**
@@ -93,14 +93,14 @@ public class CalendarEvent {
         return otherCalendarEvent.getName().equals(getName())
             && otherCalendarEvent.getPhone().equals(getPhone())
             && otherCalendarEvent.getEmail().equals(getEmail())
-            && otherCalendarEvent.getLocation().equals(getLocation())
+            && otherCalendarEvent.getVenue().equals(getVenue())
             && otherCalendarEvent.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, location, tags);
+        return Objects.hash(name, phone, email, venue, tags);
     }
 
     @Override
@@ -111,8 +111,8 @@ public class CalendarEvent {
             .append(getPhone())
             .append(" Email: ")
             .append(getEmail())
-            .append(" Location: ")
-            .append(getLocation())
+            .append(" Venue: ")
+            .append(getVenue())
             .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

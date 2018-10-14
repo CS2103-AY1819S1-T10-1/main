@@ -119,7 +119,7 @@ public class FindCommandSystemTest extends SchedulerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find address of calendarevent in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getLocation().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getVenue().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
