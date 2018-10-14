@@ -5,7 +5,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
-import seedu.address.model.calendarevent.*;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 

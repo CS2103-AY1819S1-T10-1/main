@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.calendarevent.*;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 

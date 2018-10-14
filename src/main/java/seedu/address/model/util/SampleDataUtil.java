@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.ReadOnlyScheduler;
 import seedu.address.model.Scheduler;
-import seedu.address.model.calendarevent.*;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.Email;
+import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
