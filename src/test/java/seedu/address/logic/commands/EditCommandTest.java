@@ -55,7 +55,8 @@ public class EditCommandTest {
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
         Index indexLastCalendarEvent = Index.fromOneBased(model.getFilteredCalendarEventList().size());
-        CalendarEvent lastCalendarEvent = model.getFilteredCalendarEventList().get(indexLastCalendarEvent.getZeroBased());
+        CalendarEvent lastCalendarEvent = model.getFilteredCalendarEventList()
+                .get(indexLastCalendarEvent.getZeroBased());
 
         CalendarEventBuilder personInList = new CalendarEventBuilder(lastCalendarEvent);
         CalendarEvent editedCalendarEvent = personInList.withTitle(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
