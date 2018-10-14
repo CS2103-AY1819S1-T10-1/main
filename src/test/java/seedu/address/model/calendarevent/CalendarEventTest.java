@@ -41,22 +41,22 @@ public class CalendarEventTest {
         assertFalse(ALICE.isSameCalendarEvent(editedAlice));
 
         // different name -> returns false
-        editedAlice = new CalendarEventBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        editedAlice = new CalendarEventBuilder(ALICE).withTitle(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSameCalendarEvent(editedAlice));
 
         // same name, same phone, different attributes -> returns true
-        editedAlice = new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB)
+        editedAlice = new CalendarEventBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withVenue(VALID_ADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
 
         // same name, same email, different attributes -> returns true
-        editedAlice = new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withLocation(VALID_ADDRESS_BOB)
+        editedAlice = new CalendarEventBuilder(ALICE).withPhone(VALID_PHONE_BOB).withVenue(VALID_ADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
 
         // same name, same phone, same email, different attributes -> returns true
         editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+            new CalendarEventBuilder(ALICE).withVenue(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameCalendarEvent(editedAlice));
     }
 
@@ -79,7 +79,7 @@ public class CalendarEventTest {
         assertFalse(ALICE.equals(BOB));
 
         // different name -> returns false
-        CalendarEvent editedAlice = new CalendarEventBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        CalendarEvent editedAlice = new CalendarEventBuilder(ALICE).withTitle(VALID_NAME_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different phone -> returns false
@@ -91,7 +91,7 @@ public class CalendarEventTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different address -> returns false
-        editedAlice = new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).build();
+        editedAlice = new CalendarEventBuilder(ALICE).withVenue(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false

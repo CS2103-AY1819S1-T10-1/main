@@ -12,7 +12,7 @@ import seedu.address.model.calendarevent.CalendarEvent;
  * Provides a handle for {@code CalendarEventListPanel} containing the list of {@code CalendarEventCard}.
  */
 public class CalendarEventListPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
-    public static final String CALENDAR_EVENT_LIST_VIEW_ID = "#personListView";
+    public static final String CALENDAR_EVENT_LIST_VIEW_ID = "#calendarEventListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 

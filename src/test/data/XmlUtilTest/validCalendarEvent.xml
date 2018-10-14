@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <calendarEvent>
-    <name>Hans Muster</name>
+    <title>Hans Muster</title>
     <phone>9482424</phone>
     <email>hans@example</email>
     <venue>4th street</venue>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scheduler>
-    <!-- CalendarEvent with invalid name field -->
+    <!-- CalendarEvent with invalid title field -->
     <calendarEvents>
-        <name> Ha!ns Mu@ster</name>
+        <title> Ha!ns Mu@ster</title>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <venue isPrivate="false">4th street</venue>

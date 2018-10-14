@@ -89,7 +89,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
         assertNotEquals(getModel().getFilteredCalendarEventList().get(index.getZeroBased()), BOB);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
             + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedCalendarEvent = new CalendarEventBuilder(BOB).withName(VALID_NAME_AMY).build();
+        editedCalendarEvent = new CalendarEventBuilder(BOB).withTitle(VALID_NAME_AMY).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
         /* Case: edit a calendarevent with new values same as another calendarevent's values but with different phone
@@ -119,7 +119,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
         assertTrue(index.getZeroBased() < getModel().getFilteredCalendarEventList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         calendarEventToEdit = getModel().getFilteredCalendarEventList().get(index.getZeroBased());
-        editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withName(VALID_NAME_BOB).build();
+        editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withTitle(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
         /* Case: filtered calendarevent list, edit index within bounds of address book but out of bounds of

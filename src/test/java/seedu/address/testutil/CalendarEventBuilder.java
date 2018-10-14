@@ -16,22 +16,22 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class CalendarEventBuilder {
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
+    public static final String DEFAULT_TITLE = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_LOCATION = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_VENUE = "123, Jurong West Ave 6, #08-111";
 
-    private Title name;
+    private Title title;
     private Phone phone;
     private Email email;
     private Venue venue;
     private Set<Tag> tags;
 
     public CalendarEventBuilder() {
-        name = new Title(DEFAULT_NAME);
+        title = new Title(DEFAULT_TITLE);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        venue = new Venue(DEFAULT_LOCATION);
+        venue = new Venue(DEFAULT_VENUE);
         tags = new HashSet<>();
     }
 
@@ -39,7 +39,7 @@ public class CalendarEventBuilder {
      * Initializes the CalendarEventBuilder with the data of {@code calendarEventToCopy}.
      */
     public CalendarEventBuilder(CalendarEvent calendarEventToCopy) {
-        name = calendarEventToCopy.getName();
+        title = calendarEventToCopy.getName();
         phone = calendarEventToCopy.getPhone();
         email = calendarEventToCopy.getEmail();
         venue = calendarEventToCopy.getVenue();
@@ -49,8 +49,8 @@ public class CalendarEventBuilder {
     /**
      * Sets the {@code Title} of the {@code CalendarEvent} that we are building.
      */
-    public CalendarEventBuilder withName(String name) {
-        this.name = new Title(name);
+    public CalendarEventBuilder withTitle(String title) {
+        this.title = new Title(title);
         return this;
     }
 
@@ -65,8 +65,8 @@ public class CalendarEventBuilder {
     /**
      * Sets the {@code Venue} of the {@code CalendarEvent} that we are building.
      */
-    public CalendarEventBuilder withLocation(String location) {
-        this.venue = new Venue(location);
+    public CalendarEventBuilder withVenue(String venue) {
+        this.venue = new Venue(venue);
         return this;
     }
 
@@ -87,7 +87,7 @@ public class CalendarEventBuilder {
     }
 
     public CalendarEvent build() {
-        return new CalendarEvent(name, phone, email, venue, tags);
+        return new CalendarEvent(title, phone, email, venue, tags);
     }
 
 }

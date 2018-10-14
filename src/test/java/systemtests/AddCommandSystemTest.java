@@ -76,7 +76,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: add a calendar event with all fields same as another calendar event in the scheduler except name ->
         added */
-        toAdd = new CalendarEventBuilder(AMY).withName(VALID_NAME_BOB).build();
+        toAdd = new CalendarEventBuilder(AMY).withTitle(VALID_NAME_BOB).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
             + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
@@ -133,7 +133,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate calendarevent except with different address -> rejected */
-        toAdd = new CalendarEventBuilder(HOON).withLocation(VALID_ADDRESS_BOB).build();
+        toAdd = new CalendarEventBuilder(HOON).withVenue(VALID_ADDRESS_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 

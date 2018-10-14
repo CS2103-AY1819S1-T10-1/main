@@ -54,16 +54,16 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredCalendarEventList().size());
-        CalendarEvent lastCalendarEvent = model.getFilteredCalendarEventList().get(indexLastPerson.getZeroBased());
+        Index indexLastCalendarEvent = Index.fromOneBased(model.getFilteredCalendarEventList().size());
+        CalendarEvent lastCalendarEvent = model.getFilteredCalendarEventList().get(indexLastCalendarEvent.getZeroBased());
 
         CalendarEventBuilder personInList = new CalendarEventBuilder(lastCalendarEvent);
-        CalendarEvent editedCalendarEvent = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        CalendarEvent editedCalendarEvent = personInList.withTitle(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
 
         EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
+        EditCommand editCommand = new EditCommand(indexLastCalendarEvent, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
 
@@ -94,7 +94,7 @@ public class EditCommandTest {
         CalendarEvent calendarEventInFilteredList =
             model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         CalendarEvent editedCalendarEvent =
-            new CalendarEventBuilder(calendarEventInFilteredList).withName(VALID_NAME_BOB).build();
+            new CalendarEventBuilder(calendarEventInFilteredList).withTitle(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
             new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
