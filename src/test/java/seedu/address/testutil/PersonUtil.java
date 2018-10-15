@@ -33,7 +33,7 @@ public class PersonUtil {
         sb.append(PREFIX_NAME + calendarEvent.getName().fullTitle + " ");
         sb.append(PREFIX_PHONE + calendarEvent.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + calendarEvent.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + calendarEvent.getLocation().value + " ");
+        sb.append(PREFIX_ADDRESS + calendarEvent.getVenue().value + " ");
         calendarEvent.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
@@ -48,7 +48,7 @@ public class PersonUtil {
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullTitle).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
-        descriptor.getLocation().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+        descriptor.getVenue().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {

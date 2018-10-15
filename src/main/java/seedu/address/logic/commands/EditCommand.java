@@ -22,9 +22,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -100,10 +100,10 @@ public class EditCommand extends Command {
         Title updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());
         Phone updatedPhone = editCalendarEventDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
         Email updatedEmail = editCalendarEventDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
-        Location updatedLocation = editCalendarEventDescriptor.getLocation().orElse(calendarEventToEdit.getLocation());
+        Venue updatedVenue = editCalendarEventDescriptor.getVenue().orElse(calendarEventToEdit.getVenue());
         Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
 
-        return new CalendarEvent(updatedName, updatedPhone, updatedEmail, updatedLocation, updatedTags);
+        return new CalendarEvent(updatedName, updatedPhone, updatedEmail, updatedVenue, updatedTags);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class EditCommand extends Command {
         private Title name;
         private Phone phone;
         private Email email;
-        private Location location;
+        private Venue venue;
         private Set<Tag> tags;
 
         public EditCalendarEventDescriptor() {
@@ -146,7 +146,7 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setLocation(toCopy.location);
+            setVenue(toCopy.venue);
             setTags(toCopy.tags);
         }
 
@@ -154,7 +154,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, location, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, venue, tags);
         }
 
         public void setName(Title name) {
@@ -181,12 +181,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setLocation(Location location) {
-            this.location = location;
+        public void setVenue(Venue venue) {
+            this.venue = venue;
         }
 
-        public Optional<Location> getLocation() {
-            return Optional.ofNullable(location);
+        public Optional<Venue> getVenue() {
+            return Optional.ofNullable(venue);
         }
 
         /**
@@ -224,7 +224,7 @@ public class EditCommand extends Command {
             return getName().equals(e.getName())
                 && getPhone().equals(e.getPhone())
                 && getEmail().equals(e.getEmail())
-                && getLocation().equals(e.getLocation())
+                && getVenue().equals(e.getVenue())
                 && getTags().equals(e.getTags());
         }
     }

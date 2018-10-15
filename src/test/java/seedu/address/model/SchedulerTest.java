@@ -52,7 +52,7 @@ public class SchedulerTest {
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two calendarEvents with the same identity fields
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(ALICE).withVenue(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<CalendarEvent> newCalendarEvents = Arrays.asList(ALICE, editedAlice);
         SchedulerStub newData = new SchedulerStub(newCalendarEvents);
@@ -82,7 +82,7 @@ public class SchedulerTest {
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         scheduler.addCalendarEvent(ALICE);
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(ALICE).withVenue(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(scheduler.hasCalendarEvent(editedAlice));
     }

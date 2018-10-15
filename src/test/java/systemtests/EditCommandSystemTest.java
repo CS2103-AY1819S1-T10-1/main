@@ -41,9 +41,9 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -89,7 +89,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
         assertNotEquals(getModel().getFilteredCalendarEventList().get(index.getZeroBased()), BOB);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
             + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedCalendarEvent = new CalendarEventBuilder(BOB).withName(VALID_NAME_AMY).build();
+        editedCalendarEvent = new CalendarEventBuilder(BOB).withTitle(VALID_NAME_AMY).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
         /* Case: edit a calendarevent with new values same as another calendarevent's values but with different phone
@@ -119,7 +119,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
         assertTrue(index.getZeroBased() < getModel().getFilteredCalendarEventList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         calendarEventToEdit = getModel().getFilteredCalendarEventList().get(index.getZeroBased());
-        editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withName(VALID_NAME_BOB).build();
+        editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withTitle(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
         /* Case: filtered calendarevent list, edit index within bounds of address book but out of bounds of
@@ -183,7 +183,7 @@ public class EditCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: invalid address -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
-            Location.MESSAGE_LOCATION_CONSTRAINTS);
+            Venue.MESSAGE_LOCATION_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,

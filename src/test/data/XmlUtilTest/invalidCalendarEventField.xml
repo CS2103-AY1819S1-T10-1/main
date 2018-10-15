@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- CalendarEvent with an invalid phone field -->
 <calendarEvent>
-    <name>Hans Muster</name>
+    <title>Hans Muster</title>
     <phone>9482asf424</phone>
     <email>hans@example</email>
-    <location>4th street</location>
+    <venue>4th street</venue>
     <tagged>friends</tagged>
 </calendarEvent>

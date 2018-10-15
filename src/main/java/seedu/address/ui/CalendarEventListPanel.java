@@ -23,7 +23,7 @@ public class CalendarEventListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CalendarEventListPanel.class);
 
     @FXML
-    private ListView<CalendarEvent> personListView;
+    private ListView<CalendarEvent> calendarEventListView;
 
     public CalendarEventListPanel(ObservableList<CalendarEvent> calendarEventList) {
         super(FXML);
@@ -32,13 +32,13 @@ public class CalendarEventListPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<CalendarEvent> calendarEventList) {
-        personListView.setItems(calendarEventList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        calendarEventListView.setItems(calendarEventList);
+        calendarEventListView.setCellFactory(listView -> new CalendarEventListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
+        calendarEventListView.getSelectionModel().selectedItemProperty()
             .addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     logger.fine("Selection in calendarevent list panel changed to : '" + newValue + "'");
@@ -52,8 +52,8 @@ public class CalendarEventListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().clearAndSelect(index);
+            calendarEventListView.scrollTo(index);
+            calendarEventListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
@@ -66,7 +66,7 @@ public class CalendarEventListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code CalendarEvent} using a {@code CalendarEventCard}.
      */
-    class PersonListViewCell extends ListCell<CalendarEvent> {
+    class CalendarEventListViewCell extends ListCell<CalendarEvent> {
         @Override
         protected void updateItem(CalendarEvent calendarEvent, boolean empty) {
             super.updateItem(calendarEvent, empty);

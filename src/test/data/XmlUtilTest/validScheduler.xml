@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scheduler>
     <calendarEvents>
-        <name>Hans Muster</name>
+        <title>Hans Muster</title>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Ruth Mueller</name>
+        <title>Ruth Mueller</title>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
-        <location isPrivate="false">81th street</location>
+        <venue isPrivate="false">81th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Heinz Kurz</name>
+        <title>Heinz Kurz</title>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
-        <location isPrivate="false">wall street</location>
+        <venue isPrivate="false">wall street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Cornelia Meier</name>
+        <title>Cornelia Meier</title>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
-        <location isPrivate="false">10th street</location>
+        <venue isPrivate="false">10th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Werner Meyer</name>
+        <title>Werner Meyer</title>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
-        <location isPrivate="false">michegan ave</location>
+        <venue isPrivate="false">michegan ave</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Lydia Kunz</name>
+        <title>Lydia Kunz</title>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
-        <location isPrivate="false">little tokyo</location>
+        <venue isPrivate="false">little tokyo</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Anna Best</name>
+        <title>Anna Best</title>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Stefan Meier</name>
+        <title>Stefan Meier</title>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
-        <location isPrivate="false">little india</location>
+        <venue isPrivate="false">little india</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Martin Mueller</name>
+        <title>Martin Mueller</title>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">chicago ave</location>
+        <venue isPrivate="false">chicago ave</venue>
     </calendarEvents>
 </scheduler>

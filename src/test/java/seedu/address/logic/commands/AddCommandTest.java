@@ -62,8 +62,8 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        CalendarEvent alice = new CalendarEventBuilder().withName("Alice").build();
-        CalendarEvent bob = new CalendarEventBuilder().withName("Bob").build();
+        CalendarEvent alice = new CalendarEventBuilder().withTitle("Alice").build();
+        CalendarEvent bob = new CalendarEventBuilder().withTitle("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 

@@ -54,7 +54,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             editCalendarEventDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editCalendarEventDescriptor.setLocation(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)
+            editCalendarEventDescriptor.setVenue(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)
                 .get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editCalendarEventDescriptor::setTags);

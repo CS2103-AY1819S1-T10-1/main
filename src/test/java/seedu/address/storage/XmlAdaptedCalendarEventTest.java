@@ -12,9 +12,9 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedCalendarEventTest {
@@ -27,7 +27,7 @@ public class XmlAdaptedCalendarEventTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final String VALID_LOCATION = BENSON.getLocation().toString();
+    private static final String VALID_LOCATION = BENSON.getVenue().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
         .map(XmlAdaptedTag::new)
         .collect(Collectors.toList());
@@ -90,7 +90,7 @@ public class XmlAdaptedCalendarEventTest {
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         XmlAdaptedCalendarEvent person =
             new XmlAdaptedCalendarEvent(VALID_NAME, VALID_PHONE, VALID_EMAIL, INVALID_LOCATION, VALID_TAGS);
-        String expectedMessage = Location.MESSAGE_LOCATION_CONSTRAINTS;
+        String expectedMessage = Venue.MESSAGE_LOCATION_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
@@ -98,7 +98,7 @@ public class XmlAdaptedCalendarEventTest {
     public void toModelType_nullAddress_throwsIllegalValueException() {
         XmlAdaptedCalendarEvent person = new XmlAdaptedCalendarEvent(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
             VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Location.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Venue.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

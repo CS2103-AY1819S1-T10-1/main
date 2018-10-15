@@ -2,19 +2,19 @@
 <scheduler>
 
     <calendarEvents>
-        <name>Alice Pauline</name>
+        <title>Alice Pauline</title>
         <phone>94351253</phone>
         <email>alice@example.com</email>
-        <location>123, Jurong West Ave 6, #08-111</location>
+        <venue>123, Jurong West Ave 6, #08-111</venue>
         <tagged>friends</tagged>
     </calendarEvents>
 
     <!-- CalendarEvent with same identity as Alice Pauline -->
     <calendarEvents>
-        <name>Alice Pauline</name>
+        <title>Alice Pauline</title>
         <phone>94351253</phone>
         <email>pauline@example.com</email>
-        <location>4th street</location>
+        <venue>4th street</venue>
     </calendarEvents>
 
 </scheduler>

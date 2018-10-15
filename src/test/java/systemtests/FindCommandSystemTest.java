@@ -119,7 +119,7 @@ public class FindCommandSystemTest extends SchedulerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find address of calendarevent in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getLocation().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getVenue().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -137,7 +137,7 @@ public class FindCommandSystemTest extends SchedulerSystemTest {
         /* Case: find while a calendarevent is selected -> selected card deselected */
         showAllPersons();
         selectPerson(Index.fromOneBased(1));
-        assertFalse(getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullTitle));
+        assertFalse(getPersonListPanel().getHandleToSelectedCard().getTitle().equals(DANIEL.getName().fullTitle));
         command = FindCommand.COMMAND_WORD + " Daniel";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);

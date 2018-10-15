@@ -23,38 +23,39 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public class TypicalPersons {
 
-    public static final CalendarEvent ALICE = new CalendarEventBuilder().withName("Alice Pauline")
-        .withLocation("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+    public static final CalendarEvent ALICE = new CalendarEventBuilder().withTitle("Alice Pauline")
+        .withVenue("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
         .withPhone("94351253")
         .withTags("friends").build();
-    public static final CalendarEvent BENSON = new CalendarEventBuilder().withName("Benson Meier")
-        .withLocation("311, Clementi Ave 2, #02-25")
+    public static final CalendarEvent BENSON = new CalendarEventBuilder().withTitle("Benson Meier")
+        .withVenue("311, Clementi Ave 2, #02-25")
         .withEmail("johnd@example.com").withPhone("98765432")
         .withTags("owesMoney", "friends").build();
-    public static final CalendarEvent CARL = new CalendarEventBuilder().withName("Carl Kurz").withPhone("95352563")
-        .withEmail("heinz@example.com").withLocation("wall street").build();
-    public static final CalendarEvent DANIEL = new CalendarEventBuilder().withName("Daniel Meier").withPhone("87652533")
-        .withEmail("cornelia@example.com").withLocation("10th street").withTags("friends").build();
-    public static final CalendarEvent ELLE = new CalendarEventBuilder().withName("Elle Meyer").withPhone("9482224")
-        .withEmail("werner@example.com").withLocation("michegan ave").build();
-    public static final CalendarEvent FIONA = new CalendarEventBuilder().withName("Fiona Kunz").withPhone("9482427")
-        .withEmail("lydia@example.com").withLocation("little tokyo").build();
-    public static final CalendarEvent GEORGE = new CalendarEventBuilder().withName("George Best").withPhone("9482442")
-        .withEmail("anna@example.com").withLocation("4th street").build();
+    public static final CalendarEvent CARL = new CalendarEventBuilder().withTitle("Carl Kurz").withPhone("95352563")
+        .withEmail("heinz@example.com").withVenue("wall street").build();
+    public static final CalendarEvent DANIEL = new CalendarEventBuilder().withTitle("Daniel Meier")
+            .withPhone("87652533").withEmail("cornelia@example.com").withVenue("10th street")
+            .withTags("friends").build();
+    public static final CalendarEvent ELLE = new CalendarEventBuilder().withTitle("Elle Meyer").withPhone("9482224")
+        .withEmail("werner@example.com").withVenue("michegan ave").build();
+    public static final CalendarEvent FIONA = new CalendarEventBuilder().withTitle("Fiona Kunz").withPhone("9482427")
+        .withEmail("lydia@example.com").withVenue("little tokyo").build();
+    public static final CalendarEvent GEORGE = new CalendarEventBuilder().withTitle("George Best").withPhone("9482442")
+        .withEmail("anna@example.com").withVenue("4th street").build();
 
     // Manually added
-    public static final CalendarEvent HOON = new CalendarEventBuilder().withName("Hoon Meier").withPhone("8482424")
-        .withEmail("stefan@example.com").withLocation("little india").build();
-    public static final CalendarEvent IDA = new CalendarEventBuilder().withName("Ida Mueller").withPhone("8482131")
-        .withEmail("hans@example.com").withLocation("chicago ave").build();
+    public static final CalendarEvent HOON = new CalendarEventBuilder().withTitle("Hoon Meier").withPhone("8482424")
+        .withEmail("stefan@example.com").withVenue("little india").build();
+    public static final CalendarEvent IDA = new CalendarEventBuilder().withTitle("Ida Mueller").withPhone("8482131")
+        .withEmail("hans@example.com").withVenue("chicago ave").build();
 
     // Manually added - CalendarEvent's details found in {@code CommandTestUtil}
     public static final CalendarEvent AMY =
-        new CalendarEventBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withLocation(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+        new CalendarEventBuilder().withTitle(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withVenue(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
     public static final CalendarEvent BOB =
-        new CalendarEventBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND,
+        new CalendarEventBuilder().withTitle(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withVenue(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND,
             VALID_TAG_FRIEND)
             .build();
 

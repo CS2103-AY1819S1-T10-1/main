@@ -99,10 +99,10 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         builder.append("<scheduler>\n");
         for (int i = 0; i < calendarEventCount; i++) {
             builder.append("<calendarEvents>\n");
-            builder.append("<name>").append(i).append("a</name>\n");
+            builder.append("<title>").append(i).append("a</title>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
-            builder.append("<location>a</location>\n");
+            builder.append("<venue>a</venue>\n");
             builder.append("</calendarEvents>\n");
         }
         builder.append("</scheduler>\n");
@@ -123,8 +123,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         CalendarEventListPanel calendarEventListPanel = new CalendarEventListPanel(backingList);
         uiPartRule.setUiPart(calendarEventListPanel);
 
-
         calendarEventListPanelHandle = new CalendarEventListPanelHandle(getChildNode(calendarEventListPanel.getRoot(),
-            CalendarEventListPanelHandle.CALENDAR_EVENT_LIST_VIEW_ID));
+                CalendarEventListPanelHandle.CALENDAR_EVENT_LIST_VIEW_ID));
     }
 }

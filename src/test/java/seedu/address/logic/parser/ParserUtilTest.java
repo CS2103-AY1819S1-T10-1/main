@@ -16,9 +16,9 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
 import seedu.address.model.calendarevent.Phone;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -121,15 +121,15 @@ public class ParserUtilTest {
 
     @Test
     public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Location expectedLocation = new Location(VALID_ADDRESS);
-        assertEquals(expectedLocation, ParserUtil.parseAddress(VALID_ADDRESS));
+        Venue expectedVenue = new Venue(VALID_ADDRESS);
+        assertEquals(expectedVenue, ParserUtil.parseAddress(VALID_ADDRESS));
     }
 
     @Test
     public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
         String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Location expectedLocation = new Location(VALID_ADDRESS);
-        assertEquals(expectedLocation, ParserUtil.parseAddress(addressWithWhitespace));
+        Venue expectedVenue = new Venue(VALID_ADDRESS);
+        assertEquals(expectedVenue, ParserUtil.parseAddress(addressWithWhitespace));
     }
 
     @Test
