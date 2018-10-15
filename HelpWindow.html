@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>AddressBook Level 4 - User Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta title="viewport" content="width=device-width, initial-scale=1.0"><meta title="generator" content="Asciidoctor 1.5.6.1"><title>AddressBook Level 4 - User Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="header"><h1>AddressBook Level 4 - User Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
@@ -17,7 +17,7 @@
 <li><a href="#adding-a-calendarevent-code-add-code">3.2. Adding a calendarEvent: <code>add</code></a></li>
 <li><a href="#listing-all-calendarevents-code-list-code">3.3. Listing all calendarEvents : <code>list</code></a></li>
 <li><a href="#editing-a-calendarevent-code-edit-code">3.4. Editing a calendarEvent : <code>edit</code></a></li>
-<li><a href="#locating-calendarevents-by-name-code-find-code">3.5. Locating calendarEvents by name: <code>find</code></a></li>
+<li><a href="#locating-calendarevents-by-title-code-find-code">3.5. Locating calendarEvents by title: <code>find</code></a></li>
 <li><a href="#deleting-a-calendarevent-code-delete-code">3.6. Deleting a calendarEvent : <code>delete</code></a></li>
 <li><a href="#selecting-a-calendarevent-code-select-code">3.7. Selecting a calendarEvent : <code>select</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.8. Listing entered commands : <code>history</code></a></li>
@@ -129,7 +129,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="adding-a-calendarevent-code-add-code"><a class="link" href="#adding-a-calendarevent-code-add-code">3.2. Adding a calendarEvent: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a calendarEvent to the location book<br>
+<p>Adds a calendarEvent to the venue book<br>
 Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
@@ -161,14 +161,14 @@ A calendarEvent can have any number of tags (including 0)
 <div class="sect2">
 <h3 id="listing-all-calendarevents-code-list-code"><a class="link" href="#listing-all-calendarevents-code-list-code">3.3. Listing all calendarEvents : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all calendarEvents in the location book.<br>
+<p>Shows a list of all calendarEvents in the venue book.<br>
 Format: <code>list</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="editing-a-calendarevent-code-edit-code"><a class="link" href="#editing-a-calendarevent-code-edit-code">3.4. Editing a calendarEvent : <code>edit</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing calendarEvent in the location book.<br>
+<p>Edits an existing calendarEvent in the venue book.<br>
 Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
@@ -201,17 +201,17 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;
 <ul>
 <li>
 <p><code>edit 1 p/91234567 e/johndoe@example.com</code><br>
-Edits the phone number and email location of the 1st calendarEvent to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.</p>
+Edits the description number and email venue of the 1st calendarEvent to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.</p>
 </li>
 <li>
 <p><code>edit 2 n/Betsy Crower t/</code><br>
-Edits the name of the 2nd calendarEvent to be <code>Betsy Crower</code> and clears all existing tags.</p>
+Edits the title of the 2nd calendarEvent to be <code>Betsy Crower</code> and clears all existing tags.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-calendarevents-by-name-code-find-code"><a class="link" href="#locating-calendarevents-by-name-code-find-code">3.5. Locating calendarEvents by name: <code>find</code></a></h3>
+<h3 id="locating-calendarevents-by-title-code-find-code"><a class="link" href="#locating-calendarevents-by-title-code-find-code">3.5. Locating calendarEvents by title: <code>find</code></a></h3>
 <div class="paragraph">
 <p>Finds calendarEvents whose names contain any of the given keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
@@ -227,7 +227,7 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
 </li>
 <li>
-<p>Only the name is searched.</p>
+<p>Only the title is searched.</p>
 </li>
 <li>
 <p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
@@ -258,7 +258,7 @@ Returns any calendarEvent having names <code>Betsy</code>, <code>Tim</code>, or 
 <div class="sect2">
 <h3 id="deleting-a-calendarevent-code-delete-code"><a class="link" href="#deleting-a-calendarevent-code-delete-code">3.6. Deleting a calendarEvent : <code>delete</code></a></h3>
 <div class="paragraph">
-<p>Deletes the specified calendarEvent from the location book.<br>
+<p>Deletes the specified calendarEvent from the venue book.<br>
 Format: <code>delete INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -286,7 +286,7 @@ Format: <code>delete INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>delete 2</code><br>
-Deletes the 2nd calendarEvent in the location book.</p>
+Deletes the 2nd calendarEvent in the venue book.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
@@ -327,7 +327,7 @@ Format: <code>select INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>select 2</code><br>
-Selects the 2nd calendarEvent in the location book.</p>
+Selects the 2nd calendarEvent in the venue book.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
@@ -361,7 +361,7 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.9. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>Restores the location book to the state before the previous <em>undoable</em> command was executed.<br>
+<p>Restores the venue book to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -372,7 +372,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the location book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify the venue book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -438,7 +438,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <div class="sect2">
 <h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>Clears all entries from the location book.<br>
+<p>Clears all entries from the venue book.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
@@ -519,4 +519,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-14 14:53:25 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-15 14:05:06 UTC</div></div></div></body></html>
