@@ -33,6 +33,7 @@
 <li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
 <li><a href="#logging">3.3. Logging</a></li>
 <li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -835,6 +836,33 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></h3>
+<div class="sect3">
+<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.5.1. Planned Implementation</a></h4>
+<div class="paragraph">
+<p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the navigation mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user is viewing the events for one week.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The user executes <code>next week</code> to view the events in the following week. The command is parsed by <code>schedulerParser#parseCommand</code>, returning <code>ChangePeriodCommand</code></p>
+</div>
+<div class="paragraph">
+<p>Step 3. <code>ChangePeriodCommand#executes</code> called with <code>EventIsInThisPeriodPredicate</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. <code>filteredCalendarEvents</code> is updated.</p>
+</div>
+<div class="paragraph">
+<p>Step 5. <code>CalendarPanel#filteredCalendarEventsListener</code> repopulates the calendar UI.</p>
+</div>
 </div>
 </div>
 </div>
@@ -2320,4 +2348,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 14:10:22 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 15:25:38 UTC</div></div></div></body></html>
