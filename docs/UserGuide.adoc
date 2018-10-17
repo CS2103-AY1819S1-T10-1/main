@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= U-Schedule - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -18,13 +18,13 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+U-Schedule is for university students who *prefer to use a desktop app for managing their schedule*. More importantly, U-Schedule is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). It features a calendar to manage regular events such as lectures and tutorials, as well as a todo list for upcoming deadlines. If you can type fast, you can manage both of these more efficiently with U-Schedule than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for this application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,9 +33,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all calendar events
+* **`add`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
+* **`delete`**`3` : deletes the calendar event marked `3`.
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -46,82 +46,81 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add t/TITLE`, `TITLE` is a parameter which can be used as `add t/CS2103 Lecture`.
+* Items in square brackets are optional e.g `t/TITLE [tags/TAG]` can be used as `t/CS2103 Lecture tags/lecture` or as `t/CS2103 Lecture`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[tags/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `tags/lecture`, `tags/cs2103` etc.
+* Parameters can be in any order e.g. if the command specifies `t/TITLE d/DESCRIPTION`, `d/DESCRIPTION t/TITLE` is also acceptable.
 ====
 
 === Viewing help : `help`
 
 Format: `help`
 
-=== Adding a calendarEvent: `add`
+=== Adding a calendar event: `add`
 
-Adds a calendarEvent to the location book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a calendar event to the calendar +
+Format: `add t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]...`
 
 [TIP]
-A calendarEvent can have any number of tags (including 0)
+A calendar event can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture`
 
-=== Listing all calendarEvents : `list`
+=== Listing all calendar events : `list`
 
-Shows a list of all calendarEvents in the location book. +
+Shows a list of all calendar events in the location book. +
 Format: `list`
 
-=== Editing a calendarEvent : `edit`
+=== Editing a calendar event : `edit`
 
-Edits an existing calendarEvent in the location book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing calendar event in the location book. +
+Format: `edit INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...`
 
 ****
-* Edits the calendarEvent at the specified `INDEX`. The index refers to the index number shown in the displayed calendarEvent list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the calendar event at the specified `INDEX`. The index refers to the index number shown in the displayed calendar event list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the calendarEvent will be removed i.e adding of tags is not cumulative.
-* You can remove all the calendarEvent's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the calendar event will be removed i.e adding of tags is not cumulative.
+* You can remove all the calendar event's tags by typing `tags/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email location of the 1st calendarEvent to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd calendarEvent to be `Betsy Crower` and clears all existing tags.
+* `edit 1 d/Abstraction v/i3 Auditorium` +
+Edits the description and venue of the calendar event to be `Abstraction ` and `i3 Auditorium` respectively.
+* `edit 2 t/CS2103 Tutorial tags/` +
+Edits the name of the 2nd calendar event to be `CS2103 Tutorial` and clears all existing tags.
 
-=== Locating calendarEvents by name: `find`
+=== Locating calendar events by name: `find`
 
-Finds calendarEvents whose names contain any of the given keywords. +
+Finds calendar events whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. e.g `lecture` will match `Lecture`
+* The order of the keywords does not matter. e.g. `CS2103 Lecture` will match `Lecture CS2103`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. `lecture` will not match `lectures`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `CS2103 Lecture` will return `CS2103 Lecture`, `CS2103 Tutorial`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any calendarEvent having names `Betsy`, `Tim`, or `John`
+* `find lecture` +
+Returns `CS2103 Lecture` and `Lecture`
+* `find `CS2103 Lecture` +
+Returns any calendar event having titles with `CS2103` or `Lecture`
 
-=== Deleting a calendarEvent : `delete`
+=== Deleting a calendar event : `delete`
 
-Deletes the specified calendarEvent from the location book. +
+Deletes the specified calendar event from the calendar. +
 Format: `delete INDEX`
 
 ****
-* Deletes the calendarEvent at the specified `INDEX`.
-* The index refers to the index number shown in the displayed calendarEvent list.
+* Deletes the calendar event at the specified `INDEX`.
+* The index refers to the index number shown in the displayed calendar event list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -129,19 +128,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd calendarEvent in the location book.
-* `find Betsy` +
+Deletes the 2nd calendar event in the calendar.
+* `find lecture` +
 `delete 1` +
-Deletes the 1st calendarEvent in the results of the `find` command.
+Deletes the 1st calendar event in the results of the `find` command.
 
-=== Selecting a calendarEvent : `select`
+=== Selecting a calendar event : `select`
 
-Selects the calendarEvent identified by the index number used in the displayed calendarEvent list. +
+Selects the calendar event identified by the index number used in the displayed calendar event list. +
 Format: `select INDEX`
 
 ****
-* Selects the calendarEvent and loads the Google search page the calendarEvent at the specified `INDEX`.
-* The index refers to the index number shown in the displayed calendarEvent list.
+* Selects the calendar event and loads the Google search page the calendar event at the specified `INDEX`.
+* The index refers to the index number shown in the displayed calendar event list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -149,10 +148,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd calendarEvent in the location book.
-* `find Betsy` +
+Selects the 2nd calendar event in the calendar.
+* `find lecture` +
 `select 1` +
-Selects the 1st calendarEvent in the results of the `find` command.
+Selects the 1st calendar event in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -216,7 +215,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the location book. +
+Clears all entries from the calendar. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -242,15 +241,15 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]...` +
+e.g. `add t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
+e.g. `edit 1 d/Abstraction v/i3 Auditorium`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find CS2103 Lecture`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
