@@ -2,16 +2,16 @@
 <scheduler>
     <!-- Valid CalendarEvent -->
     <calendarEvents>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
+        <title>Hans Muster</title>
+        <description isPrivate="false">9482424</description>
         <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
-    <!-- CalendarEvent with invalid phone field -->
+    <!-- CalendarEvent with invalid description field -->
     <calendarEvents>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">948asdf2424</phone>
+        <title>Hans Muster</title>
+        <description isPrivate="false"></description>
         <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
 </scheduler>

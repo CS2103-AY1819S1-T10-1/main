@@ -2,13 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
 
 import org.junit.Test;
 
@@ -20,40 +19,36 @@ public class EditCalendarEventDescriptorTest {
     public void equals() {
         // same values -> returns true
         EditCommand.EditCalendarEventDescriptor descriptorWithSameValues =
-            new EditCommand.EditCalendarEventDescriptor(DESC_AMY);
-        assertTrue(DESC_AMY.equals(descriptorWithSameValues));
+            new EditCommand.EditCalendarEventDescriptor(DESC_LECTURE);
+        assertTrue(DESC_LECTURE.equals(descriptorWithSameValues));
 
         // same object -> returns true
-        assertTrue(DESC_AMY.equals(DESC_AMY));
+        assertTrue(DESC_LECTURE.equals(DESC_LECTURE));
 
         // null -> returns false
-        assertFalse(DESC_AMY.equals(null));
+        assertFalse(DESC_LECTURE.equals(null));
 
         // different types -> returns false
-        assertFalse(DESC_AMY.equals(5));
+        assertFalse(DESC_LECTURE.equals(5));
 
         // different values -> returns false
-        assertFalse(DESC_AMY.equals(DESC_BOB));
+        assertFalse(DESC_LECTURE.equals(DESC_TUTORIAL));
 
-        // different name -> returns false
+        // different title -> returns false
         EditCommand.EditCalendarEventDescriptor editedAmy =
-            new EditPersonDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+            new EditPersonDescriptorBuilder(DESC_LECTURE).withTitle(VALID_TITLE_TUTORIAL).build();
+        assertFalse(DESC_LECTURE.equals(editedAmy));
 
-        // different phone -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        // different description -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_LECTURE).withDescription(VALID_DESCRIPTION_TUTORIAL).build();
+        assertFalse(DESC_LECTURE.equals(editedAmy));
 
-        // different email -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
-        // different address -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        // different venue -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_LECTURE).withVenue(VALID_VENUE_TUTORIAL).build();
+        assertFalse(DESC_LECTURE.equals(editedAmy));
 
         // different tags -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        editedAmy = new EditPersonDescriptorBuilder(DESC_LECTURE).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(DESC_LECTURE.equals(editedAmy));
     }
 }

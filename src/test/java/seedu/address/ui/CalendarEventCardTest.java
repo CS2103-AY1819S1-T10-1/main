@@ -47,7 +47,7 @@ public class CalendarEventCardTest extends GuiUnitTest {
         assertFalse(calendarEventCard.equals(0));
 
         // different calendarevent, same index -> returns false
-        CalendarEvent differentCalendarEvent = new CalendarEventBuilder().withName("differentName").build();
+        CalendarEvent differentCalendarEvent = new CalendarEventBuilder().withTitle("differentName").build();
         assertFalse(calendarEventCard.equals(new CalendarEventCard(differentCalendarEvent, 0)));
 
         // same calendarevent, different index -> returns false

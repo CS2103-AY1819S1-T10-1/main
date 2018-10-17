@@ -71,7 +71,6 @@ Examples:
 === Listing all calendar events : `list`
 
 Shows a list of all calendar events in the calendar. +
-Format: `list`
 
 === Editing a calendar event : `edit`
 

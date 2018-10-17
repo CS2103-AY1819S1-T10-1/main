@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- CalendarEvent with missing name field -->
+<!-- CalendarEvent with missing title field -->
 <calendarEvent>
-    <phone>9482424</phone>
-    <email>hans@example</email>
-    <location>4th street</location>
+    <description>9482424</description>
+    <start>2018-10-16 14:00</start>
+    <end>2018-10-16 16:00</end>
+    <venue>4th street</venue>
     <tagged>friends</tagged>
 </calendarEvent>

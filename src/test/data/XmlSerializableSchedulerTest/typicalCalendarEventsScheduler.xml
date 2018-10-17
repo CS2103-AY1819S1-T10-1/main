@@ -2,49 +2,56 @@
 <!-- Scheduler save file which contains the same CalendarEvent values as in TypicalPersons#getTypicalAddressBook() -->
 <scheduler>
     <calendarEvents>
-        <name>Alice Pauline</name>
-        <phone>94351253</phone>
-        <email>alice@example.com</email>
-        <location>123, Jurong West Ave 6, #08-111</location>
+        <title>Alice Pauline</title>
+        <description>94351253</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>123, Jurong West Ave 6, #08-111</venue>
         <tagged>friends</tagged>
     </calendarEvents>
     <calendarEvents>
-        <name>Benson Meier</name>
-        <phone>98765432</phone>
-        <email>johnd@example.com</email>
-        <location>311, Clementi Ave 2, #02-25</location>
+        <title>Benson Meier</title>
+        <description>98765432</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>311, Clementi Ave 2, #02-25</venue>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </calendarEvents>
     <calendarEvents>
-        <name>Carl Kurz</name>
-        <phone>95352563</phone>
-        <email>heinz@example.com</email>
-        <location>wall street</location>
+        <title>Carl Kurz</title>
+        <description>95352563</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>wall street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Daniel Meier</name>
-        <phone>87652533</phone>
-        <email>cornelia@example.com</email>
-        <location>10th street</location>
+        <title>Daniel Meier</title>
+        <description>87652533</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>10th street</venue>
         <tagged>friends</tagged>
     </calendarEvents>
     <calendarEvents>
-        <name>Elle Meyer</name>
-        <phone>9482224</phone>
-        <email>werner@example.com</email>
-        <location>michegan ave</location>
+        <title>Elle Meyer</title>
+        <description>9482224</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>michegan ave</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Fiona Kunz</name>
-        <phone>9482427</phone>
-        <email>lydia@example.com</email>
-        <location>little tokyo</location>
+        <title>Fiona Kunz</title>
+        <description>9482427</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>little tokyo</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>George Best</name>
-        <phone>9482442</phone>
-        <email>anna@example.com</email>
-        <location>4th street</location>
+        <title>George Best</title>
+        <description>9482442</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>4th street</venue>
     </calendarEvents>
 </scheduler>

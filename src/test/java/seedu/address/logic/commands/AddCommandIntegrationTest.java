@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class AddCommandIntegrationTest {
     public void execute_duplicatePerson_throwsCommandException() {
         CalendarEvent calendarEventInList = model.getScheduler().getCalendarEventList().get(0);
         assertCommandFailure(new AddCommand(calendarEventInList), model, commandHistory,
-            AddCommand.MESSAGE_DUPLICATE_PERSON);
+            AddCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
     }
 
 }

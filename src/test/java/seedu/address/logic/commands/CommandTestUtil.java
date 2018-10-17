@@ -2,11 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.Scheduler;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.NameContainsKeywordsPredicate;
+import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -26,46 +27,55 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
-    public static final String VALID_EMAIL_AMY = "amy@example.com";
-    public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_TITLE_LECTURE = "CS2103 Lecture";
+    public static final String VALID_TITLE_TUTORIAL = "CS2104 Tutorial";
+    public static final String VALID_DESCRIPTION_LECTURE = "Abstraction, IntelliJ, Gradle";
+    public static final String VALID_DESCRIPTION_TUTORIAL = "Monadic parsers";
+    public static final String VALID_VENUE_LECTURE = "Block 312, Amy Street 1";
+    public static final String VALID_VENUE_TUTORIAL = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_START_DATETIME_LECTURE = "2018-10-16 14:00";
+    public static final String VALID_END_DATETIME_LECTURE = "2018-10-16 16:00";
+    public static final String VALID_START_DATETIME_TUTORIAL = "2018-10-18 10:00";
+    public static final String VALID_END_DATETIME_TUTORIAL = "2018-10-18 11:00";
+    public static final String VALID_PRIORITY_TUTORIAL = "L";
+    public static final String VALID_PRIORITY_LECTURE = "H";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
-    public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
-    public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
-    public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
-    public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String TITLE_DESC_LECTURE = " " + PREFIX_TITLE + VALID_TITLE_LECTURE;
+    public static final String TITLE_DESC_TUTORIAL = " " + PREFIX_TITLE + VALID_TITLE_TUTORIAL;
+    public static final String DESCRIPTION_DESC_LECTURE = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_LECTURE;
+    public static final String DESCRIPTION_DESC_TUTORIAL = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TUTORIAL;
+    public static final String START_DESC_LECTURE = " " + PREFIX_START + VALID_START_DATETIME_LECTURE;
+    public static final String START_DESC_TUTORIAL = " " + PREFIX_START + VALID_START_DATETIME_TUTORIAL;
+    public static final String END_DESC_LECTURE = " " + PREFIX_END + VALID_END_DATETIME_LECTURE;
+    public static final String END_DESC_TUTORIAL = " " + PREFIX_END + VALID_END_DATETIME_TUTORIAL;
+    public static final String VENUE_DESC_LECTURE = " " + PREFIX_VENUE + VALID_VENUE_LECTURE;
+    public static final String VENUE_DESC_TUTORIAL = " " + PREFIX_VENUE + VALID_VENUE_TUTORIAL;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + " "; // empty
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + " q"; // start with whitespace not allowed
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // empty string not allowed
+    public static final String INVALID_START_DESC = " " + PREFIX_START + "2018-10-16 2.00pm"; // wrong format for time
+    public static final String INVALID_END_DESC = " " + PREFIX_END + "10/16/2018 16:00"; // wrong format for date
+    public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditCalendarEventDescriptor DESC_AMY;
-    public static final EditCommand.EditCalendarEventDescriptor DESC_BOB;
+    public static final EditCommand.EditCalendarEventDescriptor DESC_LECTURE;
+    public static final EditCommand.EditCalendarEventDescriptor DESC_TUTORIAL;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+        DESC_LECTURE = new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_LECTURE)
+            .withDescription(VALID_DESCRIPTION_LECTURE).withStart(VALID_START_DATETIME_LECTURE)
+            .withEnd(VALID_END_DATETIME_LECTURE).withVenue(VALID_VENUE_LECTURE)
             .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-            .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+        DESC_TUTORIAL = new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL)
+            .withDescription(VALID_DESCRIPTION_TUTORIAL).withStart(VALID_START_DATETIME_TUTORIAL)
+                .withEnd(VALID_END_DATETIME_TUTORIAL).withVenue(VALID_VENUE_TUTORIAL)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
@@ -116,21 +126,21 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the calendarevent at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered list to show only the calendar event at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredCalendarEventList().size());
 
         CalendarEvent calendarEvent = model.getFilteredCalendarEventList().get(targetIndex.getZeroBased());
-        final String[] splitName = calendarEvent.getName().fullTitle.split("\\s+");
-        model.updateFilteredCalendarEventList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final String[] splitTitle = calendarEvent.getTitle().value.split("\\s+");
+        model.updateFilteredCalendarEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
 
         assertEquals(1, model.getFilteredCalendarEventList().size());
     }
 
     /**
-     * Deletes the first calendarevent in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first calendar event in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
         CalendarEvent firstCalendarEvent = model.getFilteredCalendarEventList().get(0);

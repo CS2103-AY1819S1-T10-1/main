@@ -1,10 +1,11 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.util.Set;
 
@@ -30,10 +31,11 @@ public class PersonUtil {
      */
     public static String getPersonDetails(CalendarEvent calendarEvent) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + calendarEvent.getName().fullTitle + " ");
-        sb.append(PREFIX_PHONE + calendarEvent.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + calendarEvent.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + calendarEvent.getLocation().value + " ");
+        sb.append(PREFIX_TITLE + calendarEvent.getTitle().value + " ");
+        sb.append(PREFIX_DESCRIPTION + calendarEvent.getDescription().value + " ");
+        sb.append(PREFIX_START + calendarEvent.getStart().toInputFormat() + " ");
+        sb.append(PREFIX_END + calendarEvent.getEnd().toInputFormat() + " ");
+        sb.append(PREFIX_VENUE + calendarEvent.getVenue().value + " ");
         calendarEvent.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
@@ -45,10 +47,11 @@ public class PersonUtil {
      */
     public static String getEditPersonDescriptorDetails(EditCommand.EditCalendarEventDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullTitle).append(" "));
-        descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
-        descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
-        descriptor.getLocation().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+        descriptor.getTitle().ifPresent(name -> sb.append(PREFIX_TITLE).append(name.value).append(" "));
+        descriptor.getDescription().ifPresent(phone -> sb.append(PREFIX_DESCRIPTION).append(phone.value).append(" "));
+        descriptor.getStart().ifPresent(start -> sb.append(PREFIX_START).append(start.toInputFormat()).append(" "));
+        descriptor.getEnd().ifPresent(end -> sb.append(PREFIX_END).append(end.toInputFormat()).append(" "));
+        descriptor.getVenue().ifPresent(address -> sb.append(PREFIX_VENUE).append(address.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {

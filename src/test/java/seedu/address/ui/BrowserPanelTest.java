@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalEvents.LECTURE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -24,7 +24,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(ALICE);
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(LECTURE);
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -40,7 +40,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a calendarevent
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullTitle.replaceAll(" ", "%20"
+        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + LECTURE.getTitle().value.replaceAll(" ", "%20"
         ));
 
         waitUntilBrowserLoaded(browserPanelHandle);

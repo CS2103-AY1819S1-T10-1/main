@@ -1,11 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 import java.util.Collections;
@@ -21,10 +22,11 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.DateTimeInfo;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,14 +40,14 @@ public class EditCommand extends Command {
         + "by the index number used in the displayed event list. "
         + "Existing values will be overwritten by the input values.\n"
         + "Parameters: INDEX (must be a positive integer) "
-        + "[" + PREFIX_NAME + "NAME] "
-        + "[" + PREFIX_PHONE + "PHONE] "
-        + "[" + PREFIX_EMAIL + "EMAIL] "
-        + "[" + PREFIX_ADDRESS + "ADDRESS] "
+        + "[" + PREFIX_TITLE + "TITLE] "
+        + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+        + "[" + PREFIX_START + "START DATE & TIME] "
+        + "[" + PREFIX_END + "END DATE & TIME] "
+        + "[" + PREFIX_VENUE + "VENUE] "
         + "[" + PREFIX_TAG + "TAG]...\n"
         + "Example: " + COMMAND_WORD + " 1 "
-        + PREFIX_PHONE + "91234567 "
-        + PREFIX_EMAIL + "johndoe@example.com";
+        + PREFIX_DESCRIPTION + "91234567 ";
 
     public static final String MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -94,16 +96,24 @@ public class EditCommand extends Command {
      * edited with {@code editCalendarEventDescriptor}.
      */
     private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit,
-                                                           EditCalendarEventDescriptor editCalendarEventDescriptor) {
+                                    EditCalendarEventDescriptor editCalendarEventDescriptor) throws CommandException {
         assert calendarEventToEdit != null;
 
-        Title updatedName = editCalendarEventDescriptor.getName().orElse(calendarEventToEdit.getName());
-        Phone updatedPhone = editCalendarEventDescriptor.getPhone().orElse(calendarEventToEdit.getPhone());
-        Email updatedEmail = editCalendarEventDescriptor.getEmail().orElse(calendarEventToEdit.getEmail());
-        Location updatedLocation = editCalendarEventDescriptor.getLocation().orElse(calendarEventToEdit.getLocation());
+        Title updatedName = editCalendarEventDescriptor.getTitle().orElse(calendarEventToEdit.getTitle());
+        Description updatedDescription =
+            editCalendarEventDescriptor.getDescription().orElse(calendarEventToEdit.getDescription());
+
+        DateTime updatedStart = editCalendarEventDescriptor.getStart().orElse(calendarEventToEdit.getStart());
+        DateTime updatedEnd = editCalendarEventDescriptor.getEnd().orElse(calendarEventToEdit.getEnd());
+        if (!DateTimeInfo.isValidStartAndEnd(updatedStart, updatedEnd)) {
+            throw new CommandException(DateTimeInfo.MESSAGE_STARTEND_CONSTRAINTS);
+        }
+
+        Venue updatedVenue = editCalendarEventDescriptor.getVenue().orElse(calendarEventToEdit.getVenue());
         Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
 
-        return new CalendarEvent(updatedName, updatedPhone, updatedEmail, updatedLocation, updatedTags);
+        return new CalendarEvent(updatedName, updatedDescription,
+                                    new DateTimeInfo(updatedStart, updatedEnd), updatedVenue, updatedTags);
     }
 
     @Override
@@ -129,10 +139,11 @@ public class EditCommand extends Command {
      * corresponding field value of the calendar event.
      */
     public static class EditCalendarEventDescriptor {
-        private Title name;
-        private Phone phone;
-        private Email email;
-        private Location location;
+        private Title title;
+        private Description description;
+        private DateTime start;
+        private DateTime end;
+        private Venue venue;
         private Set<Tag> tags;
 
         public EditCalendarEventDescriptor() {
@@ -143,10 +154,11 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditCalendarEventDescriptor(EditCalendarEventDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setLocation(toCopy.location);
+            setTitle(toCopy.title);
+            setDescription(toCopy.description);
+            setStart(toCopy.start);
+            setEnd(toCopy.end);
+            setVenue(toCopy.venue);
             setTags(toCopy.tags);
         }
 
@@ -154,39 +166,47 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, location, tags);
+            return CollectionUtil.isAnyNonNull(title, description, start, end, venue, tags);
         }
 
-        public void setName(Title name) {
-            this.name = name;
+        public void setTitle(Title title) {
+            this.title = title;
         }
 
-        public Optional<Title> getName() {
-            return Optional.ofNullable(name);
+        public Optional<Title> getTitle() {
+            return Optional.ofNullable(title);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setStart(DateTime start) {
+            this.start = start;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<DateTime> getStart() {
+            return Optional.ofNullable(start);
         }
 
-        public void setLocation(Location location) {
-            this.location = location;
+        public void setEnd(DateTime end) {
+            this.end = end;
         }
 
-        public Optional<Location> getLocation() {
-            return Optional.ofNullable(location);
+        public Optional<DateTime> getEnd() {
+            return Optional.ofNullable(end);
+        }
+
+        public void setVenue(Venue venue) {
+            this.venue = venue;
+        }
+
+        public Optional<Venue> getVenue() {
+            return Optional.ofNullable(venue);
         }
 
         /**
@@ -221,10 +241,11 @@ public class EditCommand extends Command {
             // state check
             EditCalendarEventDescriptor e = (EditCalendarEventDescriptor) other;
 
-            return getName().equals(e.getName())
-                && getPhone().equals(e.getPhone())
-                && getEmail().equals(e.getEmail())
-                && getLocation().equals(e.getLocation())
+            return getTitle().equals(e.getTitle())
+                && getDescription().equals(e.getDescription())
+                && getStart().equals(e.getStart())
+                && getEnd().equals(e.getEnd())
+                && getVenue().equals(e.getVenue())
                 && getTags().equals(e.getTags());
         }
     }

@@ -16,40 +16,44 @@ import seedu.address.model.tag.Tag;
 public class CalendarEvent {
 
     // Identity fields
-    private final Title name;
-    private final Phone phone;
-    private final Email email;
+    private final Title title;
 
     // Data fields
-    private final Location location;
+    private final Description description;
+    private final Venue venue;
+    private final DateTimeInfo dateTimeInfo;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public CalendarEvent(Title name, Phone phone, Email email, Location location, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, location, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.location = location;
+    public CalendarEvent(Title title, Description description, DateTimeInfo dateTimeInfo, Venue venue, Set<Tag> tags) {
+        requireAllNonNull(title, description, venue, tags);
+        this.title = title;
+        this.description = description;
+        this.dateTimeInfo = dateTimeInfo;
+        this.venue = venue;
         this.tags.addAll(tags);
     }
 
-    public Title getName() {
-        return name;
+    public Title getTitle() {
+        return title;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public Description getDescription() {
+        return description;
     }
 
-    public Email getEmail() {
-        return email;
+    public DateTime getStart() {
+        return dateTimeInfo.start;
     }
 
-    public Location getLocation() {
-        return location;
+    public DateTime getEnd() {
+        return dateTimeInfo.end;
+    }
+
+    public Venue getVenue() {
+        return venue;
     }
 
     /**
@@ -61,7 +65,7 @@ public class CalendarEvent {
     }
 
     /**
-     * Returns true if both calendar events of the same name have at least one other identity field that is the same.
+     * Returns true if both calendar events of the same title also have the same start and end times.
      * This defines a weaker notion of equality between two calendar events.
      */
     public boolean isSameCalendarEvent(CalendarEvent otherCalendarEvent) {
@@ -70,9 +74,9 @@ public class CalendarEvent {
         }
 
         return otherCalendarEvent != null
-            && otherCalendarEvent.getName().equals(getName())
-            && (otherCalendarEvent.getPhone().equals(getPhone())
-            || otherCalendarEvent.getEmail().equals(getEmail()));
+            && otherCalendarEvent.getTitle().equals(getTitle())
+            && otherCalendarEvent.getStart().equals(getStart())
+            && otherCalendarEvent.getEnd().equals(getEnd());
     }
 
     /**
@@ -90,29 +94,33 @@ public class CalendarEvent {
         }
 
         CalendarEvent otherCalendarEvent = (CalendarEvent) other;
-        return otherCalendarEvent.getName().equals(getName())
-            && otherCalendarEvent.getPhone().equals(getPhone())
-            && otherCalendarEvent.getEmail().equals(getEmail())
-            && otherCalendarEvent.getLocation().equals(getLocation())
+        return otherCalendarEvent.getTitle().equals(getTitle())
+            && otherCalendarEvent.getDescription().equals(getDescription())
+            && otherCalendarEvent.getStart().equals(getStart())
+            && otherCalendarEvent.getEnd().equals(getEnd())
+            && otherCalendarEvent.getVenue().equals(getVenue())
             && otherCalendarEvent.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, location, tags);
+        return Objects.hash(title, description, venue, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-            .append(" Phone: ")
-            .append(getPhone())
-            .append(" Email: ")
-            .append(getEmail())
-            .append(" Location: ")
-            .append(getLocation())
+        builder.append(" Title: ")
+            .append(getTitle())
+            .append(" Description: ")
+            .append(getDescription())
+            .append(" Start Date & Time: ")
+            .append(getStart())
+            .append(" End Date & Time: ")
+            .append(getEnd())
+            .append(" Venue: ")
+            .append(getVenue())
             .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

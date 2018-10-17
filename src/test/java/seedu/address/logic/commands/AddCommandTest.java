@@ -56,14 +56,14 @@ public class AddCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validCalendarEvent);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
         addCommand.execute(modelStub, commandHistory);
     }
 
     @Test
     public void equals() {
-        CalendarEvent alice = new CalendarEventBuilder().withName("Alice").build();
-        CalendarEvent bob = new CalendarEventBuilder().withName("Bob").build();
+        CalendarEvent alice = new CalendarEventBuilder().withTitle("Alice").build();
+        CalendarEvent bob = new CalendarEventBuilder().withTitle("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 

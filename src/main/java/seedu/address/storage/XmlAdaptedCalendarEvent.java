@@ -11,10 +11,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.DateTimeInfo;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,13 +26,15 @@ public class XmlAdaptedCalendarEvent {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
 
     @XmlElement(required = true)
-    private String name;
+    private String title;
     @XmlElement(required = true)
-    private String phone;
+    private String description;
     @XmlElement(required = true)
-    private String email;
+    private String venue;
     @XmlElement(required = true)
-    private String location;
+    private String start;
+    @XmlElement(required = true)
+    private String end;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -46,12 +49,13 @@ public class XmlAdaptedCalendarEvent {
     /**
      * Constructs an {@code XmlAdaptedCalendarEvent} with the given calendar event details.
      */
-    public XmlAdaptedCalendarEvent(String name, String phone, String email, String location,
-                                   List<XmlAdaptedTag> tagged) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.location = location;
+    public XmlAdaptedCalendarEvent(String title, String description, String start, String end,
+                                   String venue, List<XmlAdaptedTag> tagged) {
+        this.title = title;
+        this.description = description;
+        this.start = start;
+        this.end = end;
+        this.venue = venue;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -63,10 +67,11 @@ public class XmlAdaptedCalendarEvent {
      * @param source future changes to this will not affect the created XmlAdaptedCalendarEvent
      */
     public XmlAdaptedCalendarEvent(CalendarEvent source) {
-        name = source.getName().fullTitle;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        location = source.getLocation().value;
+        title = source.getTitle().value;
+        description = source.getDescription().value;
+        start = source.getStart().toInputFormat();
+        end = source.getEnd().toInputFormat();
+        venue = source.getVenue().value;
         tagged = source.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
@@ -83,41 +88,51 @@ public class XmlAdaptedCalendarEvent {
             calendarEventTags.add(tag.toModelType());
         }
 
-        if (name == null) {
+        if (title == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
         }
-        if (!Title.isValidTitle(name)) {
-            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        if (!Title.isValid(title)) {
+            throw new IllegalValueException(Title.MESSAGE_CONSTRAINTS);
         }
-        final Title modelName = new Title(name);
+        final Title modelName = new Title(title);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
-
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
-
-        if (location == null) {
+        if (description == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                Location.class.getSimpleName()));
+                Description.class.getSimpleName()));
         }
-        if (!Location.isValidLocation(location)) {
-            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        if (!Description.isValid(description)) {
+            throw new IllegalValueException(Description.MESSAGE_CONSTRAINTS);
         }
-        final Location modelLocation = new Location(location);
+        final Description modelDescription = new Description(description);
+
+        if (venue == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                Venue.class.getSimpleName()));
+        }
+        if (!Venue.isValid(venue)) {
+            throw new IllegalValueException(Venue.MESSAGE_CONSTRAINTS);
+        }
+        final Venue modelVenue = new Venue(venue);
+
+        if (start == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Start"));
+        }
+        if (!DateTime.isValidDateTimeInput(start)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+        }
+        final DateTime modelStart = new DateTime(start);
+
+        if (end == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "End"));
+        }
+        if (!DateTime.isValidDateTimeInput(end)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+        }
+        final DateTime modelEnd = new DateTime(end);
 
         final Set<Tag> modelTags = new HashSet<>(calendarEventTags);
-        return new CalendarEvent(modelName, modelPhone, modelEmail, modelLocation, modelTags);
+        return new CalendarEvent(modelName, modelDescription,
+                                    new DateTimeInfo(modelStart, modelEnd), modelVenue, modelTags);
     }
 
     @Override
@@ -131,10 +146,11 @@ public class XmlAdaptedCalendarEvent {
         }
 
         XmlAdaptedCalendarEvent otherCalendarEvent = (XmlAdaptedCalendarEvent) other;
-        return Objects.equals(name, otherCalendarEvent.name)
-            && Objects.equals(phone, otherCalendarEvent.phone)
-            && Objects.equals(email, otherCalendarEvent.email)
-            && Objects.equals(location, otherCalendarEvent.location)
+        return Objects.equals(title, otherCalendarEvent.title)
+            && Objects.equals(description, otherCalendarEvent.description)
+            && Objects.equals(start, otherCalendarEvent.start)
+            && Objects.equals(end, otherCalendarEvent.end)
+            && Objects.equals(venue, otherCalendarEvent.venue)
             && tagged.equals(otherCalendarEvent.tagged);
     }
 }

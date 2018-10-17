@@ -29,7 +29,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.NameContainsKeywordsPredicate;
+import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 import seedu.address.testutil.CalendarEventBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -80,7 +80,7 @@ public class SchedulerParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
             FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new TitleContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

@@ -3,17 +3,17 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
 
 import org.junit.Test;
 
@@ -58,11 +58,12 @@ public class EditCommandTest {
         CalendarEvent lastCalendarEvent = model.getFilteredCalendarEventList().get(indexLastPerson.getZeroBased());
 
         CalendarEventBuilder personInList = new CalendarEventBuilder(lastCalendarEvent);
-        CalendarEvent editedCalendarEvent = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        CalendarEvent editedCalendarEvent =
+            personInList.withTitle(VALID_TITLE_TUTORIAL).withDescription(VALID_DESCRIPTION_TUTORIAL)
             .withTags(VALID_TAG_HUSBAND).build();
 
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-            .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL)
+            .withDescription(VALID_DESCRIPTION_TUTORIAL).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
@@ -94,9 +95,9 @@ public class EditCommandTest {
         CalendarEvent calendarEventInFilteredList =
             model.getFilteredCalendarEventList().get(INDEX_FIRST_PERSON.getZeroBased());
         CalendarEvent editedCalendarEvent =
-            new CalendarEventBuilder(calendarEventInFilteredList).withName(VALID_NAME_BOB).build();
+            new CalendarEventBuilder(calendarEventInFilteredList).withTitle(VALID_TITLE_TUTORIAL).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-            new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+            new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
 
@@ -132,7 +133,8 @@ public class EditCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCalendarEventDescriptor descriptor =
+            new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, commandHistory,
@@ -151,7 +153,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getScheduler().getCalendarEventList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
-            new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+            new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL).build());
 
         assertCommandFailure(editCommand, model, commandHistory,
             Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
@@ -182,7 +184,8 @@ public class EditCommandTest {
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCalendarEventDescriptor descriptor =
+            new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> address book state not added into model
@@ -230,10 +233,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_LECTURE);
 
         // same values -> returns true
-        EditCalendarEventDescriptor copyDescriptor = new EditCalendarEventDescriptor(DESC_AMY);
+        EditCalendarEventDescriptor copyDescriptor = new EditCalendarEventDescriptor(DESC_LECTURE);
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PERSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -247,10 +250,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_LECTURE)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_TUTORIAL)));
     }
 
 }

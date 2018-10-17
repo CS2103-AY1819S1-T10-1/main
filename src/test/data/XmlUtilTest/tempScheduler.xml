@@ -4,6 +4,8 @@
         <id>1</id>
         <firstName>John</firstName>
         <lastName>Doe</lastName>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
         <githubUsername></githubUsername>
         <street></street>
         <postalCode></postalCode>

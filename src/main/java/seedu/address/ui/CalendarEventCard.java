@@ -27,15 +27,13 @@ public class CalendarEventCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label title;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label description;
     @FXML
     private Label venue;
-    @FXML
-    private Label email;
     @FXML
     private FlowPane tags;
 
@@ -43,10 +41,9 @@ public class CalendarEventCard extends UiPart<Region> {
         super(FXML);
         this.calendarEvent = calendarEvent;
         id.setText(displayedIndex + ". ");
-        name.setText(calendarEvent.getName().fullTitle);
-        phone.setText(calendarEvent.getPhone().value);
-        venue.setText(calendarEvent.getLocation().value);
-        email.setText(calendarEvent.getEmail().value);
+        title.setText(calendarEvent.getTitle().value);
+        description.setText(calendarEvent.getDescription().value);
+        venue.setText(calendarEvent.getVenue().value);
         calendarEvent.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

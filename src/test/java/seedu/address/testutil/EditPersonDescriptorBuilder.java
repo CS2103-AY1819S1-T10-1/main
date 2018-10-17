@@ -6,10 +6,10 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,42 +32,51 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder(CalendarEvent calendarEvent) {
         descriptor = new EditCalendarEventDescriptor();
-        descriptor.setName(calendarEvent.getName());
-        descriptor.setPhone(calendarEvent.getPhone());
-        descriptor.setEmail(calendarEvent.getEmail());
-        descriptor.setLocation(calendarEvent.getLocation());
+        descriptor.setTitle(calendarEvent.getTitle());
+        descriptor.setDescription(calendarEvent.getDescription());
+        descriptor.setStart(calendarEvent.getStart());
+        descriptor.setEnd(calendarEvent.getEnd());
+        descriptor.setVenue(calendarEvent.getVenue());
         descriptor.setTags(calendarEvent.getTags());
     }
 
     /**
      * Sets the {@code Title} of the {@code EditCalendarEventDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withName(String name) {
-        descriptor.setName(new Title(name));
+    public EditPersonDescriptorBuilder withTitle(String name) {
+        descriptor.setTitle(new Title(name));
         return this;
     }
 
     /**
      * Sets the {@code Phone} of the {@code EditCalendarEventDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+    public EditPersonDescriptorBuilder withDescription(String description) {
+        descriptor.setDescription(new Description(description));
         return this;
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditCalendarEventDescriptor} that we are building.
+     * Sets the start {@code DateTime} of the {@code EditCalendarEventDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
+    public EditPersonDescriptorBuilder withStart(String start) {
+        descriptor.setStart(new DateTime(start));
         return this;
     }
 
     /**
-     * Sets the {@code Location} of the {@code EditCalendarEventDescriptor} that we are building.
+     * Sets the end {@code DateTime} of the {@code EditCalendarEventDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setLocation(new Location(address));
+    public EditPersonDescriptorBuilder withEnd(String end) {
+        descriptor.setEnd(new DateTime(end));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Venue} of the {@code EditCalendarEventDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withVenue(String address) {
+        descriptor.setVenue(new Venue(address));
         return this;
     }
 

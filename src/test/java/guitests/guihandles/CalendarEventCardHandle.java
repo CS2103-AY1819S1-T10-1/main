@@ -15,27 +15,24 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public class CalendarEventCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
-    private static final String NAME_FIELD_ID = "#name";
-    private static final String LOCATION_FIELD_ID = "#venue";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
+    private static final String TITLE_FIELD_ID = "#title";
+    private static final String VENUE_FIELD_ID = "#venue";
+    private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
-    private final Label nameLabel;
-    private final Label locationLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
+    private final Label titleLabel;
+    private final Label venueLabel;
+    private final Label descriptionLabel;
     private final List<Label> tagLabels;
 
     public CalendarEventCardHandle(Node cardNode) {
         super(cardNode);
 
         idLabel = getChildNode(ID_FIELD_ID);
-        nameLabel = getChildNode(NAME_FIELD_ID);
-        locationLabel = getChildNode(LOCATION_FIELD_ID);
-        phoneLabel = getChildNode(PHONE_FIELD_ID);
-        emailLabel = getChildNode(EMAIL_FIELD_ID);
+        titleLabel = getChildNode(TITLE_FIELD_ID);
+        venueLabel = getChildNode(VENUE_FIELD_ID);
+        descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         tagLabels = tagsContainer
@@ -49,20 +46,16 @@ public class CalendarEventCardHandle extends NodeHandle<Node> {
         return idLabel.getText();
     }
 
-    public String getName() {
-        return nameLabel.getText();
+    public String getTitle() {
+        return titleLabel.getText();
     }
 
-    public String getAddress() {
-        return locationLabel.getText();
+    public String getVenue() {
+        return venueLabel.getText();
     }
 
-    public String getPhone() {
-        return phoneLabel.getText();
-    }
-
-    public String getEmail() {
-        return emailLabel.getText();
+    public String getDescription() {
+        return descriptionLabel.getText();
     }
 
     public List<String> getTags() {
@@ -76,10 +69,9 @@ public class CalendarEventCardHandle extends NodeHandle<Node> {
      * Returns true if this handle contains {@code calendarevent}.
      */
     public boolean equals(CalendarEvent calendarEvent) {
-        return getName().equals(calendarEvent.getName().fullTitle)
-            && getAddress().equals(calendarEvent.getLocation().value)
-            && getPhone().equals(calendarEvent.getPhone().value)
-            && getEmail().equals(calendarEvent.getEmail().value)
+        return getTitle().equals(calendarEvent.getTitle().value)
+            && getVenue().equals(calendarEvent.getVenue().value)
+            && getDescription().equals(calendarEvent.getDescription().value)
             && ImmutableMultiset.copyOf(getTags()).equals(ImmutableMultiset.copyOf(calendarEvent.getTags().stream()
             .map(tag -> tag.tagName)
             .collect(Collectors.toList())));

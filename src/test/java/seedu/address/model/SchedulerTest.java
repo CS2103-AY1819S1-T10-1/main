@@ -3,10 +3,9 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalScheduler;
+import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -51,10 +50,10 @@ public class SchedulerTest {
     @Test
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two calendarEvents with the same identity fields
-        CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        CalendarEvent editedLecture =
+            new CalendarEventBuilder(LECTURE).withTags(VALID_TAG_HUSBAND)
                 .build();
-        List<CalendarEvent> newCalendarEvents = Arrays.asList(ALICE, editedAlice);
+        List<CalendarEvent> newCalendarEvents = Arrays.asList(LECTURE, editedLecture);
         SchedulerStub newData = new SchedulerStub(newCalendarEvents);
 
         thrown.expect(DuplicateCalendarEventException.class);
@@ -69,22 +68,22 @@ public class SchedulerTest {
 
     @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(scheduler.hasCalendarEvent(ALICE));
+        assertFalse(scheduler.hasCalendarEvent(LECTURE));
     }
 
     @Test
     public void hasPerson_personInAddressBook_returnsTrue() {
-        scheduler.addCalendarEvent(ALICE);
-        assertTrue(scheduler.hasCalendarEvent(ALICE));
+        scheduler.addCalendarEvent(LECTURE);
+        assertTrue(scheduler.hasCalendarEvent(LECTURE));
     }
 
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        scheduler.addCalendarEvent(ALICE);
-        CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        scheduler.addCalendarEvent(LECTURE);
+        CalendarEvent editedLecture =
+            new CalendarEventBuilder(LECTURE).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(scheduler.hasCalendarEvent(editedAlice));
+        assertTrue(scheduler.hasCalendarEvent(editedLecture));
     }
 
     @Test

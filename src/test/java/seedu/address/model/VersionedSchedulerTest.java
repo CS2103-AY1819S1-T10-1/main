@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalEvents.AMY;
+import static seedu.address.testutil.TypicalEvents.CARL;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import seedu.address.testutil.AddressBookBuilder;
 public class VersionedSchedulerTest {
 
     private final ReadOnlyScheduler addressBookWithAmy = new AddressBookBuilder().withPerson(AMY).build();
-    private final ReadOnlyScheduler addressBookWithBob = new AddressBookBuilder().withPerson(BOB).build();
+    private final ReadOnlyScheduler addressBookWithBob = new AddressBookBuilder().withPerson(TUTORIAL).build();
     private final ReadOnlyScheduler addressBookWithCarl = new AddressBookBuilder().withPerson(CARL).build();
     private final ReadOnlyScheduler emptyAddressBook = new AddressBookBuilder().build();
 

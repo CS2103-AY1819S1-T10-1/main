@@ -13,14 +13,20 @@ public class DateTimeTest {
 
     @Test
     public void constructor_invalidDateTime_throwsIllegalArgumentException() {
-        int invalidYear = 1;
-        int validMonth = -1;
+        int invalidYear = -1;
+        int validMonth = 1;
         int validDay = 1;
         int validHour = 1;
         int validMinute = 1;
-        Assert.assertThrows(DateTimeException.class, () -> new DateTime(invalidYear, validMonth, validDay, validHour,
-            validMinute));
+        Assert.assertThrows(DateTimeException.class, () ->
+                        new DateTime(invalidYear, validMonth, validDay, validHour, validMinute));
     }
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new DateTime(null));
+    }
+
 
     @Test
     public void isValidDateTime() {

@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.Scheduler;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalEvents;
 
 public class XmlSerializableSchedulerTest {
 
@@ -32,8 +32,8 @@ public class XmlSerializableSchedulerTest {
         XmlSerializableScheduler dataFromFile = XmlUtil.getDataFromFile(TYPICAL_CALENDAR_EVENTS_FILE,
             XmlSerializableScheduler.class);
         Scheduler schedulerFromFile = dataFromFile.toModelType();
-        Scheduler typicalPersonsScheduler = TypicalPersons.getTypicalScheduler();
-        assertEquals(schedulerFromFile, typicalPersonsScheduler);
+        Scheduler typicalEventsScheduler = TypicalEvents.getTypicalScheduler();
+        assertEquals(schedulerFromFile, typicalEventsScheduler);
     }
 
     @Test

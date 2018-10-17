@@ -1,42 +1,46 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalEvents.AMY;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
 
@@ -45,33 +49,43 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        CalendarEvent expectedCalendarEvent = new CalendarEventBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
+        CalendarEvent expectedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-            + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
 
-        // multiple names - last name accepted
-        assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-            + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+        // multiple titles - last title accepted
+        assertParseSuccess(parser, TITLE_DESC_LECTURE + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
 
-        // multiple phones - last phone accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
-            + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+        // multiple descriptions - last descriptions accepted
+        assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_LECTURE + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
 
-        // multiple emails - last email accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
-            + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+        // multiple venues - last venue accepted
+        assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL + VENUE_DESC_LECTURE
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
 
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-            + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+        // multiple start date/times - last start date/time accepted
+        assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                + START_DESC_LECTURE + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+                + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
+
+        // multiple end date/times - last end date/times accepted
+        assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                + START_DESC_TUTORIAL + END_DESC_LECTURE + END_DESC_TUTORIAL
+                + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEvent));
 
         // multiple tags - all accepted
-        CalendarEvent expectedCalendarEventMultipleTags = new CalendarEventBuilder(BOB).withTags(VALID_TAG_FRIEND,
-            VALID_TAG_HUSBAND)
-            .build();
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        CalendarEvent expectedCalendarEventMultipleTags =
+                new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
             + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedCalendarEventMultipleTags));
     }
 
@@ -79,64 +93,80 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         CalendarEvent expectedCalendarEvent = new CalendarEventBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
-            new AddCommand(expectedCalendarEvent));
+        assertParseSuccess(parser, TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE
+                        + END_DESC_LECTURE + VENUE_DESC_LECTURE, new AddCommand(expectedCalendarEvent));
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
-        // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
-            expectedMessage);
+        // missing title prefix
+        assertParseFailure(parser, VALID_TITLE_TUTORIAL + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL
+                        + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
-            expectedMessage);
+        // missing description prefix
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + VALID_DESCRIPTION_TUTORIAL
+                        + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
-        // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
-            expectedMessage);
+        // missing start prefix
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                        + VALID_START_DATETIME_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
-        // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
-            expectedMessage);
+        // missing end prefix
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                        + START_DESC_TUTORIAL + VALID_END_DATETIME_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
+
+        // missing venue prefix
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                        + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VALID_VENUE_TUTORIAL, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
-            expectedMessage);
+        assertParseFailure(parser, VALID_TITLE_TUTORIAL + VALID_DESCRIPTION_TUTORIAL
+                + VALID_START_DATETIME_TUTORIAL + VALID_END_DATETIME_TUTORIAL
+                + VALID_VENUE_TUTORIAL, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Title.MESSAGE_TITLE_CONSTRAINTS);
+        // invalid title
+        assertParseFailure(parser, INVALID_TITLE_DESC + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Title.MESSAGE_CONSTRAINTS);
 
-        // invalid phone
-        assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        // invalid description
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + INVALID_DESCRIPTION_DESC
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Description.MESSAGE_CONSTRAINTS);
 
-        // invalid email
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        // invalid venue
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + INVALID_VENUE_DESC
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Venue.MESSAGE_CONSTRAINTS);
 
-        // invalid address
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Location.MESSAGE_LOCATION_CONSTRAINTS);
+        // invalid start date/time
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + INVALID_START_DESC + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+
+        // invalid end date/time
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + INVALID_END_DESC + VENUE_DESC_TUTORIAL
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
             + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC,
-            Title.MESSAGE_TITLE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_TITLE_DESC + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + INVALID_VENUE_DESC, Title.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

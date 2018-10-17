@@ -1,33 +1,35 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalEvents.AMY;
+import static seedu.address.testutil.TypicalEvents.CARL;
+import static seedu.address.testutil.TypicalEvents.HOON;
+import static seedu.address.testutil.TypicalEvents.IDA;
+import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import org.junit.Test;
 
@@ -38,10 +40,10 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -59,8 +61,9 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
          * -> added
          */
         CalendarEvent toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-            + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+        String command =
+            "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_LECTURE + "  " + DESCRIPTION_DESC_LECTURE + " "
+            + START_DESC_LECTURE + " " + END_DESC_LECTURE + " " + VENUE_DESC_LECTURE + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -76,27 +79,28 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: add a calendar event with all fields same as another calendar event in the scheduler except name ->
         added */
-        toAdd = new CalendarEventBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-            + TAG_DESC_FRIEND;
+        toAdd = new CalendarEventBuilder(AMY).withTitle(VALID_TITLE_TUTORIAL).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE
+                + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a calendar event with all fields same as another calendar event in the scheduler except phone
-        and email
-         * -> added
+        /* Case: add a calendar event with all fields same as another calendar event in the scheduler except
+         * start and end date/time -> added
          */
-        toAdd = new CalendarEventBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        toAdd = new CalendarEventBuilder(AMY).withStart(VALID_START_DATETIME_TUTORIAL)
+                        .withEnd(VALID_END_DATETIME_TUTORIAL).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
         deleteAllPersons();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(LECTURE);
 
         /* Case: add a calendarevent with tags, command with parameters in random order -> added */
-        toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-            + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+        toAdd = TUTORIAL;
+        command =
+            AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL
+                    + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL + TITLE_DESC_TUTORIAL + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a calendarevent, missing tags -> added */
@@ -105,7 +109,7 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the calendarevent list before adding -> added */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithTitle(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
         /* ------------------------ Perform add operation while a calendarevent card is selected
@@ -120,41 +124,35 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: add a duplicate calendarevent -> rejected */
         command = PersonUtil.getAddCommand(HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: add a duplicate calendarevent except with different phone -> rejected */
-        toAdd = new CalendarEventBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: add a duplicate calendarevent except with different email -> rejected */
-        toAdd = new CalendarEventBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: add a duplicate calendarevent except with different address -> rejected */
-        toAdd = new CalendarEventBuilder(HOON).withLocation(VALID_ADDRESS_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: add a duplicate calendarevent except with different tags -> rejected */
         command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing description -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing start -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + END_DESC_LECTURE;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
+        /* Case: missing end -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing venue -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -162,24 +160,33 @@ public class AddCommandSystemTest extends SchedulerSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Title.MESSAGE_TITLE_CONSTRAINTS);
+        command = AddCommand.COMMAND_WORD + INVALID_TITLE_DESC + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE;
+        assertCommandFailure(command, Title.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        /* Case: invalid description -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + INVALID_DESCRIPTION_DESC + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE;
+        assertCommandFailure(command, Description.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        /* Case: invalid start -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + INVALID_START_DESC + END_DESC_LECTURE;
+        assertCommandFailure(command, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
-        assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
+        /* Case: invalid end -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + INVALID_END_DESC;
+        assertCommandFailure(command, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+
+        /* Case: invalid venue -> rejected */
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + INVALID_VENUE_DESC
+                + START_DESC_LECTURE + END_DESC_LECTURE;
+        assertCommandFailure(command, Venue.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-            + INVALID_TAG_DESC;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+                + START_DESC_LECTURE + END_DESC_LECTURE + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 

@@ -2,19 +2,21 @@
 <scheduler>
 
     <calendarEvents>
-        <name>Alice Pauline</name>
-        <phone>94351253</phone>
-        <email>alice@example.com</email>
-        <location>123, Jurong West Ave 6, #08-111</location>
+        <title>Alice Pauline</title>
+        <description>94351253</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>4th street</venue>
         <tagged>friends</tagged>
     </calendarEvents>
 
     <!-- CalendarEvent with same identity as Alice Pauline -->
     <calendarEvents>
-        <name>Alice Pauline</name>
-        <phone>94351253</phone>
-        <email>pauline@example.com</email>
-        <location>4th street</location>
+        <title>Alice Pauline</title>
+        <description>94351253</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue>4th street</venue>
     </calendarEvents>
 
 </scheduler>

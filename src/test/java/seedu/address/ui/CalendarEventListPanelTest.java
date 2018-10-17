@@ -4,8 +4,8 @@ import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalEvents.getTypicalCalendarEvents;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalCalendarEvents;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -98,12 +98,11 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<scheduler>\n");
         for (int i = 0; i < calendarEventCount; i++) {
-            builder.append("<calendarEvents>\n");
-            builder.append("<name>").append(i).append("a</name>\n");
-            builder.append("<phone>000</phone>\n");
-            builder.append("<email>a@aa</email>\n");
-            builder.append("<location>a</location>\n");
-            builder.append("</calendarEvents>\n");
+            builder.append("<calendarEvent>\n");
+            builder.append("<title>").append(i).append("a</title>\n");
+            builder.append("<description>000</description>\n");
+            builder.append("<venue>a</venue>\n");
+            builder.append("</calendarEvent>\n");
         }
         builder.append("</scheduler>\n");
 

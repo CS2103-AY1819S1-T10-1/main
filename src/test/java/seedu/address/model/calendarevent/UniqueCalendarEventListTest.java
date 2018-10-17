@@ -3,10 +3,10 @@ package seedu.address.model.calendarevent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
+import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,22 +34,22 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void contains_personNotInList_returnsFalse() {
-        assertFalse(uniqueCalendarEventList.contains(ALICE));
+        assertFalse(uniqueCalendarEventList.contains(LECTURE));
     }
 
     @Test
     public void contains_personInList_returnsTrue() {
-        uniqueCalendarEventList.add(ALICE);
-        assertTrue(uniqueCalendarEventList.contains(ALICE));
+        uniqueCalendarEventList.add(LECTURE);
+        assertTrue(uniqueCalendarEventList.contains(LECTURE));
     }
 
     @Test
     public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
-        uniqueCalendarEventList.add(ALICE);
-        CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        uniqueCalendarEventList.add(LECTURE);
+        CalendarEvent editedLecture =
+            new CalendarEventBuilder(LECTURE).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(uniqueCalendarEventList.contains(editedAlice));
+        assertTrue(uniqueCalendarEventList.contains(editedLecture));
     }
 
     @Test
@@ -60,45 +60,45 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void add_duplicatePerson_throwsDuplicatePersonException() {
-        uniqueCalendarEventList.add(ALICE);
+        uniqueCalendarEventList.add(LECTURE);
         thrown.expect(DuplicateCalendarEventException.class);
-        uniqueCalendarEventList.add(ALICE);
+        uniqueCalendarEventList.add(LECTURE);
     }
 
     @Test
     public void setPerson_nullTargetPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueCalendarEventList.setCalendarEvent(null, ALICE);
+        uniqueCalendarEventList.setCalendarEvent(null, LECTURE);
     }
 
     @Test
     public void setPerson_nullEditedPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueCalendarEventList.setCalendarEvent(ALICE, null);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, null);
     }
 
     @Test
     public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
         thrown.expect(CalendarEventNotFoundException.class);
-        uniqueCalendarEventList.setCalendarEvent(ALICE, ALICE);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, LECTURE);
     }
 
     @Test
     public void setPerson_editedPersonIsSamePerson_success() {
-        uniqueCalendarEventList.add(ALICE);
-        uniqueCalendarEventList.setCalendarEvent(ALICE, ALICE);
+        uniqueCalendarEventList.add(LECTURE);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, LECTURE);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
-        expectedUniqueCalendarEventList.add(ALICE);
+        expectedUniqueCalendarEventList.add(LECTURE);
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
     }
 
     @Test
     public void setPerson_editedPersonHasSameIdentity_success() {
-        uniqueCalendarEventList.add(ALICE);
+        uniqueCalendarEventList.add(LECTURE);
         CalendarEvent editedAlice =
-            new CalendarEventBuilder(ALICE).withLocation(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(LECTURE).withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_HUSBAND)
                 .build();
-        uniqueCalendarEventList.setCalendarEvent(ALICE, editedAlice);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, editedAlice);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
         expectedUniqueCalendarEventList.add(editedAlice);
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
@@ -106,19 +106,19 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void setPerson_editedPersonHasDifferentIdentity_success() {
-        uniqueCalendarEventList.add(ALICE);
-        uniqueCalendarEventList.setCalendarEvent(ALICE, BOB);
+        uniqueCalendarEventList.add(LECTURE);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, TUTORIAL);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
-        expectedUniqueCalendarEventList.add(BOB);
+        expectedUniqueCalendarEventList.add(TUTORIAL);
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
     }
 
     @Test
     public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
-        uniqueCalendarEventList.add(ALICE);
-        uniqueCalendarEventList.add(BOB);
+        uniqueCalendarEventList.add(LECTURE);
+        uniqueCalendarEventList.add(TUTORIAL);
         thrown.expect(DuplicateCalendarEventException.class);
-        uniqueCalendarEventList.setCalendarEvent(ALICE, BOB);
+        uniqueCalendarEventList.setCalendarEvent(LECTURE, TUTORIAL);
     }
 
     @Test
@@ -130,13 +130,13 @@ public class UniqueCalendarEventListTest {
     @Test
     public void remove_personDoesNotExist_throwsPersonNotFoundException() {
         thrown.expect(CalendarEventNotFoundException.class);
-        uniqueCalendarEventList.remove(ALICE);
+        uniqueCalendarEventList.remove(LECTURE);
     }
 
     @Test
     public void remove_existingPerson_removesPerson() {
-        uniqueCalendarEventList.add(ALICE);
-        uniqueCalendarEventList.remove(ALICE);
+        uniqueCalendarEventList.add(LECTURE);
+        uniqueCalendarEventList.remove(LECTURE);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
     }
@@ -149,9 +149,9 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void setPersons_uniquePersonList_replacesOwnListWithProvidedUniquePersonList() {
-        uniqueCalendarEventList.add(ALICE);
+        uniqueCalendarEventList.add(LECTURE);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
-        expectedUniqueCalendarEventList.add(BOB);
+        expectedUniqueCalendarEventList.add(TUTORIAL);
         uniqueCalendarEventList.setCalendarEvents(expectedUniqueCalendarEventList);
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
     }
@@ -164,17 +164,17 @@ public class UniqueCalendarEventListTest {
 
     @Test
     public void setPersons_list_replacesOwnListWithProvidedList() {
-        uniqueCalendarEventList.add(ALICE);
-        List<CalendarEvent> calendarEventList = Collections.singletonList(BOB);
+        uniqueCalendarEventList.add(LECTURE);
+        List<CalendarEvent> calendarEventList = Collections.singletonList(TUTORIAL);
         uniqueCalendarEventList.setCalendarEvents(calendarEventList);
         UniqueCalendarEventList expectedUniqueCalendarEventList = new UniqueCalendarEventList();
-        expectedUniqueCalendarEventList.add(BOB);
+        expectedUniqueCalendarEventList.add(TUTORIAL);
         assertEquals(expectedUniqueCalendarEventList, uniqueCalendarEventList);
     }
 
     @Test
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
-        List<CalendarEvent> listWithDuplicateCalendarEvents = Arrays.asList(ALICE, ALICE);
+        List<CalendarEvent> listWithDuplicateCalendarEvents = Arrays.asList(LECTURE, LECTURE);
         thrown.expect(DuplicateCalendarEventException.class);
         uniqueCalendarEventList.setCalendarEvents(listWithDuplicateCalendarEvents);
     }

@@ -19,10 +19,9 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(CalendarEventCardHandle expectedCard, CalendarEventCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
-        assertEquals(expectedCard.getName(), actualCard.getName());
-        assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getVenue(), actualCard.getVenue());
+        assertEquals(expectedCard.getTitle(), actualCard.getTitle());
+        assertEquals(expectedCard.getDescription(), actualCard.getDescription());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -31,10 +30,9 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(CalendarEvent expectedCalendarEvent,
                                                 CalendarEventCardHandle actualCard) {
-        assertEquals(expectedCalendarEvent.getName().fullTitle, actualCard.getName());
-        assertEquals(expectedCalendarEvent.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedCalendarEvent.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedCalendarEvent.getLocation().value, actualCard.getAddress());
+        assertEquals(expectedCalendarEvent.getTitle().value, actualCard.getTitle());
+        assertEquals(expectedCalendarEvent.getDescription().value, actualCard.getDescription());
+        assertEquals(expectedCalendarEvent.getVenue().value, actualCard.getVenue());
         assertEquals(expectedCalendarEvent.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
             actualCard.getTags());
     }

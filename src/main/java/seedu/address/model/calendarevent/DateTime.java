@@ -1,90 +1,111 @@
 package seedu.address.model.calendarevent;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a Calendar Event's datetime fields in the scheduler.
+ * Wrapper class for LocalDateTime.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateTime(int, int, int, int, int)}
  */
 public class DateTime {
+    public static final String MESSAGE_DATETIMEINPUT_CONSTRAINTS =
+                        "Format for date and time input should be YYYY-MM-DD HH:MM";
+    public static final String DATETIMEINPUT_VALIDATION_REGEX = "(\\d{4})-(\\d{1,2})-(\\d{1,2}) (\\d{2}):(\\d{2})";
+    public static final String MESSAGE_DATETIME_CONSTRAINTS =
+                        "Ensure that the input year, month, day, hour and minute correspond to a valid date and time";
 
-    private LocalDateTime date;
+    public final LocalDateTime localDateTime;
 
     /**
-     * Constructs a {@code DateTime}
+     * Constructs a {@code DateTime} from input year, month, day, hour and minute
      * Wrapper class for LocalDateTime
      *
-     * @param year   A valid year
-     * @param month  A valid month
-     * @param day    A valid day
-     * @param hour   A valid hour
-     * @param minute A valid minute
+     * @param year      A valid int year
+     * @param month     A valid int month
+     * @param day       A valid int day
+     * @param hour      A valid int hour
+     * @param minute    A valid int minute
      */
-    public DateTime(int year, int month, int day, int hour, int minute) throws DateTimeException {
-        requireAllNonNull(year, month, day, hour, minute);
-        if (year <= 0) {
-            throw new DateTimeException("Invalid year");
+    public DateTime(int year, int month, int day, int hour, int minute) {
+        if (!DateTime.isValidDateTime(year, month, day, hour, minute)) {
+            throw new DateTimeException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
-        date = LocalDateTime.of(year, month, day, hour, minute);
+
+        this.localDateTime = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public int getYear() {
-        return date.getYear();
+    /**
+     * Constructs a {@code DateTime} from date time input string
+     * Wrapper class for LocalDateTime
+     *
+     * @param dateTimeInput     valid date time input string
+     */
+    public DateTime(String dateTimeInput) {
+        String[] dateTimeInputNumbers = dateTimeInput.split("[- :]");
+
+        int year = Integer.parseInt(dateTimeInputNumbers[0]);
+        int month = Integer.parseInt(dateTimeInputNumbers[1]);
+        int day = Integer.parseInt(dateTimeInputNumbers[2]);
+        int hour = Integer.parseInt(dateTimeInputNumbers[3]);
+        int minute = Integer.parseInt(dateTimeInputNumbers[4]);
+
+        if (!DateTime.isValidDateTime(year, month, day, hour, minute)) {
+            throw new DateTimeException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
+        }
+
+        this.localDateTime = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public int getMonth() {
-        return date.getMonthValue();
-    }
-
-    public int getDay() {
-        return date.getDayOfMonth();
-    }
-
-    public int getHour() {
-        return date.getHour();
-    }
-
-    public int getMinute() {
-        return date.getMinute();
-    }
-
-    public void setYear(int year) throws DateTimeException {
-        date = date.withYear(year);
-    }
-
-    public void setMonth(int month) throws DateTimeException {
-        date = date.withMonth(month);
-    }
-
-    public void setDay(int day) throws DateTimeException {
-        date = date.withDayOfMonth(day);
-    }
-
-    public void setHour(int hour) throws DateTimeException {
-        date = date.withHour(hour);
-    }
-
-    public void setMinute(int minute) {
-        date = date.withMinute(minute);
+    /**
+     * Converts date to the input format.
+     */
+    public String toInputFormat() {
+        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy hh:mm a"));
     }
 
     /**
-     * Returns if a given datetime is a valid datetime.
+     * Returns true if a given string is a valid date time input string.
+     */
+    public static boolean isValidDateTimeInput(String test) {
+        return test.matches(DATETIMEINPUT_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns if a given year, month, day, hour and minute correspond to a valid datetime.
      */
     public static boolean isValidDateTime(int year, int month, int day, int hour, int minute) {
-        try {
-            DateTime dateTime = new DateTime(year, month, day, hour, minute);
-            return true;
-        } catch (DateTimeException e) {
+        if (year <= 0) {
             return false;
         }
+
+        try {
+            LocalDateTime.of(year, month, day, hour, minute);
+        } catch (DateTimeException E) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isAfter(DateTime other) {
+        return this.localDateTime.isAfter(other.localDateTime);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateTime // instanceof handles nulls
+                && localDateTime.isEqual(((DateTime) other).localDateTime)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return localDateTime.hashCode();
     }
 }

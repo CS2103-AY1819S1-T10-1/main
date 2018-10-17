@@ -1,29 +1,34 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.END_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -36,10 +41,10 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditCalendarEventDescriptor;
-import seedu.address.model.calendarevent.Email;
-import seedu.address.model.calendarevent.Location;
-import seedu.address.model.calendarevent.Phone;
+import seedu.address.model.calendarevent.DateTime;
+import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
+import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -55,7 +60,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_TITLE_LECTURE, MESSAGE_INVALID_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
@@ -67,10 +72,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + TITLE_DESC_LECTURE, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + TITLE_DESC_LECTURE, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
@@ -81,39 +86,42 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Title.MESSAGE_TITLE_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Location.MESSAGE_LOCATION_CONSTRAINTS); // invalid
-        // address
+        assertParseFailure(parser, "1" + INVALID_TITLE_DESC, Title.MESSAGE_CONSTRAINTS); // invalid title
+        assertParseFailure(parser, "1" + INVALID_DESCRIPTION_DESC,
+                                            Description.MESSAGE_CONSTRAINTS); // invalid description
+        assertParseFailure(parser, "1" + INVALID_START_DESC,
+                                            DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS); // invalid start
+        assertParseFailure(parser, "1" + INVALID_END_DESC,
+                                            DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS); // invalid end
+        assertParseFailure(parser, "1" + INVALID_VENUE_DESC, Venue.MESSAGE_CONSTRAINTS); // invalid venue
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
-        // invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        // invalid description followed by valid title
+        assertParseFailure(parser, "1" + INVALID_DESCRIPTION_DESC + TITLE_DESC_LECTURE,
+            Description.MESSAGE_CONSTRAINTS);
 
-        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
+        // valid description followed by invalid description. The test case for invalid description followed by valid
+        // description
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + DESCRIPTION_DESC_TUTORIAL + INVALID_DESCRIPTION_DESC,
+            Description.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code CalendarEvent} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-            Title.MESSAGE_TITLE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-            + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
+        String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE + TAG_DESC_HUSBAND
+            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TITLE_DESC_LECTURE + TAG_DESC_FRIEND;
 
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-            .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_LECTURE)
+            .withDescription(VALID_DESCRIPTION_LECTURE).withStart(VALID_START_DATETIME_LECTURE)
+            .withEnd(VALID_END_DATETIME_LECTURE).withVenue(VALID_VENUE_LECTURE)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -123,10 +131,11 @@ public class EditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_TUTORIAL;
 
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_AMY).build();
+        EditCalendarEventDescriptor descriptor =
+            new EditPersonDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
+            .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -134,28 +143,35 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
+        // title
         Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        String userInput = targetIndex.getOneBased() + TITLE_DESC_LECTURE;
+        EditCalendarEventDescriptor descriptor =
+            new EditPersonDescriptorBuilder().withTitle(VALID_TITLE_LECTURE).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        // description
+        userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE;
+        descriptor = new EditPersonDescriptorBuilder().withDescription(VALID_DESCRIPTION_LECTURE).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
+        // start date/time
+        userInput = targetIndex.getOneBased() + START_DESC_LECTURE;
+        descriptor = new EditPersonDescriptorBuilder().withStart(VALID_START_DATETIME_LECTURE).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
+        // end date/time
+        userInput = targetIndex.getOneBased() + END_DESC_LECTURE;
+        descriptor = new EditPersonDescriptorBuilder().withEnd(VALID_END_DATETIME_LECTURE).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // venue
+        userInput = targetIndex.getOneBased() + VENUE_DESC_LECTURE;
+        descriptor = new EditPersonDescriptorBuilder().withVenue(VALID_VENUE_LECTURE).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -169,12 +185,15 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-            + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-            + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
+        String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
+            + TAG_DESC_FRIEND + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE + END_DESC_LECTURE
+            + VENUE_DESC_LECTURE + START_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_HUSBAND + END_DESC_TUTORIAL;
 
-        EditCalendarEventDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+        EditCalendarEventDescriptor descriptor =
+            new EditPersonDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
+            .withStart(VALID_START_DATETIME_TUTORIAL).withEnd(VALID_END_DATETIME_TUTORIAL)
+            .withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
             .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -185,17 +204,17 @@ public class EditCommandParserTest {
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
+        String userInput = targetIndex.getOneBased() + INVALID_DESCRIPTION_DESC + DESCRIPTION_DESC_TUTORIAL;
         EditCommand.EditCalendarEventDescriptor descriptor =
-            new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+            new EditPersonDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
-            + PHONE_DESC_BOB;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-            .withAddress(VALID_ADDRESS_BOB).build();
+        userInput = targetIndex.getOneBased() + INVALID_DESCRIPTION_DESC + VENUE_DESC_TUTORIAL
+            + DESCRIPTION_DESC_TUTORIAL;
+        descriptor = new EditPersonDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
+            .withVenue(VALID_VENUE_TUTORIAL).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

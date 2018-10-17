@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scheduler>
     <calendarEvents>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <title>Hans Muster</title>
+        <description isPrivate="false">9482424</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
-        <email isPrivate="false">ruth@example.com</email>
-        <location isPrivate="false">81th street</location>
+        <title>Ruth Mueller</title>
+        <description isPrivate="false">87249245</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">81th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
-        <email isPrivate="false">heinz@example.com</email>
-        <location isPrivate="false">wall street</location>
+        <title>Heinz Kurz</title>
+        <description isPrivate="false">95352563</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">wall street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
-        <email isPrivate="false">cornelia@example.com</email>
-        <location isPrivate="false">10th street</location>
+        <title>Cornelia Meier</title>
+        <description isPrivate="false">87652533</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">10th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
-        <email isPrivate="false">werner@example.com</email>
-        <location isPrivate="false">michegan ave</location>
+        <title>Werner Meyer</title>
+        <description isPrivate="false">9482224</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">michegan ave</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
-        <location isPrivate="false">little tokyo</location>
+        <title>Lydia Kunz</title>
+        <description isPrivate="false">9482427</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">little tokyo</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
-        <location isPrivate="false">4th street</location>
+        <title>Anna Best</title>
+        <description isPrivate="false">9482442</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">4th street</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
-        <location isPrivate="false">little india</location>
+        <title>Stefan Meier</title>
+        <description isPrivate="false">8482424</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">little india</venue>
     </calendarEvents>
     <calendarEvents>
-        <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <location isPrivate="false">chicago ave</location>
+        <title>Martin Mueller</title>
+        <description isPrivate="false">8482131</description>
+        <start>2018-10-16 14:00</start>
+        <end>2018-10-16 16:00</end>
+        <venue isPrivate="false">chicago ave</venue>
     </calendarEvents>
 </scheduler>

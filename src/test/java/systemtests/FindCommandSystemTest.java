@@ -3,10 +3,10 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalEvents.BENSON;
+import static seedu.address.testutil.TypicalEvents.CARL;
+import static seedu.address.testutil.TypicalEvents.DANIEL;
+import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,17 +114,12 @@ public class FindCommandSystemTest extends SchedulerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find phone number of calendarevent in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getDescription().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find address of calendarevent in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getLocation().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find email of calendarevent in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getVenue().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -137,7 +132,7 @@ public class FindCommandSystemTest extends SchedulerSystemTest {
         /* Case: find while a calendarevent is selected -> selected card deselected */
         showAllPersons();
         selectPerson(Index.fromOneBased(1));
-        assertFalse(getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullTitle));
+        assertFalse(getPersonListPanel().getHandleToSelectedCard().getTitle().equals(DANIEL.getTitle().value));
         command = FindCommand.COMMAND_WORD + " Daniel";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);

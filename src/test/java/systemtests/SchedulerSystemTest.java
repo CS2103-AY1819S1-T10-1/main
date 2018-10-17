@@ -40,7 +40,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.Scheduler;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalEvents;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
 
@@ -85,7 +85,7 @@ public abstract class SchedulerSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected Scheduler getInitialData() {
-        return TypicalPersons.getTypicalScheduler();
+        return TypicalEvents.getTypicalScheduler();
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class SchedulerSystemTest {
     /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
-    protected void showPersonsWithName(String keyword) {
+    protected void showPersonsWithTitle(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredCalendarEventList().size()
             < getModel().getScheduler().getCalendarEventList().size());
@@ -219,7 +219,7 @@ public abstract class SchedulerSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         getPersonListPanel().navigateToCard(getPersonListPanel().getSelectedCardIndex());
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getTitle();
         URL expectedUrl;
         try {
             expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
