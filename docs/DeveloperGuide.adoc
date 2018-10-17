@@ -346,6 +346,23 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: `config.json`).
 
+=== Calendar Navigation Feature
+==== Planned Implementation
+
+The navigation mechanism will be facilitated by `ModelManager#updateFilteredCalendarEventList`.
+
+Given below is an example usage scenario and how the navigation mechanism behaves at each step.
+
+Step 1. The user is viewing the events for one week.
+
+Step 2. The user executes `next week` to view the events in the following week. The command is parsed by `schedulerParser#parseCommand`, returning `ChangePeriodCommand`
+
+Step 3. `ChangePeriodCommand#executes` called with `EventIsInThisPeriodPredicate`.
+
+Step 4. `filteredCalendarEvents` is updated.
+
+Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
+
 == Documentation
 
 We use asciidoc for writing documentation.
