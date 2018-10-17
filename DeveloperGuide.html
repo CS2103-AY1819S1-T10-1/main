@@ -30,10 +30,11 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
-<li><a href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></li>
+<li><a href="#calendar-model">3.2. Calendar Model</a></li>
+<li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
+<li><a href="#calendar-navigation-feature">3.6. Calendar Navigation Feature</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -805,20 +806,73 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></h3>
+<h3 id="calendar-model"><a class="link" href="#calendar-model">3.2. Calendar Model</a></h3>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">3.2.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The calendar model adapts the previous address book functionality to allow the <code>Scheduler</code> to store and display <code>CalendarEvents</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>Person</code> has been refactored to <code>CalendarEvent</code>. This class stores the relevant information for each event in the
+calendar, such as the title, description, start and end date/time, venue and tags.</p>
+</div>
+<div class="paragraph">
+<p><code>DateTime</code> stores and validates the input start and end date/time of each event in the calendar.</p>
+</div>
+<div class="paragraph">
+<p><code>DateTimeInfo</code> validates that the start date/time are not after the end date/time.</p>
+</div>
+<div class="paragraph">
+<p><code>AddCommandParser</code> and <code>EditCommandParser</code> functionality have been modified to allow the creation and modification of <code>CalendarEvent</code> objects.
+New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Description</code>, start <code>DateTime</code>, end <code>DateTime</code>, and <code>Venue</code> for each calendar event.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario for adding a calendar event, and how the calendar model behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user launches the application for the first time. The <code>Scheduler</code> is initialised to be empty.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user executes <code>add t/CS2103 Tutorial d/Prepare answers to the 5 questions s/Thursday 10am e/Thursday 11am v/COM1-0210</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The <code>AddCommandParser</code> parses out the strings for the title, description, start and end date/time and the venue.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Then, <code>ParserUtil</code> checks that the input strings are valid, and initialises the <code>Title</code>, <code>Description</code>, start and end <code>DateTime</code> and <code>Venue</code>. It also checks that the <code>DateTime</code> values input are valid dates and times.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Subsequently, <code>AddCommandParser</code> calls <code>DateTimeInfo</code> to validate that the start date/time is not chronologically after the end <code>DateTime</code>, before wrapping the start and end <code>DateTime</code> in a <code>DateTimeInfo</code> object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: Following that, a new <code>CalendarEvent</code> is initialised and will be displayed in the list of calendar events in the GUI.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-gui"><a class="link" href="#aspect-gui">Aspect: GUI</a></h5>
+<div class="paragraph">
+<p>The calendar events are currently only fully visible via the console. Further enhancement would be needed to display the events in an appropriate Calendar GUI.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -849,15 +903,15 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></h3>
+<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.6. Calendar Navigation Feature</a></h3>
 <div class="sect3">
-<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.5.1. Planned Implementation</a></h4>
+<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.6.1. Planned Implementation</a></h4>
 <div class="paragraph">
 <p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
 </div>
@@ -2364,4 +2418,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 15:54:08 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 15:59:56 UTC</div></div></div></body></html>
