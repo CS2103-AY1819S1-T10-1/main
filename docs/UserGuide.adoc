@@ -70,12 +70,12 @@ Examples:
 
 === Listing all calendar events : `list`
 
-Shows a list of all calendar events in the location book. +
+Shows a list of all calendar events in the calendar. +
 Format: `list`
 
 === Editing a calendar event : `edit`
 
-Edits an existing calendar event in the location book. +
+Edits an existing calendar event in the calendar. +
 Format: `edit INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...`
 
 ****
@@ -166,12 +166,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the location book to the state before the previous _undoable_ command was executed. +
+Restores the calendar to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the location book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the calendar's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
