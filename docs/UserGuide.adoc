@@ -93,7 +93,7 @@ Edits the description and venue of the calendar event to be `Abstraction ` and `
 * `edit 2 t/CS2103 Tutorial tags/` +
 Edits the name of the 2nd calendar event to be `CS2103 Tutorial` and clears all existing tags.
 
-=== Locating calendar events by name: `find`
+=== Locating calendar events by title: `find`
 
 Finds calendar events whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
