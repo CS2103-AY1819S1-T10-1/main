@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta title="viewport" content="width=device-width, initial-scale=1.0"><meta title="generator" content="Asciidoctor 1.5.6.1"><title>AddressBook Level 4 - User Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta title="viewport" content="width=device-width, initial-scale=1.0"><meta title="generator" content="Asciidoctor 1.5.6.1"><title>U-Schedule - User Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="header"><h1>AddressBook Level 4 - User Guide</h1></div><div id="content"><div id="preamble">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="header"><h1>U-Schedule - User Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
@@ -14,12 +14,12 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-a-calendarevent-code-add-code">3.2. Adding a calendarEvent: <code>add</code></a></li>
-<li><a href="#listing-all-calendarevents-code-list-code">3.3. Listing all calendarEvents : <code>list</code></a></li>
-<li><a href="#editing-a-calendarevent-code-edit-code">3.4. Editing a calendarEvent : <code>edit</code></a></li>
-<li><a href="#locating-calendarevents-by-title-code-find-code">3.5. Locating calendarEvents by title: <code>find</code></a></li>
-<li><a href="#deleting-a-calendarevent-code-delete-code">3.6. Deleting a calendarEvent : <code>delete</code></a></li>
-<li><a href="#selecting-a-calendarevent-code-select-code">3.7. Selecting a calendarEvent : <code>select</code></a></li>
+<li><a href="#adding-a-calendar-event-code-add-code">3.2. Adding a calendar event: <code>add</code></a></li>
+<li><a href="#listing-all-calendar-events-code-list-code">3.3. Listing all calendar events : <code>list</code></a></li>
+<li><a href="#editing-a-calendar-event-code-edit-code">3.4. Editing a calendar event : <code>edit</code></a></li>
+<li><a href="#locating-calendar-events-by-title-code-find-code">3.5. Locating calendar events by title: <code>find</code></a></li>
+<li><a href="#deleting-a-calendar-event-code-delete-code">3.6. Deleting a calendar event : <code>delete</code></a></li>
+<li><a href="#selecting-a-calendar-event-code-select-code">3.7. Selecting a calendar event : <code>select</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.8. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">3.9. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.10. Redoing the previously undone command : <code>redo</code></a></li>
@@ -38,7 +38,7 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AddressBook Level 4 (AB4) is for those who <strong>prefer to use a desktop app for managing contacts</strong>. More importantly, AB4 is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
+<p>U-Schedule is for university students who <strong>prefer to use a desktop app for managing their schedule</strong>. More importantly, U-Schedule is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI). It features a calendar to manage regular events such as lectures and tutorials, as well as a todo list for upcoming deadlines. If you can type fast, you can manage both of these more efficiently with U-Schedule than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
 </div>
 </div>
 </div>
@@ -54,7 +54,7 @@
 <p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/se-edu/addressbook-level4/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
+<p>Copy the file to the folder you want to use as the home folder for this application.</p>
 </li>
 <li>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
@@ -73,13 +73,13 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p><strong><code>list</code></strong> : lists all contacts</p>
+<p><strong><code>list</code></strong> : lists all calendar events</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
+<p><strong><code>add</code></strong><code>t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture</code> : adds a calendar event titled <code>CS2103 Lecture</code> to the calendar.</p>
 </li>
 <li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
+<p><strong><code>delete</code></strong><code>3</code> : deletes the calendar event marked <code>3</code>.</p>
 </li>
 <li>
 <p><strong><code>exit</code></strong> : exits the app</p>
@@ -105,16 +105,16 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
+<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add t/TITLE</code>, <code>TITLE</code> is a parameter which can be used as <code>add t/CS2103 Lecture</code>.</p>
 </li>
 <li>
-<p>Items in square brackets are optional e.g <code>n/NAME [t/TAG]</code> can be used as <code>n/John Doe t/friend</code> or as <code>n/John Doe</code>.</p>
+<p>Items in square brackets are optional e.g <code>t/TITLE [tags/TAG]</code> can be used as <code>t/CS2103 Lecture tags/lecture</code> or as <code>t/CS2103 Lecture</code>.</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/friend</code>, <code>t/friend t/family</code> etc.</p>
+<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[tags/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>tags/lecture</code>, <code>tags/cs2103</code> etc.</p>
 </li>
 <li>
-<p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/PHONE_NUMBER</code>, <code>p/PHONE_NUMBER n/NAME</code> is also acceptable.</p>
+<p>Parameters can be in any order e.g. if the command specifies <code>t/TITLE d/DESCRIPTION</code>, <code>d/DESCRIPTION t/TITLE</code> is also acceptable.</p>
 </li>
 </ul>
 </div>
@@ -127,10 +127,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-calendarevent-code-add-code"><a class="link" href="#adding-a-calendarevent-code-add-code">3.2. Adding a calendarEvent: <code>add</code></a></h3>
+<h3 id="adding-a-calendar-event-code-add-code"><a class="link" href="#adding-a-calendar-event-code-add-code">3.2. Adding a calendar event: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a calendarEvent to the venue book<br>
-Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
+<p>Adds a calendar event to the calendar<br>
+Format: <code>add t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -139,7 +139,7 @@ Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;<
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-A calendarEvent can have any number of tags (including 0)
+A calendar event can have any number of tags (including 0)
 </td>
 </tr>
 </table>
@@ -150,33 +150,29 @@ A calendarEvent can have any number of tags (including 0)
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code></p>
-</li>
-<li>
-<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal</code></p>
+<p><code>add t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture</code></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-calendarevents-code-list-code"><a class="link" href="#listing-all-calendarevents-code-list-code">3.3. Listing all calendarEvents : <code>list</code></a></h3>
+<h3 id="listing-all-calendar-events-code-list-code"><a class="link" href="#listing-all-calendar-events-code-list-code">3.3. Listing all calendar events : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all calendarEvents in the venue book.<br>
-Format: <code>list</code></p>
+<p>Shows a list of all calendar events in the calendar.<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-calendarevent-code-edit-code"><a class="link" href="#editing-a-calendarevent-code-edit-code">3.4. Editing a calendarEvent : <code>edit</code></a></h3>
+<h3 id="editing-a-calendar-event-code-edit-code"><a class="link" href="#editing-a-calendar-event-code-edit-code">3.4. Editing a calendar event : <code>edit</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing calendarEvent in the venue book.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
+<p>Edits an existing calendar event in the calendar.<br>
+Format: <code>edit INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Edits the calendarEvent at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed calendarEvent list. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+<p>Edits the calendar event at the specified <code>INDEX</code>. The index refers to the index number shown in the displayed calendar event list. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
 <p>At least one of the optional fields must be provided.</p>
@@ -185,10 +181,10 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;
 <p>Existing values will be updated to the input values.</p>
 </li>
 <li>
-<p>When editing tags, the existing tags of the calendarEvent will be removed i.e adding of tags is not cumulative.</p>
+<p>When editing tags, the existing tags of the calendar event will be removed i.e adding of tags is not cumulative.</p>
 </li>
 <li>
-<p>You can remove all the calendarEvent&#8217;s tags by typing <code>t/</code> without specifying any tags after it.</p>
+<p>You can remove all the calendar event&#8217;s tags by typing <code>tags/</code> without specifying any tags after it.</p>
 </li>
 </ul>
 </div>
@@ -200,20 +196,20 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 p/91234567 e/johndoe@example.com</code><br>
-Edits the description number and email venue of the 1st calendarEvent to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.</p>
+<p><code>edit 1 d/Abstraction v/i3 Auditorium</code><br>
+Edits the description and venue of the calendar event to be <code>Abstraction ` and `i3 Auditorium</code> respectively.</p>
 </li>
 <li>
-<p><code>edit 2 n/Betsy Crower t/</code><br>
-Edits the title of the 2nd calendarEvent to be <code>Betsy Crower</code> and clears all existing tags.</p>
+<p><code>edit 2 t/CS2103 Tutorial tags/</code><br>
+Edits the name of the 2nd calendar event to be <code>CS2103 Tutorial</code> and clears all existing tags.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-calendarevents-by-title-code-find-code"><a class="link" href="#locating-calendarevents-by-title-code-find-code">3.5. Locating calendarEvents by title: <code>find</code></a></h3>
+<h3 id="locating-calendar-events-by-title-code-find-code"><a class="link" href="#locating-calendar-events-by-title-code-find-code">3.5. Locating calendar events by title: <code>find</code></a></h3>
 <div class="paragraph">
-<p>Finds calendarEvents whose names contain any of the given keywords.<br>
+<p>Finds calendar events whose names contain any of the given keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
@@ -221,19 +217,19 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>The search is case insensitive. e.g <code>lecture</code> will match <code>Lecture</code></p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+<p>The order of the keywords does not matter. e.g. <code>CS2103 Lecture</code> will match <code>Lecture CS2103</code></p>
 </li>
 <li>
-<p>Only the title is searched.</p>
+<p>Only the name is searched.</p>
 </li>
 <li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
+<p>Only full words will be matched e.g. <code>lecture</code> will not match <code>lectures</code></p>
 </li>
 <li>
-<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>CS2103 Lecture</code> will return <code>CS2103 Lecture</code>, <code>CS2103 Tutorial</code></p>
 </li>
 </ul>
 </div>
@@ -245,20 +241,20 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>find John</code><br>
-Returns <code>john</code> and <code>John Doe</code></p>
+<p><code>find lecture</code><br>
+Returns <code>CS2103 Lecture</code> and <code>Lecture</code></p>
 </li>
 <li>
-<p><code>find Betsy Tim John</code><br>
-Returns any calendarEvent having names <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
+<p><code>find `CS2103 Lecture</code><br>
+Returns any calendar event having titles with <code>CS2103</code> or <code>Lecture</code></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-calendarevent-code-delete-code"><a class="link" href="#deleting-a-calendarevent-code-delete-code">3.6. Deleting a calendarEvent : <code>delete</code></a></h3>
+<h3 id="deleting-a-calendar-event-code-delete-code"><a class="link" href="#deleting-a-calendar-event-code-delete-code">3.6. Deleting a calendar event : <code>delete</code></a></h3>
 <div class="paragraph">
-<p>Deletes the specified calendarEvent from the venue book.<br>
+<p>Deletes the specified calendar event from the calendar.<br>
 Format: <code>delete INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -266,10 +262,10 @@ Format: <code>delete INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Deletes the calendarEvent at the specified <code>INDEX</code>.</p>
+<p>Deletes the calendar event at the specified <code>INDEX</code>.</p>
 </li>
 <li>
-<p>The index refers to the index number shown in the displayed calendarEvent list.</p>
+<p>The index refers to the index number shown in the displayed calendar event list.</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
@@ -286,20 +282,20 @@ Format: <code>delete INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>delete 2</code><br>
-Deletes the 2nd calendarEvent in the venue book.</p>
+Deletes the 2nd calendar event in the calendar.</p>
 </li>
 <li>
-<p><code>find Betsy</code><br>
+<p><code>find lecture</code><br>
 <code>delete 1</code><br>
-Deletes the 1st calendarEvent in the results of the <code>find</code> command.</p>
+Deletes the 1st calendar event in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-a-calendarevent-code-select-code"><a class="link" href="#selecting-a-calendarevent-code-select-code">3.7. Selecting a calendarEvent : <code>select</code></a></h3>
+<h3 id="selecting-a-calendar-event-code-select-code"><a class="link" href="#selecting-a-calendar-event-code-select-code">3.7. Selecting a calendar event : <code>select</code></a></h3>
 <div class="paragraph">
-<p>Selects the calendarEvent identified by the index number used in the displayed calendarEvent list.<br>
+<p>Selects the calendar event identified by the index number used in the displayed calendar event list.<br>
 Format: <code>select INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -307,10 +303,10 @@ Format: <code>select INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Selects the calendarEvent and loads the Google search page the calendarEvent at the specified <code>INDEX</code>.</p>
+<p>Selects the calendar event and loads the Google search page the calendar event at the specified <code>INDEX</code>.</p>
 </li>
 <li>
-<p>The index refers to the index number shown in the displayed calendarEvent list.</p>
+<p>The index refers to the index number shown in the displayed calendar event list.</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> <code>1, 2, 3, &#8230;&#8203;</code></p>
@@ -327,12 +323,12 @@ Format: <code>select INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>select 2</code><br>
-Selects the 2nd calendarEvent in the venue book.</p>
+Selects the 2nd calendar event in the calendar.</p>
 </li>
 <li>
-<p><code>find Betsy</code><br>
+<p><code>find lecture</code><br>
 <code>select 1</code><br>
-Selects the 1st calendarEvent in the results of the <code>find</code> command.</p>
+Selects the 1st calendar event in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
@@ -361,7 +357,7 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.9. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>Restores the venue book to the state before the previous <em>undoable</em> command was executed.<br>
+<p>Restores the calendar to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
@@ -372,7 +368,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the venue book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify the calendar&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -438,7 +434,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <div class="sect2">
 <h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>Clears all entries from the venue book.<br>
+<p>Clears all entries from the calendar.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
@@ -479,8 +475,8 @@ There is no need to save manually.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague</code></p>
+<p><strong>Add</strong> <code>add t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture</code></p>
 </li>
 <li>
 <p><strong>Clear</strong> : <code>clear</code></p>
@@ -490,12 +486,12 @@ e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1
 e.g. <code>delete 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
+<p><strong>Edit</strong> : <code>edit INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]&#8230;&#8203;</code><br>
+e.g. <code>edit 1 d/Abstraction v/i3 Auditorium</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
-e.g. <code>find James Jake</code></p>
+e.g. <code>find CS2103 Lecture</code></p>
 </li>
 <li>
 <p><strong>List</strong> : <code>list</code></p>
@@ -519,4 +515,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 13:03:41 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-17 14:10:22 UTC</div></div></div></body></html>
