@@ -69,9 +69,9 @@ public class TestApp extends MainApp {
     }
 
     /**
-     * Returns a defensive copy of the address book data stored inside the storage file.
+     * Returns a defensive copy of the scheduler data stored inside the storage file.
      */
-    public Scheduler readStorageAddressBook() {
+    public Scheduler readStorageScheduler() {
         try {
             return new Scheduler(storage.readScheduler().get());
         } catch (DataConversionException dce) {

@@ -14,7 +14,7 @@ public class ConfigTest {
 
     @Test
     public void toString_defaultObject_stringReturned() {
-        String defaultConfigAsString = "App title : College Scheduler\n"
+        String defaultConfigAsString = "App title : U-Schedule\n"
             + "Current log level : INFO\n"
             + "Preference file Venue : preferences.json";
 

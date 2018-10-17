@@ -24,7 +24,7 @@ import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.storage.XmlSerializableScheduler;
 
-public class CalendarEventListPanelTest extends GuiUnitTest {
+public class CalendarPanelTest extends GuiUnitTest {
     private static final ObservableList<CalendarEvent> TYPICAL_CALENDAR_EVENTS =
         FXCollections.observableList(getTypicalCalendarEvents());
 
@@ -63,7 +63,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Verifies that creating and deleting large number of calendar events in {@code CalendarEventListPanel} requires
+     * Verifies that creating and deleting large number of calendar events in {@code CalendarPanel} requires
      * lesser than
      * {@code CARD_CREATION_AND_DELETION_TIMEOUT} milliseconds to execute.
      */
@@ -80,7 +80,7 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
     /**
      * Returns a list of calendar events containing {@code calendarEventCount} calendar events that is used to
      * populate the
-     * {@code CalendarEventListPanel}.
+     * {@code CalendarPanel}.
      */
     private ObservableList<CalendarEvent> createBackingList(int calendarEventCount) throws Exception {
         Path xmlFile = createXmlFileWithCalendarEvents(calendarEventCount);
@@ -114,16 +114,16 @@ public class CalendarEventListPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Initializes {@code calendarEventListPanelHandle} with a {@code CalendarEventListPanel} backed by {@code
+     * Initializes {@code calendarEventListPanelHandle} with a {@code CalendarPanel} backed by {@code
      * backingList}.
-     * Also shows the {@code Stage} that displays only {@code CalendarEventListPanel}.
+     * Also shows the {@code Stage} that displays only {@code CalendarPanel}.
      */
     private void initUi(ObservableList<CalendarEvent> backingList) {
-        CalendarEventListPanel calendarEventListPanel = new CalendarEventListPanel(backingList);
-        uiPartRule.setUiPart(calendarEventListPanel);
+        CalendarPanel calendarPanel = new CalendarPanel(backingList);
+        uiPartRule.setUiPart(calendarPanel);
 
 
-        calendarEventListPanelHandle = new CalendarEventListPanelHandle(getChildNode(calendarEventListPanel.getRoot(),
+        calendarEventListPanelHandle = new CalendarEventListPanelHandle(getChildNode(calendarPanel.getRoot(),
             CalendarEventListPanelHandle.CALENDAR_EVENT_LIST_VIEW_ID));
     }
 }

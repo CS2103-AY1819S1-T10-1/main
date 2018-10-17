@@ -10,7 +10,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -35,7 +37,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private CalendarEventListPanel calendarEventListPanel;
+    private CalendarPanel calendarPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -53,7 +55,11 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane calendarEventListPanelPlaceholder;
+    private StackPane calendarPanelPlaceholder;
+
+
+    @FXML
+    private VBox dayMonthPanelPlaceholder;
 
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -122,9 +128,12 @@ public class MainWindow extends UiPart<Stage> {
         TaskListPanel taskListPanel = new TaskListPanel();
         taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
 
-        CalendarEventListPanel calendarEventListPanel =
-            new CalendarEventListPanel(logic.getFilteredCalendarEventList());
-        calendarEventListPanelPlaceholder.getChildren().add(calendarEventListPanel.getRoot());
+        DayMonthPanel dayMonthPanel = new DayMonthPanel();
+        dayMonthPanelPlaceholder.getChildren().add(dayMonthPanel.getRoot());
+
+        CalendarPanel calendarPanel =
+            new CalendarPanel(logic.getFilteredCalendarEventList());
+        calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -185,8 +194,8 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public CalendarEventListPanel getCalendarEventListPanel() {
-        return calendarEventListPanel;
+    public CalendarPanel getCalendarPanel() {
+        return calendarPanel;
     }
 
     void releaseResources() {

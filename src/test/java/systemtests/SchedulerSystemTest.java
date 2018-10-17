@@ -181,7 +181,7 @@ public abstract class SchedulerSystemTest {
                                                      Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(new Scheduler(expectedModel.getScheduler()), testApp.readStorageAddressBook());
+        assertEquals(new Scheduler(expectedModel.getScheduler()), testApp.readStorageScheduler());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredCalendarEventList());
     }
 

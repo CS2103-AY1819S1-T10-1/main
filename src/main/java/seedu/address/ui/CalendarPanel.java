@@ -18,14 +18,14 @@ import seedu.address.model.calendarevent.CalendarEvent;
 /**
  * Panel containing the list of calendar events.
  */
-public class CalendarEventListPanel extends UiPart<Region> {
-    private static final String FXML = "CalendarEventListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(CalendarEventListPanel.class);
+public class CalendarPanel extends UiPart<Region> {
+    private static final String FXML = "CalendarPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(CalendarPanel.class);
 
     @FXML
     private ListView<CalendarEvent> personListView;
 
-    public CalendarEventListPanel(ObservableList<CalendarEvent> calendarEventList) {
+    public CalendarPanel(ObservableList<CalendarEvent> calendarEventList) {
         super(FXML);
         setConnections(calendarEventList);
         registerAsAnEventHandler(this);
