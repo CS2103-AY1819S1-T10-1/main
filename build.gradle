@@ -60,6 +60,7 @@ dependencies {
 
     compile 'com.joestelmach:natty:0.13'
     compile 'me.xdrop:fuzzywuzzy:1.1.10'
+    compile group: 'org.jfxtras', name: 'jfxtras-agenda', version: '9.0-r1-SNAPSHOT'
 
     implementation group: 'org.controlsfx', name: 'controlsfx', version: '8.40.11'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
