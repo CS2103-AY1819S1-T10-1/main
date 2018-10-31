@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-T10-1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T10-1`
 
 == Introduction
 
@@ -23,7 +23,7 @@ U-Schedule is for university students who *prefer to use a desktop app for manag
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `u-schedule.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for this application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +

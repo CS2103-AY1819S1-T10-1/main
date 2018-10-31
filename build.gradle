@@ -86,7 +86,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = 'addressbook.jar'
+    archiveName = 'u-schedule.jar'
 
     destinationDir = file("${buildDir}/jar/")
 }
