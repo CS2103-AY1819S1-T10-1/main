@@ -64,15 +64,15 @@ Format: `help`
 
 === Adding: `add`
 
-Add a calendar event to the calendar +
+Adds a calendar event to the calendar +
 Format: `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]...` +
-Add an item to the todo list +
+Adds an item to the todo list +
 Format: `add todo t/TITLE d/DESCRIPTION p/PRIORITY`
 
 ****
 * Adds the specified item to the calendar or todo list
 * Since it is difficult to type a rigidly formatted date and time, a natural language date parser will try to parse the input for calendar events.
-* The Start and End times can be word descriptions, such as 'the day after tomorrow', or '1 week from now'.
+* The start and end datetimes can be word descriptions, such as 'the day after tomorrow', or '1 week from now'.
 * If only a time is specified, Scheduler will assume you mean today.
 ****
 
@@ -86,14 +86,14 @@ Examples:
 
 === Listing: `list`
 
-Show the list of all calendar events / todo items in the calendar / todo list. +
+Shows the list of all calendar events / todo items in the calendar / todo list. +
 Format: `list {event/todo}`
 
 === Editing: `edit`
 
-Edit an existing calendar event in the calendar. +
+Edits an existing calendar event in the calendar. +
 Format: `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
-Edit an existing item in the todo list. +
+Edits an existing item in the todo list. +
 Format: `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/PRIORITY]`
 
 ****
@@ -242,7 +242,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Scheduler data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -254,7 +254,7 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous U-Schedule folder.
 
 == Command Summary
 
