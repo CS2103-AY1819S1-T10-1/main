@@ -1,8 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.SwitchToSearchTabEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 
@@ -19,9 +20,12 @@ public class ListEventCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+
+        model.resetFilteredCalendarEventList();
+
+        EventsCenter.getInstance().post(new SwitchToSearchTabEvent());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
     // TODO this will have to switch tabs
 }

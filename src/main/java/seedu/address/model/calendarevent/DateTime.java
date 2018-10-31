@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * Wrapper class for LocalDateTime.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateTime(int, int, int, int, int)}
  */
-public class DateTime {
+public class DateTime implements Comparable<DateTime> {
     public static final String MESSAGE_DATETIMEINPUT_CONSTRAINTS =
                         "Format for date and time input should be YYYY-MM-DD HH:MM";
     public static final String DATETIMEINPUT_VALIDATION_REGEX = "(\\d{4})-(\\d{1,2})-(\\d{1,2}) (\\d{2}):(\\d{2})";
@@ -104,6 +104,12 @@ public class DateTime {
 
     public boolean isAfter(DateTime other) {
         return this.localDateTime.isAfter(other.localDateTime);
+    }
+
+    @Override
+    public int compareTo(DateTime other) {
+        assert(other instanceof DateTime);
+        return localDateTime.compareTo(((DateTime) other).localDateTime);
     }
 
     @Override

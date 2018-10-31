@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.SwitchToTasksTabEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelToDo;
@@ -16,7 +18,7 @@ import seedu.address.model.todolist.ToDoListEvent;
  */
 public class DeleteToDoCommand extends CommandToDo {
 
-    public static final String COMMAND_WORD = "delete_todo";
+    public static final String COMMAND_WORD = "delete todo";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the event identified by the index number used in the displayed todo list.\n"
@@ -43,6 +45,9 @@ public class DeleteToDoCommand extends CommandToDo {
         ToDoListEvent toDoListEventToDelete = lastShownList.get(targetIndex.getZeroBased());
         modelToDo.deleteToDoListEvent(toDoListEventToDelete);
         modelToDo.commitToDoList();
+
+        EventsCenter.getInstance().post(new SwitchToTasksTabEvent());
+
         return new CommandResult(String.format(MESSAGE_DELETE_TODOLIST_EVENT_SUCCESS, toDoListEventToDelete));
     }
 

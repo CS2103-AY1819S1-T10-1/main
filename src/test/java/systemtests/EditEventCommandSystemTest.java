@@ -24,7 +24,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalEvents.LECTURE;
 import static seedu.address.testutil.TypicalEvents.TUTORIAL;
@@ -60,9 +59,9 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
          * -> edited
          */
         Index index = INDEX_FIRST_ELEMENT;
-        String command = " " + EditEventCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TITLE_DESC_TUTORIAL + "  "
-            + DESCRIPTION_DESC_TUTORIAL + " " + START_DESC_TUTORIAL + " " + END_DESC_TUTORIAL + " "
-            + VENUE_DESC_TUTORIAL + " " + TAG_DESC_HUSBAND + " ";
+        String command = " " + EditEventCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
+            + TITLE_DESC_TUTORIAL + "  " + DESCRIPTION_DESC_TUTORIAL + " " + START_DESC_TUTORIAL + " "
+            + END_DESC_TUTORIAL + " " + VENUE_DESC_TUTORIAL + " " + TAG_DESC_HUSBAND + " ";
         CalendarEvent editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
@@ -79,8 +78,9 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a calendarevent with new values same as existing values -> edited */
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
+            + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, TUTORIAL);
 
         /* Case: edit a calendarevent with new values same as another calendarevent's values but with different title
@@ -88,8 +88,9 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         assertTrue(getModel().getScheduler().getCalendarEventList().contains(TUTORIAL));
         index = INDEX_SECOND_ELEMENT;
         assertNotEquals(getModel().getFilteredCalendarEventList().get(index.getZeroBased()), TUTORIAL);
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE + DESCRIPTION_DESC_TUTORIAL
-            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
+            + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
+            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTitle(VALID_TITLE_LECTURE).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
@@ -98,8 +99,9 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
          * -> edited
          */
         index = INDEX_SECOND_ELEMENT;
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
+            + DESCRIPTION_DESC_TUTORIAL + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_TUTORIAL
+            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         editedCalendarEvent =
             new CalendarEventBuilder(TUTORIAL).withStart(VALID_START_DATETIME_LECTURE)
                     .withEnd(VALID_END_DATETIME_LECTURE).build();
@@ -197,21 +199,22 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         assertTrue(getModel().getScheduler().getCalendarEventList().contains(LECTURE));
         index = INDEX_FIRST_ELEMENT;
         assertFalse(getModel().getFilteredCalendarEventList().get(index.getZeroBased()).equals(LECTURE));
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE
-            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_FRIEND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
+            + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_FRIEND;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: edit a calendarevent with new values same as another calendarevent's values but with different tags
         -> rejected */
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE
-            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
+                + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE + END_DESC_LECTURE
+                + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: edit a calendarevent with new values same as another calendarevent's values but with different
         description
          -> rejected */
-        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE + DESCRIPTION_DESC_TUTORIAL
-            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
+            + DESCRIPTION_DESC_TUTORIAL + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
     }
@@ -242,7 +245,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         Model expectedModel = getModel();
         expectedModel.updateCalendarEvent(expectedModel.getFilteredCalendarEventList().get(toEdit.getZeroBased()),
             editedCalendarEvent);
-        expectedModel.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        expectedModel.resetFilteredCalendarEventList();
 
         assertCommandSuccess(command, expectedModel,
             String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent),
@@ -276,7 +279,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
-        expectedModel.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        expectedModel.resetFilteredCalendarEventList();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {

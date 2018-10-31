@@ -80,5 +80,4 @@ public class TaskListPanel extends UiPart<Region> {
         }
     }
 
-
 }

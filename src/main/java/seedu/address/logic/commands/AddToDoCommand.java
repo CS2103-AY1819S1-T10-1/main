@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.SwitchToTasksTabEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelToDo;
@@ -14,7 +16,7 @@ import seedu.address.model.todolist.ToDoListEvent;
  * Adds a todolist event to the toDoList.
  */
 public class AddToDoCommand extends CommandToDo {
-    public static final String COMMAND_WORD = "add_todo";
+    public static final String COMMAND_WORD = "add todo";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the todo list. "
             + "Parameters: "
@@ -48,6 +50,9 @@ public class AddToDoCommand extends CommandToDo {
         }
 
         modelToDo.addToDoListEvent(toAdd);
+
+        EventsCenter.getInstance().post(new SwitchToTasksTabEvent());
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 

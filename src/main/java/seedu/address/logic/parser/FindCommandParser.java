@@ -1,11 +1,15 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
+import java.util.List;
 
 import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendarevent.FuzzySearchComparator;
+import seedu.address.model.calendarevent.TagsPredicate;
 import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 
 /**
@@ -20,15 +24,23 @@ public class FindCommandParser implements Parser<FindEventCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindEventCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
+
+        String keywords = argMultimap.getPreamble();
+
+        String trimmedKeywords = keywords.trim();
+        if (trimmedKeywords.isEmpty()) {
             throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] nameKeywords = trimmedKeywords.split("\\s+");
 
-        return new FindEventCommand(new TitleContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        List<String> tagList = argMultimap.getAllValues(PREFIX_TAG);
+
+        return new FindEventCommand(new TitleContainsKeywordsPredicate(Arrays.asList(nameKeywords)),
+                                    new FuzzySearchComparator(Arrays.asList(nameKeywords)),
+                                    new TagsPredicate(tagList));
     }
 
 }

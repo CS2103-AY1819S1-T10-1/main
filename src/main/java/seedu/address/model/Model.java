@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -50,6 +51,11 @@ public interface Model {
     void updateCalendarEvent(CalendarEvent target, CalendarEvent editedCalendarEvent);
 
     /**
+     * Returns an unmodifiable view of the full calendar event list
+     */
+    ObservableList<CalendarEvent> getFullCalendarEventList();
+
+    /**
      * Returns an unmodifiable view of the filtered calendar event list
      */
     ObservableList<CalendarEvent> getFilteredCalendarEventList();
@@ -60,6 +66,29 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate);
+
+    /**
+     * Filters the filtered calendar event list by an additional {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void addPredicate(Predicate<CalendarEvent> predicate);
+
+
+    /**
+     * Resets the filtered calendar event list to show the unaltered list.
+     *
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void resetFilteredCalendarEventList();
+
+
+    /**
+     * Sorts the filtered calendar event list by the given {@code comparator}.
+     *
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void sortFilteredCalendarEventList(Comparator<CalendarEvent> comparator);
 
     /**
      * Returns true if the model has previous scheduler states to restore.

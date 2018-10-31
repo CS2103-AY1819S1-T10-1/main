@@ -3,12 +3,14 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.SchedulerChangedEvent;
@@ -21,7 +23,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedScheduler versionedScheduler;
-    private final FilteredList<CalendarEvent> filteredCalendarEvents;
+    private FilteredList<CalendarEvent> filteredCalendarEvents;
 
     /**
      * Initializes a ModelManager with the given scheduler and userPrefs.
@@ -73,7 +75,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addCalendarEvent(CalendarEvent calendarEvent) {
         versionedScheduler.addCalendarEvent(calendarEvent);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        resetFilteredCalendarEventList();
         indicateSchedulerChanged();
     }
 
@@ -92,6 +94,15 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code versionedScheduler}
      */
     @Override
+    public ObservableList<CalendarEvent> getFullCalendarEventList() {
+        return FXCollections.unmodifiableObservableList(versionedScheduler.getCalendarEventList());
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code CalendarEvent} backed by the internal list of
+     * {@code versionedScheduler}
+     */
+    @Override
     public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
         return FXCollections.unmodifiableObservableList(filteredCalendarEvents);
     }
@@ -100,6 +111,23 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
         requireNonNull(predicate);
         filteredCalendarEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public void addPredicate(Predicate<CalendarEvent> predicate) {
+        requireNonNull(predicate);
+        filteredCalendarEvents = new FilteredList<>(filteredCalendarEvents, predicate);
+    }
+
+    @Override
+    public void sortFilteredCalendarEventList(Comparator<CalendarEvent> comparator) {
+        requireNonNull(comparator);
+        filteredCalendarEvents = new FilteredList<>(new SortedList<>(filteredCalendarEvents, comparator));
+    }
+
+    @Override
+    public void resetFilteredCalendarEventList() {
+        filteredCalendarEvents = new FilteredList<>(versionedScheduler.getCalendarEventList());
     }
 
     //=========== Undo/Redo =================================================================================

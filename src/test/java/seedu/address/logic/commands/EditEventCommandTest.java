@@ -30,7 +30,8 @@ import seedu.address.testutil.CalendarEventBuilder;
 import seedu.address.testutil.EditCalendarEventDescriptorBuilder;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditEventCommand.
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
+ * and unit tests for EditEventCommand.
  */
 public class EditEventCommandTest {
 
@@ -43,7 +44,8 @@ public class EditEventCommandTest {
         EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder(editedCalendarEvent).build();
         EditEventCommand editEventCommand = new EditEventCommand(INDEX_FIRST_ELEMENT, descriptor);
 
-        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
+        String expectedMessage = String.format(
+                EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
 
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
         expectedModel.updateCalendarEvent(model.getFilteredCalendarEventList().get(0), editedCalendarEvent);
@@ -62,11 +64,13 @@ public class EditEventCommandTest {
             personInList.withTitle(VALID_TITLE_TUTORIAL).withDescription(VALID_DESCRIPTION_TUTORIAL)
                 .withTags(VALID_TAG_HUSBAND).build();
 
-        EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL)
+        EditCalendarEventDescriptor descriptor =
+            new EditCalendarEventDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL)
             .withDescription(VALID_DESCRIPTION_TUTORIAL).withTags(VALID_TAG_HUSBAND).build();
         EditEventCommand editEventCommand = new EditEventCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
+        String expectedMessage =
+                String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
 
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
         expectedModel.updateCalendarEvent(lastCalendarEvent, editedCalendarEvent);
@@ -77,10 +81,13 @@ public class EditEventCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditEventCommand editEventCommand = new EditEventCommand(INDEX_FIRST_ELEMENT, new EditCalendarEventDescriptor());
-        CalendarEvent editedCalendarEvent = model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+        EditEventCommand editEventCommand =
+                new EditEventCommand(INDEX_FIRST_ELEMENT, new EditCalendarEventDescriptor());
+        CalendarEvent editedCalendarEvent =
+                model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
 
-        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
+        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS,
+                                                editedCalendarEvent);
 
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
         expectedModel.commitScheduler();
@@ -99,7 +106,8 @@ public class EditEventCommandTest {
         EditEventCommand editEventCommand = new EditEventCommand(INDEX_FIRST_ELEMENT,
             new EditCalendarEventDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL).build());
 
-        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent);
+        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS,
+                                                editedCalendarEvent);
 
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
         expectedModel.updateCalendarEvent(model.getFilteredCalendarEventList().get(0), editedCalendarEvent);
@@ -114,7 +122,8 @@ public class EditEventCommandTest {
         EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder(firstCalendarEvent).build();
         EditEventCommand editEventCommand = new EditEventCommand(INDEX_SECOND_ELEMENT, descriptor);
 
-        assertCommandFailure(editEventCommand, model, commandHistory, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
+        assertCommandFailure(editEventCommand, model, commandHistory,
+                                EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
     }
 
     @Test
@@ -127,7 +136,8 @@ public class EditEventCommandTest {
         EditEventCommand editEventCommand = new EditEventCommand(INDEX_FIRST_ELEMENT,
             new EditCalendarEventDescriptorBuilder(calendarEventInList).build());
 
-        assertCommandFailure(editEventCommand, model, commandHistory, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
+        assertCommandFailure(editEventCommand, model, commandHistory,
+                                EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
     }
 
     @Test
@@ -162,7 +172,8 @@ public class EditEventCommandTest {
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         CalendarEvent editedCalendarEvent = new CalendarEventBuilder().build();
-        CalendarEvent calendarEventToEdit = model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+        CalendarEvent calendarEventToEdit =
+                model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder(editedCalendarEvent).build();
         EditEventCommand editEventCommand = new EditEventCommand(INDEX_FIRST_ELEMENT, descriptor);
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
@@ -212,7 +223,8 @@ public class EditEventCommandTest {
         Model expectedModel = new ModelManager(new Scheduler(model.getScheduler()), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_ELEMENT);
-        CalendarEvent calendarEventToEdit = model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+        CalendarEvent calendarEventToEdit =
+                model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         expectedModel.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
         expectedModel.commitScheduler();
 

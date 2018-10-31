@@ -4,7 +4,7 @@ import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
 import static seedu.address.testutil.TypicalTodoListEvents.getTypicalToDoListEvents;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysToDo;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEqualsToDo;
@@ -29,7 +29,7 @@ public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<ToDoListEvent> TYPICAL_TODOLIST_EVENTS =
             FXCollections.observableList(getTypicalToDoListEvents());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_ELEMENT);
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "sandbox");
 
@@ -37,7 +37,6 @@ public class TaskListPanelTest extends GuiUnitTest {
 
     private TaskListPanelHandle taskListPanelHandle;
 
-    //TODO CANNOT PASS THIS TEST
     @Test
     public void display() {
         initUi(TYPICAL_TODOLIST_EVENTS);
@@ -52,7 +51,6 @@ public class TaskListPanelTest extends GuiUnitTest {
         }
     }
 
-    //TODO CANNOT PASS THIS TEST
     @Test
     public void handleJumpToListRequestEvent() {
         initUi(TYPICAL_TODOLIST_EVENTS);
@@ -60,7 +58,7 @@ public class TaskListPanelTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         ToDoListEventCardHandle expectedEvent =
-                taskListPanelHandle.getToDoListCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+                taskListPanelHandle.getToDoListCardHandle(INDEX_SECOND_ELEMENT.getZeroBased());
         ToDoListEventCardHandle selectedEvent = taskListPanelHandle.getHandleToSelectedCard();
         assertCardEqualsToDo(expectedEvent, selectedEvent);
     }

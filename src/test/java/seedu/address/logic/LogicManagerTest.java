@@ -55,7 +55,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandToDoExecutionError_throwsCommandToDoException() {
-        String deleteToDoCommand = "delete_todo 9";
+        String deleteToDoCommand = "delete todo 9";
         assertCommandToDoException(deleteToDoCommand, MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteToDoCommand);
     }

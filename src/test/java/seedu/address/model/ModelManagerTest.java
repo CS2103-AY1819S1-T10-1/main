@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 import static seedu.address.testutil.TypicalEvents.BENSON;
 import static seedu.address.testutil.TypicalEvents.LECTURE;
 
@@ -74,7 +73,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(scheduler, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        modelManager.resetFilteredCalendarEventList();
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

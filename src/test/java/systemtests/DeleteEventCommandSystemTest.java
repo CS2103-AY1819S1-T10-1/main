@@ -33,7 +33,8 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         /* Case: delete the first calendarevent in the list, command with leading spaces and trailing spaces ->
         deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteEventCommand.COMMAND_WORD + "      " + INDEX_FIRST_ELEMENT.getOneBased() + "       ";
+        String command = "     " + DeleteEventCommand.COMMAND_WORD + "      "
+                            + INDEX_FIRST_ELEMENT.getOneBased() + "       ";
         CalendarEvent deletedCalendarEvent = removePerson(expectedModel, INDEX_FIRST_ELEMENT);
         String expectedResultMessage = String.format(MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, deletedCalendarEvent);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -111,7 +112,8 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         assertCommandFailure(DeleteEventCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteEventCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteEventCommand.COMMAND_WORD + " 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
@@ -141,7 +143,8 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, deletedCalendarEvent);
 
         assertCommandSuccess(
-            DeleteEventCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+            DeleteEventCommand.COMMAND_WORD + " " + toDelete.getOneBased(),
+                expectedModel, expectedResultMessage);
     }
 
     /**

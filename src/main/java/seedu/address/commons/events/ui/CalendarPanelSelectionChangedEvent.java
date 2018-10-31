@@ -6,12 +6,12 @@ import seedu.address.model.calendarevent.CalendarEvent;
 /**
  * Represents a selection change in the Calendar Event List Panel
  */
-public class PersonPanelSelectionChangedEvent extends BaseEvent {
+public class CalendarPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final CalendarEvent newSelection;
 
-    public PersonPanelSelectionChangedEvent(CalendarEvent newSelection) {
+    public CalendarPanelSelectionChangedEvent(CalendarEvent newSelection) {
         this.newSelection = newSelection;
     }
 

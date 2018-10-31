@@ -3,8 +3,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ListView fx:id="toDoListView" prefHeight="600.0" prefWidth="410.0" />
-   </children>
+<VBox prefHeight="675.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+      <ListView fx:id="toDoListView" style="-fx-background-color: #383838;" VBox.vgrow="ALWAYS" />
 </VBox>

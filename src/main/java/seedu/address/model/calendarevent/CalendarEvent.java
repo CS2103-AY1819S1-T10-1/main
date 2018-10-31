@@ -119,6 +119,18 @@ public class CalendarEvent extends Agenda.AppointmentImplLocal {
     }
 
     /**
+     * Returns an immutable set of tags as Strings, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<String> getTagStrings() {
+        HashSet<String> tagStrings = new HashSet<>();
+        for (Tag tag : tags) {
+            tagStrings.add(tag.toString());
+        }
+        return Collections.unmodifiableSet(tagStrings);
+    }
+
+    /**
      * Returns true if both calendar events of the same title also have the same start and end times.
      * This defines a weaker notion of equality between two calendar events.
      */

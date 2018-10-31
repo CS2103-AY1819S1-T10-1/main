@@ -21,7 +21,8 @@ public class ClearCalendarCommandTest {
         Model expectedModel = new ModelManager();
         expectedModel.commitScheduler();
 
-        assertCommandSuccess(new ClearCalendarCommand(), model, commandHistory, ClearCalendarCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCalendarCommand(), model, commandHistory,
+                ClearCalendarCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -31,7 +32,8 @@ public class ClearCalendarCommandTest {
         expectedModel.resetData(new Scheduler());
         expectedModel.commitScheduler();
 
-        assertCommandSuccess(new ClearCalendarCommand(), model, commandHistory, ClearCalendarCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCalendarCommand(), model, commandHistory,
+                                ClearCalendarCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
 }

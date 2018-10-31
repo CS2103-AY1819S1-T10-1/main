@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -119,12 +120,32 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public ObservableList<CalendarEvent> getFullCalendarEventList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public void addPredicate(Predicate<CalendarEvent> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void sortFilteredCalendarEventList(Comparator<CalendarEvent> comparator) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void resetFilteredCalendarEventList() {
             throw new AssertionError("This method should not be called.");
         }
 

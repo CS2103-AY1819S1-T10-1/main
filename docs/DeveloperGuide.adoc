@@ -244,22 +244,135 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::toDoList
-=== ToDoList  feature
+// tag::ToDoList[]
+=== ToDoList feature
 ==== Current implementation
 
-The ToDoList mechanism is facilatated by 'ToDoList', which is a differrent but similar class form 'Schedule'.
-Inside the 'ToDoList', there are UnDuplicated 'ToDoListEvent' which include 'Title', 'Description' and 'Priority'.
-User can add events to ToDoList with 'Title', 'Description' and 'Priority'.
-The toDoList will display events in priority-decreassing order.
-Also, if click the completed event, it will be deleted from toDoList.
+===== Model for ToDoList feature:
+The ToDoList Model `ModelToDo` allows the `ToDoList` to store and display `ToDoListEvents`.
 
-Model for toDoList feature:
-* `Priority` -- Represents the priority of a todoList event.
-* `ToDoListEvent` -- The structure of single event in toDoList.
-* `TodoList` -- Wraps all data at the toDoList level. uplicates are not allowed.
-* `UniqueToDoEventList` -- A list of todoEvents that enforces uniqueness between its elements and does not allow nulls.
-* `ReadOnlyToDoList` -- Unmodifiable view of a ToDoList.
+`ToDoListEvent` stores the relevant information for each event in the toDoList, such as the title, description and priority.
+
+`AddToDoCommandParser` and `DeleteToDoCommandParser` functionaly have been created and allow user to add and delete `ToDoListEvent` objects.
+Prefixes t/, d/ and p/ respectively allow user to input `Title`, `Description` and `Priority` for each todolist event.
+
+Given below is an example usage scenario for adding a todolist event, and how the todolist model behaves at each step.
+
+Step 1: The user lauches the application for the first time. The `ToDoList` is initialised to be empty.
+
+Step 2: The user excutes `add todo t/CS3230 Assignment1 d/Dynamic Programming P/H`.
+
+Step 3: The `AddToDoCommandParser` parsers out the strings for the title, description and priority.
+
+Step 4: Then, `ParserUtil` checks that the input strings are valid, and uinitialises the `Title`, `Description` and `Priority`. It also checks that the `Priority` iniput is a valid priority.
+
+Stepp 5: Following that, a new `ToDoListEvent` is initialised and will be displayed in the list of todo list events in the GUI.
+
+Given below is an example usage scenario for deleting a todolist event, and how the todolist model behaves at each step.
+
+Step 1: Make sure the todo list is not empty.
+
+Step 2: The user excutes `delete todo [index of event]` while `[indelx of event]` is the index number for a corresponding todolist event` displayed in `ToDoList` GUI.
+
+Step 3: The `DeleteToDoCommandParser` parsers out the strings for the index.
+
+Step 4: Then, `ParserUtil` checks that the input index is valid.
+
+Stepp 5: Following that, the corresponding `ToDoListEvent` will be deleted and not displayed on th GUI.
+
+==== Logic for ToDoList feature:
+
+* `Logic#executeToDo` -- Executes the commandToDo and returns the result.
+* `Logic#getFilteredToDoListEventList` -- Returns an unmodifiable view of the filtered list of `ToDoListEvent`.
+* `LogicManager#ModelToDo` -- Model for `ToDoListEvent`.
+
+===== commands
+* `CommandToDo` -- Abstract class for executing todo list.
+* `AddToDoCommand`/`DeleteToDoCommand` -- Extends `CommandToDo` for `add todo`/`delete todo` functionality.
+
+===== parsers
+* `ParserToDo` -- Represents a parser that is able to parse user input into a `CommandToDo`.
+* `SchedulerParser#parserCommandToDo` -- Parses user input into commandToDo for execution.
+
+==== Storage for ToDoList feature:
+
+* `ToDoListStorage` -- Represents a storage for `ToDoList`.
+* `XmlAdaptedToDoListEvent` -- JAXB-friendly version of the `ToDoListEvent`.
+* `XmlSerializableToDoList` -- An Immutable `ToDoList` that is serializable to XML format
+* `XmlToDoListStorage` -- A class to access `ToDoList` data stored as an xml file on the hard disk.
+* `Storage` -- Add Extension to `ToDoListStorage`.
+* `StorageManager` -- Add `ToDoListStorage` component.
+
+==== GUI for ToDoList feature:
+The ToDoList GUI contains two parts:
+
+* `TaskListPanel` -- Panel containing the list of `ToDoListEvent`.
+* `ToDoListEventCard` -- An UI component that displays information of a `ToDoListEvent`.
+
+In `ToDoListEventCards`, there are four components:
+
+* `ToDoListEventCard#CheckBox` -- For check completed task.
+* `ToDoListEventCard#Label(id)` -- For Display index of corresponding `ToDoListEvent`.
+* `ToDoListEventCard#Label(title)` -- For Display title of corresponding `ToDoListEvent`.
+* `ToDoListEventCard#Label(priority)` -- For Display priority of corresponding `ToDoListEvent`. And different priorities will be displayed in different colors.
+
+==== Design Considerations
+
+Aspect: How to implement ToDoList Model
+
+* **Alternative 1 (current choice):** Re-construct a new model for ToDoList.
+
+** Pros: Will not influence current functionalities for Calendar part.
+
+** Cons: Time cost (Need to re-construct a lot of classes).
+
+* **Alternative 2:** Modify current calendar model to support both events.
+
+** Pros: Need less classes to re-construct.
+
+** Cons: May cause some trouble in curent Calendar model.
+
+Aspect: How to implement ToDoList Logic
+
+* **Alternative 1 (current choice):** Modify the curernt `Logic`and `LogicManager`.
+
+** Pros: Can be easilly implement and can use the current parser.
+
+** Cons: Need extra methods to execute `CommandToDo`.
+
+* **Alternative 2:** Re-construct a new `LogicToDo` for `ToDoList`.
+
+** Pros: Will not influence current Scheduler Logic.
+
+** Cons: Difficult to implement in `MainApp` and other combined classes (need another `LogicToDo` object).
+
+Aspect: How to implement ToDoList Storage
+
+* **Alternative 1 (current choice):** Modify the curernt `Storage`and `StorageManager`.
+
+** Pros: Can be easilly implement.
+
+** Cons: Need to extends one more `ToDoListStorage`.
+
+* **Alternative 2:** Re-construct a new `StorageToDo` for `ToDoList`.
+
+** Pros: Will not influence current `Storage`.
+
+** Cons: Difficult to implement in `MainApp` and other combined classes. Cause redundant work.
+
+Aspect: How to implement ToDoList UI
+
+* **Alternative 1 (current choice):** Extend current GUI and left side become ToDoList GUI.
+
+** Pros: Will be synchronous for `ToDoList` and `Calendar`.
+
+** Cons: Need to modify current GUI.
+
+* **Alternative 2:** Totally seperate to be 2 GUI (including two `CommandBox`).
+
+** Pros: Don't need to change current GUI.
+
+** Cons: Need to consruct a lot parts in GUI.
 
 // tag::undoredo[]
 === Undo/Redo feature

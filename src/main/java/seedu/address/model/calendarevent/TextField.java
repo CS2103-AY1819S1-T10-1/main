@@ -17,7 +17,7 @@ public class TextField {
      * The first character of the text field must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "\\S.+";
+    private static final String VALIDATION_REGEX = "\\S.+";
 
     public final String value;
 

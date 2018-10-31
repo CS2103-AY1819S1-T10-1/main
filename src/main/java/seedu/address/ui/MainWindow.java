@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +19,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchToSearchTabEvent;
+import seedu.address.commons.events.ui.SwitchToTasksTabEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -43,6 +46,12 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private HelpWindow helpWindow;
 
+    private final int toDoListPanelTab = 0;
+    private final int searchPanelTab = 1;
+
+    @FXML
+    private TabPane tabPane;
+
     @FXML
     private StackPane taskListPanelPlaceholder;
 
@@ -62,7 +71,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane calendarPanelPlaceholder;
 
     @FXML
-    private VBox dayMonthYearPanelPlaceholder;
+    private VBox monthYearPanelPlaceholder;
 
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -132,11 +141,11 @@ public class MainWindow extends UiPart<Stage> {
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredToDoListEventList());
         taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
 
-        calendarDisplay = new CalendarDisplay(logic.getFilteredCalendarEventList());
+        calendarDisplay = new CalendarDisplay(logic.getFullCalendarEventList());
         calendarDisplayPlaceholder.getChildren().add(calendarDisplay.getRoot());
 
-        DayMonthYearPanel dayMonthYearPanel = new DayMonthYearPanel(logic.getFilteredCalendarEventList());
-        dayMonthYearPanelPlaceholder.getChildren().add(dayMonthYearPanel.getRoot());
+        MonthYearPanel monthYearPanel = new MonthYearPanel(logic.getFilteredCalendarEventList());
+        monthYearPanelPlaceholder.getChildren().add(monthYearPanel.getRoot());
 
         CalendarPanel calendarPanel = new CalendarPanel(logic.getFilteredCalendarEventList());
         calendarPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
@@ -173,7 +182,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-            (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
     /**
@@ -185,6 +194,27 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.show();
         } else {
             helpWindow.focus();
+        }
+    }
+
+    /**
+     * Switches to the tab for the task list panel (if it is not already open)
+     */
+    @FXML
+    public void showTaskListPanel() {
+        if (!tabPane.getSelectionModel().isSelected(toDoListPanelTab)) {
+            tabPane.getSelectionModel().select(toDoListPanelTab);
+        }
+    }
+
+    /**
+     * Updates the calendar event search panel and switches to its tab (if it is not already open)
+     */
+    @FXML
+    public void showCalendarEventPanel() {
+        calendarPanelPlaceholder.getChildren().add(new CalendarPanel(logic.getFilteredCalendarEventList()).getRoot());
+        if (!tabPane.getSelectionModel().isSelected(searchPanelTab)) {
+            tabPane.getSelectionModel().select(searchPanelTab);
         }
     }
 
@@ -217,5 +247,17 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleSwitchToTasksTabEvent(SwitchToTasksTabEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showTaskListPanel();
+    }
+
+    @Subscribe
+    private void handleSwitchToSearchTabEvent(SwitchToSearchTabEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showCalendarEventPanel();
     }
 }

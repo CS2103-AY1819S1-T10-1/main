@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Collection;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
@@ -71,7 +72,30 @@ public class StringUtil {
     }
 
     /**
-     * Checks if sentence contains {@code word}, or words similar to {@code word}
+     * Checks if {@code collection} of strings contains {@code string}
+     *
+     * @param collection collection to be checked
+     * @param string that is being searched for
+     * @return whether words are similar within the tolerance
+     */
+    public static boolean containsIgnoreCase(Collection<String> collection, String string) {
+        requireNonNull(string);
+        requireNonNull(collection);
+
+        String preppedString = string.trim();
+
+        checkArgument(!preppedString.isEmpty(), "String parameter cannot be empty");
+
+        for (String str : collection) {
+            if (str.trim().equalsIgnoreCase(string)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if {@code sentence} contains {@code word}, or words similar to {@code word}
      *
      * @param tolerance higher tolerance means only very similar words will match, value between 0 to 100
      * @param sentence sentence to be checked
@@ -90,6 +114,31 @@ public class StringUtil {
 
         return partialRatioTest(preppedSentence, preppedWord, tolerance)
                 || tokenSetRatioTest(sentence, word, tolerance);
+    }
+
+    /**
+     * Checks if {@code sentence} contains {@code word}, or words similar to {@code word}
+     * Returns an integer score representing the degree to which the word matches the sentence
+     * Closer match would return a higher integer
+     *
+     * @param sentence sentence to be checked
+     * @param word that is being searched for, does not need to be single word
+     * @return int between 0 and 100
+     */
+    public static int fuzzyMatchScore(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        preppedWord = preppedWord.toLowerCase();
+
+        String preppedSentence = sentence.toLowerCase();
+
+        int score = Integer.max(computePartialRatio(preppedSentence, preppedWord),
+                                    computeTokenSetRatio(preppedSentence, preppedWord));
+
+        return score;
     }
 
     /**

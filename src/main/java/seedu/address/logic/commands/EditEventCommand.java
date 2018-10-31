@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CALENDAR_EVENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -86,7 +85,7 @@ public class EditEventCommand extends Command {
         }
 
         model.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
+        model.resetFilteredCalendarEventList();
         model.commitScheduler();
         return new CommandResult(String.format(MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent));
     }

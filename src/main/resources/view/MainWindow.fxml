@@ -23,7 +23,7 @@
                 <URL value="@Extensions.css"/>
             </stylesheets>
             <SplitPane dividerPositions="0.25" prefHeight="675.0" prefWidth="1200.0">
-                <TabPane fx:id="TabPane" tabClosingPolicy="UNAVAILABLE">
+                <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
                     <Tab text="To Do List">
                         <VBox prefHeight="675.0" prefWidth="300.0">
                             <Label fx:id="taskListHeader" maxWidth="1.7976931348623157E308" minHeight="25.0" text="Tasks"
@@ -48,10 +48,9 @@
                         </VBox>
                     </Tab>
                 </TabPane>
-
                 <VBox prefHeight="675.0" prefWidth="900.0">
-                    <VBox fx:id="dayMonthYearPanelPlaceholder" maxHeight="-Infinity" minHeight="-Infinity"
-                          prefHeight="85" prefWidth="900" VBox.vgrow="NEVER"/>
+                    <VBox fx:id="monthYearPanelPlaceholder" maxHeight="-Infinity" minHeight="-Infinity"
+                          prefHeight="50" prefWidth="900" VBox.vgrow="NEVER"/>
                     <StackPane fx:id="calendarDisplayPlaceholder" prefWidth="900"/>
 
                     <StackPane fx:id="calendarCommandBoxBorder" maxHeight="-Infinity" minHeight="-Infinity"

@@ -32,6 +32,11 @@ public interface Logic {
     CommandResult executeToDo(String commandText) throws CommandException, ParseException;
 
     /**
+     * Returns an unmodifiable view of the full list of calendar events
+     */
+    ObservableList<CalendarEvent> getFullCalendarEventList();
+
+    /**
      * Returns an unmodifiable view of the filtered list of calendar events
      */
     ObservableList<CalendarEvent> getFilteredCalendarEventList();
