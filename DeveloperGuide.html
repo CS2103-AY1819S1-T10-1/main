@@ -29,13 +29,15 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#todolist-feature">3.1. ToDoList  feature</a></li>
-<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
+<li><a href="#todolist-feature">3.1. ToDoList feature</a></li>
+<li><a href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></li>
 <li><a href="#calendar-model">3.3. Calendar Model</a></li>
 <li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
 <li><a href="#logging">3.5. Logging</a></li>
 <li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
-<li><a href="#calendar-navigation-feature">3.7. Calendar Navigation Feature</a></li>
+<li><a href="#calendar-display">3.7. Calendar Display</a></li>
+<li><a href="#calendar-navigation-feature">3.8. Calendar Navigation Feature</a></li>
+<li><a href="#undo-redo-feature">3.9. Undo/Redo feature</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -605,30 +607,545 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book<
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="todolist-feature"><a class="link" href="#todolist-feature">3.1. ToDoList  feature</a></h3>
+<h3 id="todolist-feature"><a class="link" href="#todolist-feature">3.1. ToDoList feature</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current implementation</a></h4>
+<div class="sect4">
+<h5 id="model-for-todolist-feature"><a class="link" href="#model-for-todolist-feature">Model for ToDoList feature:</a></h5>
 <div class="paragraph">
-<p>The ToDoList mechanism is facilatated by 'ToDoList', which is a differrent but similar class form 'Schedule'.
-Inside the 'ToDoList', there are UnDuplicated 'ToDoListEvent' which include 'Title', 'Description' and 'Priority'.
-User can add events to ToDoList with 'Title', 'Description' and 'Priority'.
-The toDoList will display events in priority-decreassing order.
-Also, if click the completed event, it will be deleted from toDoList.</p>
+<p>The ToDoList Model <code>ModelToDo</code> allows the <code>ToDoList</code> to store and display <code>ToDoListEvents</code>.</p>
 </div>
 <div class="paragraph">
-<p>Model for toDoList feature:
-* <code>Priority</code>&#8201;&#8212;&#8201;Represents the priority of a todoList event.
-* <code>ToDoListEvent</code>&#8201;&#8212;&#8201;The structure of single event in toDoList.
-* <code>TodoList</code>&#8201;&#8212;&#8201;Wraps all data at the toDoList level. uplicates are not allowed.
-* <code>UniqueToDoEventList</code>&#8201;&#8212;&#8201;A list of todoEvents that enforces uniqueness between its elements and does not allow nulls.
-* <code>ReadOnlyToDoList</code>&#8201;&#8212;&#8201;Unmodifiable view of a ToDoList.</p>
+<p><code>ToDoListEvent</code> stores the relevant information for each event in the toDoList, such as the title, description and priority.</p>
+</div>
+<div class="paragraph">
+<p><code>AddToDoCommandParser</code> and <code>DeleteToDoCommandParser</code> functionaly have been created and allow user to add and delete <code>ToDoListEvent</code> objects.
+Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <code>Description</code> and <code>Priority</code> for each todolist event.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario for adding a todolist event, and how the todolist model behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user lauches the application for the first time. The <code>ToDoList</code> is initialised to be empty.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user excutes <code>add todo t/CS3230 Assignment1 d/Dynamic Programming P/H</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The <code>AddToDoCommandParser</code> parsers out the strings for the title, description and priority.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Then, <code>ParserUtil</code> checks that the input strings are valid, and uinitialises the <code>Title</code>, <code>Description</code> and <code>Priority</code>. It also checks that the <code>Priority</code> iniput is a valid priority.</p>
+</div>
+<div class="paragraph">
+<p>Stepp 5: Following that, a new <code>ToDoListEvent</code> is initialised and will be displayed in the list of todo list events in the GUI.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario for deleting a todolist event, and how the todolist model behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1: Make sure the todo list is not empty.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user excutes <code>delete todo [index of event]</code> while <code>[indelx of event]</code> is the index number for a corresponding todolist event` displayed in <code>ToDoList</code> GUI.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The <code>DeleteToDoCommandParser</code> parsers out the strings for the index.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Then, <code>ParserUtil</code> checks that the input index is valid.</p>
+</div>
+<div class="paragraph">
+<p>Stepp 5: Following that, the corresponding <code>ToDoListEvent</code> will be deleted and not displayed on th GUI.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="logic-for-todolist-feature"><a class="link" href="#logic-for-todolist-feature">3.1.2. Logic for ToDoList feature:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Logic#executeToDo</code>&#8201;&#8212;&#8201;Executes the commandToDo and returns the result.</p>
+</li>
+<li>
+<p><code>Logic#getFilteredToDoListEventList</code>&#8201;&#8212;&#8201;Returns an unmodifiable view of the filtered list of <code>ToDoListEvent</code>.</p>
+</li>
+<li>
+<p><code>LogicManager#ModelToDo</code>&#8201;&#8212;&#8201;Model for <code>ToDoListEvent</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="commands"><a class="link" href="#commands">commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CommandToDo</code>&#8201;&#8212;&#8201;Abstract class for executing todo list.</p>
+</li>
+<li>
+<p><code>AddToDoCommand</code>/<code>DeleteToDoCommand</code>&#8201;&#8212;&#8201;Extends <code>CommandToDo</code> for <code>add todo</code>/<code>delete todo</code> functionality.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="parsers"><a class="link" href="#parsers">parsers</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ParserToDo</code>&#8201;&#8212;&#8201;Represents a parser that is able to parse user input into a <code>CommandToDo</code>.</p>
+</li>
+<li>
+<p><code>SchedulerParser#parserCommandToDo</code>&#8201;&#8212;&#8201;Parses user input into commandToDo for execution.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="storage-for-todolist-feature"><a class="link" href="#storage-for-todolist-feature">3.1.3. Storage for ToDoList feature:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ToDoListStorage</code>&#8201;&#8212;&#8201;Represents a storage for <code>ToDoList</code>.</p>
+</li>
+<li>
+<p><code>XmlAdaptedToDoListEvent</code>&#8201;&#8212;&#8201;JAXB-friendly version of the <code>ToDoListEvent</code>.</p>
+</li>
+<li>
+<p><code>XmlSerializableToDoList</code>&#8201;&#8212;&#8201;An Immutable <code>ToDoList</code> that is serializable to XML format</p>
+</li>
+<li>
+<p><code>XmlToDoListStorage</code>&#8201;&#8212;&#8201;A class to access <code>ToDoList</code> data stored as an xml file on the hard disk.</p>
+</li>
+<li>
+<p><code>Storage</code>&#8201;&#8212;&#8201;Add Extension to <code>ToDoListStorage</code>.</p>
+</li>
+<li>
+<p><code>StorageManager</code>&#8201;&#8212;&#8201;Add <code>ToDoListStorage</code> component.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="gui-for-todolist-feature"><a class="link" href="#gui-for-todolist-feature">3.1.4. GUI for ToDoList feature:</a></h4>
+<div class="paragraph">
+<p>The ToDoList GUI contains two parts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>TaskListPanel</code>&#8201;&#8212;&#8201;Panel containing the list of <code>ToDoListEvent</code>.</p>
+</li>
+<li>
+<p><code>ToDoListEventCard</code>&#8201;&#8212;&#8201;An UI component that displays information of a <code>ToDoListEvent</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In <code>ToDoListEventCards</code>, there are four components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ToDoListEventCard#CheckBox</code>&#8201;&#8212;&#8201;For check completed task.</p>
+</li>
+<li>
+<p><code>ToDoListEventCard#Label(id)</code>&#8201;&#8212;&#8201;For Display index of corresponding <code>ToDoListEvent</code>.</p>
+</li>
+<li>
+<p><code>ToDoListEventCard#Label(title)</code>&#8201;&#8212;&#8201;For Display title of corresponding <code>ToDoListEvent</code>.</p>
+</li>
+<li>
+<p><code>ToDoListEventCard#Label(priority)</code>&#8201;&#8212;&#8201;For Display priority of corresponding <code>ToDoListEvent</code>. And different priorities will be displayed in different colors.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.5. Design Considerations</a></h4>
+<div class="paragraph">
+<p>Aspect: How to implement ToDoList Model</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Re-construct a new model for ToDoList.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will not influence current functionalities for Calendar part.</p>
+</li>
+<li>
+<p>Cons: Time cost (Need to re-construct a lot of classes).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Modify current calendar model to support both events.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Need less classes to re-construct.</p>
+</li>
+<li>
+<p>Cons: May cause some trouble in curent Calendar model.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Aspect: How to implement ToDoList Logic</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Modify the curernt <code>Logic`and `LogicManager</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Can be easilly implement and can use the current parser.</p>
+</li>
+<li>
+<p>Cons: Need extra methods to execute <code>CommandToDo</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Re-construct a new <code>LogicToDo</code> for <code>ToDoList</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will not influence current Scheduler Logic.</p>
+</li>
+<li>
+<p>Cons: Difficult to implement in <code>MainApp</code> and other combined classes (need another <code>LogicToDo</code> object).</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Aspect: How to implement ToDoList Storage</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Modify the curernt <code>Storage`and `StorageManager</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Can be easilly implement.</p>
+</li>
+<li>
+<p>Cons: Need to extends one more <code>ToDoListStorage</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Re-construct a new <code>StorageToDo</code> for <code>ToDoList</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will not influence current <code>Storage</code>.</p>
+</li>
+<li>
+<p>Cons: Difficult to implement in <code>MainApp</code> and other combined classes. Cause redundant work.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Aspect: How to implement ToDoList UI</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Extend current GUI and left side become ToDoList GUI.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will be synchronous for <code>ToDoList</code> and <code>Calendar</code>.</p>
+</li>
+<li>
+<p>Cons: Need to modify current GUI.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Totally seperate to be 2 GUI (including two <code>CommandBox</code>).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Don&#8217;t need to change current GUI.</p>
+</li>
+<li>
+<p>Cons: Need to consruct a lot parts in GUI.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
+<h3 id="fuzzy-search-and-filter-by-tags-for-find-event-command"><a class="link" href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="sect4">
+<h5 id="model"><a class="link" href="#model">Model</a></h5>
+<div class="paragraph">
+<p>The Fuzzy Search enhancement for the <code>find event</code> command is achieved using the <code>fuzzywuzzy</code> API. The existing
+<code>TitleContainsKeywordsPredicate</code> was modified such that the <code>test</code> method checks if the <code>keyword</code> matches the <code>Title</code>
+of the <code>CalendarEvent</code> using a fuzzy algorithm based on Levenshtein distance between strings, and assigns an integer
+score to the match. If this score is under the <code>threshold</code> of 70, the <code>Predicate</code> will filter out the <code>CalendarEvent</code>
+from the <code>ObservableList</code>.</p>
+</div>
+<div class="paragraph">
+<p>The Filter by Tags enhancement is achieved using a second <code>Predicate</code>, the <code>TagsPredicate</code>. This <code>Predicate</code> will <code>test</code>
+the <code>CalendarEvent</code> by checking if any of its <code>Tags</code> matches with any of the user input <code>tags</code>. The <code>Predicate</code> will
+filter out all events that do not contain any of the specified tags.</p>
+</div>
+<div class="paragraph">
+<p>Finally, the <code>FilteredList</code> is wrapped in a <code>SortedList</code>, and sorted based on <code>FuzzySearchComparator</code>. This comparator
+uses the aforementioned fuzzy match score, and sorts the <code>CalendarEvents</code> in descending order of match score.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="gui"><a class="link" href="#gui">3.2.2. GUI</a></h4>
+<div class="sect4">
+<h5 id="tabbed-interface"><a class="link" href="#tabbed-interface">Tabbed Interface</a></h5>
+<div class="paragraph">
+<p>Since the existing <code>ObservableList</code> of <code>CalendarEvents</code> was not used in the GUI, we needed to figure out an alternative
+way to display the results for the <code>find event</code> command. We achieved this by incorporating a tabbed interface where the
+<code>TaskList</code> and the <code>CalendarEvent</code> list for the search results were shown in separate tabs.</p>
+</div>
+<div class="paragraph">
+<p>To aid our target user, who mainly uses CLI, we incorporated functionality to automatically switch to the most relevant
+tab based on the command input by the user. When the user inputs a todo list command, a <code>SwitchToTasksTabEvent</code> is
+posted to the <code>EventsCenter</code>; while when the user inputs a <code>find event</code> or <code>list event</code> command, a
+<code>SwitchToSearchTabEvent</code> is posted.</p>
+</div>
+<div class="paragraph">
+<p>The <code>MainWindow</code> handles the <code>SwitchToTasksTabEvent</code> and <code>SwitchToSearchTabEvent</code> - it switches to the appropriate tab
+when it receives either <code>Event</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updating-filteredlist-sortedlist"><a class="link" href="#updating-filteredlist-sortedlist">Updating FilteredList/SortedList</a></h5>
+<div class="paragraph">
+<p>In the original implementation, the main list of <code>CalendarEvent</code> that is shown on the GUI is implemented using a single,
+final <code>FilteredList</code> and changing the <code>Predicate</code> as needed. The <code>FilteredList</code> itself does not change unless the
+underlying <code>List</code> of <code>CalendarEvent</code> is changed (in which case the entire <code>Model</code> is reinitialised).</p>
+</div>
+<div class="paragraph">
+<p>However, in our current implementation, we only need to display the list of <code>CalendarEvent</code> when we show the results for
+the <code>find event</code> or <code>list event</code> commands. Furthermore, since we use multiple <code>Predicates</code> as well as a <code>Comparator</code>,
+the original implementation is not usable.</p>
+</div>
+<div class="paragraph">
+<p>Hence, we modified the <code>ModelManager</code> by allowing the <code>FilteredList</code> to be changed as need be. Hence whenever an
+additional <code>Predicate</code> needs to be added, we would wrap the original <code>FilteredList</code> with a new <code>FilteredList</code> using the
+new <code>Predicate</code>. Similarly, when we needed to sort based on a <code>Comparator</code>, we would wrap the <code>FilteredList</code> with a new
+<code>SortedList</code> using the required <code>Comparator</code> using the current <code>FilteredList</code> as a base.</p>
+</div>
+<div class="paragraph">
+<p>Since this update would only occur during <code>find event</code> or <code>list event</code> commands, we modified the handling of the
+<code>SwitchToSearchTabEvent</code> by the <code>MainWindow</code> to also trigger the GUI to reload the <code>ObservableList</code>/<code>FilteredList</code>
+backing the search result panel.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="calendar-model"><a class="link" href="#calendar-model">3.3. Calendar Model</a></h3>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">3.3.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The calendar model adapts the previous address book functionality to allow the <code>Scheduler</code> to store and display <code>CalendarEvents</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>Person</code> has been refactored to <code>CalendarEvent</code>. This class stores the relevant information for each event in the
+calendar, such as the title, description, start and end date/time, venue and tags.</p>
+</div>
+<div class="paragraph">
+<p><code>DateTime</code> stores and validates the input start and end date/time of each event in the calendar.</p>
+</div>
+<div class="paragraph">
+<p><code>DateTimeInfo</code> validates that the start date/time are not after the end date/time.</p>
+</div>
+<div class="paragraph">
+<p><code>AddCommandParser</code> and <code>EditCommandParser</code> functionality have been modified to allow the creation and modification of <code>CalendarEvent</code> objects.
+New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Description</code>, start <code>DateTime</code>, end <code>DateTime</code>, and <code>Venue</code> for each calendar event.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario for adding a calendar event, and how the calendar model behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1: The user launches the application for the first time. The <code>Scheduler</code> is initialised to be empty.</p>
+</div>
+<div class="paragraph">
+<p>Step 2: The user executes <code>add t/CS2103 Tutorial d/Prepare answers to the 5 questions s/Thursday 10am e/Thursday 11am v/COM1-0210</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: The <code>AddCommandParser</code> parses out the strings for the title, description, start and end date/time and the venue.</p>
+</div>
+<div class="paragraph">
+<p>Step 4: Then, <code>ParserUtil</code> checks that the input strings are valid, and initialises the <code>Title</code>, <code>Description</code>, start and end <code>DateTime</code> and <code>Venue</code>. It also checks that the <code>DateTime</code> values input are valid dates and times.</p>
+</div>
+<div class="paragraph">
+<p>Step 5: Subsequently, <code>AddCommandParser</code> calls <code>DateTimeInfo</code> to validate that the start date/time is not chronologically after the end <code>DateTime</code>, before wrapping the start and end <code>DateTime</code> in a <code>DateTimeInfo</code> object.</p>
+</div>
+<div class="paragraph">
+<p>Step 6: Following that, a new <code>CalendarEvent</code> is initialised and will be displayed in the calendar GUI.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
+<div class="paragraph">
+<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<div class="paragraph">
+<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+</li>
+<li>
+<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
+</li>
+<li>
+<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Logging Levels</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
+</li>
+<li>
+<p><code>WARNING</code> : Can continue, but with caution</p>
+</li>
+<li>
+<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
+</li>
+<li>
+<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<div class="paragraph">
+<p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="calendar-display"><a class="link" href="#calendar-display">3.7. Calendar Display</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.7.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The Calendar Display is implemented using the <strong>Agenda</strong>, a rich Control under <strong>jfxtras</strong>. <strong>Agenda</strong> accepts the Calendar Events of the user and displays them in the chronological format.</p>
+</div>
+<div class="paragraph">
+<p>As the calendar is intended to be a visual representation of the calendar events, any changes to the calendar events should be done through the command line interface. Hence, some of the built-in features that <strong>Agenda</strong> has to add, edit and delete events have been disabled.</p>
+</div>
+<div class="paragraph">
+<p>The Calendar display listens to the list of calendar events. When the list is changed, the calendar display will update itself accordingly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="features"><a class="link" href="#features">3.7.2. Features</a></h4>
+<div class="paragraph">
+<p>The user can:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Double click on displayed events to open a dialog box containing the details of the event.</p>
+</li>
+<li>
+<p>Jump to the time period containing an event by selecting the event in the list of calendar events.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.8. Calendar Navigation Feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.8.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The user can navigate the calendar display using the <code>arrow keys</code> and <code>T</code> key.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The user can toggle between weekly view and daily view using <code>T</code> key.</p>
+</li>
+<li>
+<p>The user can view the next / previous day or week using <code>left</code> and <code>right</code> arrows keys.</p>
+</li>
+<li>
+<p>The user can scroll up and down using <code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>While not a CLI feature, it is fast and easy to navigate around the calendar.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.8.2. Planned Implementation</a></h4>
+<div class="paragraph">
+<p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the navigation mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user is viewing the events for one week.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The user executes <code>next week</code> to view the events in the following week. The command is parsed by <code>schedulerParser#parseCommand</code>, returning <code>ChangePeriodCommand</code></p>
+</div>
+<div class="paragraph">
+<p>Step 3. <code>ChangePeriodCommand#executes</code> called with <code>EventIsInThisPeriodPredicate</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. <code>filteredCalendarEvents</code> is updated.</p>
+</div>
+<div class="paragraph">
+<p>Step 5. <code>CalendarPanel#filteredCalendarEventsListener</code> repopulates the calendar UI.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.9. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.9.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by <code>VersionedAddressBook</code>.
 It extends <code>AddressBook</code> with an undo/redo history, stored internally as an <code>addressBookStateList</code> and <code>currentStatePointer</code>.
@@ -758,7 +1275,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.9.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -824,136 +1341,6 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </li>
 </ul>
 </div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="calendar-model"><a class="link" href="#calendar-model">3.3. Calendar Model</a></h3>
-<div class="sect3">
-<h4 id="implementation-2"><a class="link" href="#implementation-2">3.3.1. Implementation</a></h4>
-<div class="paragraph">
-<p>The calendar model adapts the previous address book functionality to allow the <code>Scheduler</code> to store and display <code>CalendarEvents</code>.</p>
-</div>
-<div class="paragraph">
-<p><code>Person</code> has been refactored to <code>CalendarEvent</code>. This class stores the relevant information for each event in the
-calendar, such as the title, description, start and end date/time, venue and tags.</p>
-</div>
-<div class="paragraph">
-<p><code>DateTime</code> stores and validates the input start and end date/time of each event in the calendar.</p>
-</div>
-<div class="paragraph">
-<p><code>DateTimeInfo</code> validates that the start date/time are not after the end date/time.</p>
-</div>
-<div class="paragraph">
-<p><code>AddCommandParser</code> and <code>EditCommandParser</code> functionality have been modified to allow the creation and modification of <code>CalendarEvent</code> objects.
-New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Description</code>, start <code>DateTime</code>, end <code>DateTime</code>, and <code>Venue</code> for each calendar event.</p>
-</div>
-<div class="paragraph">
-<p>Given below is an example usage scenario for adding a calendar event, and how the calendar model behaves at each step.</p>
-</div>
-<div class="paragraph">
-<p>Step 1: The user launches the application for the first time. The <code>Scheduler</code> is initialised to be empty.</p>
-</div>
-<div class="paragraph">
-<p>Step 2: The user executes <code>add t/CS2103 Tutorial d/Prepare answers to the 5 questions s/Thursday 10am e/Thursday 11am v/COM1-0210</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 3: The <code>AddCommandParser</code> parses out the strings for the title, description, start and end date/time and the venue.</p>
-</div>
-<div class="paragraph">
-<p>Step 4: Then, <code>ParserUtil</code> checks that the input strings are valid, and initialises the <code>Title</code>, <code>Description</code>, start and end <code>DateTime</code> and <code>Venue</code>. It also checks that the <code>DateTime</code> values input are valid dates and times.</p>
-</div>
-<div class="paragraph">
-<p>Step 5: Subsequently, <code>AddCommandParser</code> calls <code>DateTimeInfo</code> to validate that the start date/time is not chronologically after the end <code>DateTime</code>, before wrapping the start and end <code>DateTime</code> in a <code>DateTimeInfo</code> object.</p>
-</div>
-<div class="paragraph">
-<p>Step 6: Following that, a new <code>CalendarEvent</code> is initialised and will be displayed in the list of calendar events in the GUI.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.3.2. Design Considerations</a></h4>
-<div class="sect4">
-<h5 id="aspect-gui"><a class="link" href="#aspect-gui">Aspect: GUI</a></h5>
-<div class="paragraph">
-<p>The calendar events are currently only fully visible via the console. Further enhancement would be needed to display the events in an appropriate Calendar GUI.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
-<div class="paragraph">
-<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
-</li>
-<li>
-<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
-</li>
-<li>
-<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Logging Levels</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
-</li>
-<li>
-<p><code>WARNING</code> : Can continue, but with caution</p>
-</li>
-<li>
-<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
-</li>
-<li>
-<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
-<div class="paragraph">
-<p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.7. Calendar Navigation Feature</a></h3>
-<div class="sect3">
-<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.7.1. Planned Implementation</a></h4>
-<div class="paragraph">
-<p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
-</div>
-<div class="paragraph">
-<p>Given below is an example usage scenario and how the navigation mechanism behaves at each step.</p>
-</div>
-<div class="paragraph">
-<p>Step 1. The user is viewing the events for one week.</p>
-</div>
-<div class="paragraph">
-<p>Step 2. The user executes <code>next week</code> to view the events in the following week. The command is parsed by <code>schedulerParser#parseCommand</code>, returning <code>ChangePeriodCommand</code></p>
-</div>
-<div class="paragraph">
-<p>Step 3. <code>ChangePeriodCommand#executes</code> called with <code>EventIsInThisPeriodPredicate</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 4. <code>filteredCalendarEvents</code> is updated.</p>
-</div>
-<div class="paragraph">
-<p>Step 5. <code>CalendarPanel#filteredCalendarEventsListener</code> repopulates the calendar UI.</p>
 </div>
 </div>
 </div>
@@ -2440,4 +2827,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-27 10:04:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-05 11:39:47 UTC</div></div></div></body></html>
