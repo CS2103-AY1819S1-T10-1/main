@@ -32,12 +32,12 @@
 <li><a href="#todolist-feature">3.1. ToDoList feature</a></li>
 <li><a href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></li>
 <li><a href="#calendar-model">3.3. Calendar Model</a></li>
-<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
-<li><a href="#calendar-display">3.7. Calendar Display</a></li>
-<li><a href="#calendar-navigation-feature">3.8. Calendar Navigation Feature</a></li>
-<li><a href="#undo-redo-feature">3.9. Undo/Redo feature</a></li>
+<li><a href="#calendar-display">3.4. Calendar Display</a></li>
+<li><a href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></li>
+<li><a href="#undo-redo-feature">3.6. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.8. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1046,59 +1046,9 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
-<div class="paragraph">
-<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
-</li>
-<li>
-<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
-</li>
-<li>
-<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Logging Levels</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
-</li>
-<li>
-<p><code>WARNING</code> : Can continue, but with caution</p>
-</li>
-<li>
-<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
-</li>
-<li>
-<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
-<div class="paragraph">
-<p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="calendar-display"><a class="link" href="#calendar-display">3.7. Calendar Display</a></h3>
+<h3 id="calendar-display"><a class="link" href="#calendar-display">3.4. Calendar Display</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.7.1. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.4.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The Calendar Display is implemented using the <code>jfxtras.Agenda</code>, a rich Control under <strong>jfxtras</strong>. <code>Agenda</code> accepts the Calendar Events of the user and displays them in the chronological format.</p>
 </div>
@@ -1119,7 +1069,7 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 </div>
 </div>
 <div class="sect3">
-<h4 id="features"><a class="link" href="#features">3.7.2. Features</a></h4>
+<h4 id="features"><a class="link" href="#features">3.4.2. Features</a></h4>
 <div class="paragraph">
 <p>The user can:</p>
 </div>
@@ -1136,9 +1086,9 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 </div>
 </div>
 <div class="sect2">
-<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.8. Calendar Navigation Feature</a></h3>
+<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.8.1. Current Implementation</a></h4>
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The navigation features included are:</p>
 </div>
@@ -1177,7 +1127,7 @@ Navigation method <code>2</code> would also be sufficient in most cases.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="further-extensions"><a class="link" href="#further-extensions">3.8.2. Further Extensions</a></h4>
+<h4 id="further-extensions"><a class="link" href="#further-extensions">3.5.2. Further Extensions</a></h4>
 <div class="sect4">
 <h5 id="jump-to-a-specified-date"><a class="link" href="#jump-to-a-specified-date">Jump to a specified date</a></h5>
 <div class="paragraph">
@@ -1199,7 +1149,7 @@ Navigation method <code>2</code> would also be sufficient in most cases.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.8.3. Planned Implementation</a></h4>
+<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.5.3. Planned Implementation</a></h4>
 <div class="paragraph">
 <p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
 </div>
@@ -1224,9 +1174,9 @@ Navigation method <code>2</code> would also be sufficient in most cases.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.9. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.6. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.9.1. Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.6.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by <code>VersionedScheduler</code>.
 It extends <code>Scheduler</code> with an undo/redo history, stored internally as an <code>SchedulerStateList</code> and <code>currentStatePointer</code>.
@@ -1359,7 +1309,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.9.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -1426,6 +1376,56 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </ul>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></h3>
+<div class="paragraph">
+<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<div class="paragraph">
+<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+</li>
+<li>
+<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
+</li>
+<li>
+<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Logging Levels</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
+</li>
+<li>
+<p><code>WARNING</code> : Can continue, but with caution</p>
+</li>
+<li>
+<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
+</li>
+<li>
+<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<div class="paragraph">
+<p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
 </div>
 </div>
@@ -2911,4 +2911,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 19:16:28 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 19:27:22 UTC</div></div></div></body></html>
