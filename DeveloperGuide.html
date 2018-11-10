@@ -405,13 +405,13 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </div>
 <h4 id="events-driven-nature-of-the-design" class="discrete">Events-Driven nature of the design</h4>
 <div class="paragraph">
-<p>The <em>Sequence Diagram</em> below shows how the components interact for the scenario where the user issues the command <code>delete 1</code>.</p>
+<p>The <em>Sequence Diagram</em> below shows how the components interact for the scenario where the user issues the command <code>delete event 1</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/SDforDeletePerson.png" alt="SDforDeletePerson" width="800">
 </div>
-<div class="title">Figure 3. Component interactions for <code>delete 1</code> command (part 1)</div>
+<div class="title">Figure 3. Component interactions for <code>delete event 1</code> command (part 1)</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -420,7 +420,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+Note how the <code>Model</code> simply raises a <code>SchedulerChangedEvent</code> when the calendar data is changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
 </td>
 </tr>
 </table>
@@ -432,7 +432,7 @@ Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</c
 <div class="content">
 <img src="images/SDforDeletePersonEventHandling.png" alt="SDforDeletePersonEventHandling" width="800">
 </div>
-<div class="title">Figure 4. Component interactions for <code>delete 1</code> command (part 2)</div>
+<div class="title">Figure 4. Component interactions for <code>delete event 1</code> command (part 2)</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -516,13 +516,13 @@ acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.</p>
+<p><code>Logic</code> uses the <code>SchedulerParser</code> class to parse the user command.</p>
 </li>
 <li>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a calendarEvent) and/or raise events.</p>
+<p>The command execution can affect the <code>Model</code> or <code>ModelToDo</code> (e.g. adding a calendar event or todolist event) and/or raise events.</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -530,17 +530,20 @@ acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete event 1")</code> API call.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/DeletePersonSdForLogic.png" alt="DeletePersonSdForLogic" width="800">
 </div>
-<div class="title">Figure 7. Interactions Inside the Logic Component for the <code>delete 1</code> Command</div>
+<div class="title">Figure 7. Interactions Inside the Logic Component for the <code>delete event 1</code> Command</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="Design-Model"><a class="link" href="#Design-Model">2.4. Model component</a></h3>
+<div class="paragraph">
+<p>The Model component is handled by 2 separate classes - <code>Model</code> and <code>ModelToDo</code></p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
@@ -556,13 +559,26 @@ acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
 <div class="ulist">
 <ul>
 <li>
-<p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
+<p>stores the calendar data.</p>
 </li>
 <li>
-<p>stores the Address Book data.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;CalendarEvent&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically update when the calendar data in the list changes.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>does not depend on any of the other three components.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>ModelToDo</code>,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>stores the todolist data</p>
+</li>
+<li>
+<p>exposes an unmodifiable <code>ObservableList&lt;ToDoListEvent&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically update when the todolist data in the list changes.</p>
 </li>
 <li>
 <p>does not depend on any of the other three components.</p>
@@ -576,7 +592,7 @@ acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book</code>, which <code>Person</code> can reference. This would allow <code>Address Book</code> to only require one <code>Tag</code> object per unique <code>Tag</code>, instead of each <code>Person</code> needing their own <code>Tag</code> object. An example of how such a model may look like is given below.<br>
+As a more OOP model, we can store a <code>Tag</code> list in <code>Scheduler</code>, which <code>CalendarEvent</code> can reference. This would allow <code>Address Book</code> to only require one <code>Tag</code> object per unique <code>Tag</code>, instead of each <code>CalendarEvent</code> needing their own <code>Tag</code> object. An example of how such a model may look like is given below.<br>
 <br>
 <span class="image"><img src="images/ModelClassBetterOopDiagram.png" alt="ModelClassBetterOopDiagram" width="800"></span>
 </td>
@@ -2895,4 +2911,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 12:53:41 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 14:42:46 UTC</div></div></div></body></html>
