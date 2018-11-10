@@ -462,7 +462,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/venue/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>CalendarPanel</code>, 'CalendarDisplay', etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/venue/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -480,6 +480,23 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </li>
 <li>
 <p>Responds to events raised from various parts of the App and updates the UI accordingly.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The CalendarDisplay Component uses <code>jfxtras.Agenda</code> to render the calendar events as a time table. The CalendarDisplay
+acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Listens for changes in the list of calendar events in <code>Model</code> and updates <code>Agenda</code> accordingly.</p>
+</li>
+<li>
+<p>Responds to user selecting Calendar Events and displays it to the user.</p>
+</li>
+<li>
+<p>Extends the UI controls of <code>jfxtras.Agenda</code> by including functionality to navigate the time table display.</p>
 </li>
 </ul>
 </div>
@@ -647,7 +664,7 @@ Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <cod
 <p>Step 1: Make sure the todo list is not empty.</p>
 </div>
 <div class="paragraph">
-<p>Step 2: The user excutes <code>delete todo [index of event]</code> while <code>[indelx of event]</code> is the index number for a corresponding todolist event` displayed in <code>ToDoList</code> GUI.</p>
+<p>Step 2: The user executes <code>delete todo [index of event]</code> while <code>[index of event]</code> is the index number for a corresponding todolist event` displayed in <code>ToDoList</code> GUI.</p>
 </div>
 <div class="paragraph">
 <p>Step 3: The <code>DeleteToDoCommandParser</code> parsers out the strings for the index.</p>
@@ -803,11 +820,11 @@ Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <cod
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Modify the curernt <code>Logic`and `LogicManager</code>.</p>
+<p><strong>Alternative 1 (current choice):</strong> Modify the current <code>Logic</code> and <code>LogicManager</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Can be easilly implement and can use the current parser.</p>
+<p>Pros: Can be easily implemented and can use the current parser.</p>
 </li>
 <li>
 <p>Cons: Need extra methods to execute <code>CommandToDo</code>.</p>
@@ -1067,13 +1084,22 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="sect3">
 <h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>The Calendar Display is implemented using the <strong>Agenda</strong>, a rich Control under <strong>jfxtras</strong>. <strong>Agenda</strong> accepts the Calendar Events of the user and displays them in the chronological format.</p>
+<p>The Calendar Display is implemented using the <code>jfxtras.Agenda</code>, a rich Control under <strong>jfxtras</strong>. <code>Agenda</code> accepts the Calendar Events of the user and displays them in the chronological format.</p>
 </div>
 <div class="paragraph">
-<p>As the calendar is intended to be a visual representation of the calendar events, any changes to the calendar events should be done through the command line interface. Hence, some of the built-in features that <strong>Agenda</strong> has to add, edit and delete events have been disabled.</p>
+<p><code>Agenda</code> provides some default functionality for responding to user interactions with the UI, such as adding, editing and deleting events. These functions have been disabled so as to make <code>Agenda</code> used solely for displaying the user&#8217;s events visually in a time table format. This was done to make the data flow one-directional, and reduce coupling between <code>Agenda</code> and <code>Model</code>.</p>
 </div>
 <div class="paragraph">
-<p>The Calendar display listens to the list of calendar events. When the list is changed, the calendar display will update itself accordingly.</p>
+<p><code>Agenda</code> defines the <code>Agenda.Appointment</code> interface, which must be implemented for all events that it displays. It also comes with <code>Agenda.AppointmentImplLocal</code>, which is a bare-bones implementation of the <code>Agenda.Appointment</code> interface, which is intended to be used when working with <code>java.time.LocalDateTime</code>.</p>
+</div>
+<div class="paragraph">
+<p>Due to CalendarEvent sharing many of the required attributes of <code>Agenda.AppointmentImplyLocal</code>, it was natural to have CalendarEvent <strong>extend</strong> <code>Agenda.AppointmentImplLocal</code>, so as to streamline the process of displaying CalendarEvents.</p>
+</div>
+<div class="paragraph">
+<p>Unlike a <code>ListView</code>, <code>Agenda</code> does not provide a way to directly set the contents to be displayed. Rather, CalendarDisplay holds a reference to the list of calendar events in model, which it then adds into <code>Agenda</code>. When a change occurs in <code>Model</code> 's data, CalendarDisplay is notified, and pushes the corresponding changes to <code>Agenda</code>.</p>
+</div>
+<div class="paragraph">
+<p>The full documentation for <code>Agenda</code> can be found here: (<a href="http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html" class="bare">http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html</a>).</p>
 </div>
 </div>
 <div class="sect3">
@@ -1098,27 +1124,66 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="sect3">
 <h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.8.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>The user can navigate the calendar display using the <code>arrow keys</code> and <code>T</code> key.</p>
+<p>The navigation features included are:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The user can toggle between weekly view and daily view using <code>T</code> key.</p>
+<p>Toggling between weekly view and daily view using <code>T</code> key.</p>
 </li>
 <li>
-<p>The user can view the next / previous day or week using <code>left</code> and <code>right</code> arrows keys.</p>
+<p>View a <code>CalendarEvent</code> in the time table display by <strong>selecting</strong> the event. The time table display will jump to the correct time period and attempt to centralize the selected event.</p>
 </li>
 <li>
-<p>The user can scroll up and down using <code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
+<p>View the next/previous week or day (depending on the current view) using the <code>left</code> and <code>right</code> arrows keys.</p>
+</li>
+<li>
+<p>The user can scroll up and down the 24-hour timeline using <code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
 </li>
 </ol>
 </div>
+<div class="sect4">
+<h5 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design considerations</a></h5>
 <div class="paragraph">
-<p>While not a CLI feature, it is fast and easy to navigate around the calendar.</p>
+<p>Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
+Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
+Navigation method <code>2</code> would also be sufficient in most cases.</p>
+</div>
+<div class="paragraph">
+<p>However, <code>Agenda</code> 's time table display was implemented using a customized ScrollPane, which could be scrolled using the <code>up</code> and <code>down</code> arrow keys and the scroll wheel. Hence, using the <code>left</code> and <code>right</code> arrow keys for navigation felt very natural and user-friendly.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, <code>Agenda</code> did not expose any way for the user to navigate the time table display programmatically. So if the user wanted to interact with the UI, the user would still be forced to use either the <code>up</code> and <code>down</code> arrow keys or the scroll wheel to navigate.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, while this feature is not a CLI feature, it was retained as a fast and easy way to navigate around the time table display.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.8.2. Planned Implementation</a></h4>
+<h4 id="further-extensions"><a class="link" href="#further-extensions">3.8.2. Further Extensions</a></h4>
+<div class="sect4">
+<h5 id="jump-to-a-specified-date"><a class="link" href="#jump-to-a-specified-date">Jump to a specified date</a></h5>
+<div class="paragraph">
+<p>One other common use case for a calendar is the user wants to check what events he/she has at a particular time. An example scenario would be:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User executes <code>view 20th nov</code>.</p>
+</li>
+<li>
+<p>A JumpToDateTimeEvent is raised.</p>
+</li>
+<li>
+<p>The CalendarDisplay responds by displaying the week containing the specified date and time.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.8.3. Planned Implementation</a></h4>
 <div class="paragraph">
 <p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
 </div>
@@ -1147,31 +1212,34 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="sect3">
 <h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.9.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>The undo/redo mechanism is facilitated by <code>VersionedAddressBook</code>.
-It extends <code>AddressBook</code> with an undo/redo history, stored internally as an <code>addressBookStateList</code> and <code>currentStatePointer</code>.
+<p>The undo/redo mechanism is facilitated by <code>VersionedScheduler</code>.
+It extends <code>Scheduler</code> with an undo/redo history, stored internally as an <code>SchedulerStateList</code> and <code>currentStatePointer</code>.
 Additionally, it implements the following operations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>VersionedAddressBook#commit()</code>&#8201;&#8212;&#8201;Saves the current venue book state in its history.</p>
+<p><code>VersionedScheduler#commit()</code>&#8201;&#8212;&#8201;Saves the current venue book state in its history.</p>
 </li>
 <li>
-<p><code>VersionedAddressBook#undo()</code>&#8201;&#8212;&#8201;Restores the previous venue book state from its history.</p>
+<p><code>VersionedScheduler#undo()</code>&#8201;&#8212;&#8201;Restores the previous venue book state from its history.</p>
 </li>
 <li>
-<p><code>VersionedAddressBook#redo()</code>&#8201;&#8212;&#8201;Restores a previously undone venue book state from its history.</p>
+<p><code>VersionedScheduler#redo()</code>&#8201;&#8212;&#8201;Restores a previously undone venue book state from its history.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface as <code>Model#commitAddressBook()</code>, <code>Model#undoAddressBook()</code> and <code>Model#redoAddressBook()</code> respectively.</p>
+<p>These operations are exposed in the <code>Model</code> interface as <code>Model#commitScheduler()</code>, <code>Model#undoScheduler()</code> and <code>Model#redoScheduler()</code> respectively.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user launches the application for the first time. The <code>VersionedAddressBook</code> will be initialized with the initial venue book state, and the <code>currentStatePointer</code> pointing to that single venue book state.</p>
+<p>Step 1. The user launches the application for the first time.
+The <code>VersionedAddressBook</code> will be initialized with the initial
+Scheduler state, and the <code>currentStatePointer</code> pointing to that
+single Scheduler state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1179,7 +1247,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>delete 5</code> command to delete the 5th calendarEvent in the venue book. The <code>delete</code> command calls <code>Model#commitAddressBook()</code>, causing the modified state of the venue book after the <code>delete 5</code> command executes to be saved in the <code>addressBookStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted venue book state.</p>
+<p>Step 2. The user executes <code>delete event 5</code> command to delete the 5th CalendarEvent in the Scheduler. The <code>delete</code> command calls <code>Model#commitScheduler()</code>, causing the modified state of the Scheduler after the <code>delete 5</code> command executes to be saved in the <code>schedulerStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted Scheduler state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1187,7 +1255,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>add n/David &#8230;&#8203;</code> to add a new calendarEvent. The <code>add</code> command also calls <code>Model#commitAddressBook()</code>, causing another modified venue book state to be saved into the <code>addressBookStateList</code>.</p>
+<p>Step 3. The user executes <code>add t/CS2103 Lecture &#8230;&#8203;</code> to add a new CalendarEvent. The <code>add event</code> command also calls <code>Model#commitScheduler()</code>, causing another modified Scheduler state to be saved into the <code>schedulerStateList</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1201,13 +1269,13 @@ Additionally, it implements the following operations:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not call <code>Model#commitAddressBook()</code>, so the venue book state will not be saved into the <code>addressBookStateList</code>.
+If a command fails its execution, it will not call <code>Model#commitScheduler()</code>, so the Scheduler state will not be saved into the <code>schedulerStateList</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that adding the calendarEvent was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoAddressBook()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous venue book state, and restores the venue book to that state.</p>
+<p>Step 4. The user now decides that adding the CalendarEvent was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoScheduler()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous Scheduler state, and restores the Scheduler to that state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1221,7 +1289,7 @@ If a command fails its execution, it will not call <code>Model#commitAddressBook
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If the <code>currentStatePointer</code> is at index 0, pointing to the initial venue book state, then there are no previous venue book states to restore. The <code>undo</code> command uses <code>Model#canUndoAddressBook()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the <code>currentStatePointer</code> is at index 0, pointing to the initial Scheduler state, then there are no previous Scheduler states to restore. The <code>undo</code> command uses <code>Model#canUndoScheduler()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 </td>
 </tr>
 </table>
@@ -1235,7 +1303,7 @@ If the <code>currentStatePointer</code> is at index 0, pointing to the initial v
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>redo</code> command does the opposite&#8201;&#8212;&#8201;it calls <code>Model#redoAddressBook()</code>, which shifts the <code>currentStatePointer</code> once to the right, pointing to the previously undone state, and restores the venue book to that state.</p>
+<p>The <code>redo</code> command does the opposite&#8201;&#8212;&#8201;it calls <code>Model#redoScheduler()</code>, which shifts the <code>currentStatePointer</code> once to the right, pointing to the previously undone state, and restores the Scheduler to that state.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1244,13 +1312,13 @@ If the <code>currentStatePointer</code> is at index 0, pointing to the initial v
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If the <code>currentStatePointer</code> is at index <code>addressBookStateList.size() - 1</code>, pointing to the latest venue book state, then there are no undone venue book states to restore. The <code>redo</code> command uses <code>Model#canRedoAddressBook()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the <code>currentStatePointer</code> is at index <code>schedulerStateList.size() - 1</code>, pointing to the latest Scheduler state, then there are no undone Scheduler states to restore. The <code>redo</code> command uses <code>Model#canRedoScheduler()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 5. The user then decides to execute the command <code>list</code>. Commands that do not modify the venue book, such as <code>list</code>, will usually not call <code>Model#commitAddressBook()</code>, <code>Model#undoAddressBook()</code> or <code>Model#redoAddressBook()</code>. Thus, the <code>addressBookStateList</code> remains unchanged.</p>
+<p>Step 5. The user then decides to execute the command <code>list event</code>. Commands that do not modify the Scehduler, such as <code>list</code>, will usually not call <code>Model#commitScheduler()</code>, <code>Model#undoScheduler()</code> or <code>Model#redoScheduler()</code>. Thus, the <code>schedulerStateList</code> remains unchanged.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1258,7 +1326,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="paragraph">
-<p>Step 6. The user executes <code>clear</code>, which calls <code>Model#commitAddressBook()</code>. Since the <code>currentStatePointer</code> is not pointing at the end of the <code>addressBookStateList</code>, all venue book states after the <code>currentStatePointer</code> will be purged. We designed it this way because it no longer makes sense to redo the <code>add n/David &#8230;&#8203;</code> command. This is the behavior that most modern desktop applications follow.</p>
+<p>Step 6. The user executes <code>clear calendar</code>, which calls <code>Model#commitScheduler()</code>. Since the <code>currentStatePointer</code> is not pointing at the end of the <code>schedulerStateList</code>, all venue book states after the <code>currentStatePointer</code> will be purged. We designed it this way because it no longer makes sense to redo the <code>add n/CS2103 Lecture &#8230;&#8203;</code> command. This is the behavior that most modern desktop applications follow.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1275,7 +1343,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.9.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.9.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -2827,4 +2895,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 12:11:06 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 12:53:41 UTC</div></div></div></body></html>
