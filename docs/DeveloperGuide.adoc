@@ -287,6 +287,10 @@ Step 4: Then, `ParserUtil` checks that the input index is valid.
 
 Stepp 5: Following that, the corresponding `ToDoListEvent` will be deleted and not displayed on th GUI.
 
+The following sequece diagram shows how the addToDo operation works:
+
+image::AddToDoCommand.png[width="800"]
+
 ==== Logic for ToDoList feature:
 
 * `Logic#executeToDo` -- Executes the commandToDo and returns the result.
