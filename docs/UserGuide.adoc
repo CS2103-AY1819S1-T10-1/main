@@ -16,10 +16,13 @@ endif::[]
 
 By: `Team T10-1`
 
+// tag::intro[]
 == Introduction
 
 U-Schedule is for university students who *prefer to use a desktop app for managing their schedule*. More importantly, U-Schedule is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). It features a calendar to manage regular events such as lectures and tutorials, as well as a todo list for upcoming deadlines. If you can type fast, you can manage both of these more efficiently with U-Schedule than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+// end::intro[]
 
+// tag::quickstart[]
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
@@ -43,6 +46,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+// end::quickstart[]
+
+// tag::features[]
 [[Features]]
 == Features
 
@@ -57,11 +63,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * The second word specifies whether the command will operate on the todo list or the calendar. For example `add event` adds an event to the calendar and `add todo` will add an item to the todo list.
 * Priorities on the todo list are either `H`, `M` or `L` for high, medium or low respectively, in upper case.
 ====
+// end::features[]
 
 === Viewing help : `help`
 
 Format: `help`
 
+// tag::add[]
 === Adding: `add`
 
 Adds a calendar event to the calendar +
@@ -84,12 +92,16 @@ Examples:
 
 * `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture`
 * `add todo t/CS2103 Assignment d/Version Control p/L`
+// end::add[]
 
+// tag::list[]
 === Listing: `list`
 
 Shows the list of all calendar events / todo items in the calendar / todo list. +
 Format: `list {event/todo}`
+// end::list[]
 
+// tag::edit[]
 === Editing: `edit`
 
 Edits an existing calendar event in the calendar. +
@@ -109,7 +121,9 @@ Examples:
 Edits the description and venue of the calendar event to be `Abstraction ` and `i3 Auditorium` respectively.
 * `edit event 2 t/CS2103 Project Meetup` +
 Edits the name of the 2nd calendar event to be `CS2103 Project Meetup`.
+// end::edit[]
 
+// tag::find[]
 === Locating: `find`
 
 Finds calendar events whose names contain any of the given keywords.
@@ -130,7 +144,9 @@ Examples:
 Returns `CS2103 Lecture` and `Lecture`
 * `find event cs2103 assignment tag/Project` +
 Returns any event with the tag `Project` having `CS2103` or `assignment` in the title.
+// end::find[]
 
+// tag::delete[]
 === Deleting: `delete`
 
 Deletes the specified calendar event / todo item from the calendar / todo list. +
@@ -150,7 +166,9 @@ Deletes the 2nd calendar event in the calendar.
 * `find event assignment` +
 `delete event 1` +
 Deletes the 1st calendar event in the results of the `find event` command.
+// end::delete[]
 
+// tag::select[]
 === Selecting: `select`
 
 Selects the calendar event identified by the index number used in the displayed list. +
@@ -170,6 +188,7 @@ Selects the 2nd calendar event in the calendar.
 * `find event lecture` +
 `select event 1` +
 Selects the 1st calendar event in the results of the `find event` command.
+// end::select[]
 
 === Listing entered commands : `history`
 
@@ -236,6 +255,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the calendar. +
 Format: `clear`
 
+// tag::interact[]
 === Interact with the Calendar Display
 
 1. Double click on displayed events to open a dialog box containing the details of the event.
@@ -249,7 +269,7 @@ The user can navigate the calendar display using the `arrow keys` and `T` key.
 2. The user can view the next / previous day or week using `left` and `right` arrows keys.
 
 3. The user can scroll up and down using `up` and `down` arrow keys, or using the mouse scroll wheel.
-
+// end::interact[]
 
 === Exiting the program : `exit`
 
@@ -272,6 +292,7 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous U-Schedule folder.
 
+// tag::summary[]
 == Command Summary
 
 * *Add* `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tag/TAG]...` +
@@ -292,3 +313,4 @@ e.g.`select event 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+// end::summary[]
