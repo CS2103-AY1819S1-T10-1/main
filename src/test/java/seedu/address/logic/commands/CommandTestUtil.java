@@ -22,7 +22,7 @@ import seedu.address.model.ModelToDo;
 import seedu.address.model.Scheduler;
 import seedu.address.model.ToDoList;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
+import seedu.address.model.calendarevent.FuzzySearchFilterPredicate;
 import seedu.address.model.todolist.TitleToDoContainsKeywordsPredicate;
 import seedu.address.model.todolist.ToDoListEvent;
 import seedu.address.testutil.EditCalendarEventDescriptorBuilder;
@@ -34,6 +34,7 @@ public class CommandTestUtil {
 
     public static final String VALID_TITLE_LECTURE = "CS2103 Lecture";
     public static final String VALID_TITLE_TUTORIAL = "JS1011 Tutorial";
+    public static final String VALID_TITLE_SEMINAR = "FIN3101 Seminar";
     public static final String VALID_DESCRIPTION_LECTURE = "Abstraction, IntelliJ, Gradle";
     public static final String VALID_DESCRIPTION_TUTORIAL = "Monadic parsers";
     public static final String VALID_DESCRIPTION_MIDTERM = "cover all materials from week 1 to week 7";
@@ -43,6 +44,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_START_DATETIME_LECTURE = "2018-10-16 14:00";
     public static final String VALID_END_DATETIME_LECTURE = "2018-10-16 16:00";
+    public static final String VALID_START_DATETIME_LECTURE_2 = "2018-11-15 16:00";
+    public static final String VALID_END_DATETIME_LECTURE_2 = "2018-11-15 18:00";
     public static final String VALID_START_DATETIME_TUTORIAL = "2018-10-18 10:00";
     public static final String VALID_END_DATETIME_TUTORIAL = "2018-10-18 11:00";
     public static final String VALID_PRIORITY_TUTORIAL = "L";
@@ -55,13 +58,16 @@ public class CommandTestUtil {
     public static final String PRIORITY_DESC_LECTURE = " " + PREFIX_PRIORITY + VALID_PRIORITY_LECTURE;
     public static final String PRIORITY_DESC_TUTORIAL = " " + PREFIX_PRIORITY + VALID_PRIORITY_TUTORIAL;
     public static final String START_DESC_LECTURE = " " + PREFIX_START + VALID_START_DATETIME_LECTURE;
+    public static final String START_DESC_LECTURE_2 = " " + PREFIX_START + VALID_START_DATETIME_LECTURE_2;
     public static final String START_DESC_TUTORIAL = " " + PREFIX_START + VALID_START_DATETIME_TUTORIAL;
     public static final String END_DESC_LECTURE = " " + PREFIX_END + VALID_END_DATETIME_LECTURE;
+    public static final String END_DESC_LECTURE_2 = " " + PREFIX_END + VALID_END_DATETIME_LECTURE_2;
     public static final String END_DESC_TUTORIAL = " " + PREFIX_END + VALID_END_DATETIME_TUTORIAL;
     public static final String VENUE_DESC_LECTURE = " " + PREFIX_VENUE + VALID_VENUE_LECTURE;
     public static final String VENUE_DESC_TUTORIAL = " " + PREFIX_VENUE + VALID_VENUE_TUTORIAL;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String TAG_EMPTY = " " + PREFIX_TAG;
 
     public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + " q"; // start with whitespace not allowed
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // empty string not allowed
@@ -84,7 +90,7 @@ public class CommandTestUtil {
             .withTags(VALID_TAG_FRIEND).build();
         DESC_TUTORIAL = new EditCalendarEventDescriptorBuilder().withTitle(VALID_TITLE_TUTORIAL)
             .withDescription(VALID_DESCRIPTION_TUTORIAL).withStart(VALID_START_DATETIME_TUTORIAL)
-                .withEnd(VALID_END_DATETIME_TUTORIAL).withVenue(VALID_VENUE_TUTORIAL)
+            .withEnd(VALID_END_DATETIME_TUTORIAL).withVenue(VALID_VENUE_TUTORIAL)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
@@ -113,7 +119,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel} <br>
      * - the {@code actualCommandHistory} remains unchanged.
      */
-    public static void assertCommandToDoSuccess(CommandToDo commandToDo, ModelToDo actualModel,
+    public static void assertCommandToDoSuccess(Command commandToDo, ModelToDo actualModel,
                                                 CommandHistory actualCommandHistory,
                                                 String expectedMessage, ModelToDo expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
@@ -161,7 +167,7 @@ public class CommandTestUtil {
      * - the todolist and the filtered todolistevent list in the {@code actualModel} remain unchanged <br>
      * - {@code actualCommandToDoHistory} remains unchanged.
      */
-    public static void assertCommandToDoFailure(CommandToDo commandToDo, ModelToDo actualModel,
+    public static void assertCommandToDoFailure(Command commandToDo, ModelToDo actualModel,
                                                 CommandHistory actualCommandHistory, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
@@ -185,13 +191,13 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the calendar event at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
+    public static void showCalendarEventAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredCalendarEventList().size());
 
         CalendarEvent calendarEvent = model.getFilteredCalendarEventList().get(targetIndex.getZeroBased());
         final String[] splitTitle = calendarEvent.getTitle().value.split("\\s+");
-        model.updateFilteredCalendarEventList(new TitleContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
-
+        model.updateFilteredCalendarEventList(new FuzzySearchFilterPredicate(Arrays.asList(splitTitle[1])));
+        // fuzzy search may cause the size to be more than 1, e.g. CS2103 and CS2104 are similar words
         assertEquals(1, model.getFilteredCalendarEventList().size());
     }
 

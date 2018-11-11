@@ -17,7 +17,7 @@ public class FuzzySearchComparator implements Comparator<CalendarEvent> {
 
     @Override
     public int compare(CalendarEvent calendarEvent1, CalendarEvent calendarEvent2) {
-        int compareScore = Integer.compare(maxFuzzyMatchScore(calendarEvent1), maxFuzzyMatchScore(calendarEvent2));
+        int compareScore = Integer.compare(maxFuzzyMatchScore(calendarEvent2), maxFuzzyMatchScore(calendarEvent1));
         if (compareScore == 0) {
             return calendarEvent1.getStart().compareTo(calendarEvent2.getStart());
         } else {
@@ -30,9 +30,12 @@ public class FuzzySearchComparator implements Comparator<CalendarEvent> {
      */
     public int maxFuzzyMatchScore(CalendarEvent calendarEvent) {
         return keywords.stream()
-                .mapToInt(keyword -> StringUtil.fuzzyMatchScore(calendarEvent.getTitle().value, keyword))
-                .max()
-                .orElse(0);
+            .mapToInt(keyword -> Math.max(Math.max(
+                    StringUtil.fuzzyMatchScore(calendarEvent.getTitle().value, keyword),
+                    StringUtil.fuzzyMatchScore(calendarEvent.getDescription(), keyword)),
+                    StringUtil.fuzzyMatchScore(calendarEvent.getVenue().value, keyword)))
+            .max()
+            .orElse(0);
     }
 
     @Override

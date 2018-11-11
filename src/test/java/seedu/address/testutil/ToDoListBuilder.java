@@ -6,7 +6,7 @@ import seedu.address.model.todolist.ToDoListEvent;
 /**
  * A utility class to help with building ToDoList objects.
  * Example usage: <br>
- * {@code ToDoList ab = new ToDoListBuilder().withEvent("TUTORIAL", "LECTURE").build();}
+ * {@code ToDoList ab = new ToDoListBuilder().withCalendarEvent("TUTORIAL", "LECTURE").build();}
  */
 public class ToDoListBuilder {
     private ToDoList toDolist;

@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
@@ -39,12 +38,12 @@ public class TaskListPanel extends UiPart<Region> {
 
     private void setEventHandlerForSelectionChangeEvent() {
         toDoListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                        raise(new TaskPanelSelectionChangedEvent(newValue));
-                    }
-                });
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    logger.fine("Selection in task list panel changed to : '" + newValue + "'");
+                    raise(new TaskPanelSelectionChangedEvent(newValue));
+                }
+            });
     }
 
     /**

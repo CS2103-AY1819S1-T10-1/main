@@ -28,10 +28,9 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 public class StorageManagerTest {
 
     @Rule
-    public TemporaryFolder testFolder = new TemporaryFolder();
-    @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
     private StorageManager storageManager;
 
     @Before
@@ -111,8 +110,8 @@ public class StorageManagerTest {
     public void handleToDoListChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlSchedulerStorage(Paths.get("dummy")),
-                new XmlToDoListStorageExceptionThrowingStub(Paths.get("dummy")),
-                new JsonUserPrefsStorage(Paths.get("dummy")));
+            new XmlToDoListStorageExceptionThrowingStub(Paths.get("dummy")),
+            new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleToDoListChangedEvent(new ToDoListChangedEvent(new ToDoList()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }

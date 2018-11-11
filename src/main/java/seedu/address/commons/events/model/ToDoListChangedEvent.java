@@ -18,4 +18,5 @@ public class ToDoListChangedEvent extends BaseEvent {
     public String toString() {
         return "number of events " + data.getToDoList().size();
     }
+
 }

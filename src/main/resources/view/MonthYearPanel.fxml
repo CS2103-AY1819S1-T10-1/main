@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-   <children>
-       <AnchorPane fx:id="MonthYearPanel">
-         <children>
-             <Label fx:id="monthYearLabel" layoutX="235.0" layoutY="32.0" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-         </children>
-      </AnchorPane>
-      <Separator minHeight="3.0">
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </Separator>
-   </children>
+    <children>
+        <AnchorPane fx:id="MonthYearPanel">
+            <children>
+                <Label fx:id="monthYearLabel" layoutX="235.0" layoutY="32.0" AnchorPane.bottomAnchor="0.0"
+                       AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
+            </children>
+        </AnchorPane>
+        <Separator minHeight="3.0">
+            <padding>
+                <Insets left="20.0"/>
+            </padding>
+        </Separator>
+    </children>
 </VBox>

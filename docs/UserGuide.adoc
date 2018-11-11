@@ -113,22 +113,24 @@ Edits the name of the 2nd todo list item to be `CS2103 Project`.
 
 === Locating: `find`
 
-Finds calendar events / todo items whose names contain any of the given keywords. +
-Format: `find {event/todo} KEYWORD [MORE_KEYWORDS]`
+Finds calendar events whose names contain any of the given keywords.
+Also optionally filters the search by the specified tags. +
+Format: `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]`
 
 ****
-* The search is case insensitive. e.g `lecture` will match `Lecture`
+* The search is case insensitive for both keywords and tags. e.g `lecture` will match `Lecture`
 * The order of the keywords does not matter. e.g. `CS2103 Lecture` will match `Lecture CS2103`
-* All fields (title, description, etc) will be searched.
+* Currently only the title will be searched.
 * The search does not look for only exact matches; slight differences and typos will attempt to be matched
 * `CS2103 Lecture` will match 'CS210X Lectures', or 'Lecture CS'
+* However, tags must be an exact (albeit case-insensitive) match.
 ****
 Examples:
 
 * `find event lecture` +
 Returns `CS2103 Lecture` and `Lecture`
-* `find todo cs2103 assignment` +
-Returns any todo item having `CS2103` or `Lecture` in the title or description.
+* `find event cs2103 assignment tag/Project` +
+Returns any event with the tag `Project` having `CS2103` or `assignment` in the title.
 
 === Deleting: `delete`
 
@@ -235,6 +237,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the calendar. +
 Format: `clear`
 
+=== Interact with the Calendar Display
+
+1. Double click on displayed events to open a dialog box containing the details of the event.
+
+2. Jump to the time period containing an event by selecting the event in the list of calendar events.
+
+The user can navigate the calendar display using the `arrow keys` and `T` key.
+
+1. The user can toggle between weekly view and daily view using `T` key.
+
+2. The user can view the next / previous day or week using `left` and `right` arrows keys.
+
+3. The user can scroll up and down using `up` and `down` arrow keys, or using the mouse scroll wheel.
+
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -268,8 +285,8 @@ e.g. `delete event 3`
 * *Edit* : `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
 e.g. `edit event 1 d/Abstraction v/i3 Auditorium`
 * *Edit* : `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/PRIORITY]` +
-e.g. `edit todo 2 t/CS2103 Project` 
-* *Find* : `find {event/todo} KEYWORD [MORE_KEYWORDS]` +
+e.g. `edit todo 2 t/CS2103 Project`
+* *Find* : `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]` +
 e.g. `find event CS2103 Lecture`
 * *List* : `list {event/todo}`
 * *Help* : `help`

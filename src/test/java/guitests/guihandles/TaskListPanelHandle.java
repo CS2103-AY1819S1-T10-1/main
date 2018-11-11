@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-
 import seedu.address.model.todolist.ToDoListEvent;
 
 /**
@@ -39,10 +38,10 @@ public class TaskListPanelHandle extends NodeHandle<ListView<ToDoListEvent>> {
         }
 
         return getAllCardNodes().stream()
-                .map(ToDoListEventCardHandle::new)
-                .filter(handle -> handle.equals(selectedToDoListEventList.get(0)))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+            .map(ToDoListEventCardHandle::new)
+            .filter(handle -> handle.equals(selectedToDoListEventList.get(0)))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new);
     }
 
     /**
@@ -107,10 +106,10 @@ public class TaskListPanelHandle extends NodeHandle<ListView<ToDoListEvent>> {
      */
     public ToDoListEventCardHandle getToDoListCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(ToDoListEventCardHandle::new)
-                .filter(handle -> handle.equals(getToDoListEvent(index)))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+            .map(ToDoListEventCardHandle::new)
+            .filter(handle -> handle.equals(getToDoListEvent(index)))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new);
     }
 
     private ToDoListEvent getToDoListEvent(int index) {
@@ -150,7 +149,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<ToDoListEvent>> {
             return lastRememberedSelectedToDoListEventCard.isPresent();
         } else {
             return !lastRememberedSelectedToDoListEventCard.isPresent()
-                    || !lastRememberedSelectedToDoListEventCard.get().equals(selectedItems.get(0));
+                || !lastRememberedSelectedToDoListEventCard.get().equals(selectedItems.get(0));
         }
     }
 

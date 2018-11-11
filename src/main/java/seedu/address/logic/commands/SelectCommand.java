@@ -11,6 +11,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelToDo;
 import seedu.address.model.calendarevent.CalendarEvent;
 
 /**
@@ -46,6 +47,11 @@ public class SelectCommand extends Command {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS, targetIndex.getOneBased()));
 
+    }
+
+    @Override
+    public CommandResult execute(ModelToDo modelToDo, CommandHistory history) throws CommandException {
+        throw new CommandException(MESSAGE_INCORRECT_MODEL_CALENDAR);
     }
 
     @Override

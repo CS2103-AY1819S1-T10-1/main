@@ -10,7 +10,6 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.ClearCalendarCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandToDo;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditEventCommand;
@@ -19,8 +18,10 @@ import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.ListToDoCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowDescriptionCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -36,24 +37,6 @@ public class SchedulerParser {
     // TODO improve regex or modify parse procedure
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>(\\w+\\s?(?!\\w/|[0-9])){1,2})"
         + "(?<arguments>.*)");
-
-    /**
-     * Parses user input, returns true if user input corresponds to a todolist command
-     *
-     * @param userInput full user input string
-     * @return whether user input corresponds to a todolist command
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public boolean isToDoCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        final String commandWord = matcher.group("commandWord").trim();
-
-        return commandWord.contains("todo");
-    }
 
     /**
      * Parses user input into command for execution.
@@ -78,11 +61,17 @@ public class SchedulerParser {
         case EditEventCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        case AddToDoCommand.COMMAND_WORD:
+            return new AddToDoCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteToDoCommand.COMMAND_WORD:
+            return new DeleteToDoCommandParser().parse(arguments);
 
         case ClearCalendarCommand.COMMAND_WORD:
             return new ClearCalendarCommand();
@@ -90,8 +79,14 @@ public class SchedulerParser {
         case FindEventCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        case ShowDescriptionCommand.COMMAND_WORD:
+            return new ShowDescriptionCommandParser().parse(arguments);
+
         case ListEventCommand.COMMAND_WORD:
             return new ListEventCommand();
+
+        case ListToDoCommand.COMMAND_WORD:
+            return new ListToDoCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -107,33 +102,6 @@ public class SchedulerParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-
-    /**
-     * Parses user input into commandToDo for execution.
-     *
-     * @param userInput full user input string
-     * @return the command based on the user input
-     */
-    public CommandToDo parseCommandToDo(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
-        switch (commandWord) {
-
-        case AddToDoCommand.COMMAND_WORD:
-            return new AddToDoCommandParser().parse(arguments);
-
-        case DeleteToDoCommand.COMMAND_WORD:
-            return new DeleteToDoCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

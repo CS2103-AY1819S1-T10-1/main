@@ -11,11 +11,14 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import jfxtras.internal.scene.control.skin.agenda.AgendaDaySkin;
 import jfxtras.internal.scene.control.skin.agenda.AgendaWeekSkin;
@@ -23,6 +26,7 @@ import jfxtras.scene.control.agenda.Agenda;
 import jfxtras.scene.control.agenda.Agenda.Appointment;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarDisplayTimeChangedEvent;
+import seedu.address.commons.events.ui.CalendarPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToDateTimeEvent;
 import seedu.address.model.calendarevent.CalendarEvent;
 
@@ -32,6 +36,7 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public class CalendarDisplay extends UiPart<Region> {
     private static final String FXML = "CalendarDisplay.fxml";
+    private static final String CSS = "view/ModifiedAgenda.css";
     private final Logger logger = LogsCenter.getLogger(CalendarDisplay.class);
 
     private ObservableList<CalendarEvent> calendarEventList;
@@ -53,7 +58,7 @@ public class CalendarDisplay extends UiPart<Region> {
         setConnections(calendarEventList);
         setControls();
 
-        agenda.getStylesheets().add("view/ModifiedAgenda.css"); // "src/main/resources/view/
+        agenda.getStylesheets().add(CSS); // "src/main/resources/view/
         setDisplayedDateTime(currentDateTime); // jump to the current time
     }
 
@@ -67,35 +72,41 @@ public class CalendarDisplay extends UiPart<Region> {
 
         appointmentGroup = new Agenda.AppointmentGroupImpl().withStyleClass("group18");
 
-        // TODO: decide what action callback is best
         // this actionCallBack is called when the user double clicks on an appointment in the display
         agenda.actionCallbackProperty().set(new Callback<Appointment, Void>() {
             @Override
             public Void call(Appointment param) {
                 logger.info("User double clicked on " + param.toString());
-                CalendarEvent calendarEvent = (CalendarEvent) param;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Event Information");
-                alert.setHeaderText(calendarEvent.getTitle().value);
-                alert.setContentText(calendarEvent.getDescriptionObject().value);
-                alert.show();
+                CalendarEventDialog dialog = new CalendarEventDialog((CalendarEvent) param);
+                displayPopUp(dialog.getRoot());
                 return null;
             }
         });
 
-        agenda.setAppointmentChangedCallback(null);
-
         agenda.setAllowDragging(false);
-
-        agenda.setEditAppointmentCallback(null);
-
+        agenda.setAppointmentChangedCallback(param -> null);
+        agenda.setEditAppointmentCallback(param -> null);
         agenda.setSkin(new AgendaWeekSkin(agenda));
+        agenda.setId("agenda");
 
         calendarDisplayBox.getChildren().add(agenda);
     }
 
     /**
-     * Sync the list of CalendarEvents to the calendar display
+     * Creates a new window to display {@root}.
+     * CalendarDisplay will block until the new window is closed.
+     */
+    private void displayPopUp(Parent root) {
+        Scene scene = new Scene(root, 300, 200);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    /**
+     * Sync the list of CalendarEvents to the calendar display.
+     *
      * @param calendarEventList the list of CalendarEvents to display
      */
     private void setConnections(ObservableList<CalendarEvent> calendarEventList) {
@@ -103,7 +114,6 @@ public class CalendarDisplay extends UiPart<Region> {
         calendarEventList.forEach((calendarEvent -> calendarEvent.setAppointmentGroup(appointmentGroup)));
         agenda.appointments().addAll(calendarEventList);
 
-        // TODO: fix weird add/remove all items bug for first command
         this.calendarEventList.addListener(new ListChangeListener<CalendarEvent>() {
             @Override
             public void onChanged(Change<? extends CalendarEvent> c) {
@@ -116,7 +126,7 @@ public class CalendarDisplay extends UiPart<Region> {
                     if (c.wasAdded()) {
                         for (CalendarEvent addedEvent : c.getAddedSubList()) {
                             addedEvent.setAppointmentGroup(appointmentGroup);
-                            agenda.appointments().add(addedEvent);
+                            agenda.appointments().add(c.getFrom(), addedEvent);
                         }
                     }
                 }
@@ -127,7 +137,6 @@ public class CalendarDisplay extends UiPart<Region> {
     /**
      * Set up the controls for interacting with the calendar display
      * The calendarDisplay must be in focus for this to work
-     * TODO: find way to set focus properly
      */
     public void setControls() {
         calendarDisplayBox.addEventFilter(KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -149,38 +158,51 @@ public class CalendarDisplay extends UiPart<Region> {
                     viewNext();
                     indicateCalendarDisplayTimeChanged();
                     break;
-                case L:
-                    // for testing
-                    // System.out.println("L pressed");
-                    break;
                 default:
                 }
             }
         });
     }
 
-    @FXML
     /**
-     * Bug fix: Consumes the DOWN event, preventing strange behaviour
+     * Consumes the arrow key events, preventing focus tranfering from calendar display
+     * to other UI components
      */
+    @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.DOWN) {
+        if (keyEvent.getCode() == KeyCode.UP
+            || keyEvent.getCode() == KeyCode.DOWN
+            || keyEvent.getCode() == KeyCode.LEFT
+            || keyEvent.getCode() == KeyCode.RIGHT) {
             keyEvent.consume();
         }
     }
+
 
     /**
      * Raises event to event center of change in display time
      * Depends on the current date, not on the first date displayed in the calendar
      */
-    private void indicateCalendarDisplayTimeChanged() {
+    public void indicateCalendarDisplayTimeChanged() {
         raise(new CalendarDisplayTimeChangedEvent(currentDateTime));
     }
 
     @Subscribe
+    /**
+     * Calendar will display the period containing the specified LocalDateTime
+     */
     private void handleJumpToDateTimeEvent(JumpToDateTimeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setDisplayedDateTime(event.targetLocalDateTime);
+    }
+
+    @Subscribe
+    /**
+     * Calendar will display the period containing the selected CalendarEvent
+     */
+    private void handleCalendarPanelSelectionChangedEvent(CalendarPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setDisplayedDateTime(event.newSelection.getStartLocalDateTime());
     }
 
     /**

@@ -27,11 +27,11 @@ public class DeleteToDoCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         ToDoListEvent toDoListEventToDelete =
-                model.getFilteredToDoListEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredToDoListEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         DeleteToDoCommand deleteToDoCommand = new DeleteToDoCommand(INDEX_FIRST_ELEMENT);
 
         String expectedMessage = String.format(DeleteToDoCommand.MESSAGE_DELETE_TODOLIST_EVENT_SUCCESS,
-                toDoListEventToDelete);
+            toDoListEventToDelete);
 
         ModelManagerToDo expectedModel = new ModelManagerToDo(model.getToDoList(), new UserPrefs());
         expectedModel.deleteToDoListEvent(toDoListEventToDelete);
@@ -46,7 +46,7 @@ public class DeleteToDoCommandTest {
         DeleteToDoCommand deleteToDoCommand = new DeleteToDoCommand(outOfBoundIndex);
 
         assertCommandToDoFailure(deleteToDoCommand, model, commandHistory,
-                Messages.MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
+            Messages.MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
     }
 
     @Test
@@ -54,11 +54,11 @@ public class DeleteToDoCommandTest {
         showToDoListEventAtIndex(model, INDEX_FIRST_ELEMENT);
 
         ToDoListEvent toDoListEventToDelete =
-                model.getFilteredToDoListEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredToDoListEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         DeleteToDoCommand deleteToDoCommand = new DeleteToDoCommand(INDEX_FIRST_ELEMENT);
 
         String expectedMessage = String.format(DeleteToDoCommand.MESSAGE_DELETE_TODOLIST_EVENT_SUCCESS,
-                toDoListEventToDelete);
+            toDoListEventToDelete);
 
         ModelToDo expectedModel = new ModelManagerToDo(model.getToDoList(), new UserPrefs());
         System.out.printf(toDoListEventToDelete.toString());
@@ -80,7 +80,7 @@ public class DeleteToDoCommandTest {
         DeleteToDoCommand deleteToDoCommand = new DeleteToDoCommand(outOfBoundIndex);
 
         assertCommandToDoFailure(deleteToDoCommand, model, commandHistory,
-                Messages.MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
+            Messages.MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
     }
 
     @Test
@@ -104,6 +104,7 @@ public class DeleteToDoCommandTest {
         // different todolist event -> returns false
         assertFalse(deleteFirstToDoCommand.equals(deleteSecondToDoCommand));
     }
+
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

@@ -8,7 +8,7 @@
     </toDoListEvents>
 
     <!-- ToDoListEvent with same identity as CS2103 Midterm -->
-  <toDoListEvents>
+    <toDoListEvents>
         <title>CS2103 Midterm</title>
         <description>cover all materials from week 1 to week 7</description>
         <priority>H</priority>

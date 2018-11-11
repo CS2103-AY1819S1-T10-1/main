@@ -50,8 +50,8 @@ public class ToDoListEvent {
         }
 
         return otherToDoListEvent != null
-                && otherToDoListEvent.getTitle().equals(getTitle())
-                && otherToDoListEvent.getDescription().equals(getDescription());
+            && otherToDoListEvent.getTitle().equals(getTitle())
+            && otherToDoListEvent.getDescription().equals(getDescription());
     }
 
     /**
@@ -70,8 +70,8 @@ public class ToDoListEvent {
 
         ToDoListEvent otherToDoListEvent = (ToDoListEvent) other;
         return otherToDoListEvent.getTitle().equals(getTitle())
-                && otherToDoListEvent.getDescription().equals(getDescription())
-                && otherToDoListEvent.getPriority().equals(getPriority());
+            && otherToDoListEvent.getDescription().equals(getDescription())
+            && otherToDoListEvent.getPriority().equals(getPriority());
     }
 
     @Override
@@ -84,11 +84,11 @@ public class ToDoListEvent {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(" Title: ")
-                .append(getTitle())
-                .append(" Description: ")
-                .append(getDescription())
-                .append(" Priority: ")
-                .append(getPriority());
+            .append(getTitle())
+            .append(" Description: ")
+            .append(getDescription())
+            .append(" Priority: ")
+            .append(getPriority());
         return builder.toString();
     }
 }

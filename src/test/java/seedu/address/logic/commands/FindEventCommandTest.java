@@ -17,12 +17,16 @@ import java.util.Collections;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendarevent.DatePredicate;
+import seedu.address.model.calendarevent.DateTime;
 import seedu.address.model.calendarevent.FuzzySearchComparator;
+import seedu.address.model.calendarevent.FuzzySearchFilterPredicate;
 import seedu.address.model.calendarevent.TagsPredicate;
-import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
@@ -34,25 +38,28 @@ public class FindEventCommandTest {
 
     @Test
     public void equals() {
-        TitleContainsKeywordsPredicate firstPredicate =
-            new TitleContainsKeywordsPredicate(Collections.singletonList("first"));
-        TitleContainsKeywordsPredicate secondPredicate =
-            new TitleContainsKeywordsPredicate(Collections.singletonList("second"));
+        FuzzySearchFilterPredicate firstPredicate =
+            new FuzzySearchFilterPredicate(Collections.singletonList("first"));
+        FuzzySearchFilterPredicate secondPredicate =
+            new FuzzySearchFilterPredicate(Collections.singletonList("second"));
         FuzzySearchComparator firstComparator =
             new FuzzySearchComparator(Collections.singletonList("first"));
         FuzzySearchComparator secondComparator =
             new FuzzySearchComparator(Collections.singletonList("second"));
-        TagsPredicate tagsPredicate =
-            new TagsPredicate(new ArrayList<String>());
+        DatePredicate datePredicate = new DatePredicate(null, null);
+        TagsPredicate tagsPredicate = new TagsPredicate(new ArrayList<String>());
 
-        FindEventCommand findFirstCommand = new FindEventCommand(firstPredicate, firstComparator, tagsPredicate);
-        FindEventCommand findSecondCommand = new FindEventCommand(secondPredicate, secondComparator, tagsPredicate);
+        FindEventCommand findFirstCommand =
+                new FindEventCommand(firstPredicate, firstComparator, datePredicate, tagsPredicate);
+        FindEventCommand findSecondCommand =
+                new FindEventCommand(secondPredicate, secondComparator, datePredicate, tagsPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindEventCommand findFirstCommandCopy = new FindEventCommand(firstPredicate, firstComparator, tagsPredicate);
+        FindEventCommand findFirstCommandCopy =
+                new FindEventCommand(firstPredicate, firstComparator, datePredicate, tagsPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -68,10 +75,11 @@ public class FindEventCommandTest {
     @Test
     public void execute_zeroKeywords_noCalendarEventFound() {
         String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 0);
-        TitleContainsKeywordsPredicate predicate = preparePredicate(" ");
+        FuzzySearchFilterPredicate predicate = preparePredicate(" ");
         FuzzySearchComparator comparator = prepareComparator(" ");
+        DatePredicate datePredicate = prepareDatePredicate(" ", " ");
         TagsPredicate tagsPredicate = prepareTagsPredicate(" ");
-        FindEventCommand command = new FindEventCommand(predicate, comparator, tagsPredicate);
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
         expectedModel.updateFilteredCalendarEventList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredCalendarEventList());
@@ -80,20 +88,22 @@ public class FindEventCommandTest {
     @Test
     public void execute_multipleKeywords_multipleCalendarEventsFound() {
         String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 3);
-        TitleContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
-        FuzzySearchComparator comparator = prepareComparator("Kurz Elle Kunz");
+        FuzzySearchFilterPredicate predicate = preparePredicate("Lab Practice Fair");
+        FuzzySearchComparator comparator = prepareComparator("Lab Practice Fair");
+        DatePredicate datePredicate = prepareDatePredicate(" ", " ");
         TagsPredicate tagsPredicate = prepareTagsPredicate("");
-        FindEventCommand command = new FindEventCommand(predicate, comparator, tagsPredicate);
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
         expectedModel.updateFilteredCalendarEventList(predicate);
+        expectedModel.sortFilteredCalendarEventList(comparator); // added because FindEventCommand sorts as well
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredCalendarEventList());
     }
 
     /**
-     * Parses {@code userInput} into a {@code TitleContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code FuzzySearchFilterPredicate}.
      */
-    private TitleContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new TitleContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private FuzzySearchFilterPredicate preparePredicate(String userInput) {
+        return new FuzzySearchFilterPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 
     /**
@@ -101,6 +111,26 @@ public class FindEventCommandTest {
      */
     private FuzzySearchComparator prepareComparator(String userInput) {
         return new FuzzySearchComparator(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code DatePredicate}.
+     */
+    private DatePredicate prepareDatePredicate(String userInputFrom, String userInputTo) {
+        DateTime dateFrom = null;
+        DateTime dateTo = null;
+        try {
+            if (!userInputFrom.isEmpty()) {
+                dateFrom = ParserUtil.parseDateTime(userInputFrom);
+            }
+            if (!userInputTo.isEmpty()) {
+                dateTo = ParserUtil.parseDateTime(userInputTo);
+            }
+        } catch (ParseException E) {
+            return new DatePredicate(null, null);
+        }
+
+        return new DatePredicate(dateFrom, dateTo);
     }
 
     /**

@@ -26,7 +26,6 @@ public class CalendarEvent extends Agenda.AppointmentImplLocal {
     private final DateTimeInfo dateTimeInfo;
     private final Set<Tag> tags = new HashSet<>();
 
-    private boolean isWholeDay;
     private Agenda.AppointmentGroupImpl appointmentGroup;
 
     /**
@@ -39,9 +38,6 @@ public class CalendarEvent extends Agenda.AppointmentImplLocal {
         this.dateTimeInfo = dateTimeInfo;
         this.venue = venue;
         this.tags.addAll(tags);
-
-        // Appointment variables
-        this.isWholeDay = false;
         this.appointmentGroup = null;
     }
 
@@ -52,11 +48,6 @@ public class CalendarEvent extends Agenda.AppointmentImplLocal {
     @Override
     public Boolean isWholeDay() {
         return false;
-    }
-
-    @Override
-    public void setWholeDay(Boolean b) {
-        this.isWholeDay = b;
     }
 
     @Override

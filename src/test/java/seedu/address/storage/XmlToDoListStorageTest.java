@@ -33,7 +33,7 @@ public class XmlToDoListStorageTest {
     @Test
     public void readToDoList_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        readToDoList (null);
+        readToDoList(null);
     }
 
     private java.util.Optional<ReadOnlyToDoList> readToDoList(String filePath) throws Exception {
@@ -42,8 +42,8 @@ public class XmlToDoListStorageTest {
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
         return prefsFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER.resolve(prefsFileInTestDataFolder)
-                : null;
+            ? TEST_DATA_FOLDER.resolve(prefsFileInTestDataFolder)
+            : null;
     }
 
     @Test
@@ -112,7 +112,7 @@ public class XmlToDoListStorageTest {
     private void saveToDoList(ReadOnlyToDoList toDoList, String filePath) {
         try {
             new XmlToDoListStorage(Paths.get(filePath))
-                    .saveToDoList(toDoList, addToTestDataPathIfNotNull(filePath));
+                .saveToDoList(toDoList, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

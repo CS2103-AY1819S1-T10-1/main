@@ -18,16 +18,16 @@ public class TitleToDoContainsKeywordsPredicateTest {
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
         TitleToDoContainsKeywordsPredicate firstPredicate =
-                new TitleToDoContainsKeywordsPredicate(firstPredicateKeywordList);
+            new TitleToDoContainsKeywordsPredicate(firstPredicateKeywordList);
         TitleToDoContainsKeywordsPredicate secondPredicate =
-                new TitleToDoContainsKeywordsPredicate(secondPredicateKeywordList);
+            new TitleToDoContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         TitleToDoContainsKeywordsPredicate firstPredicateCopy =
-                new TitleToDoContainsKeywordsPredicate(firstPredicateKeywordList);
+            new TitleToDoContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -44,7 +44,7 @@ public class TitleToDoContainsKeywordsPredicateTest {
     public void test_titleContainsKeywords_returnsTrue() {
         // One keyword
         TitleToDoContainsKeywordsPredicate predicate = new TitleToDoContainsKeywordsPredicate(Collections.singletonList(
-                "Alice"));
+            "Alice"));
         assertTrue(predicate.test(new ToDoListEventBuilder().withTitle("Alice Bob").build()));
 
         // Multiple keywords

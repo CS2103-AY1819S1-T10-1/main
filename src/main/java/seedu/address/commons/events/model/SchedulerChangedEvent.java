@@ -18,4 +18,5 @@ public class SchedulerChangedEvent extends BaseEvent {
     public String toString() {
         return "number of events " + data.getCalendarEventList().size();
     }
+
 }

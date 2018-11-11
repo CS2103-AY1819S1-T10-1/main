@@ -5,7 +5,7 @@ package seedu.address.model.calendarevent;
  * Guarantees: immutable; is valid as declared in {@link #isValidStartAndEnd(DateTime, DateTime)}
  */
 public class DateTimeInfo {
-    public static final String MESSAGE_STARTEND_CONSTRAINTS = "Start date & time must be before end date & time";
+    public static final String MESSAGE_DATETIMEINFO_CONSTRAINTS = "Start date & time must be before end date & time";
     public final DateTime start;
     public final DateTime end;
 
@@ -13,7 +13,6 @@ public class DateTimeInfo {
      * Constructs a {@code DateTime} from input start and end DateTimes
      *
      * @param start, end A valid start and end datetime
-     *
      */
     public DateTimeInfo(DateTime start, DateTime end) {
         this.start = start;
@@ -30,8 +29,8 @@ public class DateTimeInfo {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DateTimeInfo // instanceof handles nulls
-                && start.equals(((DateTimeInfo) other).start)
-                && end.equals(((DateTimeInfo) other).end)); // state check
+            || (other instanceof DateTimeInfo // instanceof handles nulls
+            && start.equals(((DateTimeInfo) other).start)
+            && end.equals(((DateTimeInfo) other).end)); // state check
     }
 }

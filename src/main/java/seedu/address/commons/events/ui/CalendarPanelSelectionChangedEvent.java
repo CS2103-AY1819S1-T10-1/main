@@ -8,8 +8,7 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public class CalendarPanelSelectionChangedEvent extends BaseEvent {
 
-
-    private final CalendarEvent newSelection;
+    public final CalendarEvent newSelection;
 
     public CalendarPanelSelectionChangedEvent(CalendarEvent newSelection) {
         this.newSelection = newSelection;
@@ -20,7 +19,4 @@ public class CalendarPanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public CalendarEvent getNewSelection() {
-        return newSelection;
-    }
 }

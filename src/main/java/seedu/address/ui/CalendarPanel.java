@@ -41,7 +41,7 @@ public class CalendarPanel extends UiPart<Region> {
         calendarView.getSelectionModel().selectedItemProperty()
             .addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    logger.fine("Selection in calendarevent list panel changed to : '" + newValue + "'");
+                    logger.fine("Selection in calendar event list panel changed to : '" + newValue + "'");
                     raise(new CalendarPanelSelectionChangedEvent(newValue));
                 }
             });

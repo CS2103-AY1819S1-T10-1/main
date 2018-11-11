@@ -37,9 +37,9 @@ public class XmlSerializableToDoList {
     public XmlSerializableToDoList(ReadOnlyToDoList src) {
         this();
         toDoListEvents.addAll(src.getToDoList()
-                .stream()
-                .map(XmlAdaptedToDoListEvent::new)
-                .collect(Collectors.toList()));
+            .stream()
+            .map(XmlAdaptedToDoListEvent::new)
+            .collect(Collectors.toList()));
     }
 
     /**

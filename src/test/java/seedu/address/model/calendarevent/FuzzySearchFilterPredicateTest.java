@@ -11,22 +11,22 @@ import org.junit.Test;
 
 import seedu.address.testutil.CalendarEventBuilder;
 
-public class TitleContainsKeywordsPredicateTest {
+public class FuzzySearchFilterPredicateTest {
 
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        TitleContainsKeywordsPredicate firstPredicate = new TitleContainsKeywordsPredicate(firstPredicateKeywordList);
-        TitleContainsKeywordsPredicate secondPredicate = new TitleContainsKeywordsPredicate(secondPredicateKeywordList);
+        FuzzySearchFilterPredicate firstPredicate = new FuzzySearchFilterPredicate(firstPredicateKeywordList);
+        FuzzySearchFilterPredicate secondPredicate = new FuzzySearchFilterPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        TitleContainsKeywordsPredicate firstPredicateCopy =
-            new TitleContainsKeywordsPredicate(firstPredicateKeywordList);
+        FuzzySearchFilterPredicate firstPredicateCopy =
+            new FuzzySearchFilterPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,36 +42,36 @@ public class TitleContainsKeywordsPredicateTest {
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
-        TitleContainsKeywordsPredicate predicate = new TitleContainsKeywordsPredicate(Collections.singletonList(
+        FuzzySearchFilterPredicate predicate = new FuzzySearchFilterPredicate(Collections.singletonList(
             "Alice"));
         assertTrue(predicate.test(new CalendarEventBuilder().withTitle("Alice Bob").build()));
 
         // Multiple keywords
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        predicate = new FuzzySearchFilterPredicate(Arrays.asList("Alice", "Bob"));
         assertTrue(predicate.test(new CalendarEventBuilder().withTitle("Alice Bob").build()));
 
         // Only one matching keyword
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        predicate = new FuzzySearchFilterPredicate(Arrays.asList("Bob", "Carol"));
         assertTrue(predicate.test(new CalendarEventBuilder().withTitle("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        predicate = new FuzzySearchFilterPredicate(Arrays.asList("aLIce", "bOB"));
         assertTrue(predicate.test(new CalendarEventBuilder().withTitle("Alice Bob").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        TitleContainsKeywordsPredicate predicate = new TitleContainsKeywordsPredicate(Collections.emptyList());
+        FuzzySearchFilterPredicate predicate = new FuzzySearchFilterPredicate(Collections.emptyList());
         assertFalse(predicate.test(new CalendarEventBuilder().withTitle("Alice").build()));
 
         // Non-matching keyword
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Carol"));
+        predicate = new FuzzySearchFilterPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new CalendarEventBuilder().withTitle("Alice Bob").build()));
 
-        // Keywords match phone, email and address, but does not match name
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("12345", "boba@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new CalendarEventBuilder().withTitle("Alice").withDescription("12345")
-            .withVenue("Main Street").build()));
+        // Keywords do not match title, venue or description
+        predicate = new FuzzySearchFilterPredicate(Arrays.asList("12345", "boba@email.com", "Main", "Street"));
+        assertFalse(predicate.test(new CalendarEventBuilder().withTitle("Lecture").withDescription("Daydream")
+            .withVenue("LT19").build()));
     }
 }

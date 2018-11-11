@@ -42,6 +42,7 @@ public class MonthYearPanel extends UiPart<Region> {
         calendarEventList.addListener(new ListChangeListener<CalendarEvent>() {
             @Override
             public void onChanged(Change<? extends CalendarEvent> c) {
+                c.next();
                 if (c.wasUpdated()) {
                     renderDayMonthPanel(calendarEventList);
                 }

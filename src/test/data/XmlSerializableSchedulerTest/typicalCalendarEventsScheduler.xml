@@ -2,56 +2,59 @@
 <!-- Scheduler save file which contains the same CalendarEvent values as in TypicalPersons#getTypicalAddressBook() -->
 <scheduler>
     <calendarEvents>
-        <title>Alice Pauline</title>
-        <description>94351253</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>123, Jurong West Ave 6, #08-111</venue>
-        <tagged>friends</tagged>
+        <title>CS2103 Lecture</title>
+        <description>Abstraction, Gradle, JUnit</description>
+        <venue>i3 Auditorium</venue>
+        <start>2018-11-15 16:00</start>
+        <end>2018-11-15 18:00</end>
+        <tagged>lecture</tagged>
+        <tagged>CS2103</tagged>
     </calendarEvents>
     <calendarEvents>
-        <title>Benson Meier</title>
-        <description>98765432</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>311, Clementi Ave 2, #02-25</venue>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <title>CS2104 Tutorial</title>
+        <description>Monadic Parsers</description>
+        <venue>AS6 04-21</venue>
+        <start>2018-11-13 14:00</start>
+        <end>2018-11-13 16:00</end>
+        <tagged>tutorial</tagged>
+        <tagged>CS2104</tagged>
     </calendarEvents>
     <calendarEvents>
-        <title>Carl Kurz</title>
-        <description>95352563</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>wall street</venue>
+        <title>CS2040 Lab</title>
+        <description>Linked Lists</description>
+        <venue>COM1 02-09</venue>
+        <start>2018-11-14 08:00</start>
+        <end>2018-11-14 10:00</end>
     </calendarEvents>
     <calendarEvents>
-        <title>Daniel Meier</title>
-        <description>87652533</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>10th street</venue>
-        <tagged>friends</tagged>
+        <title>FIN3101 Seminar</title>
+        <description>One-Fund Theorem</description>
+        <venue>Marina Boulevard</venue>
+        <start>2018-11-16 10:00</start>
+        <end>2018-11-16 15:00</end>
+        <tagged>FIN3101</tagged>
+        <tagged>seminar</tagged>
     </calendarEvents>
     <calendarEvents>
-        <title>Elle Meyer</title>
-        <description>9482224</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>michegan ave</venue>
+        <title>Choir Practice</title>
+        <description>Bring songbook</description>
+        <venue>Little Tokyo</venue>
+        <start>2018-11-16 19:00</start>
+        <end>2018-11-16 22:00</end>
     </calendarEvents>
     <calendarEvents>
-        <title>Fiona Kunz</title>
-        <description>9482427</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>little tokyo</venue>
+        <title>Career Fair</title>
+        <description>Bring resume</description>
+        <venue>MPSH 1</venue>
+        <start>2018-11-17 09:00</start>
+        <end>2018-11-17 18:00</end>
     </calendarEvents>
     <calendarEvents>
-        <title>George Best</title>
-        <description>9482442</description>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <venue>4th street</venue>
+        <title>Google Interview</title>
+        <description>Bring water bottle</description>
+        <venue>Mountain View</venue>
+        <start>2018-11-14 14:00</start>
+        <end>2018-11-14 16:00</end>
     </calendarEvents>
 </scheduler>
+

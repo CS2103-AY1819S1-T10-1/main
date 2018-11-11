@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import seedu.address.model.todolist.exceptions.DuplicateToDoListEventException;
 import seedu.address.model.todolist.exceptions.ToDoListEventNotFoundException;
 
@@ -113,8 +112,8 @@ public class UniqueToDoEventList implements Iterable<ToDoListEvent> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueToDoEventList // instanceof handles nulls
-                && internalList.equals(((UniqueToDoEventList) other).internalList));
+            || (other instanceof UniqueToDoEventList // instanceof handles nulls
+            && internalList.equals(((UniqueToDoEventList) other).internalList));
     }
 
     @Override

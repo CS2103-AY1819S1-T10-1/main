@@ -17,25 +17,39 @@
 }
 
 /* tab styles */
+.tab-header-background {
+    -fx-background-color: #282828;
+}
+
+.tab-pane:top *.tab-header-area {
+    -fx-padding: 0em 0em 0em 0em;
+}
+
+.tab-pane:bottom *.tab-header-area {
+    -fx-padding: 0em 0em 0em 0em;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #282828;
+    -fx-border-color: #282828;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3c3e3f;
+    -fx-border-color: #3c3e3f;
+}
+
 .tab-label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 12;
+    -fx-font-size: 14;
     -fx-alignment: CENTER;
-    -fx-font-weight: bold;
+    -fx-text-fill: #CCCCCC;
 }
-
-.tab {
-    -fx-background-insets: 0 1 0 1,0,0;
-}
-
-.tab-pane {
-    -fx-tab-min-width:90px;
-}
-
-.tab-header-background {
-    -fx-background-color: #3c3c3c
-}
-
 
 /* task list styles */
 #taskListHeader {
@@ -69,6 +83,7 @@
     -fx-border-radius: 10;
 }
 
+/* calendar styles */
 #monthYearPanelPlaceholder {
     -fx-background-color: #282828;
 }
@@ -94,35 +109,80 @@
     -fx-width: 3;
 }
 
-/* calendar styles */
-#calendarPanelPlaceHolder {
-    -fx-background-color: #282828;
-}
-
-#filterField, #CalendarEventListPanel, #calendarEventWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
-    -fx-background-color: #282828;
-}
-
-#calendarEventListPanelPlaceholder {
-    -fx-background-color: #282828;
-}
-
-#personListView {
-    -fx-background-color: #282828;
-}
-
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
-#calendarCommandBoxBorder {
-    -fx-background-color: #273445;
-}
-
 #calendarDisplayBox {
     -fx-background-color: #282828;
+}
+
+/* dark theme for todolist and search pane items */
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #3c3e3f;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #424d5f;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+/* font for todolist panel */
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #555555;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+#priority {
+    -fx-alignment: CENTER;
 }
 
 /* command box styles */
@@ -157,7 +217,7 @@
     -fx-background-color: #1B1B1B #1B1B1B;
     -fx-background-radius: 0;
     -fx-border-insets: 0;
-    -fx-border-width: 0 0 0 ;
+    -fx-border-width: 0 0 0;
     -fx-border-color: #1B1B1B #1B1B1B;
 }
 
@@ -214,3 +274,30 @@
     -fx-text-fill: white;
 }
 
+/* dark scroll bar for todolist */
+/* todo use this scrollbar style for the calendar too, it looks really nice */
+.scroll-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}

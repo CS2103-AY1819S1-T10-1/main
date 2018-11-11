@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showCalendarEventAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
@@ -52,16 +52,16 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_ELEMENT);
-        showPersonAtIndex(expectedModel, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(model, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(expectedModel, INDEX_FIRST_ELEMENT);
 
         assertExecutionSuccess(INDEX_FIRST_ELEMENT);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_ELEMENT);
-        showPersonAtIndex(expectedModel, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(model, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(expectedModel, INDEX_FIRST_ELEMENT);
 
         Index outOfBoundsIndex = INDEX_SECOND_ELEMENT;
         // ensures that outOfBoundIndex is still in bounds of address book list

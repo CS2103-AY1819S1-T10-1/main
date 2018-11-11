@@ -102,13 +102,7 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandEntered() {
         try {
             String command = commandTextField.getText();
-            CommandResult commandResult;
-            String[] commandWord = command.trim().split(" ");
-            if (commandWord[1].contains("todo")) {
-                commandResult = logic.executeToDo(command);
-            } else {
-                commandResult = logic.execute(command);
-            }
+            CommandResult commandResult = logic.execute(command);
             initHistory();
             historySnapshot.next();
             // process result of the command

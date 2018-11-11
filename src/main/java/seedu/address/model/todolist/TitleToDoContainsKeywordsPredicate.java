@@ -19,14 +19,14 @@ public class TitleToDoContainsKeywordsPredicate implements Predicate<ToDoListEve
     @Override
     public boolean test(ToDoListEvent toDoListEvent) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordFuzzy(toDoListEvent.getTitle().value, keyword, tolerance));
+            .anyMatch(keyword -> StringUtil.containsWordFuzzy(toDoListEvent.getTitle().value, keyword, tolerance));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TitleToDoContainsKeywordsPredicate // instanceof handles nulls
-                && keywords.equals(((TitleToDoContainsKeywordsPredicate) other).keywords)); // state check
+            || (other instanceof TitleToDoContainsKeywordsPredicate // instanceof handles nulls
+            && keywords.equals(((TitleToDoContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

@@ -58,10 +58,13 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing U-Schedule ]===========================");
+        logger.info("=============================[ Initializing U-Schedule ]=============================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -235,9 +238,5 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

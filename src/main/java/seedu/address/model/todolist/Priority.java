@@ -13,9 +13,9 @@ public class Priority {
 
     public static final String DEFAULT_PRIORITY = "1"; // default field name
     public static final String MESSAGE_CONSTRAINTS =
-            "The valid user input for priority is p/[priority]."
-                    + "While [priority] is H/M/L,"
-                    + "and H for high priority, M for medium priority, L for low priority";
+        "The valid user input for priority is p/[priority]."
+            + "While [priority] is H/M/L,"
+            + "and H for high priority, M for medium priority, L for low priority";
 
     /*
      * There should be only one integer, and the integer should be 1, 2 or 3.
@@ -42,8 +42,8 @@ public class Priority {
      */
     public static boolean isValid(String priority) {
         return (priority.matches(VALIDATION_REGEX_HIGH)
-                || priority.matches(VALIDATION_REGEX_MEDIUM)
-                || priority.matches(VALIDATION_REGEX_LOW));
+            || priority.matches(VALIDATION_REGEX_MEDIUM)
+            || priority.matches(VALIDATION_REGEX_LOW));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class Priority {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Priority // instanceof handles nulls
-                && value.equals(((Priority) other).value)); // state check
+            || (other instanceof Priority // instanceof handles nulls
+            && value.equals(((Priority) other).value)); // state check
     }
 
     @Override

@@ -18,16 +18,13 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import seedu.address.model.todolist.ToDoListEvent;
 import seedu.address.model.todolist.exceptions.DuplicateToDoListEventException;
-
 import seedu.address.testutil.ToDoListEventBuilder;
 
 public class ToDoListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final ToDoList toDoList = new ToDoList();
 
     @Test
@@ -52,8 +49,8 @@ public class ToDoListTest {
     public void resetData_withDuplicateToDo_throwsDuplicateToDoException() {
         // Two toDoListEvent with the same identity fields
         ToDoListEvent editedLecture =
-                new ToDoListEventBuilder(LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
-                        .build();
+            new ToDoListEventBuilder(LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
+                .build();
         List<ToDoListEvent> newToDoListEvents = Arrays.asList(LECTURE, editedLecture);
         ToDoListStub newData = new ToDoListStub(newToDoListEvents);
 
@@ -82,8 +79,8 @@ public class ToDoListTest {
     public void hasToDo_todoWithSameIdentityFieldsInToDoList_returnsTrue() {
         toDoList.addToDoListEvent(LECTURE);
         ToDoListEvent editedLecture =
-                new ToDoListEventBuilder(LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
-                        .build();
+            new ToDoListEventBuilder(LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
+                .build();
         assertTrue(toDoList.hasToDoListEvent(editedLecture));
     }
 

@@ -20,7 +20,7 @@ public class DateTimeTest {
         int validHour = 1;
         int validMinute = 1;
         Assert.assertThrows(DateTimeException.class, () ->
-                        new DateTime(invalidYear, validMonth, validDay, validHour, validMinute));
+            new DateTime(invalidYear, validMonth, validDay, validHour, validMinute));
     }
 
     @Test

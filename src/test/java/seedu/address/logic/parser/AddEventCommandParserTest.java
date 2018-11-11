@@ -73,17 +73,17 @@ public class AddEventCommandParserTest {
 
         // multiple start date/times - last start date/time accepted
         assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-                + START_DESC_LECTURE + START_DESC_TUTORIAL + END_DESC_TUTORIAL
-                + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddEventCommand(expectedCalendarEvent));
+            + START_DESC_LECTURE + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddEventCommand(expectedCalendarEvent));
 
         // multiple end date/times - last end date/times accepted
         assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-                + START_DESC_TUTORIAL + END_DESC_LECTURE + END_DESC_TUTORIAL
-                + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddEventCommand(expectedCalendarEvent));
+            + START_DESC_TUTORIAL + END_DESC_LECTURE + END_DESC_TUTORIAL
+            + VENUE_DESC_TUTORIAL + TAG_DESC_FRIEND, new AddEventCommand(expectedCalendarEvent));
 
         // multiple tags - all accepted
         CalendarEvent expectedCalendarEventMultipleTags =
-                new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+            new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
             + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
             + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddEventCommand(expectedCalendarEventMultipleTags));
@@ -94,7 +94,7 @@ public class AddEventCommandParserTest {
         // zero tags
         CalendarEvent expectedCalendarEvent = new CalendarEventBuilder(AMY).withTags().build();
         assertParseSuccess(parser, TITLE_DESC_LECTURE + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE
-                        + END_DESC_LECTURE + VENUE_DESC_LECTURE, new AddEventCommand(expectedCalendarEvent));
+            + END_DESC_LECTURE + VENUE_DESC_LECTURE, new AddEventCommand(expectedCalendarEvent));
     }
 
     @Test
@@ -103,28 +103,28 @@ public class AddEventCommandParserTest {
 
         // missing title prefix
         assertParseFailure(parser, VALID_TITLE_TUTORIAL + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL
-                        + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
+            + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
         // missing description prefix
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + VALID_DESCRIPTION_TUTORIAL
-                        + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
         // missing start prefix
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-                        + VALID_START_DATETIME_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
+            + VALID_START_DATETIME_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
         // missing end prefix
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-                        + START_DESC_TUTORIAL + VALID_END_DATETIME_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
+            + START_DESC_TUTORIAL + VALID_END_DATETIME_TUTORIAL + VENUE_DESC_TUTORIAL, expectedMessage);
 
         // missing venue prefix
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-                        + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VALID_VENUE_TUTORIAL, expectedMessage);
+            + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VALID_VENUE_TUTORIAL, expectedMessage);
 
         // all prefixes missing
         assertParseFailure(parser, VALID_TITLE_TUTORIAL + VALID_DESCRIPTION_TUTORIAL
-                + VALID_START_DATETIME_TUTORIAL + VALID_END_DATETIME_TUTORIAL
-                + VALID_VENUE_TUTORIAL, expectedMessage);
+            + VALID_START_DATETIME_TUTORIAL + VALID_END_DATETIME_TUTORIAL
+            + VALID_VENUE_TUTORIAL, expectedMessage);
     }
 
     @Test
@@ -147,12 +147,12 @@ public class AddEventCommandParserTest {
         // invalid start date/time
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
             + INVALID_START_DESC + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS);
 
         // invalid end date/time
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
             + START_DESC_TUTORIAL + INVALID_END_DESC + VENUE_DESC_TUTORIAL
-            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+            + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
@@ -165,8 +165,8 @@ public class AddEventCommandParserTest {
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
-            + START_DESC_TUTORIAL + END_DESC_TUTORIAL
-            + VENUE_DESC_TUTORIAL + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + START_DESC_TUTORIAL + END_DESC_TUTORIAL
+                + VENUE_DESC_TUTORIAL + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
     }
 }

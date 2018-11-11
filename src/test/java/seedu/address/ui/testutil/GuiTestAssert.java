@@ -1,14 +1,15 @@
 package seedu.address.ui.testutil;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.CalendarDisplayHandle;
 import guitests.guihandles.CalendarEventCardHandle;
 import guitests.guihandles.CalendarPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-
 import guitests.guihandles.ToDoListEventCardHandle;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.todolist.ToDoListEvent;
@@ -79,6 +80,26 @@ public class GuiTestAssert {
     public static void assertListMatching(CalendarPanelHandle calendarPanelHandle,
                                           List<CalendarEvent> calendarEvents) {
         assertListMatching(calendarPanelHandle, calendarEvents.toArray(new CalendarEvent[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code calendarDisplayHandle} displays the details of {@code calendarEvents}
+     * correctly and
+     * in the correct order.
+     */
+    public static void assertListMatchingIgnoreOrder(CalendarDisplayHandle calendarDisplayHandle,
+                                                     List<CalendarEvent> calendarEvents) {
+        /*
+        System.out.println("agenda calendar events:");
+        for(CalendarEvent c : calendarDisplayHandle.getDisplayedCalendarEvents()) {
+            System.out.println(c);
+        }
+        System.out.println("model calendar events:");
+        for(CalendarEvent c : calendarEvents) {
+            System.out.println(c);
+        }*/
+        assertEquals(calendarDisplayHandle.getDisplayedCalendarEvents().size(), calendarEvents.size());
+        assertTrue(calendarDisplayHandle.getDisplayedCalendarEvents().containsAll(calendarEvents));
     }
 
     /**

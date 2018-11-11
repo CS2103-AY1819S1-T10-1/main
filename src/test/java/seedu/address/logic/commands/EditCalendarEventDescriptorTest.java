@@ -41,7 +41,7 @@ public class EditCalendarEventDescriptorTest {
 
         // different description -> returns false
         editedAmy = new EditCalendarEventDescriptorBuilder(DESC_LECTURE)
-                .withDescription(VALID_DESCRIPTION_TUTORIAL).build();
+            .withDescription(VALID_DESCRIPTION_TUTORIAL).build();
         assertFalse(DESC_LECTURE.equals(editedAmy));
 
         // different venue -> returns false

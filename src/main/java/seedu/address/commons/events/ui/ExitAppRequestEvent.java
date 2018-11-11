@@ -11,4 +11,5 @@ public class ExitAppRequestEvent extends BaseEvent {
     public String toString() {
         return getClass().getSimpleName();
     }
+
 }

@@ -20,6 +20,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelToDo;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.DateTime;
 import seedu.address.model.calendarevent.DateTimeInfo;
@@ -67,6 +68,32 @@ public class EditEventCommand extends Command {
         this.editCalendarEventDescriptor = new EditCalendarEventDescriptor(editCalendarEventDescriptor);
     }
 
+    /**
+     * Creates and returns a {@code CalendarEvent} with the details of {@code calendarEventToEdit}
+     * edited with {@code editCalendarEventDescriptor}.
+     */
+    private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit,
+                                                           EditCalendarEventDescriptor editCalendarEventDescriptor)
+        throws CommandException {
+        assert calendarEventToEdit != null;
+
+        Title updatedName = editCalendarEventDescriptor.getTitle().orElse(calendarEventToEdit.getTitle());
+        Description updatedDescription =
+            editCalendarEventDescriptor.getDescription().orElse(calendarEventToEdit.getDescriptionObject());
+
+        DateTime updatedStart = editCalendarEventDescriptor.getStart().orElse(calendarEventToEdit.getStart());
+        DateTime updatedEnd = editCalendarEventDescriptor.getEnd().orElse(calendarEventToEdit.getEnd());
+        if (!DateTimeInfo.isValidStartAndEnd(updatedStart, updatedEnd)) {
+            throw new CommandException(DateTimeInfo.MESSAGE_DATETIMEINFO_CONSTRAINTS);
+        }
+
+        Venue updatedVenue = editCalendarEventDescriptor.getVenue().orElse(calendarEventToEdit.getVenue());
+        Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
+
+        return new CalendarEvent(updatedName, updatedDescription,
+            new DateTimeInfo(updatedStart, updatedEnd), updatedVenue, updatedTags);
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -85,34 +112,13 @@ public class EditEventCommand extends Command {
         }
 
         model.updateCalendarEvent(calendarEventToEdit, editedCalendarEvent);
-        model.resetFilteredCalendarEventList();
         model.commitScheduler();
         return new CommandResult(String.format(MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent));
     }
 
-    /**
-     * Creates and returns a {@code CalendarEvent} with the details of {@code calendarEventToEdit}
-     * edited with {@code editCalendarEventDescriptor}.
-     */
-    private static CalendarEvent createEditedCalendarEvent(CalendarEvent calendarEventToEdit,
-                                    EditCalendarEventDescriptor editCalendarEventDescriptor) throws CommandException {
-        assert calendarEventToEdit != null;
-
-        Title updatedName = editCalendarEventDescriptor.getTitle().orElse(calendarEventToEdit.getTitle());
-        Description updatedDescription =
-            editCalendarEventDescriptor.getDescription().orElse(calendarEventToEdit.getDescriptionObject());
-
-        DateTime updatedStart = editCalendarEventDescriptor.getStart().orElse(calendarEventToEdit.getStart());
-        DateTime updatedEnd = editCalendarEventDescriptor.getEnd().orElse(calendarEventToEdit.getEnd());
-        if (!DateTimeInfo.isValidStartAndEnd(updatedStart, updatedEnd)) {
-            throw new CommandException(DateTimeInfo.MESSAGE_STARTEND_CONSTRAINTS);
-        }
-
-        Venue updatedVenue = editCalendarEventDescriptor.getVenue().orElse(calendarEventToEdit.getVenue());
-        Set<Tag> updatedTags = editCalendarEventDescriptor.getTags().orElse(calendarEventToEdit.getTags());
-
-        return new CalendarEvent(updatedName, updatedDescription,
-                                    new DateTimeInfo(updatedStart, updatedEnd), updatedVenue, updatedTags);
+    @Override
+    public CommandResult execute(ModelToDo modelToDo, CommandHistory history) throws CommandException {
+        throw new CommandException(MESSAGE_INCORRECT_MODEL_CALENDAR);
     }
 
     @Override
@@ -168,52 +174,44 @@ public class EditEventCommand extends Command {
             return CollectionUtil.isAnyNonNull(title, description, start, end, venue, tags);
         }
 
-        public void setTitle(Title title) {
-            this.title = title;
-        }
-
         public Optional<Title> getTitle() {
             return Optional.ofNullable(title);
         }
 
-        public void setDescription(Description description) {
-            this.description = description;
+        public void setTitle(Title title) {
+            this.title = title;
         }
 
         public Optional<Description> getDescription() {
             return Optional.ofNullable(description);
         }
 
-        public void setStart(DateTime start) {
-            this.start = start;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
         public Optional<DateTime> getStart() {
             return Optional.ofNullable(start);
         }
 
-        public void setEnd(DateTime end) {
-            this.end = end;
+        public void setStart(DateTime start) {
+            this.start = start;
         }
 
         public Optional<DateTime> getEnd() {
             return Optional.ofNullable(end);
         }
 
-        public void setVenue(Venue venue) {
-            this.venue = venue;
+        public void setEnd(DateTime end) {
+            this.end = end;
         }
 
         public Optional<Venue> getVenue() {
             return Optional.ofNullable(venue);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setVenue(Venue venue) {
+            this.venue = venue;
         }
 
         /**
@@ -223,6 +221,14 @@ public class EditEventCommand extends Command {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code tags} to this object's {@code tags}.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public void setTags(Set<Tag> tags) {
+            this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
         @Override

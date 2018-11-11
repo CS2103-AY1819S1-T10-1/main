@@ -78,7 +78,7 @@ public class XmlAdaptedCalendarEvent {
     }
 
     /**
-     * Converts this jaxb-friendly adapted calendarevent object into the model's CalendarEvent object.
+     * Converts this jaxb-friendly adapted calendar event object into the model's CalendarEvent object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted calendar event
      */
@@ -118,7 +118,7 @@ public class XmlAdaptedCalendarEvent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Start"));
         }
         if (!DateTime.isValidDateTimeInput(start)) {
-            throw new IllegalValueException(DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS);
         }
         final DateTime modelStart = new DateTime(start);
 
@@ -126,13 +126,13 @@ public class XmlAdaptedCalendarEvent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "End"));
         }
         if (!DateTime.isValidDateTimeInput(end)) {
-            throw new IllegalValueException(DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+            throw new IllegalValueException(DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS);
         }
         final DateTime modelEnd = new DateTime(end);
 
         final Set<Tag> modelTags = new HashSet<>(calendarEventTags);
         return new CalendarEvent(modelName, modelDescription,
-                                    new DateTimeInfo(modelStart, modelEnd), modelVenue, modelTags);
+            new DateTimeInfo(modelStart, modelEnd), modelVenue, modelTags);
     }
 
     @Override

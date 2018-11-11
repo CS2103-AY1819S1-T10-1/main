@@ -19,8 +19,8 @@ import seedu.address.model.Scheduler;
 import seedu.address.storage.XmlAdaptedCalendarEvent;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableScheduler;
-import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.CalendarEventBuilder;
+import seedu.address.testutil.SchedulerBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -131,9 +131,9 @@ public class XmlUtilTest {
         XmlSerializableScheduler dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableScheduler.class);
         assertEquals(dataToWrite, dataFromFile);
 
-        AddressBookBuilder builder = new AddressBookBuilder(new Scheduler());
+        SchedulerBuilder builder = new SchedulerBuilder(new Scheduler());
         dataToWrite = new XmlSerializableScheduler(
-            builder.withPerson(new CalendarEventBuilder().build()).build());
+            builder.withCalendarEvent(new CalendarEventBuilder().build()).build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableScheduler.class);

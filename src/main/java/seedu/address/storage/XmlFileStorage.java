@@ -28,7 +28,7 @@ public class XmlFileStorage {
      * Saves the given toDoList data to the specified file.
      */
     public static void saveToDoListDataToFile(Path file, XmlSerializableToDoList toDoList)
-            throws FileNotFoundException {
+        throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, toDoList);
         } catch (JAXBException e) {
@@ -52,7 +52,7 @@ public class XmlFileStorage {
      * Returns toDoList in the file or an empty toDoList
      */
     public static XmlSerializableToDoList loadToDoListDataFromSaveFile(Path file) throws DataConversionException,
-            FileNotFoundException {
+        FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableToDoList.class);
         } catch (JAXBException e) {

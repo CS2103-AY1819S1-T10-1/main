@@ -48,7 +48,7 @@ public class VersionedToDoList extends ToDoList {
 
         // state check
         return super.equals(otherVersionedToDoList)
-                && toDoListStateList.equals(otherVersionedToDoList.toDoListStateList)
-                && currentStatePointer == otherVersionedToDoList.currentStatePointer;
+            && toDoListStateList.equals(otherVersionedToDoList.toDoListStateList)
+            && currentStatePointer == otherVersionedToDoList.currentStatePointer;
     }
 }

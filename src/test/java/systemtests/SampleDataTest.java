@@ -46,6 +46,6 @@ public class SampleDataTest extends SchedulerSystemTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         CalendarEvent[] expectedList = SampleDataUtil.getSampleCalendarEvents();
-        assertListMatching(getPersonListPanel(), expectedList);
+        assertListMatching(getCalendarEventListPanel(), expectedList);
     }
 }

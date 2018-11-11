@@ -10,9 +10,10 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindEventCommand;
+import seedu.address.model.calendarevent.DatePredicate;
 import seedu.address.model.calendarevent.FuzzySearchComparator;
+import seedu.address.model.calendarevent.FuzzySearchFilterPredicate;
 import seedu.address.model.calendarevent.TagsPredicate;
-import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 
 public class FindEventCommandParserTest {
 
@@ -21,16 +22,17 @@ public class FindEventCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",
-                                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindEventCommand expectedFindEventCommand =
-            new FindEventCommand(new TitleContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")),
-                                 new FuzzySearchComparator(Arrays.asList("Alice", "Bob")),
-                                 new TagsPredicate(new ArrayList<>()));
+            new FindEventCommand(new FuzzySearchFilterPredicate(Arrays.asList("Alice", "Bob")),
+                new FuzzySearchComparator(Arrays.asList("Alice", "Bob")),
+                new DatePredicate(null, null),
+                new TagsPredicate(new ArrayList<>()));
         assertParseSuccess(parser, "Alice Bob", expectedFindEventCommand);
 
         // multiple whitespaces between keywords

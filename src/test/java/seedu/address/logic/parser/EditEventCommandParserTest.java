@@ -88,11 +88,11 @@ public class EditEventCommandParserTest {
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_TITLE_DESC, Title.MESSAGE_CONSTRAINTS); // invalid title
         assertParseFailure(parser, "1" + INVALID_DESCRIPTION_DESC,
-                                            Description.MESSAGE_CONSTRAINTS); // invalid description
+            Description.MESSAGE_CONSTRAINTS); // invalid description
         assertParseFailure(parser, "1" + INVALID_START_DESC,
-                                            DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS); // invalid start
+            DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS); // invalid start
         assertParseFailure(parser, "1" + INVALID_END_DESC,
-                                            DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS); // invalid end
+            DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS); // invalid end
         assertParseFailure(parser, "1" + INVALID_VENUE_DESC, Venue.MESSAGE_CONSTRAINTS); // invalid venue
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
@@ -109,11 +109,11 @@ public class EditEventCommandParserTest {
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code CalendarEvent} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
-                Tag.MESSAGE_TAG_CONSTRAINTS);
+            Tag.MESSAGE_TAG_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
-                Tag.MESSAGE_TAG_CONSTRAINTS);
+            Tag.MESSAGE_TAG_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
-                Tag.MESSAGE_TAG_CONSTRAINTS);
+            Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class EditEventCommandParserTest {
 
         EditCalendarEventDescriptor descriptor =
             new EditCalendarEventDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
-            .build();
+                .build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -195,9 +195,9 @@ public class EditEventCommandParserTest {
 
         EditCalendarEventDescriptor descriptor =
             new EditCalendarEventDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
-            .withStart(VALID_START_DATETIME_TUTORIAL).withEnd(VALID_END_DATETIME_TUTORIAL)
-            .withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-            .build();
+                .withStart(VALID_START_DATETIME_TUTORIAL).withEnd(VALID_END_DATETIME_TUTORIAL)
+                .withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+                .build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

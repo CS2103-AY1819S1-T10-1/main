@@ -22,16 +22,6 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Executes the commandToDo and returns the result.
-     *
-     * @param commandText The commandToDo as entered by the user.
-     * @return the result of the commandToDo execution.
-     * @throws CommandException If an error occurs during command execution.
-     * @throws ParseException   If an error occurs during parsing.
-     */
-    CommandResult executeToDo(String commandText) throws CommandException, ParseException;
-
-    /**
      * Returns an unmodifiable view of the full list of calendar events
      */
     ObservableList<CalendarEvent> getFullCalendarEventList();

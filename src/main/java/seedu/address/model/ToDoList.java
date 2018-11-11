@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.model.todolist.ToDoListEvent;
 import seedu.address.model.todolist.UniqueToDoEventList;
 
@@ -115,8 +114,8 @@ public class ToDoList implements ReadOnlyToDoList {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ToDoList // instanceof handles nulls
-                && toDoListEvents.equals(((ToDoList) other).toDoListEvents));
+            || (other instanceof ToDoList // instanceof handles nulls
+            && toDoListEvents.equals(((ToDoList) other).toDoListEvents));
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.FsList;
 
 /**
  * The API of the Model component.
@@ -56,7 +57,7 @@ public interface Model {
     ObservableList<CalendarEvent> getFullCalendarEventList();
 
     /**
-     * Returns an unmodifiable view of the filtered calendar event list
+     * Returns an unmodifiable view of the FsList of calendar events
      */
     ObservableList<CalendarEvent> getFilteredCalendarEventList();
 
@@ -68,20 +69,19 @@ public interface Model {
     void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate);
 
     /**
-     * Filters the filtered calendar event list by an additional {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
+     * Filters the {@code FsList} calendar event list by an additional {@code predicate}.
      */
     void addPredicate(Predicate<CalendarEvent> predicate);
 
+    /**
+     * Removes all predicates from the {@code FsList} of calendar events.
+     */
+    void clearAllPredicatesAndComparators();
 
     /**
-     * Resets the filtered calendar event list to show the unaltered list.
-     *
-     * @throws NullPointerException if {@code comparator} is null.
+     * Return a defensive copy of the {@code FsList}.
      */
-    void resetFilteredCalendarEventList();
-
+    FsList getFsList();
 
     /**
      * Sorts the filtered calendar event list by the given {@code comparator}.

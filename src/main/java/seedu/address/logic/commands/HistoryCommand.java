@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelToDo;
 
 /**
  * Lists all the commands entered by user from the start of app launch.
@@ -30,4 +32,8 @@ public class HistoryCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
     }
 
+    @Override
+    public CommandResult execute(ModelToDo modelToDo, CommandHistory history) throws CommandException {
+        throw new CommandException(MESSAGE_INCORRECT_MODEL_CALENDAR);
+    }
 }

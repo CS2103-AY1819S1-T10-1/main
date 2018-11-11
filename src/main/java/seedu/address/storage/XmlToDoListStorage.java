@@ -4,10 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -46,7 +44,7 @@ public class XmlToDoListStorage implements ToDoListStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyToDoList> readToDoList(Path filePath) throws DataConversionException,
-            FileNotFoundException {
+        FileNotFoundException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
@@ -64,7 +62,7 @@ public class XmlToDoListStorage implements ToDoListStorage {
     }
 
     @Override
-    public void saveToDoList (ReadOnlyToDoList toDoList) throws IOException {
+    public void saveToDoList(ReadOnlyToDoList toDoList) throws IOException {
         saveToDoList(toDoList, filePath);
     }
 

@@ -87,7 +87,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleSchedulerChangedEvent(SchedulerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage
-                (event, "Local data changed, saving to scheduler file"));
+            (event, "Local data changed, saving to scheduler file"));
         try {
             saveScheduler(event.data);
         } catch (IOException e) {
@@ -128,7 +128,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleToDoListChangedEvent(ToDoListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage
-                (event, "Local data changed, saving to todolist file"));
+            (event, "Local data changed, saving to todolist file"));
         try {
             saveToDoList(event.data);
         } catch (IOException e) {

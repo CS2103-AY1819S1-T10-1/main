@@ -4,11 +4,12 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -18,7 +19,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RefreshCalendarPanelEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchTabEvent;
 import seedu.address.commons.events.ui.SwitchToSearchTabEvent;
 import seedu.address.commons.events.ui.SwitchToTasksTabEvent;
 import seedu.address.logic.Logic;
@@ -33,10 +36,11 @@ public class MainWindow extends UiPart<Stage> {
     private static final String FXML = "MainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
-
+    private final int toDoListPanelTab = 0;
+    private final int searchPanelTab = 1;
+    private final int numberOfTabs = 2;
     private Stage primaryStage;
     private Logic logic;
-
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private CalendarDisplay calendarDisplay;
@@ -45,10 +49,6 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
-
-    private final int toDoListPanelTab = 0;
-    private final int searchPanelTab = 1;
-
     @FXML
     private TabPane tabPane;
 
@@ -65,9 +65,6 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
-
-    @FXML
     private StackPane calendarPanelPlaceholder;
 
     @FXML
@@ -76,6 +73,7 @@ public class MainWindow extends UiPart<Stage> {
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
+
 
         // Set dependencies
         this.primaryStage = primaryStage;
@@ -87,10 +85,13 @@ public class MainWindow extends UiPart<Stage> {
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
 
-        // TODO decide if setAccelerators is necessary
-        // setAccelerators();
+        // TODO refactor switchtab to belong to the calendar panel
+        setAccelerator(() -> handleSwitchTab(new SwitchTabEvent()), new KeyCodeCombination(KeyCode.TAB,
+            KeyCombination.SHIFT_ANY, KeyCombination.CONTROL_DOWN));
         registerAsAnEventHandler(this);
 
+        setAccelerator(() -> calendarDisplay.viewPrevious(), new KeyCodeCombination(KeyCode.LEFT));
+        setAccelerator(() -> calendarDisplay.viewNext(), new KeyCodeCombination(KeyCode.RIGHT));
         helpWindow = new HelpWindow();
     }
 
@@ -98,41 +99,21 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
-    private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-    }
 
     /**
-     * Sets the accelerator of a MenuItem.
+     * Sets the accelerator of an action.
      *
+     * @param action         the action to execute when the keyCombination is pressed
      * @param keyCombination the KeyCombination value of the accelerator
      */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
-
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
+    private void setAccelerator(Runnable action, KeyCombination keyCombination) {
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
+            if (!(event.getTarget() instanceof TextInputControl) && keyCombination.match(event)) {
+                action.run();
                 event.consume();
             }
         });
     }
-
 
     /**
      * Fills up all the placeholders of this window.
@@ -182,7 +163,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+            (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
     /**
@@ -195,6 +176,15 @@ public class MainWindow extends UiPart<Stage> {
         } else {
             helpWindow.focus();
         }
+    }
+
+    // TODO: remove if not needed anymore
+    /**
+     * Refreshes the calendar event panel
+     */
+    @FXML
+    public void refreshCalendarPanel() {
+        calendarPanelPlaceholder.getChildren().add(new CalendarPanel(logic.getFilteredCalendarEventList()).getRoot());
     }
 
     /**
@@ -212,10 +202,15 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void showCalendarEventPanel() {
-        calendarPanelPlaceholder.getChildren().add(new CalendarPanel(logic.getFilteredCalendarEventList()).getRoot());
         if (!tabPane.getSelectionModel().isSelected(searchPanelTab)) {
             tabPane.getSelectionModel().select(searchPanelTab);
         }
+    }
+
+    private void switchPanel() {
+        SelectionModel selectionModel = tabPane.getSelectionModel();
+        int currentIndex = selectionModel.getSelectedIndex();
+        selectionModel.select((currentIndex + 1) % numberOfTabs);
     }
 
     void show() {
@@ -250,6 +245,11 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
+    private void handleRefreshCalendarPanelEvent(RefreshCalendarPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+
+    @Subscribe
     private void handleSwitchToTasksTabEvent(SwitchToTasksTabEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showTaskListPanel();
@@ -259,5 +259,11 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToSearchTabEvent(SwitchToSearchTabEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showCalendarEventPanel();
+    }
+
+    @Subscribe
+    private void handleSwitchTab(SwitchTabEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchPanel();
     }
 }

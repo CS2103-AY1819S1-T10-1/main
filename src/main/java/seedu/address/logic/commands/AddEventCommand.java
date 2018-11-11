@@ -11,13 +11,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelToDo;
 import seedu.address.model.calendarevent.CalendarEvent;
 
 /**
  * Adds a calendar event to the calendar of the scheduler.
  */
 public class AddEventCommand extends Command {
-
     public static final String COMMAND_WORD = "add event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the calendar. "
@@ -61,6 +61,11 @@ public class AddEventCommand extends Command {
         model.addCalendarEvent(toAdd);
         model.commitScheduler();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    }
+
+    @Override
+    public CommandResult execute(ModelToDo modelToDo, CommandHistory history) throws CommandException {
+        throw new CommandException(MESSAGE_INCORRECT_MODEL_CALENDAR);
     }
 
     @Override

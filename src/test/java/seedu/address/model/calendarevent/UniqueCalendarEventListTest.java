@@ -23,7 +23,6 @@ import seedu.address.testutil.CalendarEventBuilder;
 public class UniqueCalendarEventListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final UniqueCalendarEventList uniqueCalendarEventList = new UniqueCalendarEventList();
 
     @Test

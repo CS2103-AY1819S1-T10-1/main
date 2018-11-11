@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_LECTURE;
 
 import org.junit.Test;
 
@@ -16,7 +16,6 @@ public class ClearCalendarCommandSystemTest extends SchedulerSystemTest {
 
     @Test
     public void clear() {
-        // TODO: not passing due to gui changes
         final Model defaultModel = getModel();
 
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
@@ -39,13 +38,13 @@ public class ClearCalendarCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: selects first card in calendarevent list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectPerson(Index.fromOneBased(1));
+        selectCalendarEvent(Index.fromOneBased(1));
         assertCommandSuccess(ClearCalendarCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the calendarevent list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        showPersonsWithTitle(KEYWORD_MATCHING_MEIER);
+        showCalendarEventsWithTitle(KEYWORD_MATCHING_LECTURE);
         assertCommandSuccess(ClearCalendarCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

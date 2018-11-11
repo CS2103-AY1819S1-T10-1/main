@@ -127,7 +127,7 @@ public class CalendarPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
     /**
      * Remembers the selected {@code CalendarEventCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
+    public void rememberSelectedCalendarEventCard() {
         List<CalendarEvent> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
@@ -139,9 +139,9 @@ public class CalendarPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
 
     /**
      * Returns true if the selected {@code CalendarEventCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * {@code rememberSelectedCalendarEventCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean isSelectedCalendarEventCardChanged() {
         List<CalendarEvent> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {

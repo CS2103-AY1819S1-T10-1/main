@@ -106,7 +106,7 @@ public class ParserUtil {
 
         // If 0 groups found, date is invalid
         if (groups.size() == 0) {
-            throw new ParseException(DateTime.MESSAGE_DATETIMEINPUT_CONSTRAINTS);
+            throw new ParseException(DateTime.MESSAGE_DATETIME_INPUT_CONSTRAINTS);
             // TODO: Change the message to something less specific
             // TODO: Stronger condition to detect invalid date
         } else {
@@ -115,7 +115,7 @@ public class ParserUtil {
             // .map(date -> dateToLocalDateTime(date)).collect(Collectors.toList());
             LocalDateTime firstDate = dateToLocalDateTime(dates.get(0));
             LocalDateTime rounded = firstDate.withMinute(
-                    roundToNearestMultiple(firstDate.getMinute(), ROUND_MINUTES_TO));
+                roundToNearestMultiple(firstDate.getMinute(), ROUND_MINUTES_TO));
             return new DateTime(rounded);
         }
     }
@@ -123,7 +123,7 @@ public class ParserUtil {
     /**
      * Rounds {@code number} to the nearest multiple of {@code multiple}
      *
-     * @param number the number to be rounded
+     * @param number   the number to be rounded
      * @param multiple the multiple to round to
      * @return a rounded number
      */

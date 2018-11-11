@@ -62,7 +62,7 @@ public class XmlAdaptedToDoListEvent {
 
         if (title == null) {
             throw new IllegalValueException(
-                    String.format(MISSING_TODOLIST_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
+                String.format(MISSING_TODOLIST_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
         }
         if (!Title.isValid(title)) {
             throw new IllegalValueException(Title.MESSAGE_CONSTRAINTS);
@@ -71,7 +71,7 @@ public class XmlAdaptedToDoListEvent {
 
         if (description == null) {
             throw new IllegalValueException(String.format(MISSING_TODOLIST_FIELD_MESSAGE_FORMAT,
-                    Description.class.getSimpleName()));
+                Description.class.getSimpleName()));
         }
         if (!Description.isValid(description)) {
             throw new IllegalValueException(Description.MESSAGE_CONSTRAINTS);
@@ -80,7 +80,7 @@ public class XmlAdaptedToDoListEvent {
 
         if (priority == null) {
             throw new IllegalValueException(String.format(MISSING_TODOLIST_FIELD_MESSAGE_FORMAT,
-                    Priority.class.getSimpleName()));
+                Priority.class.getSimpleName()));
         }
         if (!Priority.isValid(priority)) {
             throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
@@ -102,7 +102,7 @@ public class XmlAdaptedToDoListEvent {
 
         XmlAdaptedToDoListEvent otherToDoListEvent = (XmlAdaptedToDoListEvent) other;
         return Objects.equals(title, otherToDoListEvent.title)
-                && Objects.equals(description, otherToDoListEvent.description)
-                && Objects.equals(priority, otherToDoListEvent.priority);
+            && Objects.equals(description, otherToDoListEvent.description)
+            && Objects.equals(priority, otherToDoListEvent.priority);
     }
 }

@@ -19,7 +19,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableScheduler;
 import seedu.address.testutil.TestUtil;
-import systemtests.ModelHelper;
+
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -48,6 +48,10 @@ public class TestApp extends MainApp {
             createDataFileWithData(new XmlSerializableScheduler(this.initialDataSupplier.get()),
                 this.saveFileLocation);
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -90,20 +94,16 @@ public class TestApp extends MainApp {
 
     /**
      * Returns a defensive copy of the model.
+     * The new Model has the same predicates and comparator from FsList and thus the same ordering of FsList.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getScheduler()), new UserPrefs());
-        ModelHelper.setFilteredList(copy, model.getFilteredCalendarEventList());
+        Model copy = new ModelManager(model.getScheduler(), new UserPrefs(), model.getFsList());
         return copy;
     }
 
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**

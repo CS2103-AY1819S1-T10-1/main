@@ -17,7 +17,15 @@ import seedu.address.model.todolist.ToDoListEvent;
 /**
  * Parses input arguments and creates a new AddToDoCommand object
  */
-public class AddToDoCommandParser implements ParserToDo<AddToDoCommand> {
+public class AddToDoCommandParser implements Parser<AddToDoCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddToDoCommand
@@ -28,10 +36,10 @@ public class AddToDoCommandParser implements ParserToDo<AddToDoCommand> {
 
     public AddToDoCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_PRIORITY);
+            ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_PRIORITY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_DESCRIPTION, PREFIX_PRIORITY)
-                || !argMultimap.getPreamble().isEmpty()) {
+            || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
         }
 
@@ -42,14 +50,6 @@ public class AddToDoCommandParser implements ParserToDo<AddToDoCommand> {
         ToDoListEvent toDoListEvent = new ToDoListEvent(name, description, priority);
 
         return new AddToDoCommand(toDoListEvent);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
 }

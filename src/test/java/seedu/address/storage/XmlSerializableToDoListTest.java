@@ -17,13 +17,13 @@ import seedu.address.testutil.TypicalTodoListEvents;
 public class XmlSerializableToDoListTest {
 
     private static final Path TEST_DATA_FOLDER =
-            Paths.get("src", "test", "data", "XmlSerializableToDoListTest");
+        Paths.get("src", "test", "data", "XmlSerializableToDoListTest");
     private static final Path TYPICAL_TODOLIST_EVENTS_FILE = TEST_DATA_FOLDER
-            .resolve("typicalToDoListEventsToDoList" + ".xml");
+        .resolve("typicalToDoListEventsToDoList" + ".xml");
     private static final Path INVALID_TODOLIST_EVENTS_FILE = TEST_DATA_FOLDER
-            .resolve("invalidToDoListEventToDoList" + ".xml");
+        .resolve("invalidToDoListEventToDoList" + ".xml");
     private static final Path DUPLICATE_TODOLIST_EVENTS_FILE = TEST_DATA_FOLDER.resolve(
-            "duplicateToDoListEventToDoList.xml");
+        "duplicateToDoListEventToDoList.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -31,7 +31,7 @@ public class XmlSerializableToDoListTest {
     @Test
     public void toModelType_typicalToDoListEventsFile_success() throws Exception {
         XmlSerializableToDoList dataFromFile = XmlUtil.getDataFromFile(TYPICAL_TODOLIST_EVENTS_FILE,
-                XmlSerializableToDoList.class);
+            XmlSerializableToDoList.class);
         ToDoList toDoListFromFile = dataFromFile.toModelType();
         ToDoList typicalEventsToDoList = TypicalTodoListEvents.getTypicalToDoList();
         assertEquals(toDoListFromFile, typicalEventsToDoList);
@@ -40,7 +40,7 @@ public class XmlSerializableToDoListTest {
     @Test
     public void toModelType_invalidToDoListEventFile_throwsIllegalValueException() throws Exception {
         XmlSerializableToDoList dataFromFile = XmlUtil.getDataFromFile(INVALID_TODOLIST_EVENTS_FILE,
-                XmlSerializableToDoList.class);
+            XmlSerializableToDoList.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
@@ -48,7 +48,7 @@ public class XmlSerializableToDoListTest {
     @Test
     public void toModelType_duplicateToDoListEvents_throwsIllegalValueException() throws Exception {
         XmlSerializableToDoList dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_TODOLIST_EVENTS_FILE,
-                XmlSerializableToDoList.class);
+            XmlSerializableToDoList.class);
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(XmlSerializableToDoList.MESSAGE_DUPLICATE_TODOLIST_EVENT);
         dataFromFile.toModelType();

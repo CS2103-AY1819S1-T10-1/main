@@ -26,7 +26,6 @@ public class SchedulerTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final Scheduler scheduler = new Scheduler();
 
     @Test

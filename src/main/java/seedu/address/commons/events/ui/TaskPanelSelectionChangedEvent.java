@@ -8,7 +8,7 @@ import seedu.address.model.todolist.ToDoListEvent;
  */
 public class TaskPanelSelectionChangedEvent extends BaseEvent {
 
-    private final ToDoListEvent newSelection;
+    public final ToDoListEvent newSelection;
 
     public TaskPanelSelectionChangedEvent(ToDoListEvent newSelection) {
         this.newSelection = newSelection;
@@ -19,7 +19,4 @@ public class TaskPanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public ToDoListEvent getNewSelection() {
-        return newSelection;
-    }
 }

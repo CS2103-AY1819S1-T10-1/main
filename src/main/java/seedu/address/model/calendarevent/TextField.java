@@ -11,7 +11,7 @@ public class TextField {
 
     public static final String MESSAGE_FIELD_NAME = "Text field"; // default field name
     public static final String MESSAGE_CONSTRAINTS = MESSAGE_FIELD_NAME
-        + " should not be blank or begin with a whitespace";
+            + " should not be blank or begin with a whitespace";
 
     /*
      * The first character of the text field must not be a whitespace,

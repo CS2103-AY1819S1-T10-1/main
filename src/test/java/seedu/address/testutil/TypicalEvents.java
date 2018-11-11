@@ -25,39 +25,50 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public class TypicalEvents {
 
-    public static final CalendarEvent LECTURE = new CalendarEventBuilder().withTitle("Alice Pauline")
-        .withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("123, Jurong West Ave 6, #08-111")
-        .withDescription("94351253")
-        .withTags("friends").build();
-    public static final CalendarEvent BENSON = new CalendarEventBuilder().withTitle("Benson Meier")
-        .withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("311, Clementi Ave 2, #02-25")
-        .withDescription("98765432")
-        .withTags("owesMoney", "friends").build();
-    public static final CalendarEvent CARL = new CalendarEventBuilder().withTitle("Carl Kurz").withDescription(
-        "95352563").withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("wall street").build();
-    public static final CalendarEvent DANIEL = new CalendarEventBuilder().withTitle("Daniel Meier").withDescription(
-        "87652533").withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("10th street").withTags("friends").build();
-    public static final CalendarEvent ELLE = new CalendarEventBuilder().withTitle("Elle Meyer").withDescription(
-        "9482224").withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("michegan ave").build();
-    public static final CalendarEvent FIONA = new CalendarEventBuilder().withTitle("Fiona Kunz").withDescription(
-        "9482427").withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("little tokyo").build();
-    public static final CalendarEvent GEORGE = new CalendarEventBuilder().withTitle("George Best").withDescription(
-        "9482442").withStart("2018-10-16 14:00").withEnd("2018-10-16 16:00")
-        .withVenue("4th street").build();
+    public static final CalendarEvent LECTURE = new CalendarEventBuilder().withTitle("CS2103 Lecture")
+        .withStart("2018-11-15 16:00").withEnd("2018-11-15 18:00")
+        .withVenue("i3 Auditorium")
+        .withDescription("Abstraction, Gradle, JUnit")
+        .withTags("lecture", "CS2103").build();
+    public static final CalendarEvent BENSON = new CalendarEventBuilder().withTitle("CS2104 Tutorial")
+        .withStart("2018-11-13 14:00").withEnd("2018-11-13 16:00")
+        .withVenue("AS6 04-21")
+        .withDescription("Monadic Parsers")
+        .withTags("tutorial", "CS2104").build();
+    public static final CalendarEvent CARL = new CalendarEventBuilder().withTitle("CS2040 Lab")
+        .withStart("2018-11-14 08:00")
+        .withEnd("2018-11-14 10:00")
+        .withDescription("Linked Lists")
+        .withVenue("COM1 02-09").build();
+    public static final CalendarEvent DANIEL = new CalendarEventBuilder().withTitle("FIN3101 Seminar")
+        .withStart("2018-11-16 10:00")
+        .withEnd("2018-11-16 15:00")
+        .withDescription("One-Fund Theorem")
+        .withVenue("Marina Boulevard")
+        .withTags("seminar", "FIN3101").build();
+    public static final CalendarEvent ELLE = new CalendarEventBuilder().withTitle("Choir Practice")
+        .withStart("2018-11-16 19:00")
+        .withEnd("2018-11-16 22:00")
+        .withDescription("Bring songbook")
+        .withVenue("Little Tokyo").build();
+    public static final CalendarEvent FIONA = new CalendarEventBuilder().withTitle("Career Fair")
+        .withStart("2018-11-17 09:00")
+        .withEnd("2018-11-17 18:00")
+        .withDescription("Bring resume")
+        .withVenue("MPSH 1").build();
+    public static final CalendarEvent GEORGE = new CalendarEventBuilder().withTitle("Google Interview")
+        .withStart("2018-11-14 14:00")
+        .withEnd("2018-11-14 16:00")
+        .withDescription("Bring water bottle")
+        .withVenue("Mountain View").build();
 
     // Manually added
-    public static final CalendarEvent HOON = new CalendarEventBuilder().withTitle("Hoon Meier").withDescription(
-        "8482424")
-        .withVenue("little india").build();
-    public static final CalendarEvent IDA = new CalendarEventBuilder().withTitle("Ida Mueller").withDescription(
-        "8482131")
-        .withVenue("chicago ave").build();
+    public static final CalendarEvent HOON = new CalendarEventBuilder().withTitle("GEQ1000 Lecture")
+        .withDescription("Design Wallet")
+        .withVenue("SRC 02-07").build();
+    public static final CalendarEvent IDA = new CalendarEventBuilder().withTitle("Lunch At McDs").withDescription(
+        "Bring girlfriend")
+        .withVenue("Hanbaobao Avenue").build();
 
     // Manually added - CalendarEvent's details found in {@code CommandTestUtil}
     public static final CalendarEvent AMY =
@@ -71,7 +82,8 @@ public class TypicalEvents {
             VALID_TAG_FRIEND)
             .build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_LECTURE = "Lecture"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_EXACT_TUTORIAL = "JS1011 Tutorial";
 
     private TypicalEvents() {
     } // prevents instantiation

@@ -28,7 +28,7 @@ public class ToDoListEventTest {
 
         // different description -> returns false
         ToDoListEvent editedMidterm =
-                new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_TUTORIAL).build();
+            new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_TUTORIAL).build();
         assertFalse(MIDTERM.isSameToDoListEvent(editedMidterm));
 
         // different title -> returns false
@@ -37,15 +37,15 @@ public class ToDoListEventTest {
 
         // same title, different description, different priority -> returns false
         editedMidterm =
-                new ToDoListEventBuilder(MIDTERM)
-                        .withDescription(VALID_DESCRIPTION_TUTORIAL)
-                        .withPriority(VALID_PRIORITY_TUTORIAL)
-                        .build();
+            new ToDoListEventBuilder(MIDTERM)
+                .withDescription(VALID_DESCRIPTION_TUTORIAL)
+                .withPriority(VALID_PRIORITY_TUTORIAL)
+                .build();
         assertFalse(MIDTERM.isSameToDoListEvent(editedMidterm));
 
         // same title, same description, different priority -> returns true
         editedMidterm =
-                new ToDoListEventBuilder(MIDTERM).withPriority(VALID_PRIORITY_TUTORIAL).build();
+            new ToDoListEventBuilder(MIDTERM).withPriority(VALID_PRIORITY_TUTORIAL).build();
         assertTrue(MIDTERM.isSameToDoListEvent(editedMidterm));
     }
 

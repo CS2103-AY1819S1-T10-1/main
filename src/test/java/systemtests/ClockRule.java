@@ -18,8 +18,8 @@ import seedu.address.ui.StatusBarFooter;
  * @see Clock#fixed(Instant, ZoneId)
  */
 public class ClockRule implements TestRule {
-    private Clock injectedClock;
     private final Clock originalClock = StatusBarFooter.getClock();
+    private Clock injectedClock;
 
     protected void before() {
         setInjectedClockToCurrentTime();

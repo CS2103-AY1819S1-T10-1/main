@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a change in the time displayed by the calendar ui
  */
 public class CalendarDisplayTimeChangedEvent extends BaseEvent {
 

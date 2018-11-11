@@ -14,14 +14,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.SchedulerBuilder;
 
 public class VersionedSchedulerTest {
 
-    private final ReadOnlyScheduler addressBookWithAmy = new AddressBookBuilder().withPerson(AMY).build();
-    private final ReadOnlyScheduler addressBookWithBob = new AddressBookBuilder().withPerson(TUTORIAL).build();
-    private final ReadOnlyScheduler addressBookWithCarl = new AddressBookBuilder().withPerson(CARL).build();
-    private final ReadOnlyScheduler emptyAddressBook = new AddressBookBuilder().build();
+    private final ReadOnlyScheduler addressBookWithAmy = new SchedulerBuilder().withCalendarEvent(AMY).build();
+    private final ReadOnlyScheduler addressBookWithBob = new SchedulerBuilder().withCalendarEvent(TUTORIAL).build();
+    private final ReadOnlyScheduler addressBookWithCarl = new SchedulerBuilder().withCalendarEvent(CARL).build();
+    private final ReadOnlyScheduler emptyAddressBook = new SchedulerBuilder().build();
 
     @Test
     public void commit_singleAddressBook_noStatesRemovedCurrentStateSaved() {

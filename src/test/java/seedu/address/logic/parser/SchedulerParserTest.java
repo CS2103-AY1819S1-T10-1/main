@@ -29,12 +29,14 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowDescriptionCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.DatePredicate;
 import seedu.address.model.calendarevent.FuzzySearchComparator;
+import seedu.address.model.calendarevent.FuzzySearchFilterPredicate;
 import seedu.address.model.calendarevent.TagsPredicate;
-import seedu.address.model.calendarevent.TitleContainsKeywordsPredicate;
 import seedu.address.model.todolist.ToDoListEvent;
 import seedu.address.testutil.CalendarEventBuilder;
 import seedu.address.testutil.EditCalendarEventDescriptorBuilder;
@@ -45,7 +47,6 @@ import seedu.address.testutil.ToDoListEventUtil;
 public class SchedulerParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final SchedulerParser parser = new SchedulerParser();
 
     @Test
@@ -88,8 +89,9 @@ public class SchedulerParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindEventCommand command = (FindEventCommand) parser.parseCommand(
             FindEventCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindEventCommand(new TitleContainsKeywordsPredicate(keywords),
-                    new FuzzySearchComparator(keywords), new TagsPredicate(new ArrayList<>())), command);
+        assertEquals(new FindEventCommand(new FuzzySearchFilterPredicate(keywords),
+            new FuzzySearchComparator(keywords), new DatePredicate(null, null),
+            new TagsPredicate(new ArrayList<>())), command);
     }
 
     @Test
@@ -154,14 +156,21 @@ public class SchedulerParserTest {
     public void parseCommand_addToDo() throws Exception {
         ToDoListEvent toDoListEvent = new ToDoListEventBuilder().build();
         AddToDoCommand commandToDo = (AddToDoCommand) parser
-                .parseCommandToDo(ToDoListEventUtil.getAddToDoCommand(toDoListEvent));
+            .parseCommand(ToDoListEventUtil.getAddToDoCommand(toDoListEvent));
         assertEquals(new AddToDoCommand(toDoListEvent), commandToDo);
     }
 
     @Test
     public void parseCommand_deleteToDo() throws Exception {
-        DeleteToDoCommand commandToDo = (DeleteToDoCommand) parser.parseCommandToDo(
-                DeleteToDoCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
+        DeleteToDoCommand commandToDo = (DeleteToDoCommand) parser.parseCommand(
+            DeleteToDoCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
         assertEquals(new DeleteToDoCommand(INDEX_FIRST_ELEMENT), commandToDo);
+    }
+
+    @Test
+    public void parseCommand_showDescription() throws Exception {
+        ShowDescriptionCommand commandToDo = (ShowDescriptionCommand) parser.parseCommand(
+                ShowDescriptionCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
+        assertEquals(new ShowDescriptionCommand(INDEX_FIRST_ELEMENT), commandToDo);
     }
 }

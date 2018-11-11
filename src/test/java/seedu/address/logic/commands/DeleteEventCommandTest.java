@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showCalendarEventAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
@@ -56,7 +56,7 @@ public class DeleteEventCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(model, INDEX_FIRST_ELEMENT);
 
         CalendarEvent calendarEventToDelete =
             model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
@@ -75,7 +75,7 @@ public class DeleteEventCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_ELEMENT);
+        showCalendarEventAtIndex(model, INDEX_FIRST_ELEMENT);
 
         Index outOfBoundIndex = INDEX_SECOND_ELEMENT;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -125,32 +125,32 @@ public class DeleteEventCommandTest {
     /**
      * 1. Deletes a {@code CalendarEvent} from a filtered list.
      * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted calendarevent in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted calendar event in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the calendarevent object regardless of indexing.
+     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the calendar event object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameCalendarEventDeleted() throws Exception {
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_ELEMENT);
         Model expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
 
-        showPersonAtIndex(model, INDEX_SECOND_ELEMENT);
+        showCalendarEventAtIndex(model, INDEX_SECOND_ELEMENT);
         CalendarEvent calendarEventToDelete =
             model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
         expectedModel.commitScheduler();
 
-        // delete -> deletes second calendarevent in unfiltered calendarevent list / first calendarevent in filtered
-        // calendarevent list
+        // delete -> deletes second calendar event in unfiltered calendar event list / first calendar event in filtered
+        // calendar event list
         deleteEventCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered calendarevent list to show all persons
+        // undo -> reverts scheduler back to previous state and filtered calendar event list to show all events
         expectedModel.undoScheduler();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(calendarEventToDelete,
             model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased()));
-        // redo -> deletes same second calendarevent in unfiltered calendarevent list
+        // redo -> deletes same second calendar event in unfiltered calendar event list
         expectedModel.redoScheduler();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }

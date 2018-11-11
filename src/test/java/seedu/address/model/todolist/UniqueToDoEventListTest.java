@@ -3,7 +3,6 @@ package seedu.address.model.todolist;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_MIDTERM;
 import static seedu.address.testutil.TypicalTodoListEvents.MIDTERM;
 import static seedu.address.testutil.TypicalTodoListEvents.TUTORIAL;
@@ -18,13 +17,11 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.todolist.exceptions.DuplicateToDoListEventException;
 import seedu.address.model.todolist.exceptions.ToDoListEventNotFoundException;
-
 import seedu.address.testutil.ToDoListEventBuilder;
 
 public class UniqueToDoEventListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final UniqueToDoEventList uniqueToDoEventList = new UniqueToDoEventList();
 
     @Test
@@ -48,8 +45,8 @@ public class UniqueToDoEventListTest {
     public void contains_eventWithSameIdentityFieldsInList_returnsTrue() {
         uniqueToDoEventList.add(MIDTERM);
         ToDoListEvent editedMidterm =
-                new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_MIDTERM)
-                        .build();
+            new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_MIDTERM)
+                .build();
         assertTrue(uniqueToDoEventList.contains(editedMidterm));
     }
 
@@ -97,7 +94,7 @@ public class UniqueToDoEventListTest {
     public void setEvent_editedEventHasSameIdentity_success() {
         uniqueToDoEventList.add(MIDTERM);
         ToDoListEvent editedMidterm =
-                new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_MIDTERM).build();
+            new ToDoListEventBuilder(MIDTERM).withDescription(VALID_DESCRIPTION_MIDTERM).build();
         uniqueToDoEventList.setToDoListEvent(MIDTERM, editedMidterm);
         UniqueToDoEventList expectedUniqueToDoListEventList = new UniqueToDoEventList();
         expectedUniqueToDoListEventList.add(editedMidterm);

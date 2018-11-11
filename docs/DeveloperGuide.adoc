@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= U-Schedule - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -13,9 +13,9 @@ ifdef::env-github[]
 :warning-caption: :warning:
 :experimental:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-AY1819S1-T10-1/main/tree/master/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T10-1`      Since: `Sep 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -47,7 +47,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
-. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors
+. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedCalendarEvent.java[`XmlAdaptedCalendarEvent.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors
 .. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
 .. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=...' to module compiler options` for each error
 . Repeat this for the test folder as well (e.g. check link:{repoURL}/src/test/java/seedu/address/commons/util/XmlUtilTest.java[`XmlUtilTest.java`] and link:{repoURL}/src/test/java/seedu/address/ui/HelpWindowTest.java[`HelpWindowTest.java`] for code errors, and if so, resolve it the same way)
@@ -146,18 +146,18 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete event 1`.
 
-.Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+.Component interactions for `delete event 1` command (part 1)
+image::SDforDeleteCalendarEvent.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `SchedulerChangedEvent` when the calendar data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+.Component interactions for `delete event 1` command (part 2)
+image::SDforDeleteCalendarEventEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -172,7 +172,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/venue/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `CalendarPanel`, 'CalendarDisplay', etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/venue/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -181,6 +181,13 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+The CalendarDisplay Component uses `jfxtras.Agenda` to render the calendar events as a time table. The CalendarDisplay
+acts as a wrapper around the `jfxtras.Agenda`. CalendarDisplay
+
+* Listens for changes in the list of calendar events in `Model` and updates `Agenda` accordingly.
+* Responds to user selecting Calendar Events and displays it to the user.
+* Extends the UI controls of `jfxtras.Agenda` by including functionality to navigate the time table display.
 
 [[Design-Logic]]
 === Logic component
@@ -192,18 +199,20 @@ image::LogicClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/venue/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `SchedulerParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a calendarEvent) and/or raise events.
+.  The command execution can affect the `Model` or `ModelToDo` (e.g. adding a calendar event or todolist event) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete event 1")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
-image::DeletePersonSdForLogic.png[width="800"]
+.Interactions Inside the Logic Component for the `delete event 1` Command
+image::DeleteCalendarEventSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
+
+The Model component is handled by 2 separate classes - `Model` and `ModelToDo`
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
@@ -212,13 +221,18 @@ image::ModelClassDiagram.png[width="800"]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the calendar data.
+* exposes an unmodifiable `ObservableList<CalendarEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically update when the calendar data in the list changes.
+* does not depend on any of the other three components.
+
+The `ModelToDo`,
+
+* stores the todolist data
+* exposes an unmodifiable `ObservableList<ToDoListEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically update when the todolist data in the list changes.
 * does not depend on any of the other three components.
 
 [NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
+As a more OOP model, we can store a `Tag` list in `Scheduler`, which `CalendarEvent` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `CalendarEvent` needing their own `Tag` object. An example of how such a model may look like is given below. +
  +
 image:ModelClassBetterOopDiagram.png[width="800"]
 
@@ -272,7 +286,7 @@ Given below is an example usage scenario for deleting a todolist event, and how 
 
 Step 1: Make sure the todo list is not empty.
 
-Step 2: The user excutes `delete todo [index of event]` while `[indelx of event]` is the index number for a corresponding todolist event` displayed in `ToDoList` GUI.
+Step 2: The user executes `delete todo [index of event]` while `[index of event]` is the index number for a corresponding todolist event` displayed in `ToDoList` GUI.
 
 Step 3: The `DeleteToDoCommandParser` parsers out the strings for the index.
 
@@ -334,9 +348,9 @@ Aspect: How to implement ToDoList Model
 
 Aspect: How to implement ToDoList Logic
 
-* **Alternative 1 (current choice):** Modify the curernt `Logic`and `LogicManager`.
+* **Alternative 1 (current choice):** Modify the current `Logic` and `LogicManager`.
 
-** Pros: Can be easilly implement and can use the current parser.
+** Pros: Can be easily implemented and can use the current parser.
 
 ** Cons: Need extra methods to execute `CommandToDo`.
 
@@ -373,86 +387,62 @@ Aspect: How to implement ToDoList UI
 ** Pros: Don't need to change current GUI.
 
 ** Cons: Need to consruct a lot parts in GUI.
+// end::ToDoList[]
 
-// tag::undoredo[]
-=== Undo/Redo feature
+// tag::FuzzySearch[]
+=== Fuzzy Search and Filter by Tags for Find Event Command
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by `VersionedAddressBook`.
-It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
-Additionally, it implements the following operations:
+===== Model
+The Fuzzy Search enhancement for the `find event` command is achieved using the `fuzzywuzzy` API. The existing
+`TitleContainsKeywordsPredicate` was modified such that the `test` method checks if the `keyword` matches the `Title`
+of the `CalendarEvent` using a fuzzy algorithm based on Levenshtein distance between strings, and assigns an integer
+score to the match. If this score is under the `threshold` of 70, the `Predicate` will filter out the `CalendarEvent`
+from the `ObservableList`.
 
-* `VersionedAddressBook#commit()` -- Saves the current venue book state in its history.
-* `VersionedAddressBook#undo()` -- Restores the previous venue book state from its history.
-* `VersionedAddressBook#redo()` -- Restores a previously undone venue book state from its history.
+The Filter by Tags enhancement is achieved using a second `Predicate`, the `TagsPredicate`. This `Predicate` will `test`
+the `CalendarEvent` by checking if any of its `Tags` matches with any of the user input `tags`. The `Predicate` will
+filter out all events that do not contain any of the specified tags.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+Finally, the `FilteredList` is wrapped in a `SortedList`, and sorted based on `FuzzySearchComparator`. This comparator
+uses the aforementioned fuzzy match score, and sorts the `CalendarEvents` in descending order of match score.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial venue book state, and the `currentStatePointer` pointing to that single venue book state.
+==== GUI
 
-image::UndoRedoStartingStateListDiagram.png[width="800"]
+===== Tabbed Interface
+Since the existing `ObservableList` of `CalendarEvents` was not used in the GUI, we needed to figure out an alternative
+way to display the results for the `find event` command. We achieved this by incorporating a tabbed interface where the
+`TaskList` and the `CalendarEvent` list for the search results were shown in separate tabs.
 
-Step 2. The user executes `delete 5` command to delete the 5th calendarEvent in the venue book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the venue book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted venue book state.
+To aid our target user, who mainly uses CLI, we incorporated functionality to automatically switch to the most relevant
+tab based on the command input by the user. When the user inputs a todo list command, a `SwitchToTasksTabEvent` is
+posted to the `EventsCenter`; while when the user inputs a `find event` or `list event` command, a
+`SwitchToSearchTabEvent` is posted.
 
-image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
+The `MainWindow` handles the `SwitchToTasksTabEvent` and `SwitchToSearchTabEvent` - it switches to the appropriate tab
+when it receives either `Event`.
 
-Step 3. The user executes `add n/David ...` to add a new calendarEvent. The `add` command also calls `Model#commitAddressBook()`, causing another modified venue book state to be saved into the `addressBookStateList`.
+===== Updating FilteredList/SortedList
+In the original implementation, the main list of `CalendarEvent` that is shown on the GUI is implemented using a single,
+final `FilteredList` and changing the `Predicate` as needed. The `FilteredList` itself does not change unless the
+underlying `List` of `CalendarEvent` is changed (in which case the entire `Model` is reinitialised).
 
-image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
+However, in our current implementation, we only need to display the list of `CalendarEvent` when we show the results for
+the `find event` or `list event` commands. Furthermore, since we use multiple `Predicates` as well as a `Comparator`,
+the original implementation is not usable.
 
-[NOTE]
-If a command fails its execution, it will not call `Model#commitAddressBook()`, so the venue book state will not be saved into the `addressBookStateList`.
+Hence, we modified the `ModelManager` by allowing the `FilteredList` to be changed as need be. Hence whenever an
+additional `Predicate` needs to be added, we would wrap the original `FilteredList` with a new `FilteredList` using the
+new `Predicate`. Similarly, when we needed to sort based on a `Comparator`, we would wrap the `FilteredList` with a new
+`SortedList` using the required `Comparator` using the current `FilteredList` as a base.
 
-Step 4. The user now decides that adding the calendarEvent was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous venue book state, and restores the venue book to that state.
+Since this update would only occur during `find event` or `list event` commands, we modified the handling of the
+`SwitchToSearchTabEvent` by the `MainWindow` to also trigger the GUI to reload the `ObservableList`/`FilteredList`
+backing the search result panel.
 
-image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
+// end::FuzzySearch[]
 
-[NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial venue book state, then there are no previous venue book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
-
-The following sequence diagram shows how the undo operation works:
-
-image::UndoRedoSequenceDiagram.png[width="800"]
-
-The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the venue book to that state.
-
-[NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest venue book state, then there are no undone venue book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the venue book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all venue book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
-
-image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-image::UndoRedoActivityDiagram.png[width="650"]
-
-==== Design Considerations
-
-===== Aspect: How undo & redo executes
-
-* **Alternative 1 (current choice):** Saves the entire venue book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the calendarEvent being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
-
-===== Aspect: Data structure to support the undo/redo commands
-
-* **Alternative 1 (current choice):** Use a list to store the history of venue book states.
-** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
-// end::undoredo[]
 
 === Calendar Model
 ==== Implementation
@@ -481,14 +471,169 @@ Step 4: Then, `ParserUtil` checks that the input strings are valid, and initiali
 
 Step 5: Subsequently, `AddCommandParser` calls `DateTimeInfo` to validate that the start date/time is not chronologically after the end `DateTime`, before wrapping the start and end `DateTime` in a `DateTimeInfo` object.
 
-Step 6: Following that, a new `CalendarEvent` is initialised and will be displayed in the list of calendar events in the GUI.
+Step 6: Following that, a new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
 
+
+=== Calendar Display
+
+==== Current Implementation
+
+The Calendar Display is implemented using the `jfxtras.Agenda`, a rich Control under *jfxtras*. `Agenda` accepts the Calendar Events of the user and displays them in the chronological format.
+
+`Agenda` provides some default functionality for responding to user interactions with the UI, such as adding, editing and deleting events. These functions have been disabled so as to make `Agenda` used solely for displaying the user's events visually in a time table format. This was done to make the data flow one-directional, and reduce coupling between `Agenda` and `Model`.
+
+`Agenda` defines the `Agenda.Appointment` interface, which must be implemented for all events that it displays. It also comes with `Agenda.AppointmentImplLocal`, which is a bare-bones implementation of the `Agenda.Appointment` interface, which is intended to be used when working with `java.time.LocalDateTime`.
+
+Due to CalendarEvent sharing many of the required attributes of `Agenda.AppointmentImplyLocal`, it was natural to have CalendarEvent *extend* `Agenda.AppointmentImplLocal`, so as to streamline the process of displaying CalendarEvents.
+
+Unlike a `ListView`, `Agenda` does not provide a way to directly set the contents to be displayed. Rather, CalendarDisplay holds a reference to the list of calendar events in model, which it then adds into `Agenda`. When a change occurs in `Model` 's data, CalendarDisplay is notified, and pushes the corresponding changes to `Agenda`.
+
+The full documentation for `Agenda` can be found here: (http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html).
+
+
+==== Features
+
+The user can:
+
+1. Double click on displayed events to open a dialog box containing the details of the event.
+
+2. Jump to the time period containing an event by selecting the event in the list of calendar events.
+
+=== Calendar Navigation Feature
+==== Current Implementation
+
+The navigation features included are:
+
+1. Toggling between weekly view and daily view using `T` key.
+
+2. View a `CalendarEvent` in the time table display by *selecting* the event. The time table display will jump to the correct time period and attempt to centralize the selected event.
+
+3. View the next/previous week or day (depending on the current view) using the `left` and `right` arrows keys.
+
+4. The user can scroll up and down the 24-hour timeline using `up` and `down` arrow keys, or using the mouse scroll wheel.
+
+===== Design considerations
+
+Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
+Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
+Navigation method `2` would also be sufficient in most cases.
+
+However, `Agenda` 's time table display was implemented using a customized ScrollPane, which could be scrolled using the `up` and `down` arrow keys and the scroll wheel. Hence, using the `left` and `right` arrow keys for navigation felt very natural and user-friendly.
+
+Furthermore, `Agenda` did not expose any way for the user to navigate the time table display programmatically. So if the user wanted to interact with the UI, the user would still be forced to use either the `up` and `down` arrow keys or the scroll wheel to navigate.
+
+Therefore, while this feature is not a CLI feature, it was retained as a fast and easy way to navigate around the time table display.
+
+==== Further Extensions
+
+===== Jump to a specified date
+
+One other common use case for a calendar is the user wants to check what events he/she has at a particular time. An example scenario would be:
+
+1. User executes `view 20th nov`.
+
+2. A JumpToDateTimeEvent is raised.
+
+3. The CalendarDisplay responds by displaying the week containing the specified date and time.
+
+==== Planned Implementation
+
+The navigation mechanism will be facilitated by `ModelManager#updateFilteredCalendarEventList`.
+
+Given below is an example usage scenario and how the navigation mechanism behaves at each step.
+
+Step 1. The user is viewing the events for one week.
+
+Step 2. The user executes `next week` to view the events in the following week. The command is parsed by `schedulerParser#parseCommand`, returning `ChangePeriodCommand`
+
+Step 3. `ChangePeriodCommand#executes` called with `EventIsInThisPeriodPredicate`.
+
+Step 4. `filteredCalendarEvents` is updated.
+
+Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
+
+// tag::undoredo[]
+=== Undo/Redo feature
+==== Current Implementation
+
+The undo/redo mechanism is facilitated by `VersionedScheduler`.
+It extends `Scheduler` with an undo/redo history, stored internally as an `SchedulerStateList` and `currentStatePointer`.
+Additionally, it implements the following operations:
+
+* `VersionedScheduler#commit()` -- Saves the current venue book state in its history.
+* `VersionedScheduler#undo()` -- Restores the previous venue book state from its history.
+* `VersionedScheduler#redo()` -- Restores a previously undone venue book state from its history.
+
+These operations are exposed in the `Model` interface as `Model#commitScheduler()`, `Model#undoScheduler()` and `Model#redoScheduler()` respectively.
+
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time.
+The `VersionedAddressBook` will be initialized with the initial
+Scheduler state, and the `currentStatePointer` pointing to that
+single Scheduler state.
+
+image::UndoRedoStartingStateListDiagram.png[width="800"]
+
+Step 2. The user executes `delete event 5` command to delete the 5th CalendarEvent in the Scheduler. The `delete` command calls `Model#commitScheduler()`, causing the modified state of the Scheduler after the `delete 5` command executes to be saved in the `schedulerStateList`, and the `currentStatePointer` is shifted to the newly inserted Scheduler state.
+
+image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
+
+Step 3. The user executes `add t/CS2103 Lecture ...` to add a new CalendarEvent. The `add event` command also calls `Model#commitScheduler()`, causing another modified Scheduler state to be saved into the `schedulerStateList`.
+
+image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
+
+[NOTE]
+If a command fails its execution, it will not call `Model#commitScheduler()`, so the Scheduler state will not be saved into the `schedulerStateList`.
+
+Step 4. The user now decides that adding the CalendarEvent was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoScheduler()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous Scheduler state, and restores the Scheduler to that state.
+
+image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
+
+[NOTE]
+If the `currentStatePointer` is at index 0, pointing to the initial Scheduler state, then there are no previous Scheduler states to restore. The `undo` command uses `Model#canUndoScheduler()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+
+The following sequence diagram shows how the undo operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
+
+The `redo` command does the opposite -- it calls `Model#redoScheduler()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the Scheduler to that state.
+
+[NOTE]
+If the `currentStatePointer` is at index `schedulerStateList.size() - 1`, pointing to the latest Scheduler state, then there are no undone Scheduler states to restore. The `redo` command uses `Model#canRedoScheduler()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+Step 5. The user then decides to execute the command `list event`. Commands that do not modify the Scehduler, such as `list`, will usually not call `Model#commitScheduler()`, `Model#undoScheduler()` or `Model#redoScheduler()`. Thus, the `schedulerStateList` remains unchanged.
+
+image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
+
+Step 6. The user executes `clear calendar`, which calls `Model#commitScheduler()`. Since the `currentStatePointer` is not pointing at the end of the `schedulerStateList`, all venue book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/CS2103 Lecture ...` command. This is the behavior that most modern desktop applications follow.
+
+image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
-===== Aspect: GUI
+===== Aspect: How undo & redo executes
 
-The calendar events are currently only fully visible via the console. Further enhancement would be needed to display the events in an appropriate Calendar GUI.
+* **Alternative 1 (current choice):** Saves the entire venue book.
+** Pros: Easy to implement.
+** Cons: May have performance issues in terms of memory usage.
+* **Alternative 2:** Individual command knows how to undo/redo by itself.
+** Pros: Will use less memory (e.g. for `delete`, just save the calendarEvent being deleted).
+** Cons: We must ensure that the implementation of each individual command are correct.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Use a list to store the history of venue book states.
+** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
+* **Alternative 2:** Use `HistoryManager` for undo/redo
+** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
+** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
+// end::undoredo[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -513,26 +658,11 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 [[Implementation-Configuration]]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: `config.json`).
 
-=== Calendar Navigation Feature
-==== Planned Implementation
-
-The navigation mechanism will be facilitated by `ModelManager#updateFilteredCalendarEventList`.
-
-Given below is an example usage scenario and how the navigation mechanism behaves at each step.
-
-Step 1. The user is viewing the events for one week.
-
-Step 2. The user executes `next week` to view the events in the following week. The command is parsed by `schedulerParser#parseCommand`, returning `ChangePeriodCommand`
-
-Step 3. `ChangePeriodCommand#executes` called with `EventIsInThisPeriodPredicate`.
-
-Step 4. `filteredCalendarEvents` is updated.
-
-Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
 
 == Documentation
 

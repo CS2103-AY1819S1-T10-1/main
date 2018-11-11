@@ -16,31 +16,31 @@ import seedu.address.model.todolist.ToDoListEvent;
  */
 public class TypicalTodoListEvents {
     public static final ToDoListEvent MIDTERM = new ToDoListEventBuilder().withTitle("CS2103 Midterm")
-            .withDescription("cover all materials from week 1 to week 7")
-            .withPriority("H").build();
+        .withDescription("cover all materials from week 1 to week 7")
+        .withPriority("H").build();
     public static final ToDoListEvent TUTORIAL = new ToDoListEventBuilder().withTitle("JS1011 Tutorial")
-            .withDescription("Monadic parsers")
-            .withPriority("L").build();
+        .withDescription("Monadic parsers")
+        .withPriority("L").build();
     public static final ToDoListEvent WORKSHOP = new ToDoListEventBuilder().withTitle("Interview workshop")
-            .withDescription("will be helpful for interview")
-            .withPriority("L").build();
+        .withDescription("will be helpful for interview")
+        .withPriority("L").build();
     public static final ToDoListEvent ENTERTAINMENT = new ToDoListEventBuilder().withTitle("Daniel's birthday party")
-            .withDescription("remember to buy gifts")
-            .withPriority("M").build();
+        .withDescription("remember to buy gifts")
+        .withPriority("M").build();
 
 
     // Manually added
     public static final ToDoListEvent CS2106LAB = new ToDoListEventBuilder().withTitle("CS2106 LAB4")
-            .withDescription("write mymalloc() and myfree()")
-            .withPriority("H").build();
+        .withDescription("write mymalloc() and myfree()")
+        .withPriority("H").build();
     public static final ToDoListEvent CS3230WA = new ToDoListEventBuilder().withTitle("CS3230 Written Assignment")
-            .withDescription("proof questions")
-            .withPriority("M").build();
+        .withDescription("proof questions")
+        .withPriority("M").build();
 
     // Manually added - ToDoListEvent's details found in {@code CommandTestUtil}
     public static final ToDoListEvent LECTURE =
-            new ToDoListEventBuilder().withTitle(VALID_TITLE_LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
-                    .withPriority(VALID_PRIORITY_LECTURE).build();
+        new ToDoListEventBuilder().withTitle(VALID_TITLE_LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
+            .withPriority(VALID_PRIORITY_LECTURE).build();
 
     private TypicalTodoListEvents() {
     } // prevents instantiation

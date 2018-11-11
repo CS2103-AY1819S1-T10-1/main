@@ -12,10 +12,12 @@ import seedu.address.model.calendarevent.exceptions.CalendarEventNotFoundExcepti
 import seedu.address.model.calendarevent.exceptions.DuplicateCalendarEventException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A calendar event is considered unique by comparing using {@code CalendarEvent#isSameCalendarEvent(CalendarEvent)}.
- * As such, adding and updating of persons uses CalendarEvent#isSameCalendarEvent(CalendarEvent) for equality so as to
- * ensure that the calendar event being added or updated is unique in terms of identity in the UniqueCalendarEventList.
+ * A list of {@code CalendarEvent}s that enforces uniqueness between its elements and does not allow nulls.
+ * A {@code CalendarEvent}s is considered unique by comparing using
+ * {@code CalendarEvent#isSameCalendarEvent(CalendarEvent)}.
+ * As such, adding and updating of {@code CalendarEvent}s uses CalendarEvent#isSameCalendarEvent(CalendarEvent) for
+ * equality so as to ensure that the calendar event being added or updated is unique in terms of identity in the
+ * UniqueCalendarEventList.
  * However, the removal of a calendar event uses CalendarEvent#equals(Object) so
  * as to ensure that the calendar event with exactly the same fields will be removed.
  * <p>

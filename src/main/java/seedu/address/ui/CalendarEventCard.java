@@ -31,6 +31,10 @@ public class CalendarEventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label start;
+    @FXML
+    private Label end;
+    @FXML
     private Label description;
     @FXML
     private Label venue;
@@ -42,9 +46,10 @@ public class CalendarEventCard extends UiPart<Region> {
         this.calendarEvent = calendarEvent;
         id.setText(displayedIndex + ". ");
         title.setText(calendarEvent.getTitle().value);
+        start.setText("Start:  " + calendarEvent.getStart().toString());
+        end.setText("End:   " + calendarEvent.getEnd().toString());
         description.setText(calendarEvent.getDescriptionObject().value);
         venue.setText(calendarEvent.getVenue().value);
-        // TODO add start date and end date (remember to update fxml file)
         calendarEvent.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

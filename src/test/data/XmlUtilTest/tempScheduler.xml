@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scheduler>
     <calendarEvents>
-        <id>1</id>
-        <firstName>John</firstName>
-        <lastName>Doe</lastName>
-        <start>2018-10-16 14:00</start>
-        <end>2018-10-16 16:00</end>
-        <githubUsername></githubUsername>
-        <street></street>
-        <postalCode></postalCode>
-        <city></city>
+        <title>CS2103 Lecture</title>
+        <description>Abstraction, Gradle, JUnit</description>
+        <venue>i3 Auditorium</venue>
+        <start>2018-11-15 16:00</start>
+        <end>2018-11-15 18:00</end>
+        <tagged>CS2103</tagged>
+        <tagged>lecture</tagged>
     </calendarEvents>
 </scheduler>
