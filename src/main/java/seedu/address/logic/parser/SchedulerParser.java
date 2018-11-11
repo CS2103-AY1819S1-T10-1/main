@@ -34,7 +34,6 @@ public class SchedulerParser {
     /**
      * Used for initial separation of command word and args.
      */
-    // TODO improve regex or modify parse procedure
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>(\\w+\\s?(?!\\w/|[0-9])){1,2})"
         + "(?<arguments>.*)");
 
