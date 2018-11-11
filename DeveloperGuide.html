@@ -620,7 +620,10 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Scheduler</co
 <p>can save <code>UserPref</code> objects in json format and read it back.</p>
 </li>
 <li>
-<p>can save the Address Book data in xml format and read it back.</p>
+<p>can save the Scheduler data in xml format and read it back.</p>
+</li>
+<li>
+<p>can save the ToDoList data in xml format and read it back.</p>
 </li>
 </ul>
 </div>
@@ -1163,13 +1166,10 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Toggling between weekly view and daily view using <code>T</code> key.</p>
+<p>View a <code>CalendarEvent</code> in the time table display by selecting the event. The time table display will jump to the correct time period and attempt to centralize the selected event.</p>
 </li>
 <li>
-<p>View a <code>CalendarEvent</code> in the time table display by <strong>selecting</strong> the event. The time table display will jump to the correct time period and attempt to centralize the selected event.</p>
-</li>
-<li>
-<p>View the next/previous week or day (depending on the current view) using the <code>left</code> and <code>right</code> arrows keys.</p>
+<p>View the next/previous week or using the <code>left</code> and <code>right</code> arrows keys.</p>
 </li>
 <li>
 <p>The user can scroll up and down the 24-hour timeline using <code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
@@ -1181,7 +1181,8 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="paragraph">
 <p>Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
 Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
-Navigation method <code>2</code> would also be sufficient in most cases.</p>
+Having the calendar jump to display selected events would also be
+would also be sufficient in most cases.</p>
 </div>
 <div class="paragraph">
 <p>However, <code>Agenda</code> 's time table display was implemented using a customized ScrollPane, which could be scrolled using the <code>up</code> and <code>down</code> arrow keys and the scroll wheel. Hence, using the <code>left</code> and <code>right</code> arrow keys for navigation felt very natural and user-friendly.</p>
@@ -2979,4 +2980,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 11:01:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:29:05 UTC</div></div></div></body></html>
