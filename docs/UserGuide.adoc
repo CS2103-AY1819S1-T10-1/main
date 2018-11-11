@@ -35,7 +35,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list event`* : lists all calendar events
 * *`list todo`* : lists all todo items
-* **`add event`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
+* **`add event`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
 * **`add todo`**`t/CS2103 Assignment d/Version Control p/H` : adds a todo item titled `CS2103 Assignment` to the todo list.
 * **`delete event`**`3` : deletes the calendar event marked `3`.
 * **`delete todo`**`3` : deletes the todo item marked `3`.
@@ -51,8 +51,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add event t/TITLE`, `TITLE` is a parameter which can be used as `add event t/CS2103 Lecture`.
 * Items in curly brackets denote the choices of words that can be used. e.g. `add {event/todo}`
-* Items in square brackets are optional e.g `t/TITLE [tags/TAG]` can be used as `t/CS2103 Lecture tags/lecture` or as `t/CS2103 Lecture`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[tags/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `tags/lecture`, `tags/cs2103` etc.
+* Items in square brackets are optional e.g `t/TITLE [tag/TAG]` can be used as `t/CS2103 Lecture tag/lecture` or as `t/CS2103 Lecture`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `tag/lecture`, `tag/cs2103` etc.
 * Parameters can be in any order e.g. if the command specifies `t/TITLE d/DESCRIPTION`, `d/DESCRIPTION t/TITLE` is also acceptable.
 * The second word specifies whether the command will operate on the todo list or the calendar. For example `add event` adds an event to the calendar and `add todo` will add an item to the todo list.
 * Priorities on the todo list are either `H`, `M` or `L` for high, medium or low respectively.
@@ -65,15 +65,15 @@ Format: `help`
 === Adding: `add`
 
 Adds a calendar event to the calendar +
-Format: `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]...` +
+Format: `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tag/TAG]...` +
 Adds an item to the todo list +
-Format: `add todo t/TITLE d/DESCRIPTION p/PRIORITY`
+Format: `add todo t/TITLE d/DESCRIPTION p/{H/M/L}`
 
 ****
 * Adds the specified item to the calendar or todo list
 * Since it is difficult to type a rigidly formatted date and time, a natural language date parser will try to parse the input for calendar events.
 * The start and end datetimes can be word descriptions, such as 'the day after tomorrow', or '1 week from now'.
-* If only a time is specified, Scheduler will assume you mean today.
+* If only a time is specified, the application will assume you mean today.
 ****
 
 [TIP]
@@ -81,7 +81,7 @@ A calendar event can have any number of tags. (including 0)
 
 Examples:
 
-* `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture`
+* `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture`
 * `add todo t/CS2103 Assignment d/Version Control p/L`
 
 === Listing: `list`
@@ -94,14 +94,14 @@ Format: `list {event/todo}`
 Edits an existing calendar event in the calendar. +
 Format: `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
 Edits an existing item in the todo list. +
-Format: `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/PRIORITY]`
+Format: `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L}]`
 
 ****
 * Edits the calendar event / todo list item at the specified `INDEX`. The index refers to the index number shown in the displayed list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the calendar event will be removed i.e adding of tags is not cumulative.
-* You can remove all the calendar event's tags by typing `tags/` without specifying any tags after it.
+* You can remove all the calendar event's tags by typing `tag/` without specifying any tags after it.
 ****
 
 Examples:
@@ -148,14 +148,14 @@ Examples:
 * `list event` +
 `delete event 2` +
 Deletes the 2nd calendar event in the calendar.
-* `find todo assignment` +
-`delete todo 1` +
-Deletes the 1st todo item in the results of the `find todo` command.
+* `find event assignment` +
+`delete event 1` +
+Deletes the 1st calendar event in the results of the `find event` command.
 
 === Selecting: `select`
 
-Selects the calendar event / todo item identified by the index number used in the displayed list. +
-Format: `select {event/todo} INDEX`
+Selects the calendar event identified by the index number used in the displayed list. +
+Format: `select event INDEX`
 
 ****
 * Selects the calendar event and loads the Google search page the calendar event at the specified `INDEX`.
@@ -168,7 +168,7 @@ Examples:
 * `list event` +
 `select event 2` +
 Selects the 2nd calendar event in the calendar.
-* `find lecture` +
+* `find event lecture` +
 `select event 1` +
 Selects the 1st calendar event in the results of the `find event` command.
 
@@ -259,7 +259,7 @@ Format: `exit`
 
 === Saving the data
 
-Scheduler data is saved in the hard disk automatically after any command that changes the data. +
+Application data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -275,16 +275,16 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tags/TAG]...` +
-e.g. `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tags/lecture`
-* *Add* `add todo t/TITLE d/DESCRIPTION p/PRIORITY` +
+* *Add* `add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tag/TAG]...` +
+e.g. `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture`
+* *Add* `add todo t/TITLE d/DESCRIPTION p/{H/M/L}` +
 e.g. `add todo t/CS2103 Assignment d/Version Control p/L`
 * *Clear* : `clear`
 * *Delete* : `delete {event/todo} INDEX` +
 e.g. `delete event 3`
-* *Edit* : `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
+* *Edit* : `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tag/TAG]...` +
 e.g. `edit event 1 d/Abstraction v/i3 Auditorium`
-* *Edit* : `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/PRIORITY]` +
+* *Edit* : `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L]` +
 e.g. `edit todo 2 t/CS2103 Project`
 * *Find* : `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]` +
 e.g. `find event CS2103 Lecture`
