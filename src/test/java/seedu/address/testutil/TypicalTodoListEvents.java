@@ -1,7 +1,10 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_LECTURE;
 
 import java.util.ArrayList;
@@ -42,6 +45,9 @@ public class TypicalTodoListEvents {
         new ToDoListEventBuilder().withTitle(VALID_TITLE_LECTURE).withDescription(VALID_DESCRIPTION_LECTURE)
             .withPriority(VALID_PRIORITY_LECTURE).build();
 
+    public static final ToDoListEvent ASSIGNMENT =
+            new ToDoListEventBuilder().withTitle(VALID_TITLE_ASSIGNMENT).withDescription(VALID_DESCRIPTION_ASSIGNMENT)
+                    .withPriority(VALID_PRIORITY_ASSIGNMENT).build();
     private TypicalTodoListEvents() {
     } // prevents instantiation
 

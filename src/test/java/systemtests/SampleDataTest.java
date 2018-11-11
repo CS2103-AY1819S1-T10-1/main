@@ -1,6 +1,6 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCalendarEventListMatching;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,6 +46,6 @@ public class SampleDataTest extends SchedulerSystemTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         CalendarEvent[] expectedList = SampleDataUtil.getSampleCalendarEvents();
-        assertListMatching(getCalendarEventListPanel(), expectedList);
+        assertCalendarEventListMatching(getCalendarEventListPanel(), expectedList);
     }
 }

@@ -109,7 +109,7 @@ When you are ready to start coding,
 === Architecture
 
 .Architecture Diagram
-image::Architecture.png[width="600"]
+image::ArchitectureDiagram.png[width="600"]
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -247,7 +247,8 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Scheduler data in xml format and read it back.
+* can save the ToDoList data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -280,7 +281,7 @@ Step 3: The `AddToDoCommandParser` parsers out the strings for the title, descri
 
 Step 4: Then, `ParserUtil` checks that the input strings are valid, and uinitialises the `Title`, `Description` and `Priority`. It also checks that the `Priority` iniput is a valid priority.
 
-Stepp 5: Following that, a new `ToDoListEvent` is initialised and will be displayed in the list of todo list events in the GUI.
+Step 5: Following that, a new `ToDoListEvent` is initialised and will be displayed in the list of todo list events in the GUI.
 
 Given below is an example usage scenario for deleting a todolist event, and how the todolist model behaves at each step.
 
@@ -292,21 +293,55 @@ Step 3: The `DeleteToDoCommandParser` parsers out the strings for the index.
 
 Step 4: Then, `ParserUtil` checks that the input index is valid.
 
-Stepp 5: Following that, the corresponding `ToDoListEvent` will be deleted and not displayed on th GUI.
+Step 5: Following that, the corresponding `ToDoListEvent` will be deleted and not displayed on th GUI.
+
+The following sequece diagram shows how the add todo operation works:
+
+image::AddToDoDeleteToDoSequenceDiagram.png[width="800"]
+
+The delete todo does the similar operation.It calls `ModelToDo#deleteToDoListEvent`.
+
+`ShowDescriptionParser` functionaly have been created and allow user to show description of `ToDoListEvent` objects.
+
+Given below is an example usage scenario for showing description of a todolist event, and how the todolist model behaves at each step.
+
+Step 1: Make sure the todo list is not empty.
+
+Step 2: The user executes `show todo [index of event]` while `[index of event]` is the index number for a corresponding todolist event` displayed in `ToDoList` GUI.
+
+Step 3: The `ShowDescriptionCommandParser` parsers out the strings for the index.
+
+Step 4: Then, `ParserUtil` checks that the input index is valid.
+
+Step 5: Following that, the corresponding description of `ToDoListEvent` will be showed and displayed by `DescriptionDisplay`.
+
+The following sequece diagram shows how the show todo operation works:
+
+image::ShowDescriptionSequenceDiagram.png[width="800"]
+
+Implementation for `list todo` is similar with `list event`.
+
+Step 1: The user executes `list todo`.
+
+Step 2: The `ListToDoCommand` will be executed.
+
+Step 3: The tab will change to display todo list panel.
 
 ==== Logic for ToDoList feature:
 
-* `Logic#executeToDo` -- Executes the commandToDo and returns the result.
 * `Logic#getFilteredToDoListEventList` -- Returns an unmodifiable view of the filtered list of `ToDoListEvent`.
 * `LogicManager#ModelToDo` -- Model for `ToDoListEvent`.
 
 ===== commands
-* `CommandToDo` -- Abstract class for executing todo list.
-* `AddToDoCommand`/`DeleteToDoCommand` -- Extends `CommandToDo` for `add todo`/`delete todo` functionality.
+* `Command` -- Abstract class for executing todo list.
+* `Command#isToDoCommand` -- Judge the command is todo command or not.
+* `Command#excute(ModelToDo, CommandHistory)` -- Execute todo command.
+* `AddToDoCommand`/`DeleteToDoCommand` -- Extends `Command` for `add todo`/`delete todo` functionality.
+* `ListToDoCommand` -- Extends `Command` for `list todo` functionality.
+* `ShowDescriptionCommand` -- Extends `Command` for `show todo` functionality.
 
 ===== parsers
-* `ParserToDo` -- Represents a parser that is able to parse user input into a `CommandToDo`.
-* `SchedulerParser#parserCommandToDo` -- Parses user input into commandToDo for execution.
+* `SchedulerParser#parserCommand` -- Add additionl parses user input into command for execution.
 
 ==== Storage for ToDoList feature:
 
@@ -326,9 +361,14 @@ The ToDoList GUI contains two parts:
 In `ToDoListEventCards`, there are four components:
 
 * `ToDoListEventCard#CheckBox` -- For check completed task.
-* `ToDoListEventCard#Label(id)` -- For Display index of corresponding `ToDoListEvent`.
-* `ToDoListEventCard#Label(title)` -- For Display title of corresponding `ToDoListEvent`.
-* `ToDoListEventCard#Label(priority)` -- For Display priority of corresponding `ToDoListEvent`. And different priorities will be displayed in different colors.
+* `ToDoListEventCard#Label(id)` -- For display index of corresponding `ToDoListEvent`.
+* `ToDoListEventCard#Label(title)` -- For display title of corresponding `ToDoListEvent`.
+* `ToDoListEventCard#Label(priority)` -- For display priority of corresponding `ToDoListEvent`. And different priorities will be displayed in different colors.
+
+The description popup GUI is developed by `DescriptionDisplay`, there are two components:
+
+* `DescriptionDisplay#TextArea(description)` -- For display description of corresponding `ToDoListEvent`.
+* `DescriptionDisplay#Label(id)` -- For display index of corresponding `ToDoListEvent`.
 
 ==== Design Considerations
 
@@ -352,8 +392,6 @@ Aspect: How to implement ToDoList Logic
 
 ** Pros: Can be easily implemented and can use the current parser.
 
-** Cons: Need extra methods to execute `CommandToDo`.
-
 * **Alternative 2:** Re-construct a new `LogicToDo` for `ToDoList`.
 
 ** Pros: Will not influence current Scheduler Logic.
@@ -362,7 +400,7 @@ Aspect: How to implement ToDoList Logic
 
 Aspect: How to implement ToDoList Storage
 
-* **Alternative 1 (current choice):** Modify the curernt `Storage`and `StorageManager`.
+* **Alternative 1 (current choice):** Modify the curernt `Storage` and `StorageManager`.
 
 ** Pros: Can be easilly implement.
 
@@ -504,19 +542,18 @@ The user can:
 
 The navigation features included are:
 
-1. Toggling between weekly view and daily view using `T` key.
+1. View a `CalendarEvent` in the time table display by selecting the event. The time table display will jump to the correct time period and attempt to centralize the selected event.
 
-2. View a `CalendarEvent` in the time table display by *selecting* the event. The time table display will jump to the correct time period and attempt to centralize the selected event.
+2. View the next/previous week or using the `left` and `right` arrows keys.
 
-3. View the next/previous week or day (depending on the current view) using the `left` and `right` arrows keys.
-
-4. The user can scroll up and down the 24-hour timeline using `up` and `down` arrow keys, or using the mouse scroll wheel.
+3. The user can scroll up and down the 24-hour timeline using `up` and `down` arrow keys, or using the mouse scroll wheel.
 
 ===== Design considerations
 
 Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
 Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
-Navigation method `2` would also be sufficient in most cases.
+Having the calendar jump to display selected events would also be
+would also be sufficient in most cases.
 
 However, `Agenda` 's time table display was implemented using a customized ScrollPane, which could be scrolled using the `up` and `down` arrow keys and the scroll wheel. Hence, using the `left` and `right` arrow keys for navigation felt very natural and user-friendly.
 

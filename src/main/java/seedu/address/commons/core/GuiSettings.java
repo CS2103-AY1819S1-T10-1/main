@@ -8,8 +8,6 @@ import java.util.Objects;
  * A Serializable class that contains the GUI settings.
  */
 public class GuiSettings implements Serializable {
-    // TODO change the default height and width to something appropriate
-    // TODO look at ui component and see if anything else belongs to GuiSettings
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
 

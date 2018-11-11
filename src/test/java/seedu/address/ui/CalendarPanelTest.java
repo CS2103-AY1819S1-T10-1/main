@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendarEvents;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCalendarEventCardEquals;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,7 +59,7 @@ public class CalendarPanelTest extends GuiUnitTest {
         CalendarEventCardHandle expectedPerson =
             calendarPanelHandle.getPersonCardHandle(INDEX_SECOND_ELEMENT.getZeroBased());
         CalendarEventCardHandle selectedPerson = calendarPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedPerson, selectedPerson);
+        assertCalendarEventCardEquals(expectedPerson, selectedPerson);
     }
 
     /**

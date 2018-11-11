@@ -80,7 +80,6 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
                 getModel().getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased()), editedCalendarEvent);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        // TODO: decide correct response
         /* Case: edit a calendar event with new values same as existing values -> edited */
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL

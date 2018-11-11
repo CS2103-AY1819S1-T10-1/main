@@ -7,7 +7,9 @@ import java.nio.file.Paths;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
+import seedu.address.model.ModelToDo;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.todolist.ToDoListEvent;
 
 /**
  * A utility class for test cases.
@@ -51,5 +53,12 @@ public class TestUtil {
      */
     public static CalendarEvent getPerson(Model model, Index index) {
         return model.getFilteredCalendarEventList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the todolistevent in the {@code modelToDo}'s todolistevent list at {@code index}.
+     */
+    public static ToDoListEvent getTask(ModelToDo modelToDo, Index index) {
+        return modelToDo.getFilteredToDoListEventList().get(index.getZeroBased());
     }
 }

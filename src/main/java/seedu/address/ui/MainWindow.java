@@ -90,8 +90,8 @@ public class MainWindow extends UiPart<Stage> {
             KeyCombination.SHIFT_ANY, KeyCombination.CONTROL_DOWN));
         registerAsAnEventHandler(this);
 
-        setAccelerator(() -> calendarDisplay.viewPrevious(), new KeyCodeCombination(KeyCode.LEFT));
-        setAccelerator(() -> calendarDisplay.viewNext(), new KeyCodeCombination(KeyCode.RIGHT));
+        setAccelerator(() -> calendarDisplay.displayPreviousWeek(), new KeyCodeCombination(KeyCode.LEFT));
+        setAccelerator(() -> calendarDisplay.displayNextWeek(), new KeyCodeCombination(KeyCode.RIGHT));
         helpWindow = new HelpWindow();
     }
 

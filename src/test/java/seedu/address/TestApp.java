@@ -13,8 +13,11 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelManagerToDo;
+import seedu.address.model.ModelToDo;
 import seedu.address.model.ReadOnlyScheduler;
 import seedu.address.model.Scheduler;
+import seedu.address.model.ToDoList;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableScheduler;
@@ -86,6 +89,19 @@ public class TestApp extends MainApp {
     }
 
     /**
+     * Returns a defensive copy of the todolist data stored inside the storage file.
+     */
+    public ToDoList readStorageToDoList() {
+        try {
+            return new ToDoList(storage.readToDoList().get());
+        } catch (DataConversionException dce) {
+            throw new AssertionError("Data is not in the ToDoList format.", dce);
+        } catch (IOException ioe) {
+            throw new AssertionError("Storage file cannot be found.", ioe);
+        }
+    }
+
+    /**
      * Returns the file path of the storage file.
      */
     public Path getStorageSaveLocation() {
@@ -93,11 +109,28 @@ public class TestApp extends MainApp {
     }
 
     /**
+     * Returns the todolist file path of the storage file.
+     */
+    public Path getStorageSaveLocationToDo() {
+        return storage.getToDoListFilePath();
+    }
+
+
+    /**
      * Returns a defensive copy of the model.
      * The new Model has the same predicates and comparator from FsList and thus the same ordering of FsList.
      */
     public Model getModel() {
         Model copy = new ModelManager(model.getScheduler(), new UserPrefs(), model.getFsList());
+        return copy;
+    }
+
+    /**
+     * Returns a defensive copy of the modelToDo.
+     * The new Model has the same predicates and comparator from FsList and thus the same ordering of FsList.
+     */
+    public ModelToDo getModelToDo() {
+        ModelToDo copy = new ModelManagerToDo(modelToDo.getToDoList(), new UserPrefs());
         return copy;
     }
 

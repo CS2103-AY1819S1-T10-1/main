@@ -14,8 +14,8 @@ import seedu.address.model.todolist.ToDoListEvent;
  * An UI component that displays selected description of a {@code ToDoListEvent}.
  */
 public class DescriptionDisplay extends UiPart<Region> {
-
     private static final String FXML = "DescriptionDisplay.fxml";
+
     public final ToDoListEvent toDoListEvent;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private int selectedIndex;
@@ -30,9 +30,27 @@ public class DescriptionDisplay extends UiPart<Region> {
         super(FXML);
         this.selectedIndex = displayedIndex;
         this.toDoListEvent = toDoListEvent;
-        id.setText(displayedIndex + 1 + ": ");
+        id.setText(displayedIndex + 1 + ". ");
         description.setText(toDoListEvent.getDescription().value);
         description.setEditable(false);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DescriptionDisplay)) {
+            return false;
+        }
+
+        // state check
+        DescriptionDisplay display = (DescriptionDisplay) other;
+        return id.getText().equals(display.id.getText())
+            && toDoListEvent.equals(display.toDoListEvent);
     }
 
 }

@@ -34,10 +34,13 @@ public class CommandTestUtil {
 
     public static final String VALID_TITLE_LECTURE = "CS2103 Lecture";
     public static final String VALID_TITLE_TUTORIAL = "JS1011 Tutorial";
+    public static final String VALID_TITLE_MIDTERM = "CS2103 Midterm";
+    public static final String VALID_TITLE_ASSIGNMENT = "CS3230 assignment";
     public static final String VALID_TITLE_SEMINAR = "FIN3101 Seminar";
     public static final String VALID_DESCRIPTION_LECTURE = "Abstraction, IntelliJ, Gradle";
     public static final String VALID_DESCRIPTION_TUTORIAL = "Monadic parsers";
     public static final String VALID_DESCRIPTION_MIDTERM = "cover all materials from week 1 to week 7";
+    public static final String VALID_DESCRIPTION_ASSIGNMENT = "greedy algorithm";
     public static final String VALID_VENUE_LECTURE = "Block 312, Amy Street 1";
     public static final String VALID_VENUE_TUTORIAL = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -50,13 +53,21 @@ public class CommandTestUtil {
     public static final String VALID_END_DATETIME_TUTORIAL = "2018-10-18 11:00";
     public static final String VALID_PRIORITY_TUTORIAL = "L";
     public static final String VALID_PRIORITY_LECTURE = "H";
+    public static final String VALID_PRIORITY_MIDTERM = "H";
+    public static final String VALID_PRIORITY_ASSIGNMENT = "M";
 
     public static final String TITLE_DESC_LECTURE = " " + PREFIX_TITLE + VALID_TITLE_LECTURE;
     public static final String TITLE_DESC_TUTORIAL = " " + PREFIX_TITLE + VALID_TITLE_TUTORIAL;
+    public static final String TITLE_DESC_MIDTERM = " " + PREFIX_TITLE + VALID_TITLE_MIDTERM;
+    public static final String TITLE_DESC_ASSIGNMENT = " " + PREFIX_TITLE + VALID_PRIORITY_ASSIGNMENT;
     public static final String DESCRIPTION_DESC_LECTURE = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_LECTURE;
     public static final String DESCRIPTION_DESC_TUTORIAL = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TUTORIAL;
+    public static final String DESCRIPTION_DESC_MIDTERM = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_MIDTERM;
+    public static final String DESCRIPTION_DESC_ASSIGNMENT = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ASSIGNMENT;
     public static final String PRIORITY_DESC_LECTURE = " " + PREFIX_PRIORITY + VALID_PRIORITY_LECTURE;
     public static final String PRIORITY_DESC_TUTORIAL = " " + PREFIX_PRIORITY + VALID_PRIORITY_TUTORIAL;
+    public static final String PRIORITY_DESC_MIDTERM = " " + PREFIX_PRIORITY + VALID_PRIORITY_MIDTERM;
+    public static final String PRIORITY_DESC_ASSIGNMENT = " " + PREFIX_PRIORITY + VALID_PRIORITY_ASSIGNMENT;
     public static final String START_DESC_LECTURE = " " + PREFIX_START + VALID_START_DATETIME_LECTURE;
     public static final String START_DESC_LECTURE_2 = " " + PREFIX_START + VALID_START_DATETIME_LECTURE_2;
     public static final String START_DESC_TUTORIAL = " " + PREFIX_START + VALID_START_DATETIME_TUTORIAL;
