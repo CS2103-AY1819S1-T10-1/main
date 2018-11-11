@@ -55,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `tag/lecture`, `tag/cs2103` etc.
 * Parameters can be in any order e.g. if the command specifies `t/TITLE d/DESCRIPTION`, `d/DESCRIPTION t/TITLE` is also acceptable.
 * The second word specifies whether the command will operate on the todo list or the calendar. For example `add event` adds an event to the calendar and `add todo` will add an item to the todo list.
-* Priorities on the todo list are either `H`, `M` or `L` for high, medium or low respectively.
+* Priorities on the todo list are either `H`, `M` or `L` for high, medium or low respectively, in upper case.
 ====
 
 === Viewing help : `help`
@@ -74,6 +74,7 @@ Format: `add todo t/TITLE d/DESCRIPTION p/{H/M/L}`
 * Since it is difficult to type a rigidly formatted date and time, a natural language date parser will try to parse the input for calendar events.
 * The start and end datetimes can be word descriptions, such as 'the day after tomorrow', or '1 week from now'.
 * If only a time is specified, the application will assume you mean today.
+* The priority can be `H`, `M` or `L` for high, medium or low respectively, in upper case.
 ****
 
 [TIP]
@@ -93,8 +94,6 @@ Format: `list {event/todo}`
 
 Edits an existing calendar event in the calendar. +
 Format: `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]...` +
-Edits an existing item in the todo list. +
-Format: `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L}]`
 
 ****
 * Edits the calendar event / todo list item at the specified `INDEX`. The index refers to the index number shown in the displayed list. The index *must be a positive integer* 1, 2, 3, ...
@@ -108,8 +107,8 @@ Examples:
 
 * `edit event 1 d/Abstraction v/i3 Auditorium` +
 Edits the description and venue of the calendar event to be `Abstraction ` and `i3 Auditorium` respectively.
-* `edit todo 2 t/CS2103 Project` +
-Edits the name of the 2nd todo list item to be `CS2103 Project`.
+* `edit event 2 t/CS2103 Project Meetup` +
+Edits the name of the 2nd calendar event to be `CS2103 Project Meetup`.
 
 === Locating: `find`
 
@@ -284,8 +283,6 @@ e.g. `add todo t/CS2103 Assignment d/Version Control p/L`
 e.g. `delete event 3`
 * *Edit* : `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tag/TAG]...` +
 e.g. `edit event 1 d/Abstraction v/i3 Auditorium`
-* *Edit* : `edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L]` +
-e.g. `edit todo 2 t/CS2103 Project`
 * *Find* : `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]` +
 e.g. `find event CS2103 Lecture`
 * *List* : `list {event/todo}`
