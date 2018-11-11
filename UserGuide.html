@@ -25,7 +25,7 @@
 <li><a href="#undoing-previous-command-code-undo-code">3.10. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.11. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.12. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#using-the-calendar-display">3.13. Using the Calendar Display</a></li>
+<li><a href="#interact-with-the-calendar-display">3.13. Interact with the Calendar Display</a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.14. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.15. Saving the data</a></li>
 <li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.16. Encrypting data files <code>[coming in v2.0]</code></a></li>
@@ -137,7 +137,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>The second word specifies whether the command will operate on the todo list or the calendar. For example <code>add event</code> adds an event to the calendar and <code>add todo</code> will add an item to the todo list.</p>
 </li>
 <li>
-<p>Priorities on the todo list are either <code>H</code>, <code>M</code> or <code>L</code> for high, medium or low respectively.</p>
+<p>Priorities on the todo list are either <code>H</code>, <code>M</code> or <code>L</code> for high, medium or low respectively, in upper case.</p>
 </li>
 </ul>
 </div>
@@ -175,6 +175,9 @@ Format: <code>add todo t/TITLE d/DESCRIPTION p/{H/M/L}</code></p>
 </li>
 <li>
 <p>If only a time is specified, the application will assume you mean today.</p>
+</li>
+<li>
+<p>The priority can be <code>H</code>, <code>M</code> or <code>L</code> for high, medium or low respectively, in upper case.</p>
 </li>
 </ul>
 </div>
@@ -217,9 +220,7 @@ Format: <code>list {event/todo}</code></p>
 <h3 id="editing-code-edit-code"><a class="link" href="#editing-code-edit-code">3.4. Editing: <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing calendar event in the calendar.<br>
-Format: <code>edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]&#8230;&#8203;</code><br>
-Edits an existing item in the todo list.<br>
-Format: <code>edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L}]</code></p>
+Format: <code>edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tags/TAG]&#8230;&#8203;</code><br></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -254,8 +255,8 @@ Format: <code>edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L}]</code></p>
 Edits the description and venue of the calendar event to be <code>Abstraction ` and `i3 Auditorium</code> respectively.</p>
 </li>
 <li>
-<p><code>edit todo 2 t/CS2103 Project</code><br>
-Edits the name of the 2nd todo list item to be <code>CS2103 Project</code>.</p>
+<p><code>edit event 2 t/CS2103 Project Meetup</code><br>
+Edits the name of the 2nd calendar event to be <code>CS2103 Project Meetup</code>.</p>
 </li>
 </ul>
 </div>
@@ -538,7 +539,7 @@ Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="using-the-calendar-display"><a class="link" href="#using-the-calendar-display">3.13. Using the Calendar Display</a></h3>
+<h3 id="interact-with-the-calendar-display"><a class="link" href="#interact-with-the-calendar-display">3.13. Interact with the Calendar Display</a></h3>
 <div class="sect3">
 <h4 id="manual-navigation"><a class="link" href="#manual-navigation">3.13.1. Manual navigation:</a></h4>
 <div class="paragraph">
@@ -582,7 +583,7 @@ Format: <code>clear</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The calendar display msut be in focus in order to navigate with the arrow keys.</p>
+<p>The calendar display must be in focus in order to navigate with the arrow keys.</p>
 </div>
 </td>
 </tr>
@@ -668,10 +669,6 @@ e.g. <code>delete event 3</code></p>
 e.g. <code>edit event 1 d/Abstraction v/i3 Auditorium</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit todo INDEX [t/TITLE] [d/DESCRIPTION] [p/{H/M/L]</code><br>
-e.g. <code>edit todo 2 t/CS2103 Project</code></p>
-</li>
-<li>
 <p><strong>Find</strong> : <code>find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]</code><br>
 e.g. <code>find event CS2103 Lecture</code></p>
 </li>
@@ -704,4 +701,4 @@ e.g.<code>show todo 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:29:05 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:52:02 UTC</div></div></div></body></html>

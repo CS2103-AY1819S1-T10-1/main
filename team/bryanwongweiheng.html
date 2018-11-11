@@ -10,11 +10,9 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>U-Schedule* is a desktop calendar application for university students written for the project for the module CS2103
+<p>U-Schedule is a desktop calendar application for university students written for the project for the module CS2103
 Software Engineering. The user interacts with it using a CLI, and it has a GUI created with JavaFX for user feedback. It
- is
-written in
-Java, and has about 10 kLoC.</p>
+ is written in Java, and has about 10 kLoC.</p>
 </div>
 </div>
 </div>
@@ -36,17 +34,11 @@ Java, and has about 10 kLoC.</p>
 <li>
 <p>Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.</p>
 </li>
-<li>
-<p>Credits: <em>{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}</em></p>
-</li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Minor enhancement</strong>: added a history command that allows the user to navigate to previous commands using up/down keys.</p>
-</li>
-<li>
-<p><strong>Code contributed</strong>: [<a href="https://github.com">Functional code</a>] [<a href="https://github.com">Test code</a>] <em>{give links to collated code files}</em></p>
+<p><a href="https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&amp;search=bryanwongweiheng">Code Contributed</a></p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -57,7 +49,13 @@ Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+<p>Review issues created from PE dry run</p>
+</li>
+<li>
+<p>Reviewed PRs (with non-trivial review comments)</p>
+</li>
+<li>
+<p>Labeled issues in the tracker</p>
 </li>
 </ul>
 </div>
@@ -67,10 +65,16 @@ Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Updated the GUI color scheme (Pull requests <a href="https://github.com">#33</a>, <a href="https://github.com">#34</a>)</p>
+<p>Changed GUI layout and color scheme</p>
 </li>
 <li>
-<p>Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests <a href="https://github.com">#36</a>, <a href="https://github.com">#38</a>)</p>
+<p>Update Test Data <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/112">#112</a></p>
+</li>
+<li>
+<p>Changed the regex to support two worded commands</p>
+</li>
+<li>
+<p>Change model from person to calendar event</p>
 </li>
 </ul>
 </div>
@@ -80,39 +84,7 @@ Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Community:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com">#12</a>, <a href="https://github.com">#32</a>, <a href="https://github.com">#19</a>, <a href="https://github.com">#42</a></p>
-</li>
-<li>
-<p>Contributed to forum discussions (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>, <a href="https://github.com">4</a>)</p>
-</li>
-<li>
-<p>Reported bugs and suggestions for other teams in the class (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>)</p>
-</li>
-<li>
-<p>Some parts of the history feature I added was adopted by several other class mates (<a href="https://github.com">1</a>, <a href="https://github.com">2</a>)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Tools:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Integrated a third party library (Natty) to the project (<a href="https://github.com">#42</a>)</p>
-</li>
-<li>
-<p>Integrated a new Github plugin (CircleCI) to the team repo</p>
+<p>Managed user guide through the project</p>
 </li>
 </ul>
 </div>
@@ -121,9 +93,6 @@ Java, and has about 10 kLoC.</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><em>{you can add/remove categories in the list above}</em></p>
 </div>
 </div>
 </div>
@@ -140,25 +109,195 @@ Java, and has about 10 kLoC.</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>U-Schedule is for university students who <strong>prefer to use a desktop app for managing their schedule</strong>. More importantly, U-Schedule is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI). It features a calendar to manage regular events such as lectures and tutorials, as well as a todo list for upcoming deadlines. If you can type fast, you can manage both of these more efficiently with U-Schedule than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Quick Start</a> to get started. Enjoy!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-start"><a class="link" href="#quick-start">Quick Start</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure you have Java version <code>9</code> or later installed in your Computer.</p>
+</li>
+<li>
+<p>Download the latest <code>u-schedule.jar</code> <a href="{repoURL}/releases">here</a>.</p>
+</li>
+<li>
+<p>Copy the file to the folder you want to use as the home folder for this application.</p>
+</li>
+<li>
+<p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Ui.png" alt="Ui" width="900">
+</div>
+</div>
+</li>
+<li>
+<p>Type the command in the command box and press <kbd>Enter</kbd> to execute it.<br>
+e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
+</li>
+<li>
+<p>Some example commands you can try:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>list event</code></strong> : lists all calendar events</p>
+</li>
+<li>
+<p><strong><code>list todo</code></strong> : lists all todo items</p>
+</li>
+<li>
+<p><strong><code>add event</code></strong><code>t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture</code> : adds a calendar event titled <code>CS2103 Lecture</code> to the calendar.</p>
+</li>
+<li>
+<p><strong><code>add todo</code></strong><code>t/CS2103 Assignment d/Version Control p/H</code> : adds a todo item titled <code>CS2103 Assignment</code> to the todo list.</p>
+</li>
+<li>
+<p><strong><code>delete event</code></strong><code>3</code> : deletes the calendar event marked <code>3</code>.</p>
+</li>
+<li>
+<p><strong><code>delete todo</code></strong><code>3</code> : deletes the todo item marked <code>3</code>.</p>
+</li>
+<li>
+<p><strong><code>show todo</code></strong><code>3</code> : show the description of todo item marked <code>3</code>.</p>
+</li>
+<li>
+<p><strong><code>exit</code></strong> : exits the app</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Refer to <a href="#Features">Features</a> for details of each command.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Features"><a class="link" href="#Features">Features</a></h2>
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Command Format</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add event t/TITLE</code>, <code>TITLE</code> is a parameter which can be used as <code>add event t/CS2103 Lecture</code>.</p>
+</li>
+<li>
+<p>Items in curly brackets denote the choices of words that can be used. e.g. <code>add {event/todo}</code></p>
+</li>
+<li>
+<p>Items in square brackets are optional e.g <code>t/TITLE [tag/TAG]</code> can be used as <code>t/CS2103 Lecture tag/lecture</code> or as <code>t/CS2103 Lecture</code>.</p>
+</li>
+<li>
+<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[tag/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>tag/lecture</code>, <code>tag/cs2103</code> etc.</p>
+</li>
+<li>
+<p>Parameters can be in any order e.g. if the command specifies <code>t/TITLE d/DESCRIPTION</code>, <code>d/DESCRIPTION t/TITLE</code> is also acceptable.</p>
+</li>
+<li>
+<p>The second word specifies whether the command will operate on the todo list or the calendar. For example <code>add event</code> adds an event to the calendar and <code>add todo</code> will add an item to the todo list.</p>
+</li>
+<li>
+<p>Priorities on the todo list are either <code>H</code>, <code>M</code> or <code>L</code> for high, medium or low respectively, in upper case.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="command-summary"><a class="link" href="#command-summary">Command Summary</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Add</strong> <code>add event t/TITLE d/DESCRIPTION s/START_DATETIME e/END_DATETIME v/VENUE [tag/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture</code></p>
+</li>
+<li>
+<p><strong>Add</strong> <code>add todo t/TITLE d/DESCRIPTION p/{H/M/L}</code><br>
+e.g. <code>add todo t/CS2103 Assignment d/Version Control p/L</code></p>
+</li>
+<li>
+<p><strong>Clear</strong> : <code>clear calendar</code></p>
+</li>
+<li>
+<p><strong>Delete</strong> : <code>delete {event/todo} INDEX</code><br>
+e.g. <code>delete event 3</code></p>
+</li>
+<li>
+<p><strong>Edit</strong> : <code>edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tag/TAG]&#8230;&#8203;</code><br>
+e.g. <code>edit event 1 d/Abstraction v/i3 Auditorium</code></p>
+</li>
+<li>
+<p><strong>Find</strong> : <code>find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]</code><br>
+e.g. <code>find event CS2103 Lecture</code></p>
+</li>
+<li>
+<p><strong>List</strong> : <code>list {event/todo}</code></p>
+</li>
+<li>
+<p><strong>Help</strong> : <code>help</code></p>
+</li>
+<li>
+<p><strong>Select</strong> : <code>select {event/todo} INDEX</code><br>
+e.g.<code>select event 2</code></p>
+</li>
+<li>
+<p><strong>ShowDescription</strong> : <code>show todo INDEX</code><br>
+e.g.<code>show todo 2</code></p>
+</li>
+<li>
+<p><strong>History</strong> : <code>history</code></p>
+</li>
+<li>
+<p><strong>Undo</strong> : <code>undo</code></p>
+</li>
+<li>
+<p><strong>Redo</strong> : <code>redo</code></p>
+</li>
+<li>
+<p><strong>Calendar navigation</strong> : <kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd></p>
+</li>
+</ul>
+</div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
+<h3 id="selecting-code-select-code"><a class="link" href="#selecting-code-select-code">Selecting: <code>select</code></a></h3>
 <div class="paragraph">
-<p>Restores the calendar to the state before the previous <em>undoable</em> command was executed.<br>
-Format: <code>undo</code></p>
+<p>Selects the calendar event identified by the index number used in the displayed list.<br>
+Format: <code>select event INDEX</code></p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Undoable commands: those commands that modify the calendar&#8217;s /todo list&#8217;s content (<code>add event</code>, <code>delete event</code>, <code>edit event</code> and <code>clear</code>).</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Selects the calendar event and loads the Google search page the calendar event at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the displayed calendar event list.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> <code>1, 2, 3, &#8230;&#8203;</code></p>
+</li>
+</ul>
 </div>
-</td>
-</tr>
-</table>
+</div>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -166,61 +305,16 @@ Format: <code>undo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete event 1</code><br>
-<code>list event</code><br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br></p>
+<p><code>list event</code><br>
+<code>select event 2</code><br>
+Selects the 2nd calendar event in the calendar.</p>
 </li>
 <li>
-<p><code>select 1</code><br>
-<code>list event</code><br>
-<code>undo</code><br>
-The <code>undo</code> command fails as there are no undoable commands executed previously.</p>
-</li>
-<li>
-<p><code>delete event 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br></p>
+<p><code>find event lecture</code><br>
+<code>select event 1</code><br>
+Selects the 1st calendar event in the results of the <code>find event</code> command.</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
-<div class="paragraph">
-<p>Reverses the most recent <code>undo</code> command.<br>
-Format: <code>redo</code></p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>delete event 1</code><br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete event 1</code> command)<br></p>
-</li>
-<li>
-<p><code>delete event 1</code><br>
-<code>redo</code><br>
-The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
-</li>
-<li>
-<p><code>delete event 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">Encrypting data files <code>[coming in v2.0]</code></a></h3>
-<div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
 </div>
 </div>
@@ -239,4 +333,4 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:29:05 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:52:02 UTC</div></div></div></body></html>
