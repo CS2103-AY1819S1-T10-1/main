@@ -41,15 +41,15 @@ Software Engineering. The user interacts with it using a CLI, and it has a GUI c
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=intro]
+include::../team/UserGuide.adoc[tag=intro]
 
-include::../UserGuide.adoc[tag=quickstart]
+include::../team/UserGuide.adoc[tag=quickstart]
 
-include::../UserGuide.adoc[tag=features]
+include::../team/UserGuide.adoc[tag=features]
 
-include::../UserGuide.adoc[tag=summary]
+include::../team/UserGuide.adoc[tag=summary]
 
-include::../UserGuide.adoc[tag=select]
+include::../team/UserGuide.adoc[tag=select]
 
 == Contributions to the Developer Guide
 
