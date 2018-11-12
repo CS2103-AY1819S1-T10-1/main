@@ -82,8 +82,10 @@
 <li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-calendarevent">H.2. Deleting a calendarEvent</a></li>
-<li><a href="#saving-data">H.3. Saving data</a></li>
+<li><a href="#adding-a-calendar-event">H.2. Adding a calendar event</a></li>
+<li><a href="#deleting-a-calendar-event">H.3. Deleting a calendar event</a></li>
+<li><a href="#finding-calendar-events">H.4. Finding calendar events</a></li>
+<li><a href="#saving-data">H.5. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -3068,31 +3070,28 @@ Expected: The most recent window size and venue is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-calendarevent"><a class="link" href="#deleting-a-calendarevent">H.2. Deleting a calendarEvent</a></h3>
+<h3 id="adding-a-calendar-event"><a class="link" href="#adding-a-calendar-event">H.2. Adding a calendar event</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a calendarEvent while all calendarEvents are listed</p>
+<p>Adding a new calendar event to the scheduler</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all calendarEvents using the <code>list</code> command. Multiple calendarEvents in the list.</p>
+<p>Prerequisites: Nil</p>
 </li>
 <li>
-<p>Test case: <code>delete 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
+<p>Test case: <code>add event t/CS2103 Lecture d/Practical Exam v/i3 Auditorium s/16 Nov 4pm e/16 Nov 6pm tag/Graded</code><br>
+Expected: New calendar event is added. Details of the new calendar event shown in the status message.</p>
 </li>
 <li>
-<p>Test case: <code>delete 0</code><br>
-Expected: No calendarEvent is deleted. Error details shown in the status message. Status bar remains the same.</p>
+<p>Test case: <code>add event t/CS2103 Lecture d/Sleep v/Home s/16 Nov 4pm e/16 Nov 6pm</code><br>
+Expected: New calendar event is not added as it is a duplicate of the earlier one. Error details shown in the status message.</p>
 </li>
 <li>
-<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
+<p>Other incorrect add event commands to try: <code>add event</code>, <code>add event {without all the required prefixes}</code>
 Expected: Similar to previous.</p>
 </li>
 </ol>
@@ -3100,12 +3099,75 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-calendar-event"><a class="link" href="#deleting-a-calendar-event">H.3. Deleting a calendar event</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting a calendar event while all calendar events are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all calendar events using the <code>list event</code> command. Multiple calendar events in the list.</p>
+</li>
+<li>
+<p>Test case: <code>delete event 1</code><br>
+Expected: First calendar event is deleted from the list. Details of the deleted calendar event shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>delete event 0</code><br>
+Expected: No calendar event is deleted. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Other incorrect delete event commands to try: <code>delete event</code>, <code>delete event x</code> (where x is larger than the list size)
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">H.3. Saving data</a></h3>
+<h3 id="finding-calendar-events"><a class="link" href="#finding-calendar-events">H.4. Finding calendar events</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Search for calendar events in the scheduler</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all calendar events using the <code>list event</code> command. Multiple calendar events in the list.</p>
+</li>
+<li>
+<p>Test case: <code>find event CS2103</code><br>
+Expected: At least 1 calendar event is found (assuming you added the calendar event listed earlier). Number of filtered search results shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>find event CS2103 to/16 Nov 3pm</code><br>
+Expected: The event added earlier would not be shown. Number of filtered search results shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>find event tag/Graded</code><br>
+Expected: The event added earlier would be shown. Number of filtered search results shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>find event</code><br>
+Expected: No change in the list of calendar events. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Other incorrect find event commands to try: <code>find event to/</code> <code>find event from/16 Nov 5pm to/15 Nov 8pm</code>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">H.5. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3125,4 +3187,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:04:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:11:10 UTC</div></div></div></body></html>
