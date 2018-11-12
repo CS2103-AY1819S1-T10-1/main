@@ -27,7 +27,7 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5], https://github.com/JFXtras/jfxtras/tree/9.0/jfxtras-agenda[Agenda]
+* Libraries used: https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5], https://github.com/joestelmach/natty[natty], https://github.com/xdrop/fuzzywuzzy[fuzzywuzzy], https://github.com/JFXtras/jfxtras/tree/9.0/jfxtras-agenda[Agenda]
 * Original source code from https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative at https://github.com/se-edu/
 
 == Licence : link:LICENSE[MIT]

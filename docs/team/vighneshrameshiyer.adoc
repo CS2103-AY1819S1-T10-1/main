@@ -16,46 +16,36 @@ Software Engineering. The user interacts with it using a CLI, and it has a GUI c
 == Summary of contributions
 
 * *Major enhancement*: added *fuzzy search with filters*
-** What it does: Allows the user to search for commands without having to type the exact matching words - e.g. "find event proj" to find a calendar event with "Project" in its name. Also allows the user to filter their search by date and time, and by tags, for more precise searching. Finally, it displays the results in decreasing order of relevance (i.e. the most relevant results first).
-** Justification: This feature improves the product significantly because it allows users to search for events more conveniently and more precisely. This would help to significantly improve the ease of use and navigation for our users.
-** Highlights: This enhancement is extensible - it has the potential to be
-This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** What it does: Allows the user to search for commands without having to type the exact matching words - e.g. "find event proj" to find a calendar event with "Project" in its name. Also allows the user to filter their search by date and time, and by tags, for more precise searching. Finally, it displays the most relevant results first.
+** Justification: This feature improves the product significantly because it allows users to search for events more conveniently and more precisely. This would improve the overall user experience as well as the ease of navigation for users of U-Schedule, since the search function also makes the edit and select functions more convenient.
+** Highlights: This feature expands upon the existing find command in Address Book (Level 4), by revamping the Parser and Model to allow extra functionality (filtering by multiple Predicates and Sorting). This feature has the potential to be extended further, to allow users to filter the search by even more criteria or to incorporate more fine-grained filtering with boolean logic.
 ** Credits: Uses third party library https://github.com/xdrop/fuzzywuzzy[fuzzywuzzy] for the fuzzy search
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+* *Minor enhancement*: added feature that switches the GUI to the appropriate tab - either To Do List or Calendar Events - when a todo or event command is entered respectively
 
 * https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=vig42[Code Contributed]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Set up Travis and AppVeyor CI, Coveralls and Netlify for our team repo (Pull requests: https://github.com/CS2103-AY1819S1-T10-1/main/pull/5[#5], https://github.com/CS2103-AY1819S1-T10-1/main/pull/49[#49])
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Modified classes in the original AddressBook app to help transform it into our U-Schedule app. e.g. renaming AddressBook to Scheduler, modifying CalendarEvent and the various parsers to accept and store events' start and end date/time (Pull Requests: https://github.com/CS2103-AY1819S1-T10-1/main/pull/11[#11], https://github.com/CS2103-AY1819S1-T10-1/main/pull/39[#39])
+*** Updated the GUI color scheme (Pull request https://github.com/CS2103-AY1819S1-T10-1/main/pull/111[#111])
+*** Wrote additional tests and test cases for existing features, increasing coverage to 91% (Pull request https://github.com/CS2103-AY1819S1-T10-1/main/pull/131[#131])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Modified the Developer Guide (Architecture, Logic, Model and Storage sections), including the class and sequence diagrams, to reflect the modifications we made to the original AddressBook (Level 4) (Pull Requests: https://github.com/CS2103-AY1819S1-T10-1/main/pull/119[#119], https://github.com/CS2103-AY1819S1-T10-1/main/pull/122/files[#122])
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S1-T10-1/main/pull/17[#17], https://github.com/CS2103-AY1819S1-T10-1/main/pull/60[#60], https://github.com/CS2103-AY1819S1-T10-1/main/pull/67[#67], https://github.com/CS2103-AY1819S1-T10-1/main/pull/78[#78]
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103-AY1819S1-F11-4/main/issues/170[1], https://github.com/CS2103-AY1819S1-F11-4/main/issues/192[2])
 
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=find]
 
 == Contributions to the Developer Guide
 
@@ -63,6 +53,4 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
+include::../DeveloperGuide.adoc[tag=fuzzysearch]

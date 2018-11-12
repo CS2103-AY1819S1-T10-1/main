@@ -60,6 +60,8 @@ include::../UserGuide.adoc[tag=select]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+include::../DeveloperGuide.adoc[tag=CalendarModel]
+
 include::../DeveloperGuide.adoc[tag=parsing]
 
-include::../DeveloperGuide.adoc[tag=CalendarModel]
+

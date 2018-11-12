@@ -421,61 +421,76 @@ Aspect: How to implement ToDoList UI
 ** Cons: Need to consruct a lot parts in GUI.
 // end::ToDoList[]
 
-// tag::FuzzySearch[]
-=== Fuzzy Search and Filter by Tags for Find Event Command
+// tag::fuzzysearch[]
+=== Fuzzy Search and Filter by Date/Time and Tags
 ==== Current Implementation
 
-===== Model
-The Fuzzy Search enhancement for the `find event` command is achieved using the `fuzzywuzzy` API. The existing
-`TitleContainsKeywordsPredicate` was modified such that the `test` method checks if the `keyword` matches the `Title`
-of the `CalendarEvent` using a fuzzy algorithm based on Levenshtein distance between strings, and assigns an integer
-score to the match. If this score is under the `threshold` of 70, the `Predicate` will filter out the `CalendarEvent`
-from the `ObservableList`.
+===== Overview
+The Fuzzy Search enhancement for the `find event` command is achieved by modifying the `Predicate` used to filter the `FilteredList` already present in the `ModelManager`, by using a fuzzy match algorithm to check the similarity of the event's `Title`, `Description` and `Venue` text with each input keywords, and seeing if it exceeds a given threshold.
 
-The Filter by Tags enhancement is achieved using a second `Predicate`, the `TagsPredicate`. This `Predicate` will `test`
-the `CalendarEvent` by checking if any of its `Tags` matches with any of the user input `tags`. The `Predicate` will
-filter out all events that do not contain any of the specified tags.
+The Filter by Date/Time and Tags feature is achieved by allowing the aforementioned `FilteredList` to accept multiple predicates at a time, by taking the logical AND of all the input predicates.
 
-Finally, the `FilteredList` is wrapped in a `SortedList`, and sorted based on `FuzzySearchComparator`. This comparator
-uses the aforementioned fuzzy match score, and sorts the `CalendarEvents` in descending order of match score.
+The feature to show the most relevant search results first is achieved by sorting the `FilteredList`, by wrapping it with a `SortedList`, and changing the `Comparator` used based on the input command.
+
+The `FindEventCommandParser` and the `ArgumentTokenizer` were modified to accept commands that may or may not have keywords (i.e. preamble), and handle having varying numbers of prefixes in each command.
+
+Finally, the GUI `CalendarPanel` was modified to access the new `SortedList` instead of the `FilteredList` so as to display the most relevant results first.
+
+===== Model - Predicates, Comparators and SortedList
+To allow for fuzzy matching, the `fuzzywuzzy` API was used. This allows us to compare strings using using a fuzzy algorithm based on Levenshtein distance between the strings. It assigns an integer match score from 0-100 for each pair of strings. If this score was above the threshold of 70, the retooled `FuzzySearchFilterPredicate` would allow it to be seen. This score was also used to compare events in our `FuzzySearchComparator`.
+
+To implement the extra filters in conjunction with the fuzzy search, the `UpdateFilteredCalendarEventList` method was modified to allow for variable number (at least 1) of input `Predicate<CalendarEvent>` arguments. The method would then combine the input `Predicates` into a single `Predicate` by taking their logical AND. The combined `Predicate` would then be used to filter the `FilteredList`.
+
+To allow users to filter by date/time, a new predicate, `DateTimePredicate` was created with 2 `DateTime` objects to set the `dateFrom` and `dateTo` for the filter. The `DateTime` objects were allowed to be null - this allowed for only 1 `DateTime` (either from or to) to be specified, so as to reduce the restrictions on users. If both `DateTime` objects were null, it would always return true - allowing it to be AND-ed with the other `Predicates` by the `ModelManager` without interfering with the filters.
+
+To allow users to filter by tags, a new predicate, `TagsPredicate` was created. This stored a `Set` of input tag `Strings`, and if all of them had a full (but case-insensitive) match with at least one of the event's `Tags`, then the event would be shown. The `Set` is allowed to be empty - similar to the implementation of the `DatePredicate`, this case would always return true.
+
+The existing `ModelManager` attributes and methods were insufficient to show the most relevant search results first, as this would require sorting. As a result, we created a new `FuzzySearchComparator` to sort the `CalendarEvents` based on the aforementioned fuzzy match score, in descending order. In order to let users see this, we created a new `SortedList` to the `ModelManager`, to sort the existing `FilteredList` based on the `FuzzySearchComparator`.
+
+===== Logic - ArgumentTokenizer and Parser
+The new `FindEventCommand` required modifications to the parser to allow for commands with varying levels of inputs - it could have preamble and prefixes, only preamble with no prefixes or no preamble and only prefixes. In the latter case, we noticed that the `ArgumentTokenizer` would end up capturing the initial prefix as the "preamble". In order to correctly detect the absence of a preamble, the `ArgumentTokenizer` was modified, so as to correctly detect the absence of a preamble (i.e. when a prefix is at index 0 of the input), and accordingly not add the 'preamble' (actually the first prefix) to the `ArgumentMultimap`.
+
+After modifying the `ArgumentTokenizer`, the `FindEventCommandParser` also needed to be modified to generate the correct `FindEventCommand` from the inputs. As mentioned earlier, for each of the `Predicates` and `Comparators`, we implemented a 'default case', when the `Predicate` always returned true and the `Comparator` always returned zero - e.g. when both the `DateTime` for the `DatePredicate` are null, or when the `List` of keywords for the `FuzzySearchFilterPredicate` and `FuzzySearchComparator` are empty.
+
+This allowed us to deal with the cases where some of the inputs were missing. If the user did not enter any `tag/` prefix, then the `FindEventCommand` created by the `FindEventCommandParser` will have a `TagPredicate` containing an empty `Set` of tag strings.
+
+===== GUI
+In order for the new search features to be visible to the user, the `getFilteredAndSortedCalendarEventList` method was modified to allow the GUI `CalendarPanel` to access the `SortedList` rather than the `FilteredList` when initializing its `ListView`.
+
+====== Tabbed Interface
+Since the left panel would be shared between the `TaskListPanel` and the `CalendarPanel`, we realised that sometimes the panel would be showing the wrong list when a command is entered. Hence, after updating the `FilteredList` and `SortedList`, we made the `execute` method of the `FindEventCommand` post a `SwitchToSearchTabEvent` to the `EventsCenter`. The `MainWindow` handles the `SwitchToSearchTabEvent` and switches to the Calendar Events tab, so that the user can see the search results.
 
 
-==== GUI
+==== Design Considerations
 
-===== Tabbed Interface
-Since the existing `ObservableList` of `CalendarEvents` was not used in the GUI, we needed to figure out an alternative
-way to display the results for the `find event` command. We achieved this by incorporating a tabbed interface where the
-`TaskList` and the `CalendarEvent` list for the search results were shown in separate tabs.
+===== Aspect: How Predicates are Managed and Applied to the FilteredList
+* **Alternative 1 (current choice):** Use a simple rule (AND) to combine all the `Predicates` into a single one, then apply them to the `FilteredList` as normal.
+** Pros: Easy to implement, since it mostly leverages existing functionality (only need to modify 1 method). As such it is also less likely to lead to regression errors.
+** Cons: Only capable of limited functionality
+* **Alternative 2:** Use a separate class to store and manage the `Predicates`, combine them in the desired fashion and apply the resulting `Predicate` to the `FilteredList`.
+** Pros: Will be capable of combining multiple `Predicates` in various different ways, allowing for more complex boolean expressions (see the next section for possible implementations)
+** Cons: More difficult to implement, since it would add an extra layer of integration between the new class and the ModelManager. Would also need to ensure that the list of predicates is appropriately reset when each new command is entered.
 
-To aid our target user, who mainly uses CLI, we incorporated functionality to automatically switch to the most relevant
-tab based on the command input by the user. When the user inputs a todo list command, a `SwitchToTasksTabEvent` is
-posted to the `EventsCenter`; while when the user inputs a `find event` or `list event` command, a
-`SwitchToSearchTabEvent` is posted.
+===== Aspect: How Best to Show the User the Most Relevant Search Result
+* **Alternative 1 (current choice):** Sort the `FilteredList` of `CalendarEvents` in descending order of fuzzy match score
+** Pros: More reliable, has high chance of achieving the desired goal
+** Cons: Slower (since it needs to sort), more complicated to implement
+* **Alternative 2:** Apply a more aggressive filter (with higher threshold for acceptance) to hide less relevant results
+** Pros: Faster than sorting
+** Cons: Can be difficult to calibrate the filters properly to achieve the desired result. May end up being too aggressive, and could remove correct/desired results in some scenarios.
 
-The `MainWindow` handles the `SwitchToTasksTabEvent` and `SwitchToSearchTabEvent` - it switches to the appropriate tab
-when it receives either `Event`.
+==== Further Extensions
 
-===== Updating FilteredList/SortedList
-In the original implementation, the main list of `CalendarEvent` that is shown on the GUI is implemented using a single,
-final `FilteredList` and changing the `Predicate` as needed. The `FilteredList` itself does not change unless the
-underlying `List` of `CalendarEvent` is changed (in which case the entire `Model` is reinitialised).
+===== Additional Filters
+The `FindEventCommand` could be enhanced by including more `Predicates` to further filter the events based on other properties. For instance, we could allow users to specifically filter based on whether `Venue` or `Description` matched an input keyword, e.g. `find event v/COM2` or `find event d/Wear formal clothes`.
 
-However, in our current implementation, we only need to display the list of `CalendarEvent` when we show the results for
-the `find event` or `list event` commands. Furthermore, since we use multiple `Predicates` as well as a `Comparator`,
-the original implementation is not usable.
+===== Custom Filters using Boolean Logic
+The `FindEventCommand` could be modified to allow users to specify custom filters using boolean logic, e.g. a possible command could be `find event t/exam && v/MPSH5` or `find event t/lecture || d/lecture`. This would allow users to perform much more fine-grained searches. It is likely to appeal to our users, since they are more tech-savvy university students who are comfortable with CLI, and thus are probably somewhat familiar with boolean logic.
 
-Hence, we modified the `ModelManager` by allowing the `FilteredList` to be changed as need be. Hence whenever an
-additional `Predicate` needs to be added, we would wrap the original `FilteredList` with a new `FilteredList` using the
-new `Predicate`. Similarly, when we needed to sort based on a `Comparator`, we would wrap the `FilteredList` with a new
-`SortedList` using the required `Comparator` using the current `FilteredList` as a base.
+In order to implement this feature, we could create a new class specifically to take in the list of input `Predicates` as well as the specific rules by which to apply the AND/OR, and then to generate the appropriate predicate based on those instructions. This could then be fed to the `ModelManager` to update the `FilteredList`.
+// end::fuzzysearch[]
 
-Since this update would only occur during `find event` or `list event` commands, we modified the handling of the
-`SwitchToSearchTabEvent` by the `MainWindow` to also trigger the GUI to reload the `ObservableList`/`FilteredList`
-backing the search result panel.
-
-// end::FuzzySearch[]
-
-// tag:CalendarModel[]
+// tag::CalendarModel[]
 === Calendar Model
 ==== Implementation
 
@@ -667,7 +682,7 @@ containing the target date.
 display the specified date and time.
 // end::calendardisplay[]
 
-// tag::parsing
+// tag::parsing[]
 === SchedulerParser
 
 ==== Current Implementation
@@ -685,8 +700,7 @@ identified by two words. Some commands such as `help` and `exit` are not specifi
 
 One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
 .g. `add-event`. However this is assumed to be less natural to the end user.
-
-// end::parsing
+// end::parsing[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -771,12 +785,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
 
 === Logging
 
@@ -1401,21 +1409,81 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and venue is retained.
 
-_{ more test cases ... }_
+=== Adding a calendar event
 
-=== Deleting a calendarEvent
+. Adding a new calendar event to the scheduler
 
-. Deleting a calendarEvent while all calendarEvents are listed
-
-.. Prerequisites: List all calendarEvents using the `list` command. Multiple calendarEvents in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No calendarEvent is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: Nil
+.. Test case: `add event t/CS2103 Lecture d/Practical Exam v/i3 Auditorium s/16 Nov 4pm e/16 Nov 6pm tag/Graded` +
+   Expected: New calendar event is added. Details of the new calendar event shown in the status message.
+.. Test case: `add event t/CS2103 Lecture d/Sleep v/Home s/16 Nov 4pm e/16 Nov 6pm` +
+   Expected: New calendar event is not added as it is a duplicate of the earlier one. Error details shown in the status message.
+.. Other incorrect add event commands to try: `add event`, `add event {without all the required prefixes}`
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Deleting a calendar event
+
+. Deleting a calendar event while all calendar events are listed
+
+.. Prerequisites: List all calendar events using the `list event` command. Multiple calendar events in the list.
+.. Test case: `delete event 1` +
+   Expected: First calendar event is deleted from the list. Details of the deleted calendar event shown in the status message.
+.. Test case: `delete event 0` +
+   Expected: No calendar event is deleted. Error details shown in the status message.
+.. Other incorrect delete event commands to try: `delete event`, `delete event x` (where x is larger than the list size)
+   Expected: Similar to previous.
+
+=== Finding calendar events
+
+. Search for calendar events in the scheduler
+
+.. Prerequisites: List all calendar events using the `list event` command. Multiple calendar events in the list.
+.. Test case: `find event CS2103` +
+   Expected: At least 1 calendar event is found (assuming you added the calendar event listed earlier). Number of filtered search results shown in the status message.
+.. Test case: `find event CS2103 to/16 Nov 3pm` +
+   Expected: The event added earlier would not be shown. Number of filtered search results shown in the status message.
+.. Test case: `find event tag/Graded` +
+   Expected: The event added earlier would be shown. Number of filtered search results shown in the status message.
+.. Test case: `find event` +
+   Expected: No change in the list of calendar events. Error details shown in the status message.
+.. Other incorrect find event commands to try: `find event to/` `find event from/16 Nov 5pm to/15 Nov 8pm`
+   Expected: Similar to previous.
+
+=== Adding a todolist event
+
+. Adding a new todolist event to the todolist
+
+.. Prerequisites: Nil
+.. Test case: `add todo t/CS2103 assignment d/Practical Exam p/M` +
+   Expected: New todolist event is added. Details of the new todolist event shown in the status message.
+.. Test case: `add todo t/CS2103 assignment d/Practical Exam p/M` +
+   Expected: New todolist event is not added as it is a duplicate of the earlier one. Error details shown in the status message.
+.. Other incorrect add todo commands to try: `add todo`, `add todo {without all the required prefixes}`
+   Expected: Similar to previous.
+
+=== Deleting a todolist event
+
+. Deleting a todolist event while all todolist events are listed
+
+.. Prerequisites: List all todolist events using the `list todo` command. Multiple todolist events in the list.
+.. Test case: `delete todo 1` +
+   Expected: First todolist event is deleted from the list. Details of the deleted todolist event shown in the status message.
+.. Test case: `delete todo 0` +
+   Expected: No todolist event is deleted. Error details shown in the status message.
+.. Other incorrect delete todo commands to try: `delete todo`, `delete todo x` (where x is larger than the list size)
+   Expected: Similar to previous.
+
+=== Showing description of a todolist event
+
+. Showing description of a todolist event while all todolist events are listed
+
+.. Prerequisites: List all todolist events using the `list todo` command. Multiple todolist events in the list. Success details shown in the status message.
+.. Test case: `show todo 1` +
+   Expected: Description of first todolist event is showed with a popup window.
+.. Test case: `show todo 0` +
+   Expected: No Description of todolist event is showed. Error details shown in the status message.
+.. Other incorrect show todo commands to try: `shows todo`, `show todo x` (where x is larger than the list size)
+   Expected: Similar to previous.
 
 === Saving data
 

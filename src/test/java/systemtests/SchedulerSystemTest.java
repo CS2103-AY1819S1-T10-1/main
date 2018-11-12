@@ -29,7 +29,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCalendarCommand;
 import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.ListEventCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelToDo;
 import seedu.address.model.Scheduler;
@@ -156,7 +156,7 @@ public abstract class SchedulerSystemTest {
      * Selects the calendarevent at {@code index} of the displayed list.
      */
     protected void selectCalendarEvent(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        executeCommand(SelectEventCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getCalendarEventListPanel().getSelectedCardIndex());
     }
 

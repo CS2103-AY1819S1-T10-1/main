@@ -20,7 +20,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.ListToDoCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.ShowDescriptionCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -55,19 +55,19 @@ public class SchedulerParser {
         switch (commandWord) {
 
         case AddEventCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new AddEventCommandParser().parse(arguments);
 
         case EditEventCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new EditEventCommandParser().parse(arguments);
 
         case AddToDoCommand.COMMAND_WORD:
             return new AddToDoCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
+        case SelectEventCommand.COMMAND_WORD:
+            return new SelectEventCommandParser().parse(arguments);
 
         case DeleteEventCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new DeleteEventCommandParser().parse(arguments);
 
         case DeleteToDoCommand.COMMAND_WORD:
             return new DeleteToDoCommandParser().parse(arguments);
@@ -76,7 +76,7 @@ public class SchedulerParser {
             return new ClearCalendarCommand();
 
         case FindEventCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            return new FindEventCommandParser().parse(arguments);
 
         case ShowDescriptionCommand.COMMAND_WORD:
             return new ShowDescriptionCommandParser().parse(arguments);

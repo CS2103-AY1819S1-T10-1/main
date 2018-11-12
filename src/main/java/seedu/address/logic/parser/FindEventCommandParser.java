@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new FindEventCommand object
  */
-public class FindCommandParser implements Parser<FindEventCommand> {
+public class FindEventCommandParser implements Parser<FindEventCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindEventCommand

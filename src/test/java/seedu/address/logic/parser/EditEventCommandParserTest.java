@@ -55,7 +55,7 @@ public class EditEventCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
         String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE);
 
-    private EditCommandParser parser = new EditCommandParser();
+    private EditEventCommandParser parser = new EditEventCommandParser();
 
     @Test
     public void parse_missingParts_failure() {

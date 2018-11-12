@@ -45,7 +45,8 @@ public class CalendarEventUtil {
     /**
      * Returns the part of command string for the given {@code EditCalendarEventDescriptor}'s details.
      */
-    public static String getEditCalendarEventDescriptorDetails(EditEventCommand.EditCalendarEventDescriptor descriptor) {
+    public static String getEditCalendarEventDescriptorDetails(
+            EditEventCommand.EditCalendarEventDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getTitle().ifPresent(name -> sb.append(PREFIX_TITLE).append(name.value).append(" "));
         descriptor.getDescription().ifPresent(phone -> sb.append(PREFIX_DESCRIPTION).append(phone.value).append(" "));

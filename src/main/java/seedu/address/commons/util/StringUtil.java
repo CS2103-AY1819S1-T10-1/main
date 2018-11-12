@@ -72,11 +72,11 @@ public class StringUtil {
     }
 
     /**
-     * Checks if {@code collection} of strings contains {@code string}
+     * Checks if {@code collection} of strings contains {@code string} (ignoring case)
      *
      * @param collection collection to be checked
      * @param string     that is being searched for
-     * @return whether words are similar within the tolerance
+     * @return whether string is present in the collection
      */
     public static boolean containsIgnoreCase(Collection<String> collection, String string) {
         requireNonNull(string);

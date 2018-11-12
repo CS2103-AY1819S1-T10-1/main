@@ -40,6 +40,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`list todo`* : lists all todo items
 * **`add event`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/16 nov 4pm e/16 nov 6pm v/i3 Auditorium tag/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
 * **`add todo`**`t/CS2103 Assignment d/Version Control p/H` : adds a todo item titled `CS2103 Assignment` to the todo list.
+* **`find event cs2103` : shows all events with title, description or venue matching `cs2103`
 * **`delete event`**`3` : deletes the calendar event marked `3`.
 * **`delete todo`**`3` : deletes the todo item marked `3`.
 * **`show todo`**`3` : show the description of todo item marked `3`.
@@ -85,7 +86,7 @@ Format: `add todo t/TITLE d/DESCRIPTION p/{H/M/L}`
 * Since it is difficult to type a rigidly formatted date and time, a natural language date parser will try to parse the input for calendar events.
 * The start and end datetimes can be word descriptions, such as 'the day after tomorrow', or '1 week from now'.
 * If only a time is specified, the application will assume you mean today.
-* The priority can be `H`, `M` or `L` for high, medium or low respectively, in upper case.
+* For todo items, the priority can be `H`, `M` or `L` for high, medium or low respectively, in upper case.
 ****
 
 [TIP]
@@ -93,7 +94,7 @@ A calendar event can have any number of tags. (including 0)
 
 Examples:
 
-* `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture`
+* `add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/16 oct 2pm e/16 oct 4pm v/i3 Auditorium tag/lecture`
 * `add todo t/CS2103 Assignment d/Version Control p/L`
 // end::add[]
 
@@ -127,35 +128,44 @@ Edits the name of the 2nd calendar event to be `CS2103 Project Meetup`.
 // end::edit[]
 
 // tag::find[]
-=== Locating: `find`
+=== Searching for events: `find event`
 
 Finds calendar events whose title, venue or description match any of the given keywords.
-Also optionally filters the search by the specified date & time interval as well as tags. +
-Format: `find event [KEYWORD MORE_KEYWORDS...] [from/DATE & TIME] [to/DATE & TIME] [tag/TAG] [tag/MORE_TAGS]`
+Also optionally filters the search by the specified date & time interval as well as the specified tags. +
+Format: `find event [KEYWORD MORE_KEYWORDS...] [from/DATE & TIME] [to/DATE & TIME] [tag/TAG] [tag/MORE_TAGS]...`
 
 ****
-* Shows all events that match the keywords and obey the filter rules.
-* The most relevant search results are shown at the top.
+* Shows list of events that match the keywords and fulfil the filter rules.
+* The most relevant results are shown at the top.
 * At least one of the optional fields must be provided.
 * Fuzzy Keyword Search
-** The search is case insensitive for both keywords. e.g `lecture` will match `Lecture`
+** The search is *case insensitive* for both keywords. e.g `lecture` will match `Lecture`
 ** The order of the keywords does not matter. e.g. `CS2103 Lecture` will match `Lecture CS2103`
-** The fuzzy search allows for partial matches for keywords. e.g. `2103 lec` will match `CS2103 Lecture`.
+** The fuzzy search allows for *partial matches for keywords*. e.g. `2103 lec` will match `CS2103 Lecture`.
 *** Slight differences and typos will also usually be matched. e.g. `s2130 Lecutre` will match 'CS2103 Lecture'
 * Filter by Date & Time
-** Shows events that occur in the interval from the `from/` date and time, to the `before/` date and time
+** Shows events that occur in the interval from the `from` date & time, to the `to` date & time.
+*** i.e. the event must be ongoing at some point in the time interval starting at the `from` date and ending at the `to` date
+** You can choose to include only one of the 2 (`from` or `to`) date & times
+** Date & time are parsed using natural language parsing, thus they can be input in most human-readable formats, e.g. `16 nov 8am`
+*** Note: sometimes date & time inputs may be parsed in an unexpected manner - see Question 3 in the <<FAQ,FAQ>>
 * Filter by Tags
-** In order for an event to be shown, it must have a tag that is exactly matching (although case-insensitive) with the input tag.
-** If multiple tags are input, the filter will only show the events with ALL the input tags. e.g. `tag/cs2103 tag/lecture` would not match an event without tag `Lecture`, even if it has the tag `CS2103`
+** In order for an event to be shown, it must have a tag that is *exactly matching* (although case-insensitive) with the input tag.
+** If multiple tags are input, the filter will only show the events with ALL the input tags.
 
 ****
 Examples:
 
 * `find event lecture` +
-Returns `CS2103 Lecture` and `Lecture`
+Returns list of events whose title, venue or description matches the keyword `lecture`.
 * `find event cs2103 assignment tag/Project` +
-Returns any event with the tag `Project`, whose title, venue or description matches the keywords `CS2103` or `assignment`.
-* `find event exam from/29 nov 8am to/7 dec 5pm
+Returns list of events matching the keywords `cs2103` and `assignment`, and having the tag `Project`
+* `find event exam from/29 nov 8am to/7 dec 5pm`
+Returns list of events matching the keyword `exam`, that is ongoing at some point between 8am on 29th November and 5pm on 7th December.
+* `find event project tag/CS2103 from/15 nov 10am `
+Returns list of events matching the keyword `project`, having the tag `CS2103`, that is ongoing at some point after 10am on 15th November.
+* `find event tag/cs2103 tag/lecture`
+Returns list of events having both the tags 'CS2103' and 'Lecture' (i.e. events with only the `CS2103` tag but not the `Lecture` tag would be excluded).
 // end::find[]
 
 // tag::delete[]
@@ -166,7 +176,7 @@ Format: `delete {event/todo} INDEX`
 
 ****
 * Deletes the calendar event at the specified `INDEX`.
-* The index refers to the index number shown in the displayed calendar event list.
+* The index refers to the index number shown in the displayed calendar event list / todo list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -184,13 +194,13 @@ Deletes the 1st todo item in the todo list.
 // end::delete[]
 
 // tag::select[]
-=== Selecting: `select`
+=== Selecting event: `select event`
 
 Selects the calendar event identified by the index number used in the displayed list. +
 Format: `select event INDEX`
 
 ****
-* Selects the calendar event and loads the Google search page the calendar event at the specified `INDEX`.
+* Selects the calendar event at the specified index on the list, and jumps to the event in the calendar display..
 * The index refers to the index number shown in the displayed calendar event list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -206,7 +216,7 @@ Selects the 1st calendar event in the results of the `find event` command.
 // end::select[]
 
 // tag::showDes[]
-=== Showing description: `showDescription`
+=== Showing description: `show todo`
 
 Shows description of the specified todo item from the todo list. +
 Format: `show todo INDEX`
@@ -363,13 +373,13 @@ e.g. `add todo t/CS2103 Assignment d/Version Control p/L`
 e.g. `delete event 3`
 * *Edit* : `edit event INDEX [t/TITLE] [d/DESCRIPTION] [s/START_DATETIME] [e/END_DATETIME] [v/VENUE] [tag/TAG]...` +
 e.g. `edit event 1 d/Abstraction v/i3 Auditorium`
-* *Find* : `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]` +
-e.g. `find event CS2103 Lecture`
+* *Find* : `find event [KEYWORD MORE_KEYWORDS...] [from/DATE & TIME] [to/DATE & TIME] [tag/TAG] [tag/MORE_TAGS]` +
+e.g. `find event CS2103 Lecture from/16 Nov 8am tag/PE`
 * *List* : `list {event/todo}`
 * *Help* : `help`
-* *Select* : `select {event/todo} INDEX` +
+* *Select* : `select event INDEX` +
 e.g.`select event 2`
-* *ShowDescription* : `show todo INDEX` +
+* *Show Description* : `show todo INDEX` +
 e.g.`show todo 2`
 * *History* : `history`
 * *Undo* : `undo`

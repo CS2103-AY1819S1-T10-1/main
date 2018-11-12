@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS;
+import static seedu.address.logic.commands.SelectEventCommand.MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_LECTURE;
@@ -14,11 +14,11 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
-public class SelectCommandSystemTest extends SchedulerSystemTest {
+public class SelectEventCommandSystemTest extends SchedulerSystemTest {
 
     @Test
     public void select() {
@@ -27,12 +27,12 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
         /* Case: select the first card in the calendar event list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased() + "   ";
+        String command = "   " + SelectEventCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_ELEMENT);
 
         /* Case: select the last card in the calendar event list -> selected */
         Index calendarEventCount = getLastIndex(getModel());
-        command = SelectCommand.COMMAND_WORD + " " + calendarEventCount.getOneBased();
+        command = SelectEventCommand.COMMAND_WORD + " " + calendarEventCount.getOneBased();
         assertCommandSuccess(command, calendarEventCount);
 
         /* Case: undo previous selection -> rejected */
@@ -47,7 +47,7 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: select the middle card in the calendar event list -> selected */
         Index middleIndex = getMidIndex(getModel());
-        command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
+        command = SelectEventCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
         /* Case: select the current selected card -> selected */
@@ -62,46 +62,46 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
          */
         showCalendarEventsWithTitle(KEYWORD_MATCHING_LECTURE);
         int invalidIndex = getModel().getScheduler().getCalendarEventList().size();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " " + invalidIndex,
             MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 
         /* Case: filtered calendar event list, select index within bounds of scheduler and calendar event list ->
         selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredAndSortedCalendarEventList().size());
-        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
+        command = SelectEventCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
         /* ----------------------------------- Perform invalid select operations ------------------------------------ */
 
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " " + 0,
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " " + -1,
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredAndSortedCalendarEventList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " " + invalidIndex,
             MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " abc",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " 1 abc",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectEventCommand.MESSAGE_USAGE));
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt eVeNt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty address book -> rejected */
         deleteAllCalendarEvents();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased(),
+        assertCommandFailure(SelectEventCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased(),
             MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
     }
 

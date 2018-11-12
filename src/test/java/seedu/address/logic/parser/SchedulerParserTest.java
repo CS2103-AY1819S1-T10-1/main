@@ -28,7 +28,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.ShowDescriptionCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -39,8 +39,8 @@ import seedu.address.model.calendarevent.FuzzySearchFilterPredicate;
 import seedu.address.model.calendarevent.TagsPredicate;
 import seedu.address.model.todolist.ToDoListEvent;
 import seedu.address.testutil.CalendarEventBuilder;
-import seedu.address.testutil.EditCalendarEventDescriptorBuilder;
 import seedu.address.testutil.CalendarEventUtil;
+import seedu.address.testutil.EditCalendarEventDescriptorBuilder;
 import seedu.address.testutil.ToDoListEventBuilder;
 import seedu.address.testutil.ToDoListEventUtil;
 
@@ -59,7 +59,8 @@ public class SchedulerParserTest {
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCalendarCommand.COMMAND_WORD) instanceof ClearCalendarCommand);
-        assertTrue(parser.parseCommand(ClearCalendarCommand.COMMAND_WORD + " 3") instanceof ClearCalendarCommand);
+        assertTrue(parser.parseCommand(ClearCalendarCommand.COMMAND_WORD + " 3")
+                instanceof ClearCalendarCommand);
     }
 
     @Test
@@ -74,7 +75,8 @@ public class SchedulerParserTest {
         CalendarEvent calendarEvent = new CalendarEventBuilder().build();
         EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder(calendarEvent).build();
         EditEventCommand command = (EditEventCommand) parser.parseCommand(EditEventCommand.COMMAND_WORD + " "
-            + INDEX_FIRST_ELEMENT.getOneBased() + " " + CalendarEventUtil.getEditCalendarEventDescriptorDetails(descriptor));
+            + INDEX_FIRST_ELEMENT.getOneBased()
+            + " " + CalendarEventUtil.getEditCalendarEventDescriptorDetails(descriptor));
         assertEquals(new EditEventCommand(INDEX_FIRST_ELEMENT, descriptor), command);
     }
 
@@ -121,9 +123,9 @@ public class SchedulerParserTest {
 
     @Test
     public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-            SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_ELEMENT), command);
+        SelectEventCommand command = (SelectEventCommand) parser.parseCommand(
+            SelectEventCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
+        assertEquals(new SelectEventCommand(INDEX_FIRST_ELEMENT), command);
     }
 
     @Test

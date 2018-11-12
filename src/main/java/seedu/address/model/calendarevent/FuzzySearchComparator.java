@@ -12,16 +12,17 @@ public class FuzzySearchComparator implements Comparator<CalendarEvent> {
     private final List<String> keywords;
 
     public FuzzySearchComparator(List<String> keywords) {
+        assert keywords != null;
         this.keywords = keywords;
     }
 
     @Override
     public int compare(CalendarEvent calendarEvent1, CalendarEvent calendarEvent2) {
-        if (!hasKeywords()) {
+        if (!hasKeywords()) { // If no keywords are present, then it does not sort
             return 0;
         }
         int compareScore = Integer.compare(maxFuzzyMatchScore(calendarEvent2), maxFuzzyMatchScore(calendarEvent1));
-        if (compareScore == 0) {
+        if (compareScore == 0) { // If scores are equal, sort in chronological order
             return calendarEvent1.getStart().compareTo(calendarEvent2.getStart());
         } else {
             return compareScore;

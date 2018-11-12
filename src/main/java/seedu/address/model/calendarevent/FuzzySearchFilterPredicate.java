@@ -14,13 +14,14 @@ public class FuzzySearchFilterPredicate implements Predicate<CalendarEvent> {
     private final List<String> keywords;
 
     public FuzzySearchFilterPredicate(List<String> keywords) {
+        assert keywords != null;
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(CalendarEvent calendarEvent) {
-        return !hasKeywords()
-                || keywords.stream()
+        return !hasKeywords() // If no keywords are present, then always accepts
+                || keywords.stream() // Accept if event title, venue or description match any of the keywords
                 .anyMatch(keyword -> StringUtil.containsWordFuzzy(calendarEvent.getTitle().value, keyword, tolerance)
                                 || StringUtil.containsWordFuzzy(calendarEvent.getDescription(), keyword, tolerance)
                                 || StringUtil.containsWordFuzzy(calendarEvent.getVenue().value, keyword, tolerance));

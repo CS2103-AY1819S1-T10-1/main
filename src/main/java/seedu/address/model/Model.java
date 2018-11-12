@@ -11,12 +11,6 @@ import seedu.address.model.calendarevent.CalendarEvent;
  */
 public interface Model {
     /**
-     * {@code Predicate} that always evaluate to true
-     */
-    Predicate<CalendarEvent> PREDICATE_SHOW_ALL_CALENDAR_EVENTS = unused -> true;
-    Comparator<CalendarEvent> COMPARATOR_DEFAULT_SORT_CALENDAR_EVENTS = (var1, var2) -> 0;
-
-    /**
      * Clears existing backing model and replaces with the provided new data.
      */
     void resetData(ReadOnlyScheduler newData);

@@ -12,11 +12,13 @@ public class TagsPredicate implements Predicate<CalendarEvent> {
     private final Set<String> tags;
 
     public TagsPredicate(Set<String> tags) {
+        assert tags != null;
         this.tags = tags;
     }
 
     @Override
     public boolean test(CalendarEvent calendarEvent) {
+        // Always accepts if tag list is empty, otherwise accepts only if all tags have a (case-insensitive) full match
         return !hasTags()
                 || tags.stream().allMatch(tag -> StringUtil.containsIgnoreCase(calendarEvent.getTagStrings(), tag));
     }

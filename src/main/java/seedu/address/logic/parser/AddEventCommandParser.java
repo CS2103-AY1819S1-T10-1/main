@@ -24,7 +24,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */
-public class AddCommandParser implements Parser<AddEventCommand> {
+public class AddEventCommandParser implements Parser<AddEventCommand> {
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

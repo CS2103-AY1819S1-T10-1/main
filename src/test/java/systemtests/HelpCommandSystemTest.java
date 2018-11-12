@@ -13,7 +13,7 @@ import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.
@@ -37,7 +37,7 @@ public class HelpCommandSystemTest extends SchedulerSystemTest {
         getMainWindowHandle().focus();
 
         // assert that while the help window is open the UI updates correctly for a command execution
-        executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
+        executeCommand(SelectEventCommand.COMMAND_WORD + " " + INDEX_FIRST_ELEMENT.getOneBased());
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());

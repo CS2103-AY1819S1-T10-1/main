@@ -20,7 +20,7 @@ import seedu.address.model.tag.Tag;
 
 public class FindEventCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private FindEventCommandParser parser = new FindEventCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {

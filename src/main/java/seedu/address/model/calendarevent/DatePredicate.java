@@ -19,12 +19,12 @@ public class DatePredicate implements Predicate<CalendarEvent> {
 
     @Override
     public boolean test(CalendarEvent calendarEvent) {
-        return (!hasDateTo() && !hasDateFrom())
-                || (hasDateTo() && hasDateFrom()
-                    && !calendarEvent.getStart().isAfter(dateTo)
+        return (!hasDateTo() && !hasDateFrom()) // If both dates are null, always accepts
+                || (hasDateTo() && hasDateFrom() // If both dates are present, then only accept if start date is not
+                    && !calendarEvent.getStart().isAfter(dateTo) // after 'from' and end date is not before 'to'
                     && !calendarEvent.getEnd().isBefore(dateFrom))
-                || (!hasDateFrom() && !calendarEvent.getStart().isAfter(dateTo))
-                || (!hasDateTo() && !calendarEvent.getEnd().isBefore(dateFrom));
+                || (!hasDateFrom() && !calendarEvent.getStart().isAfter(dateTo)) // If only 1 date is present, apply
+                || (!hasDateTo() && !calendarEvent.getEnd().isBefore(dateFrom)); // 1-sided variant of above
     }
 
     /**

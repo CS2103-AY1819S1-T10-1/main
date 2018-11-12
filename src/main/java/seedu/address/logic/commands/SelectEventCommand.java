@@ -18,7 +18,7 @@ import seedu.address.model.calendarevent.CalendarEvent;
 /**
  * Selects a calendar event identified using its displayed index from the calendar event list in the scheduler.
  */
-public class SelectCommand extends Command {
+public class SelectEventCommand extends Command {
 
     public static final String COMMAND_WORD = "select event";
 
@@ -31,7 +31,7 @@ public class SelectCommand extends Command {
 
     private final Index targetIndex;
 
-    public SelectCommand(Index targetIndex) {
+    public SelectEventCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -58,7 +58,7 @@ public class SelectCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-            || (other instanceof SelectCommand // instanceof handles nulls
-            && targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+            || (other instanceof SelectEventCommand // instanceof handles nulls
+            && targetIndex.equals(((SelectEventCommand) other).targetIndex)); // state check
     }
 }

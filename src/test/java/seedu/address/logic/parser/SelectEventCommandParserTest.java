@@ -7,24 +7,25 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 
 /**
  * Test scope: similar to {@code DeleteEventCommandParserTest}.
  *
  * @see DeleteEventCommandParserTest
  */
-public class SelectCommandParserTest {
+public class SelectEventCommandParserTest {
 
-    private SelectCommandParser parser = new SelectCommandParser();
+    private SelectEventCommandParser parser = new SelectEventCommandParser();
 
     @Test
     public void parse_validArgs_returnsSelectCommand() {
-        assertParseSuccess(parser, "1", new SelectCommand(INDEX_FIRST_ELEMENT));
+        assertParseSuccess(parser, "1", new SelectEventCommand(INDEX_FIRST_ELEMENT));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            SelectEventCommand.MESSAGE_USAGE));
     }
 }

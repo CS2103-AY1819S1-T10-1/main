@@ -45,7 +45,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
 
 public class AddEventCommandParserTest {
-    private AddCommandParser parser = new AddCommandParser();
+    private AddEventCommandParser parser = new AddEventCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
