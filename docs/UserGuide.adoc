@@ -287,7 +287,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the calendar. +
-Format: `clear`
+Format: `clear calendar`
 
 
 // tag::interact[]
