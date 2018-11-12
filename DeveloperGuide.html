@@ -33,12 +33,13 @@
 <li><a href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></li>
 <li><a href="#calendar-model">3.3. Calendar Model</a></li>
 <li><a href="#calendar-display">3.4. Calendar Display</a></li>
-<li><a href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></li>
-<li><a href="#schedulerparser">3.6. SchedulerParser</a></li>
-<li><a href="#undo-redo-feature">3.7. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.9. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
+<li><a href="#calendar-display-navigation">3.5. Calendar Display Navigation</a></li>
+<li><a href="#further-extensions">3.6. Further Extensions</a></li>
+<li><a href="#schedulerparser">3.7. SchedulerParser</a></li>
+<li><a href="#undo-redo-feature">3.8. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.10. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.11. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -487,23 +488,6 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The CalendarDisplay Component uses <code>jfxtras.Agenda</code> to render the calendar events as a time table. The CalendarDisplay
-acts as a wrapper around the <code>jfxtras.Agenda</code>. CalendarDisplay</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Listens for changes in the list of calendar events in <code>Model</code> and updates <code>Agenda</code> accordingly.</p>
-</li>
-<li>
-<p>Responds to user selecting Calendar Events and displays it to the user.</p>
-</li>
-<li>
-<p>Extends the UI controls of <code>jfxtras.Agenda</code> by including functionality to navigate the time table display.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="Design-Logic"><a class="link" href="#Design-Logic">2.3. Logic component</a></h3>
@@ -948,7 +932,7 @@ Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <cod
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Can be easilly implement.</p>
+<p>Pros: Can be easily implemented.</p>
 </li>
 <li>
 <p>Cons: Need to extends one more <code>ToDoListStorage</code>.</p>
@@ -1127,30 +1111,87 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="sect2">
 <h3 id="calendar-display"><a class="link" href="#calendar-display">3.4. Calendar Display</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.4.1. Current Implementation</a></h4>
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
+<div class="sect4">
+<h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
 <div class="paragraph">
-<p>The Calendar Display is implemented using the <code>jfxtras.Agenda</code>, a rich Control under <strong>jfxtras</strong>. <code>Agenda</code> accepts the Calendar Events of the user and displays them in the chronological format.</p>
+<p>The Calendar Display is implemented using <code>jfxtras.Agenda</code>.
+<code>jfxtras</code> is a third-party library
+containing more feature-rich UI controls.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="agenda-summary"><a class="link" href="#agenda-summary">Agenda Summary</a></h5>
+<div class="paragraph">
+<p><code>Agenda</code> defines the <code>Agenda.Appointment</code> interface, which must be
+implemented for all events that it displays.
+<code>Agenda</code> also defines <code>Agenda.AppointmentImplLocal</code>,
+which is a bare-bones implementation
+of the <code>Agenda.Appointment</code> interface.</p>
 </div>
 <div class="paragraph">
-<p><code>Agenda</code> provides some default functionality for responding to user interactions with the UI, such as adding, editing and deleting events. These functions have been disabled so as to make <code>Agenda</code> used solely for displaying the user&#8217;s events visually in a time table format. This was done to make the data flow one-directional, and reduce coupling between <code>Agenda</code> and <code>Model</code>.</p>
+<p>The full documentation for <code>Agenda</code> can be found
+<a href="http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html">here</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="integration-with-our-project"><a class="link" href="#integration-with-our-project">Integration with our Project</a></h5>
+<div class="paragraph">
+<p><code>CalendarEvent</code> extends <code>Agenda.AppointmentImplLocal</code>,
+so as to streamline the process
+of displaying CalendarEvents.</p>
 </div>
 <div class="paragraph">
-<p><code>Agenda</code> defines the <code>Agenda.Appointment</code> interface, which must be implemented for all events that it displays. It also comes with <code>Agenda.AppointmentImplLocal</code>, which is a bare-bones implementation of the <code>Agenda.Appointment</code> interface, which is intended to be used when working with <code>java.time.LocalDateTime</code>.</p>
+<p>The <code>CalendarDisplay</code> class acts as a wrapper around <code>Agenda</code>.
+<code>CalendarDisplay</code> will:</p>
 </div>
-<div class="paragraph">
-<p>Due to CalendarEvent sharing many of the required attributes of <code>Agenda.AppointmentImplyLocal</code>, it was natural to have CalendarEvent <strong>extend</strong> <code>Agenda.AppointmentImplLocal</code>, so as to streamline the process of displaying CalendarEvents.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Initialize the <code>Agenda</code> UI with the desired settings.</p>
+</li>
+<li>
+<p>Listen for changes in the list of calendar events in <code>Model</code> and
+update <code>Agenda</code> accordingly.</p>
+</li>
+<li>
+<p>Respond to user selecting Calendar Events and displays it to the user.</p>
+</li>
+<li>
+<p>Extend the in-built UI controls of <code>Agenda</code> by including functionality
+to navigate the calendar.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Unlike a <code>ListView</code>, <code>Agenda</code> does not provide a way to directly set the contents to be displayed. Rather, CalendarDisplay holds a reference to the list of calendar events in model, which it then adds into <code>Agenda</code>. When a change occurs in <code>Model</code> 's data, CalendarDisplay is notified, and pushes the corresponding changes to <code>Agenda</code>.</p>
-</div>
-<div class="paragraph">
-<p>The full documentation for <code>Agenda</code> can be found here: (<a href="http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html" class="bare">http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html</a>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="features"><a class="link" href="#features">3.4.2. Features</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.4.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="updating-the-calendar"><a class="link" href="#updating-the-calendar">Updating the Calendar</a></h5>
 <div class="paragraph">
-<p>The user can:</p>
+<p>Unlike a <code>ListView</code>, <code>Agenda</code> does not provide a way to directly set
+a list of <code>Appointments</code> to be displayed.
+<code>CalendarDisplay</code> takes the list of calendar events to be displayed
+and adds them to <code>Agenda</code>.
+<code>CalendarDisplay</code> then listens for changes in
+changes in the <code>Model</code> and forwards the same changes to <code>Agenda</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="trimming-excess-functionality"><a class="link" href="#trimming-excess-functionality">Trimming Excess Functionality</a></h5>
+<div class="paragraph">
+<p><code>Agenda</code> provides some default functionality for responding to user
+interactions with the UI, such as adding, editing and deleting <code>Appointment</code> s.
+This features could have been implemented by setting the
+appropriate callbacks in <code>Agenda</code>. Changes to the data in <code>Agenda</code>
+could then be updated in <code>Model</code>.
+However, these features would not be very useful for a product that is
+designed to be used with the command line.
+Their implementation would also make the data flow bi-directional, and
+increase coupling between <code>Agenda</code> and <code>Model</code>.
+Therefore, functions have been disabled so as to make <code>Agenda</code>
+solely for displaying the user&#8217;s events as a calendar.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1164,51 +1205,123 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 </div>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="calendar-navigation-feature"><a class="link" href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></h3>
+<h3 id="calendar-display-navigation"><a class="link" href="#calendar-display-navigation">3.5. Calendar Display Navigation</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.5.1. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
-<p>The navigation features included are:</p>
+<p>The navigation features available are:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>View a <code>CalendarEvent</code> in the time table display by selecting the event. The time table display will jump to the correct time period and attempt to centralize the selected event.</p>
+<p>View a <code>CalendarEvent</code> in the calendar display by selecting
+the event. The time table display will jump to the correct time
+period and attempt to centralize the selected event.</p>
 </li>
 <li>
-<p>View the next/previous week or using the <code>left</code> and <code>right</code> arrows keys.</p>
+<p>View the next/previous week or using the <code>left</code> and <code>right</code>
+arrows keys.</p>
 </li>
 <li>
-<p>The user can scroll up and down the 24-hour timeline using <code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
+<p>The user can scroll up and down the 24-hour timeline using
+<code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
 </li>
 </ol>
 </div>
-<div class="sect4">
-<h5 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design considerations</a></h5>
-<div class="paragraph">
-<p>Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
-Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
-Having the calendar jump to display selected events would also be
-would also be sufficient in most cases.</p>
 </div>
-<div class="paragraph">
-<p>However, <code>Agenda</code> 's time table display was implemented using a customized ScrollPane, which could be scrolled using the <code>up</code> and <code>down</code> arrow keys and the scroll wheel. Hence, using the <code>left</code> and <code>right</code> arrow keys for navigation felt very natural and user-friendly.</p>
-</div>
-<div class="paragraph">
-<p>Furthermore, <code>Agenda</code> did not expose any way for the user to navigate the time table display programmatically. So if the user wanted to interact with the UI, the user would still be forced to use either the <code>up</code> and <code>down</code> arrow keys or the scroll wheel to navigate.</p>
-</div>
-<div class="paragraph">
-<p>Therefore, while this feature is not a CLI feature, it was retained as a fast and easy way to navigate around the time table display.</p>
-</div>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.2. Implementation</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Implemented by having <code>CalendarDisplay</code> listen for
+<code>JumpToDateTimeEvent</code>. <code>CalendarDisplay</code> would then
+set <code>Agenda</code> to display the target date and time.</p>
+</li>
+<li>
+<p>Implemented using an <code>EventFilter</code> in <code>CalendarDisplay</code>.
+<code>CalendarDisplay</code> would then
+set <code>Agenda</code> to display the target date and time.</p>
+</li>
+<li>
+<p>In-built into <code>Agenda</code>.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="further-extensions"><a class="link" href="#further-extensions">3.5.2. Further Extensions</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.3. Design considerations</a></h4>
 <div class="sect4">
-<h5 id="jump-to-a-specified-date"><a class="link" href="#jump-to-a-specified-date">Jump to a specified date</a></h5>
+<h5 id="keyboard-navigation"><a class="link" href="#keyboard-navigation">Keyboard Navigation</a></h5>
 <div class="paragraph">
-<p>One other common use case for a calendar is the user wants to check what events he/she has at a particular time. An example scenario would be:</p>
+<p>Initially, the keyboard navigation features
+were implemented for ease of testing <code>CalendarDisplay</code>,
+with the intention to implement
+Command Line Interface commands in the future.
+This would agree with the project direction,
+since this application is intended to be controlled
+using the command line.</p>
+</div>
+<div class="paragraph">
+<p>However, <code>Agenda</code> 's calendar display was implemented
+using a customized ScrollPane, which could be scrolled using the
+up and down arrow keys and the scroll wheel.
+Hence, using the left and right arrow keys for
+navigation felt very natural and user-friendly.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, <code>Agenda</code> did not expose any way for the user
+to scroll the calendar display programmatically.
+So if the user wanted to interact with the UI,
+the user would still be forced to use either the up and down
+arrow keys or the scroll wheel to navigate.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, while this feature is not a CLI feature,
+it was retained as a fast and easy way to navigate around
+the time table display.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="further-extensions"><a class="link" href="#further-extensions">3.6. Further Extensions</a></h3>
+<div class="sect3">
+<h4 id="command-line-navigation"><a class="link" href="#command-line-navigation">3.6.1. Command Line Navigation</a></h4>
+<div class="paragraph">
+<p>To make the command line instructions more complete, it would be
+good if users are able to navigate the calendar display using the
+command line.</p>
+</div>
+<div class="sect4">
+<h5 id="view-next-and-previous-week"><a class="link" href="#view-next-and-previous-week">View Next and Previous Week</a></h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User enters <code>view next</code>.</p>
+</li>
+<li>
+<p>The command is parsed and the correct date is calculated.
+A <code>ChangePeriodCommand</code> containing the target date is created.</p>
+</li>
+<li>
+<p><code>ChangePeriodCommand#execute</code> raises a JumpToDateTimeEvent.</p>
+</li>
+<li>
+<p>The CalendarDisplay responds by setting <code>Agenda</code> to
+display the specified date and time.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="jump-to-a-specified-date"><a class="link" href="#jump-to-a-specified-date">Jump to a Specified Date</a></h5>
+<div class="paragraph">
+<p>One common use case for a calendar is when the
+user wants to check what events he/she has at a particular time.
+An example scenario would be:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1216,44 +1329,25 @@ would also be sufficient in most cases.</p>
 <p>User executes <code>view 20th nov</code>.</p>
 </li>
 <li>
-<p>A JumpToDateTimeEvent is raised.</p>
+<p>The command is parsed, creating a <code>ChangePeriodCommand</code>
+containing the target date.</p>
 </li>
 <li>
-<p>The CalendarDisplay responds by displaying the week containing the specified date and time.</p>
+<p><code>ChangePeriodCommand#execute</code> raises a JumpToDateTimeEvent.</p>
+</li>
+<li>
+<p>The CalendarDisplay responds by setting <code>Agenda</code> to
+display the specified date and time.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="planned-implementation"><a class="link" href="#planned-implementation">3.5.3. Planned Implementation</a></h4>
-<div class="paragraph">
-<p>The navigation mechanism will be facilitated by <code>ModelManager#updateFilteredCalendarEventList</code>.</p>
-</div>
-<div class="paragraph">
-<p>Given below is an example usage scenario and how the navigation mechanism behaves at each step.</p>
-</div>
-<div class="paragraph">
-<p>Step 1. The user is viewing the events for one week.</p>
-</div>
-<div class="paragraph">
-<p>Step 2. The user executes <code>next week</code> to view the events in the following week. The command is parsed by <code>schedulerParser#parseCommand</code>, returning <code>ChangePeriodCommand</code></p>
-</div>
-<div class="paragraph">
-<p>Step 3. <code>ChangePeriodCommand#executes</code> called with <code>EventIsInThisPeriodPredicate</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 4. <code>filteredCalendarEvents</code> is updated.</p>
-</div>
-<div class="paragraph">
-<p>Step 5. <code>CalendarPanel#filteredCalendarEventsListener</code> repopulates the calendar UI.</p>
-</div>
-</div>
 </div>
 <div class="sect2">
-<h3 id="schedulerparser"><a class="link" href="#schedulerparser">3.6. SchedulerParser</a></h3>
+<h3 id="schedulerparser"><a class="link" href="#schedulerparser">3.7. SchedulerParser</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.6.1. Current Implementation</a></h4>
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>Commands are now required for both models <code>CalendarEvent</code> and <code>ToDoListEvent</code>. Hence it is beneficial for the parser to
 support both one and two-worded commands which would specify the action (e.g. <code>add</code>, <code>delete</code>) as well as the model
@@ -1262,7 +1356,7 @@ be returned, for both models.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
 <div class="paragraph">
 <p>The parser should be flexible enough to at least support commands which are identified by one word and those
 identified by two words. Some commands such as <code>help</code> and <code>exit</code> are not specific to a model, while others act on one
@@ -1275,9 +1369,9 @@ identified by two words. Some commands such as <code>help</code> and <code>exit<
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.7. Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.8. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.7.1. Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.8.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by <code>VersionedScheduler</code>.
 It extends <code>Scheduler</code> with an undo/redo history, stored internally as an <code>SchedulerStateList</code> and <code>currentStatePointer</code>.
@@ -1410,7 +1504,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -1480,20 +1574,20 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.10. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.11, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1524,7 +1618,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.11. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -3012,4 +3106,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 12:44:09 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:00:46 UTC</div></div></div></body></html>
