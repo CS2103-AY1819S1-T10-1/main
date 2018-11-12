@@ -84,12 +84,13 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
 <li><a href="#adding-a-calendar-event">H.2. Adding a calendar event</a></li>
-<li><a href="#deleting-a-calendar-event">H.3. Deleting a calendar event</a></li>
-<li><a href="#finding-calendar-events">H.4. Finding calendar events</a></li>
-<li><a href="#adding-a-todolist-event">H.5. Adding a todolist event</a></li>
-<li><a href="#deleting-a-todolist-event">H.6. Deleting a todolist event</a></li>
-<li><a href="#showing-description-of-a-todolist-event">H.7. Showing description of a todolist event</a></li>
-<li><a href="#saving-data">H.8. Saving data</a></li>
+<li><a href="#editing-a-calendar-event">H.3. Editing a calendar event</a></li>
+<li><a href="#deleting-a-calendar-event">H.4. Deleting a calendar event</a></li>
+<li><a href="#finding-calendar-events">H.5. Finding calendar events</a></li>
+<li><a href="#adding-a-todolist-event">H.6. Adding a todolist event</a></li>
+<li><a href="#deleting-a-todolist-event">H.7. Deleting a todolist event</a></li>
+<li><a href="#showing-description-of-a-todolist-event">H.8. Showing description of a todolist event</a></li>
+<li><a href="#saving-data">H.9. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -3153,7 +3154,42 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-calendar-event"><a class="link" href="#deleting-a-calendar-event">H.3. Deleting a calendar event</a></h3>
+<h3 id="editing-a-calendar-event"><a class="link" href="#editing-a-calendar-event">H.3. Editing a calendar event</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editing a calendar event in the scheduler</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: The calendar event to be edited must be present in the displayed calendar event list</p>
+</li>
+<li>
+<p>Test case:<br>
+ <code>add event t/CS2103 Lecture d/Practical Exam v/i3 Auditorium s/16 Nov 4pm e/16 Nov 6pm tag/Graded</code><br>
+ <code>edit event [index] t/CS2105 Lecture</code><br>
+ where <code>[index]</code> is the index of the newly added event listed on the calendar event list<br>
+Expected:
+New calendar event is added. Details of the new calendar event shown in the status message.<br>
+Calendar event&#8217;s title is changed from <code>CS2103 Lecture</code> to <code>CS2105</code> Lecture</p>
+</li>
+<li>
+<p>Test case:<br>
+ <code>add event t/CS2104 Tutorial d/Tutorial 3 v/AS6 04-10 s/16 Nov 2pm e/16 Nov 4pm</code><br>
+ <code>edit event [index] tag/important</code><br>
+  where <code>[index]</code> is the index of the newly added event listed on the calendar event list<br>
+Expected:
+New calendar event is added. Details of the new calendar event shown in the status message.<br>
+Calendar event has a new tag titled <code>important</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-calendar-event"><a class="link" href="#deleting-a-calendar-event">H.4. Deleting a calendar event</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3182,7 +3218,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="finding-calendar-events"><a class="link" href="#finding-calendar-events">H.4. Finding calendar events</a></h3>
+<h3 id="finding-calendar-events"><a class="link" href="#finding-calendar-events">H.5. Finding calendar events</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3219,7 +3255,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-todolist-event"><a class="link" href="#adding-a-todolist-event">H.5. Adding a todolist event</a></h3>
+<h3 id="adding-a-todolist-event"><a class="link" href="#adding-a-todolist-event">H.6. Adding a todolist event</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3248,7 +3284,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-todolist-event"><a class="link" href="#deleting-a-todolist-event">H.6. Deleting a todolist event</a></h3>
+<h3 id="deleting-a-todolist-event"><a class="link" href="#deleting-a-todolist-event">H.7. Deleting a todolist event</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3277,7 +3313,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="showing-description-of-a-todolist-event"><a class="link" href="#showing-description-of-a-todolist-event">H.7. Showing description of a todolist event</a></h3>
+<h3 id="showing-description-of-a-todolist-event"><a class="link" href="#showing-description-of-a-todolist-event">H.8. Showing description of a todolist event</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3306,7 +3342,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">H.8. Saving data</a></h3>
+<h3 id="saving-data"><a class="link" href="#saving-data">H.9. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3326,4 +3362,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:37:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 15:43:53 UTC</div></div></div></body></html>
