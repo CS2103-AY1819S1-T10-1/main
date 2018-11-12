@@ -49,9 +49,9 @@ public class TestUtil {
     }
 
     /**
-     * Returns the calendarevent in the {@code model}'s calendarevent list at {@code index}.
+     * Returns the calendar event in the {@code model}'s calendar event list at {@code index}.
      */
-    public static CalendarEvent getPerson(Model model, Index index) {
+    public static CalendarEvent getCalendarEvent(Model model, Index index) {
         return model.getFilteredAndSortedCalendarEventList().get(index.getZeroBased());
     }
 

@@ -7,7 +7,7 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendarEvents;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCalendarEventCardEquals;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysCalendarEvent;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,7 +45,7 @@ public class CalendarPanelTest extends GuiUnitTest {
             CalendarEvent expectedCalendarEvent = TYPICAL_CALENDAR_EVENTS.get(i);
             CalendarEventCardHandle actualCard = calendarPanelHandle.getPersonCardHandle(i);
 
-            assertCardDisplaysPerson(expectedCalendarEvent, actualCard);
+            assertCardDisplaysCalendarEvent(expectedCalendarEvent, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }

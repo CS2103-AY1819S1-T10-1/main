@@ -57,7 +57,7 @@ public class UniqueToDoEventListTest {
     }
 
     @Test
-    public void add_duplicateEvent_throwsDuplicatePersonException() {
+    public void add_duplicateEvent_throwsDuplicateToDoEventException() {
         uniqueToDoEventList.add(MIDTERM);
         thrown.expect(DuplicateToDoListEventException.class);
         uniqueToDoEventList.add(MIDTERM);

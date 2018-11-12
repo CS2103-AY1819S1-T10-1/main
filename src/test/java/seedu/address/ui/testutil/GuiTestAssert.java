@@ -45,8 +45,8 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedCalendarEvent}.
      */
-    public static void assertCardDisplaysPerson(CalendarEvent expectedCalendarEvent,
-                                                CalendarEventCardHandle actualCard) {
+    public static void assertCardDisplaysCalendarEvent(CalendarEvent expectedCalendarEvent,
+                                                       CalendarEventCardHandle actualCard) {
         assertEquals(expectedCalendarEvent.getTitle().value, actualCard.getTitle());
         assertEquals(expectedCalendarEvent.getDescriptionObject().value, actualCard.getDescription());
         assertEquals(expectedCalendarEvent.getVenue().value, actualCard.getVenue());
@@ -91,7 +91,7 @@ public class GuiTestAssert {
                                                        CalendarEvent... calendarEvents) {
         for (int i = 0; i < calendarEvents.length; i++) {
             calendarPanelHandle.navigateToCard(i);
-            assertCardDisplaysPerson(calendarEvents[i], calendarPanelHandle.getPersonCardHandle(i));
+            assertCardDisplaysCalendarEvent(calendarEvents[i], calendarPanelHandle.getPersonCardHandle(i));
         }
     }
 

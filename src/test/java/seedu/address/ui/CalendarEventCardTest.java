@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysCalendarEvent;
 
 import org.junit.Test;
 
@@ -69,6 +69,6 @@ public class CalendarEventCardTest extends GuiUnitTest {
         assertEquals(Integer.toString(expectedId) + ". ", calendarEventCardHandle.getId());
 
         // verify calendarevent details are displayed correctly
-        assertCardDisplaysPerson(expectedCalendarEvent, calendarEventCardHandle);
+        assertCardDisplaysCalendarEvent(expectedCalendarEvent, calendarEventCardHandle);
     }
 }

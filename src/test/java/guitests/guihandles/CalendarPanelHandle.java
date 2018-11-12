@@ -106,12 +106,12 @@ public class CalendarPanelHandle extends NodeHandle<ListView<CalendarEvent>> {
     public CalendarEventCardHandle getPersonCardHandle(int index) {
         return getAllCardNodes().stream()
             .map(CalendarEventCardHandle::new)
-            .filter(handle -> handle.equals(getPerson(index)))
+            .filter(handle -> handle.equals(getCalendarEvent(index)))
             .findFirst()
             .orElseThrow(IllegalStateException::new);
     }
 
-    private CalendarEvent getPerson(int index) {
+    private CalendarEvent getCalendarEvent(int index) {
         return getRootNode().getItems().get(index);
     }
 

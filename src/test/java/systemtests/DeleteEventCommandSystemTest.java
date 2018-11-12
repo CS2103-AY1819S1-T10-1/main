@@ -6,7 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
+import static seedu.address.testutil.TestUtil.getCalendarEvent;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         Model expectedModel = getModel();
         String command = "     " + DeleteEventCommand.COMMAND_WORD + "      "
             + INDEX_FIRST_ELEMENT.getOneBased() + "       ";
-        CalendarEvent deletedCalendarEvent = removePerson(expectedModel, INDEX_FIRST_ELEMENT);
+        CalendarEvent deletedCalendarEvent = removeCalendarEvent(expectedModel, INDEX_FIRST_ELEMENT);
         String expectedResultMessage = String.format(MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, deletedCalendarEvent);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -49,7 +49,7 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: redo deleting the last calendarevent in the list -> last calendarevent deleted again */
         command = RedoCommand.COMMAND_WORD;
-        removePerson(modelBeforeDeletingLast, lastPersonIndex);
+        removeCalendarEvent(modelBeforeDeletingLast, lastPersonIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
@@ -86,7 +86,7 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectCalendarEvent(selectedIndex);
         command = DeleteEventCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedCalendarEvent = removePerson(expectedModel, selectedIndex);
+        deletedCalendarEvent = removeCalendarEvent(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, deletedCalendarEvent);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
@@ -120,16 +120,16 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
     /**
      * Removes the {@code CalendarEvent} at the specified {@code index} in {@code model}'s address book.
      *
-     * @return the removed calendarevent
+     * @return the removed CalendarEvent
      */
-    private CalendarEvent removePerson(Model model, Index index) {
-        CalendarEvent targetCalendarEvent = getPerson(model, index);
+    private CalendarEvent removeCalendarEvent(Model model, Index index) {
+        CalendarEvent targetCalendarEvent = getCalendarEvent(model, index);
         model.deleteCalendarEvent(targetCalendarEvent);
         return targetCalendarEvent;
     }
 
     /**
-     * Deletes the calendarevent at {@code toDelete} by creating a default {@code DeleteEventCommand} using {@code
+     * Deletes the calendar event at {@code toDelete} by creating a default {@code DeleteEventCommand} using {@code
      * toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      *
@@ -137,7 +137,7 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        CalendarEvent deletedCalendarEvent = removePerson(expectedModel, toDelete);
+        CalendarEvent deletedCalendarEvent = removeCalendarEvent(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS, deletedCalendarEvent);
 
         assertCommandSuccess(
@@ -149,7 +149,6 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
      * Executes {@code command} and in addition,<br>
      * 1. Asserts that the command box displays an empty string.<br>
      * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the browser url and selected card remains unchanged.<br>
      * 4. Asserts that the status bar's sync status changes.<br>
      * 5. Asserts that the command box has the default style class.<br>
      * Verifications 1 and 2 are performed by
@@ -162,8 +161,8 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
-     * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that
+     * selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      *
      * @see DeleteEventCommandSystemTest#assertCommandSuccess(String, Model, String)
      * @see SchedulerSystemTest#assertSelectedCardChanged(Index)
