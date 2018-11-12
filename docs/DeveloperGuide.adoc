@@ -491,6 +491,9 @@ The calendar model adapts the previous address book functionality to allow the `
 `Person` has been refactored to `CalendarEvent`. This class stores the relevant information for each event in the
 calendar, such as the title, description, start and end date/time, venue and tags.
 
+`Title`, `Description` and `Venue` now inherit from a `TextField` parent class, to represent fields in the model that
+store string data.
+
 `DateTime` stores and validates the input start and end date/time of each event in the calendar.
 
 `DateTimeInfo` validates that the start date/time are not after the end date/time.
@@ -594,6 +597,27 @@ Step 4. `filteredCalendarEvents` is updated.
 
 Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
 // end::Navigation[]
+
+// tag::parsing
+=== SchedulerParser
+
+==== Current Implementation
+
+Commands are now required for both models `CalendarEvent` and `ToDoListEvent`. Hence it is beneficial for the parser to
+support both one and two-worded commands which would specify the action (e.g. `add`, `delete`) as well as the model
+it is updating (`event` or `todo`). The parser still retains the responsibility of resolving which `Command` should
+be returned, for both models.
+
+==== Design Considerations
+
+The parser should be flexible enough to at least support commands which are identified by one word and those
+identified by two words. Some commands such as `help` and `exit` are not specific to a model, while others act on one
+ of the two models and are hence appropriately identified by another word.
+
+One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
+.g. `add-event`. However this is assumed to be less natural to the end user.
+
+//end::parsing
 
 // tag::undoredo[]
 === Undo/Redo feature
