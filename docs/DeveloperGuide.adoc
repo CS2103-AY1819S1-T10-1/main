@@ -475,7 +475,7 @@ backing the search result panel.
 
 // end::FuzzySearch[]
 
-// tag:CalendarModel[]
+// tag::CalendarModel[]
 === Calendar Model
 ==== Implementation
 
@@ -669,7 +669,7 @@ containing the target date.
 display the specified date and time.
 // end::calendardisplay[]
 
-// tag::parsing
+// tag::parsing[]
 === SchedulerParser
 
 ==== Current Implementation
@@ -687,29 +687,7 @@ identified by two words. Some commands such as `help` and `exit` are not specifi
 
 One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
 .g. `add-event`. However this is assumed to be less natural to the end user.
-
-// end::parsing
-
-// tag::parsing
-=== SchedulerParser
-
-==== Current Implementation
-
-Commands are now required for both models `CalendarEvent` and `ToDoListEvent`. Hence it is beneficial for the parser to
-support both one and two-worded commands which would specify the action (e.g. `add`, `delete`) as well as the model
-it is updating (`event` or `todo`). The parser still retains the responsibility of resolving which `Command` should
-be returned, for both models.
-
-==== Design Considerations
-
-The parser should be flexible enough to at least support commands which are identified by one word and those
-identified by two words. Some commands such as `help` and `exit` are not specific to a model, while others act on one
- of the two models and are hence appropriately identified by another word.
-
-One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
-.g. `add-event`. However this is assumed to be less natural to the end user.
-
-// end::parsing
+// end::parsing[]
 
 // tag::undoredo[]
 === Undo/Redo feature
