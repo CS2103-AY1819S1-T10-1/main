@@ -46,7 +46,7 @@ import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.CalendarEventUtil;
 
 public class AddEventCommandSystemTest extends SchedulerSystemTest {
 
@@ -90,7 +90,7 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
          */
         toAdd = new CalendarEventBuilder(LECTURE).withStart(VALID_START_DATETIME_TUTORIAL)
             .withEnd(VALID_END_DATETIME_TUTORIAL).build();
-        command = PersonUtil.getAddCommand(toAdd);
+        command = CalendarEventUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -124,11 +124,11 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate calendarevent -> rejected */
-        command = PersonUtil.getAddCommand(GEQ1000_LECTURE);
+        command = CalendarEventUtil.getAddCommand(GEQ1000_LECTURE);
         assertCommandFailure(command, AddEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: add a duplicate calendarevent except with different tags -> rejected */
-        command = PersonUtil.getAddCommand(GEQ1000_LECTURE) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = CalendarEventUtil.getAddCommand(GEQ1000_LECTURE) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: missing name -> rejected */
@@ -157,7 +157,7 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + CalendarEventUtil.getCalendarEventDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
@@ -207,7 +207,7 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
      * @see SchedulerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(CalendarEvent toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+        assertCommandSuccess(CalendarEventUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**

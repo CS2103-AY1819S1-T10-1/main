@@ -17,19 +17,19 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class for CalendarEvent.
  */
-public class PersonUtil {
+public class CalendarEventUtil {
 
     /**
      * Returns an add command string for adding the {@code calendarevent}.
      */
     public static String getAddCommand(CalendarEvent calendarEvent) {
-        return AddEventCommand.COMMAND_WORD + " " + getPersonDetails(calendarEvent);
+        return AddEventCommand.COMMAND_WORD + " " + getCalendarEventDetails(calendarEvent);
     }
 
     /**
      * Returns the part of command string for the given {@code calendarevent}'s details.
      */
-    public static String getPersonDetails(CalendarEvent calendarEvent) {
+    public static String getCalendarEventDetails(CalendarEvent calendarEvent) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_TITLE + calendarEvent.getTitle().value + " ");
         sb.append(PREFIX_DESCRIPTION + calendarEvent.getDescriptionObject().value + " ");
@@ -45,7 +45,7 @@ public class PersonUtil {
     /**
      * Returns the part of command string for the given {@code EditCalendarEventDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(EditEventCommand.EditCalendarEventDescriptor descriptor) {
+    public static String getEditCalendarEventDescriptorDetails(EditEventCommand.EditCalendarEventDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getTitle().ifPresent(name -> sb.append(PREFIX_TITLE).append(name.value).append(" "));
         descriptor.getDescription().ifPresent(phone -> sb.append(PREFIX_DESCRIPTION).append(phone.value).append(" "));

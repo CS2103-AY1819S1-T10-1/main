@@ -49,7 +49,7 @@ import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.CalendarEventUtil;
 
 public class EditEventCommandSystemTest extends SchedulerSystemTest {
 
@@ -196,7 +196,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a calendar event with new values same as another calendar event's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(CS2103_LECTURE));
+        executeCommand(CalendarEventUtil.getAddCommand(CS2103_LECTURE));
         assertTrue(getModel().getScheduler().getCalendarEventList().contains(CS2103_LECTURE));
         index = INDEX_FIRST_ELEMENT;
         assertFalse(getModel().getFilteredAndSortedCalendarEventList().get(index.getZeroBased())
