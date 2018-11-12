@@ -1155,7 +1155,8 @@ of displaying CalendarEvents.</p>
 update <code>Agenda</code> accordingly.</p>
 </li>
 <li>
-<p>Respond to user selecting Calendar Events and displays it to the user.</p>
+<p>Respond to the user selecting calendar events by
+displaying the selected event to the user.</p>
 </li>
 <li>
 <p>Extend the in-built UI controls of <code>Agenda</code> by including functionality
@@ -1172,7 +1173,7 @@ to navigate the calendar.</p>
 <div class="paragraph">
 <p>Unlike a <code>ListView</code>, <code>Agenda</code> does not provide a way to directly set
 a list of <code>Appointments</code> to be displayed.
-<code>CalendarDisplay</code> takes the list of calendar events to be displayed
+Therefore, <code>CalendarDisplay</code> takes the list of calendar events to be displayed
 and adds them to <code>Agenda</code>.
 <code>CalendarDisplay</code> then listens for changes in
 changes in the <code>Model</code> and forwards the same changes to <code>Agenda</code>.</p>
@@ -1190,18 +1191,8 @@ However, these features would not be very useful for a product that is
 designed to be used with the command line.
 Their implementation would also make the data flow bi-directional, and
 increase coupling between <code>Agenda</code> and <code>Model</code>.
-Therefore, functions have been disabled so as to make <code>Agenda</code>
+Therefore, these functions have been disabled so as to make <code>Agenda</code>
 solely for displaying the user&#8217;s events as a calendar.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Double click on displayed events to open a dialog box containing the details of the event.</p>
-</li>
-<li>
-<p>Jump to the time period containing an event by selecting the event in the list of calendar events.</p>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -1217,16 +1208,16 @@ solely for displaying the user&#8217;s events as a calendar.</p>
 <ol class="arabic">
 <li>
 <p>View a <code>CalendarEvent</code> in the calendar display by selecting
-the event. The time table display will jump to the correct time
+the event. The calendar display will jump to the correct time
 period and attempt to centralize the selected event.</p>
 </li>
 <li>
 <p>View the next/previous week or using the <code>left</code> and <code>right</code>
-arrows keys.</p>
+arrow keys.</p>
 </li>
 <li>
 <p>The user can scroll up and down the 24-hour timeline using
-<code>up</code> and <code>down</code> arrow keys, or using the mouse scroll wheel.</p>
+the <code>up</code> and <code>down</code> arrow keys, or by using the mouse scroll wheel.</p>
 </li>
 </ol>
 </div>
@@ -1281,7 +1272,7 @@ arrow keys or the scroll wheel to navigate.</p>
 <div class="paragraph">
 <p>Therefore, while this feature is not a CLI feature,
 it was retained as a fast and easy way to navigate around
-the time table display.</p>
+the calendar display.</p>
 </div>
 </div>
 </div>
@@ -1291,26 +1282,27 @@ the time table display.</p>
 <div class="sect3">
 <h4 id="command-line-navigation"><a class="link" href="#command-line-navigation">3.6.1. Command Line Navigation</a></h4>
 <div class="paragraph">
-<p>To make the command line instructions more complete, it would be
+<p>To make the command line instruction set more complete, it would be
 good if users are able to navigate the calendar display using the
-command line.</p>
+command line as well. Some possible extensions could be:</p>
 </div>
 <div class="sect4">
 <h5 id="view-next-and-previous-week"><a class="link" href="#view-next-and-previous-week">View Next and Previous Week</a></h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User enters <code>view next</code>.</p>
+<p>User executes <code>view next</code>.</p>
 </li>
 <li>
-<p>The command is parsed and the correct date is calculated.
-A <code>ChangePeriodCommand</code> containing the target date is created.</p>
+<p>The command is parsed and the correct date to navigate to
+is calculated. A <code>ChangePeriodCommand</code> containing the
+target date is created.</p>
 </li>
 <li>
 <p><code>ChangePeriodCommand#execute</code> raises a JumpToDateTimeEvent.</p>
 </li>
 <li>
-<p>The CalendarDisplay responds by setting <code>Agenda</code> to
+<p><code>CalendarDisplay</code> responds by setting <code>Agenda</code> to
 display the specified date and time.</p>
 </li>
 </ol>
@@ -1336,7 +1328,7 @@ containing the target date.</p>
 <p><code>ChangePeriodCommand#execute</code> raises a JumpToDateTimeEvent.</p>
 </li>
 <li>
-<p>The CalendarDisplay responds by setting <code>Agenda</code> to
+<p><code>CalendarDisplay</code> responds by setting <code>Agenda</code> to
 display the specified date and time.</p>
 </li>
 </ol>
@@ -3106,4 +3098,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:14:07 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:20:10 UTC</div></div></div></body></html>
