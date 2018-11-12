@@ -13,7 +13,7 @@ import seedu.address.model.calendarevent.CalendarEvent;
  * Contains helper methods to set up {@code Model} for testing.
  */
 public class ModelHelper {
-    private static final Predicate<CalendarEvent> PREDICATE_MATCHING_NO_PERSONS = unused -> false;
+    private static final Predicate<CalendarEvent> PREDICATE_MATCHING_NO_CALENDAR_EVENTS = unused -> false;
 
     /**
      * Updates {@code model}'s filtered list to display only {@code toDisplay}.
@@ -21,7 +21,7 @@ public class ModelHelper {
     public static void setFilteredAndSortedList(Model model, List<CalendarEvent> toDisplay) {
         Optional<Predicate<CalendarEvent>> predicate =
             toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
-        model.updateFilteredCalendarEventList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
+        model.updateFilteredCalendarEventList(predicate.orElse(PREDICATE_MATCHING_NO_CALENDAR_EVENTS));
         model.sortFilteredCalendarEventList(Comparator.comparing(toDisplay::indexOf));
     }
 
