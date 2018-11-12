@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.text.Font?>
 
-<!-- the fxml for gridpane was taken from
+<!-- the fxml for GridPane was taken from
 https://www.callicoder.com/javafx-fxml-form-gui-tutorial/
 as I was unable to get my own implementation to format nicely -->
 <?import javafx.geometry.Insets?>
@@ -63,69 +63,3 @@ as I was unable to get my own implementation to format nicely -->
         </GridPane.margin>
     </Button>
 </GridPane>
-
-<!--<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">-->
-    <!--<GridPane alignment="TOP_CENTER" hgap="5" vgap="5">-->
-        <!--<columnConstraints>-->
-            <!--<ColumnConstraints percentWidth="33">-->
-            <!--</ColumnConstraints>-->
-        <!--</columnConstraints>-->
-        <!--<padding><Insets top="25" right="25" bottom="25" left="25"/></padding>-->
-        <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Title"-->
-               <!--GridPane.columnIndex="0" GridPane.rowIndex="1"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-        <!--<Label fx:id="titleLabel" HBox.hgrow="ALWAYS" text="Some Title"-->
-               <!--GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-
-        <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Description"-->
-               <!--GridPane.columnIndex="0" GridPane.rowIndex="2"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-        <!--<Label fx:id="descriptionLabel" text="Some Description that is gggggggggg"-->
-               <!--maxHeight="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-
-        <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Venue"-->
-               <!--GridPane.columnIndex="0" GridPane.rowIndex="3"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-        <!--<Label fx:id="venueLabel" HBox.hgrow="ALWAYS" text="Some Venue"-->
-               <!--GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="2"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-
-        <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Date and Time"-->
-               <!--GridPane.columnIndex="0" GridPane.rowIndex="4"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-        <!--<Label fx:id="dateTimeLabel" HBox.hgrow="ALWAYS" text="Some Date"-->
-               <!--GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"-->
-               <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-
-        <!--<Button alignment="CENTER" onAction="#onOkButtonClicked" text="OK"-->
-                <!--GridPane.columnIndex="1" GridPane.rowIndex="5"-->
-                <!--GridPane.hgrow="always" GridPane.vgrow="always"/>-->
-    <!--</GridPane>-->
-<!--</AnchorPane>-->
-
-<!--<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx/8">-->
-    <!--<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">-->
-        <!--<Label alignment="CENTER" text="Event Title" minWidth="100"/>-->
-        <!--<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">-->
-            <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Title"/>-->
-            <!--<Label fx:id="titleLabel" HBox.hgrow="ALWAYS" text="Some Title"/>-->
-        <!--</HBox>-->
-        <!--<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">-->
-            <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Description"/>-->
-            <!--<Label fx:id="descriptionLabel" HBox.hgrow="ALWAYS" text="Some Description"/>-->
-        <!--</HBox>-->
-        <!--<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">-->
-            <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Venue"/>-->
-            <!--<Label fx:id="venueLabel" HBox.hgrow="ALWAYS" text="Some Venue"/>-->
-        <!--</HBox>-->
-        <!--<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">-->
-            <!--<Label alignment="CENTER_RIGHT" minWidth="100.0" text="Date and Time"/>-->
-            <!--<Label fx:id="dateTimeLabel" HBox.hgrow="ALWAYS" text="Some Date and Time"/>-->
-        <!--</HBox>-->
-        <!--<HBox alignment="CENTER_RIGHT">-->
-            <!--<Button mnemonicParsing="false" onAction="#onOkButtonClicked" text="OK"/>-->
-        <!--</HBox>-->
-    <!--</VBox>-->
-<!--</AnchorPane>-->
