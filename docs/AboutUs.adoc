@@ -21,7 +21,7 @@ In Charge Of: Main, Commons
 
 === Pang Jia Hao
 image::pangjiahao.png[width="150", align="left"]
-{empty}[https://github.com/pangjiahao] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/pangjiahao] [<<pangjiahao#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Testing, Scheduling and tracking, JavaFX expert +

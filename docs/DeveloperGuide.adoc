@@ -183,13 +183,6 @@ The `UI` component,
 * Binds itself to some data in the `Model`/`ModelToDo` so that the UI can auto-update when data in the `Model`/`ModelToDo` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-The CalendarDisplay Component uses `jfxtras.Agenda` to render the calendar events as a time table. The CalendarDisplay
-acts as a wrapper around the `jfxtras.Agenda`. CalendarDisplay
-
-* Listens for changes in the list of calendar events in `Model` and updates `Agenda` accordingly.
-* Responds to user selecting Calendar Events and displays it to the user.
-* Extends the UI controls of `jfxtras.Agenda` by including functionality to navigate the time table display.
-
 [[Design-Logic]]
 === Logic component
 
@@ -403,7 +396,7 @@ Aspect: How to implement ToDoList Storage
 
 * **Alternative 1 (current choice):** Modify the curernt `Storage` and `StorageManager`.
 
-** Pros: Can be easilly implement.
+** Pros: Can be easily implemented.
 
 ** Cons: Need to extends one more `ToDoListStorage`.
 
@@ -516,87 +509,186 @@ Step 5: Subsequently, `AddCommandParser` calls `DateTimeInfo` to validate that t
 Step 6: Following that, a new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
 // end::CalendarModel[]
 
-// tag::CalendarDisplay[]
+// tag::calendardisplay[]
 === Calendar Display
 
-==== Current Implementation
+==== Implementation
 
-The Calendar Display is implemented using the `jfxtras.Agenda`, a rich Control under *jfxtras*. `Agenda` accepts the Calendar Events of the user and displays them in the chronological format.
+===== Overview
 
-`Agenda` provides some default functionality for responding to user interactions with the UI, such as adding, editing and deleting events. These functions have been disabled so as to make `Agenda` used solely for displaying the user's events visually in a time table format. This was done to make the data flow one-directional, and reduce coupling between `Agenda` and `Model`.
+The Calendar Display is implemented using `jfxtras.Agenda`.
+`jfxtras` is a third-party library
+containing more feature-rich UI controls.
 
-`Agenda` defines the `Agenda.Appointment` interface, which must be implemented for all events that it displays. It also comes with `Agenda.AppointmentImplLocal`, which is a bare-bones implementation of the `Agenda.Appointment` interface, which is intended to be used when working with `java.time.LocalDateTime`.
+===== Agenda Summary
 
-Due to CalendarEvent sharing many of the required attributes of `Agenda.AppointmentImplyLocal`, it was natural to have CalendarEvent *extend* `Agenda.AppointmentImplLocal`, so as to streamline the process of displaying CalendarEvents.
+`Agenda` defines the `Agenda.Appointment` interface, which must be
+implemented for all events that it displays.
+`Agenda` also defines `Agenda.AppointmentImplLocal`,
+which is a bare-bones implementation
+of the `Agenda.Appointment` interface.
 
-Unlike a `ListView`, `Agenda` does not provide a way to directly set the contents to be displayed. Rather, CalendarDisplay holds a reference to the list of calendar events in model, which it then adds into `Agenda`. When a change occurs in `Model` 's data, CalendarDisplay is notified, and pushes the corresponding changes to `Agenda`.
+The full documentation for `Agenda` can be found
+link:http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html[here].
 
-The full documentation for `Agenda` can be found here: (http://jfxtras.org/doc/8.0/jfxtras-agenda/index.html).
+===== Integration with our Project
 
+`CalendarEvent` extends `Agenda.AppointmentImplLocal`,
+so as to streamline the process
+of displaying CalendarEvents.
 
-==== Features
+The `CalendarDisplay` class acts as a wrapper around `Agenda`.
+`CalendarDisplay` will:
 
-The user can:
+* Initialize the `Agenda` UI with the desired settings.
+* Listen for changes in the list of calendar events in `Model` and
+ update `Agenda` accordingly.
+* Respond to user selecting Calendar Events and displays it to the user.
+* Extend the in-built UI controls of `Agenda` by including functionality
+to navigate the calendar.
+
+==== Design Considerations
+
+===== Updating the Calendar
+
+Unlike a `ListView`, `Agenda` does not provide a way to directly set
+a list of `Appointments` to be displayed.
+`CalendarDisplay` takes the list of calendar events to be displayed
+and adds them to `Agenda`.
+`CalendarDisplay` then listens for changes in
+changes in the `Model` and forwards the same changes to `Agenda`.
+
+===== Trimming Excess Functionality
+
+`Agenda` provides some default functionality for responding to user
+interactions with the UI, such as adding, editing and deleting `Appointment` s.
+This features could have been implemented by setting the
+appropriate callbacks in `Agenda`. Changes to the data in `Agenda`
+could then be updated in `Model`.
+However, these features would not be very useful for a product that is
+designed to be used with the command line.
+Their implementation would also make the data flow bi-directional, and
+increase coupling between `Agenda` and `Model`.
+Therefore, functions have been disabled so as to make `Agenda`
+solely for displaying the user's events as a calendar.
 
 1. Double click on displayed events to open a dialog box containing the details of the event.
 
 2. Jump to the time period containing an event by selecting the event in the list of calendar events.
-// end::CalendarDisplay[]
 
-// tag::Navigation[]
-=== Calendar Navigation Feature
+=== Calendar Display Navigation
 
 ==== Current Implementation
 
-The navigation features included are:
+The navigation features available are:
 
-1. View a `CalendarEvent` in the time table display by selecting the event. The time table display will jump to the correct time period and attempt to centralize the selected event.
+1. View a `CalendarEvent` in the calendar display by selecting
+the event. The time table display will jump to the correct time
+period and attempt to centralize the selected event.
 
-2. View the next/previous week or using the `left` and `right` arrows keys.
+2. View the next/previous week or using the `left` and `right`
+arrows keys.
 
-3. The user can scroll up and down the 24-hour timeline using `up` and `down` arrow keys, or using the mouse scroll wheel.
+3. The user can scroll up and down the 24-hour timeline using
+`up` and `down` arrow keys, or using the mouse scroll wheel.
 
-===== Design considerations
+==== Implementation
 
-Initially, the navigation features were implemented for ease of testing CalendarDisplay, with the intention to implement
-Command Line Interface commands in the future. This would agree with the project direction, since this application is intended to be controlled using the command line.
-Having the calendar jump to display selected events would also be
-would also be sufficient in most cases.
+1. Implemented by having `CalendarDisplay` listen for
+`JumpToDateTimeEvent`. `CalendarDisplay` would then
+set `Agenda` to display the target date and time.
 
-However, `Agenda` 's time table display was implemented using a customized ScrollPane, which could be scrolled using the `up` and `down` arrow keys and the scroll wheel. Hence, using the `left` and `right` arrow keys for navigation felt very natural and user-friendly.
+2. Implemented using an `EventFilter` in `CalendarDisplay`.
+`CalendarDisplay` would then
+set `Agenda` to display the target date and time.
 
-Furthermore, `Agenda` did not expose any way for the user to navigate the time table display programmatically. So if the user wanted to interact with the UI, the user would still be forced to use either the `up` and `down` arrow keys or the scroll wheel to navigate.
+3. In-built into `Agenda`.
 
-Therefore, while this feature is not a CLI feature, it was retained as a fast and easy way to navigate around the time table display.
+==== Design considerations
 
-==== Further Extensions
+===== Keyboard Navigation
 
-===== Jump to a specified date
+Initially, the keyboard navigation features
+were implemented for ease of testing `CalendarDisplay`,
+with the intention to implement
+Command Line Interface commands in the future.
+This would agree with the project direction,
+since this application is intended to be controlled
+using the command line.
 
-One other common use case for a calendar is the user wants to check what events he/she has at a particular time. An example scenario would be:
+However, `Agenda` 's calendar display was implemented
+using a customized ScrollPane, which could be scrolled using the
+up and down arrow keys and the scroll wheel.
+Hence, using the left and right arrow keys for
+navigation felt very natural and user-friendly.
+
+Furthermore, `Agenda` did not expose any way for the user
+to scroll the calendar display programmatically.
+So if the user wanted to interact with the UI,
+the user would still be forced to use either the up and down
+arrow keys or the scroll wheel to navigate.
+
+Therefore, while this feature is not a CLI feature,
+it was retained as a fast and easy way to navigate around
+the time table display.
+
+=== Further Extensions
+
+==== Command Line Navigation
+
+To make the command line instructions more complete, it would be
+good if users are able to navigate the calendar display using the
+command line.
+
+===== View Next and Previous Week
+
+1. User enters `view next`.
+
+2. The command is parsed and the correct date is calculated.
+A `ChangePeriodCommand` containing the target date is created.
+
+3. `ChangePeriodCommand#execute` raises a JumpToDateTimeEvent.
+
+4. The CalendarDisplay responds by setting `Agenda` to
+display the specified date and time.
+
+===== Jump to a Specified Date
+
+One common use case for a calendar is when the
+user wants to check what events he/she has at a particular time.
+An example scenario would be:
 
 1. User executes `view 20th nov`.
 
-2. A JumpToDateTimeEvent is raised.
+2. The command is parsed, creating a `ChangePeriodCommand`
+containing the target date.
 
-3. The CalendarDisplay responds by displaying the week containing the specified date and time.
+3. `ChangePeriodCommand#execute` raises a JumpToDateTimeEvent.
 
-==== Planned Implementation
+4. The CalendarDisplay responds by setting `Agenda` to
+display the specified date and time.
+// end::calendardisplay[]
 
-The navigation mechanism will be facilitated by `ModelManager#updateFilteredCalendarEventList`.
+// tag::parsing
+=== SchedulerParser
 
-Given below is an example usage scenario and how the navigation mechanism behaves at each step.
+==== Current Implementation
 
-Step 1. The user is viewing the events for one week.
+Commands are now required for both models `CalendarEvent` and `ToDoListEvent`. Hence it is beneficial for the parser to
+support both one and two-worded commands which would specify the action (e.g. `add`, `delete`) as well as the model
+it is updating (`event` or `todo`). The parser still retains the responsibility of resolving which `Command` should
+be returned, for both models.
 
-Step 2. The user executes `next week` to view the events in the following week. The command is parsed by `schedulerParser#parseCommand`, returning `ChangePeriodCommand`
+==== Design Considerations
 
-Step 3. `ChangePeriodCommand#executes` called with `EventIsInThisPeriodPredicate`.
+The parser should be flexible enough to at least support commands which are identified by one word and those
+identified by two words. Some commands such as `help` and `exit` are not specific to a model, while others act on one
+ of the two models and are hence appropriately identified by another word.
 
-Step 4. `filteredCalendarEvents` is updated.
+One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
+.g. `add-event`. However this is assumed to be less natural to the end user.
 
-Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
-// end::Navigation[]
+// end::parsing
 
 // tag::parsing
 === SchedulerParser

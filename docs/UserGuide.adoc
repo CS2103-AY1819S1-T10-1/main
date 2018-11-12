@@ -289,9 +289,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the calendar. +
 Format: `clear calendar`
 
-
-// tag::interact[]
-=== Interact with the Calendar Display
+// tag::calendar[]
+=== Using the Calendar Display
 
 ==== Manual navigation:
 
@@ -314,15 +313,14 @@ The calendar display must be in focus in order to navigate with the arrow keys.
 
 ==== Automatic Navigation:
 
-When selecting an event, either by `select` command or clicking in the list of calendar events,
-the calendar display will navigate to that event and attempt to centralize it in the display.
+When selecting an event, either by the `select` command or clicking in the list of calendar events,
+the calendar display will navigate to that event and attempt to centralize it in the calendar.
 
 ==== Viewing Event Details
 
 The compact display of the calendar does not allow all the information of the event to be displayed.
 To view full details of an event, double click on it to open a dialog box containing the details of the event.
-
-// end::interact[]
+// end::calendar[]
 
 === Exiting the program : `exit`
 
@@ -340,6 +338,7 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::faq[]
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -350,6 +349,7 @@ _{explain how the user can enable/disable data encryption}_
 
 *Q*: The date time parser is parsing dates unexpectedly! +
 *A*: The Natural Language Parser we used tries its best to parse a datetime out of any input. Hence, there are some inputs which even humans would not consider a valid date, but the parser would still try to find a best fit. Most of the time, if a human can understand the input, the parser will parse the input correctly.
+// end::faq[]
 
 // tag::summary[]
 == Command Summary
