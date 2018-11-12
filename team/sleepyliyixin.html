@@ -10,7 +10,7 @@
 <h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>U-Schedule* is a desktop calendar application for university students written for the project for the module CS2103
+<p><strong>U-Schedule</strong> is a desktop calendar application for university students written for the project for the module CS2103
 Software Engineering. The user interacts with it using a CLI, and it has a GUI created with JavaFX for user feedback.
 It is written in Java, and has about 10 kLoC.</p>
 </div>
@@ -26,22 +26,32 @@ It is written in Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does: It allows users to record the tasks with different priorities that need to be completed and delete if completed. And it can also show description of the task to users.</p>
+<p>What it does: It allows users to record the tasks with different priorities that need to be completed and delete if completed.</p>
 </li>
 <li>
-<p>Justification: This feature improves the product significantly because in addition to those events that occur at specific times, users also need to record tasks that do not have a specific time. These tasks can be assignments, projects or some simple plans that need to be finished. And if users record priorities, they can do tasks according to priority.</p>
+<p>Justification: This feature improves the product significantly because in addition to those events that occur at specific times, users also need to record tasks that do not have a specific time. These tasks can be assignments, projects or some simple plans. And they can do tasks according to priority.</p>
 </li>
 <li>
 <p>Highlights: This enhancement uses a different model from calendar events and it need re-construct logic, storage and ui conponents.</p>
-</li>
-<li>
-<p>Credits: <em>{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}</em></p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Code contributed</strong>: [<a href="https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/" class="bare">https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/</a><mark>=undefined&amp;search=sleepysanjinli] [<a href="https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/" class="bare">https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/</a></mark>=undefined&amp;search=sleepysanjinli] <em>{give links to collated code files}</em></p>
+<p><strong>Minor enhancement</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add a showDescriptionCommand to show description of task with a popup window.</p>
+</li>
+<li>
+<p>Make priorities displyed in different colors.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: * <a href="https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&amp;search=sleepysanjinli" class="bare">https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&amp;search=sleepysanjinli</a> *</p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -52,7 +62,10 @@ It is written in Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Set up some issues. Managing milestones.</p>
+<p>Set up some issues.</p>
+</li>
+<li>
+<p>Managing milestones.</p>
 </li>
 </ul>
 </div>
@@ -72,7 +85,17 @@ It is written in Java, and has about 10 kLoC.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/120" class="bare">https://github.com/CS2103-AY1819S1-T10-1/main/pull/120</a></p>
+<p>Did cosmetic tweaks to existing contents of the User Guide and Developer Guide: <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/120" class="bare">https://github.com/CS2103-AY1819S1-T10-1/main/pull/120</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/130" class="bare">https://github.com/CS2103-AY1819S1-T10-1/main/pull/130</a></p>
 </li>
 </ul>
 </div>
@@ -81,9 +104,6 @@ It is written in Java, and has about 10 kLoC.</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><em>{you can add/remove categories in the list above}</em></p>
 </div>
 </div>
 </div>
@@ -100,6 +120,42 @@ It is written in Java, and has about 10 kLoC.</p>
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="showing-description-code-showdescription-code"><a class="link" href="#showing-description-code-showdescription-code">Showing description: <code>showDescription</code></a></h3>
+<div class="paragraph">
+<p>Shows description of the specified todo item from the todo list.<br>
+Format: <code>show todo INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Shows description of the todo item at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the displayed todo list.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list todo</code><br>
+<code>show todo 1</code><br>
+Shows description of the 1st todo item in the todo list.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -474,9 +530,9 @@ Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <cod
 </ul>
 </div>
 <div class="paragraph">
-<p>And modify diagrams in Design parts, including Architecture, UI Component, Logic Component and Storage Component.</p>
+<p><strong>And modify diagrams in Design parts, including Architecture, UI Component, Logic Component and Storage Component.</strong></p>
 </div>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 09:25:23 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 09:49:57 UTC</div></div></div></body></html>
