@@ -1421,6 +1421,26 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect add event commands to try: `add event`, `add event {without all the required prefixes}`
    Expected: Similar to previous.
 
+=== Editing a calendar event
+
+. Editing a calendar event in the scheduler
+
+.. Prerequisites: The calendar event to be edited must be present in the displayed calendar event list
+.. Test case: +
+    `add event t/CS2103 Lecture d/Practical Exam v/i3 Auditorium s/16 Nov 4pm e/16 Nov 6pm tag/Graded` +
+    `edit event [index] t/CS2105 Lecture` +
+    where `[index]` is the index of the newly added event listed on the calendar event list +
+   Expected:
+   New calendar event is added. Details of the new calendar event shown in the status message. +
+   Calendar event's title is changed from `CS2103 Lecture` to `CS2105` Lecture
+.. Test case: +
+       `add event t/CS2104 Tutorial d/Tutorial 3 v/AS6 04-10 s/16 Nov 2pm e/16 Nov 4pm` +
+       `edit event [index] tag/important` +
+        where `[index]` is the index of the newly added event listed on the calendar event list +
+      Expected:
+      New calendar event is added. Details of the new calendar event shown in the status message. +
+      Calendar event has a new tag titled `important`
+
 === Deleting a calendar event
 
 . Deleting a calendar event while all calendar events are listed
