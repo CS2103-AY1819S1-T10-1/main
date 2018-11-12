@@ -26,14 +26,13 @@ Software Engineering. The user interacts with it using a CLI, and it has a GUI c
 <div class="ulist">
 <ul>
 <li>
-<p>What it does: Allows the user to search for commands without having to type the exact matching words - e.g. "find event proj" to find a calendar event with "Project" in its name. Also allows the user to filter their search by date and time, and by tags, for more precise searching. Finally, it displays the results in decreasing order of relevance (i.e. the most relevant results first).</p>
+<p>What it does: Allows the user to search for commands without having to type the exact matching words - e.g. "find event proj" to find a calendar event with "Project" in its name. Also allows the user to filter their search by date and time, and by tags, for more precise searching. Finally, it displays the most relevant results first.</p>
 </li>
 <li>
-<p>Justification: This feature improves the product significantly because it allows users to search for events more conveniently and more precisely. This would help to significantly improve the ease of use and navigation for our users.</p>
+<p>Justification: This feature improves the product significantly because it allows users to search for events more conveniently and more precisely. This would improve the overall user experience as well as the ease of navigation for users of U-Schedule, since the search function also makes the edit and select functions more convenient.</p>
 </li>
 <li>
-<p>Highlights: This enhancement is extensible - it has the potential to be
-This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.</p>
+<p>Highlights: This feature expands upon the existing find command in Address Book (Level 4), by revamping the Parser and Model to allow extra functionality (filtering by multiple Predicates and Sorting). This feature has the potential to be extended further, to allow users to filter the search by even more criteria or to incorporate more fine-grained filtering with boolean logic.</p>
 </li>
 <li>
 <p>Credits: Uses third party library <a href="https://github.com/xdrop/fuzzywuzzy">fuzzywuzzy</a> for the fuzzy search</p>
@@ -42,7 +41,7 @@ This enhancement affects existing commands and commands to be added in future. I
 </div>
 </li>
 <li>
-<p><strong>Minor enhancement</strong>: added a history command that allows the user to navigate to previous commands using up/down keys.</p>
+<p><strong>Minor enhancement</strong>: added feature that switches the GUI to the appropriate tab - either To Do List or Calendar Events - when a todo or event command is entered respectively</p>
 </li>
 <li>
 <p><a href="https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&amp;search=vig42">Code Contributed</a></p>
@@ -56,7 +55,7 @@ This enhancement affects existing commands and commands to be added in future. I
 <div class="ulist">
 <ul>
 <li>
-<p>Managed releases <code>v1.3</code> - <code>v1.5rc</code> (3 releases) on GitHub</p>
+<p>Set up Travis and AppVeyor CI, Coveralls and Netlify for our team repo (Pull requests: <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/5">#5</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/49">#49</a>)</p>
 </li>
 </ul>
 </div>
@@ -66,10 +65,13 @@ This enhancement affects existing commands and commands to be added in future. I
 <div class="ulist">
 <ul>
 <li>
-<p>Updated the GUI color scheme (Pull requests <a href="https://github.com">#33</a>, <a href="https://github.com">#34</a>)</p>
+<p>Modified classes in the original AddressBook app to help transform it into our U-Schedule app. e.g. renaming AddressBook to Scheduler, modifying CalendarEvent and the various parsers to accept and store events' start and end date/time (Pull Requests: <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/11">#11</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/39">#39</a>)</p>
 </li>
 <li>
-<p>Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests <a href="https://github.com">#36</a>, <a href="https://github.com">#38</a>)</p>
+<p>Updated the GUI color scheme (Pull request <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/111">#111</a>)</p>
+</li>
+<li>
+<p>Wrote additional tests and test cases for existing features, increasing coverage to 91% (Pull request <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/131">#131</a>)</p>
 </li>
 </ul>
 </div>
@@ -79,7 +81,7 @@ This enhancement affects existing commands and commands to be added in future. I
 <div class="ulist">
 <ul>
 <li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
+<p>Modified the Developer Guide (Architecture, Logic, Model and Storage sections), including the class and sequence diagrams, to reflect the modifications we made to the original AddressBook (Level 4) (Pull Requests: <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/119">#119</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/122/files">#122</a>)</p>
 </li>
 </ul>
 </div>
@@ -89,29 +91,10 @@ This enhancement affects existing commands and commands to be added in future. I
 <div class="ulist">
 <ul>
 <li>
-<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com">#12</a>, <a href="https://github.com">#32</a>, <a href="https://github.com">#19</a>, <a href="https://github.com">#42</a></p>
+<p>PRs reviewed (with non-trivial review comments): <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/17">#17</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/60">#60</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/67">#67</a>, <a href="https://github.com/CS2103-AY1819S1-T10-1/main/pull/78">#78</a></p>
 </li>
 <li>
-<p>Contributed to forum discussions (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>, <a href="https://github.com">4</a>)</p>
-</li>
-<li>
-<p>Reported bugs and suggestions for other teams in the class (examples:  <a href="https://github.com">1</a>, <a href="https://github.com">2</a>, <a href="https://github.com">3</a>)</p>
-</li>
-<li>
-<p>Some parts of the history feature I added was adopted by several other class mates (<a href="https://github.com">1</a>, <a href="https://github.com">2</a>)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Tools:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Integrated a third party library (Natty) to the project (<a href="https://github.com">#42</a>)</p>
-</li>
-<li>
-<p>Integrated a new Github plugin (CircleCI) to the team repo</p>
+<p>Reported bugs and suggestions for other teams in the class (examples: <a href="https://github.com/CS2103-AY1819S1-F11-4/main/issues/170">1</a>, <a href="https://github.com/CS2103-AY1819S1-F11-4/main/issues/192">2</a>)</p>
 </li>
 </ul>
 </div>
@@ -120,9 +103,6 @@ This enhancement affects existing commands and commands to be added in future. I
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><em>{you can add/remove categories in the list above}</em></p>
 </div>
 </div>
 </div>
@@ -140,24 +120,94 @@ This enhancement affects existing commands and commands to be added in future. I
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">Undoing previous command : <code>undo</code></a></h3>
+<h3 id="searching-for-events-code-find-event-code"><a class="link" href="#searching-for-events-code-find-event-code">Searching for events: <code>find event</code></a></h3>
 <div class="paragraph">
-<p>Restores the calendar to the state before the previous <em>undoable</em> command was executed.<br>
-Format: <code>undo</code></p>
+<p>Finds calendar events whose title, venue or description match any of the given keywords.
+Also optionally filters the search by the specified date &amp; time interval as well as the specified tags.<br>
+Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; TIME] [to/DATE &amp; TIME] [tag/TAG] [tag/MORE_TAGS]&#8230;&#8203;</code></p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Undoable commands: those commands that modify the calendar&#8217;s /todo list&#8217;s content (<code>add event</code>, <code>delete event</code>, <code>edit event</code> and <code>clear</code>).</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Shows list of events that match the keywords and fulfil the filter rules.</p>
+</li>
+<li>
+<p>The most relevant results are shown at the top.</p>
+</li>
+<li>
+<p>At least one of the optional fields must be provided.</p>
+</li>
+<li>
+<p>Fuzzy Keyword Search</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The search is <strong>case insensitive</strong> for both keywords. e.g <code>lecture</code> will match <code>Lecture</code></p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>CS2103 Lecture</code> will match <code>Lecture CS2103</code></p>
+</li>
+<li>
+<p>The fuzzy search allows for <strong>partial matches for keywords</strong>. e.g. <code>2103 lec</code> will match <code>CS2103 Lecture</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Slight differences and typos will also usually be matched. e.g. <code>s2130 Lecutre</code> will match 'CS2103 Lecture'</p>
+</li>
+</ul>
 </div>
-</td>
-</tr>
-</table>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Filter by Date &amp; Time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Shows events that occur in the interval from the <code>from</code> date &amp; time, to the <code>to</code> date &amp; time.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>i.e. the event must be ongoing at some point in the time interval starting at the <code>from</code> date and ending at the <code>to</code> date</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You can choose to include only one of the 2 (<code>from</code> or <code>to</code>) date &amp; times</p>
+</li>
+<li>
+<p>Date &amp; time are parsed using Natural Language Parsing, thus they can be input in most human-readable formats, e.g. <code>16 nov 8am</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Note: sometimes date &amp; time inputs may be parsed unexpectedly - see Question 3 in the <a href="#FAQ">FAQ</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Filter by Tags</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In order for an event to be shown, it must have a tag that is <strong>exactly matching</strong> (although case-insensitive) with the input tag.</p>
+</li>
+<li>
+<p>If multiple tags are input, the filter will only show the events with ALL the input tags.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -165,61 +215,26 @@ Format: <code>undo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete event 1</code><br>
-<code>list event</code><br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br></p>
+<p><code>find event lecture</code><br>
+Returns list of events whose title, venue or description matches the keyword <code>lecture</code>.</p>
 </li>
 <li>
-<p><code>select 1</code><br>
-<code>list event</code><br>
-<code>undo</code><br>
-The <code>undo</code> command fails as there are no undoable commands executed previously.</p>
+<p><code>find event cs2103 assignment tag/Project</code><br>
+Returns list of events matching the keywords <code>cs2103</code> and <code>assignment</code>, and having the tag <code>Project</code></p>
 </li>
 <li>
-<p><code>delete event 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br></p>
+<p><code>find event exam from/29 nov 8am to/7 dec 5pm</code>
+Returns list of events matching the keyword <code>exam</code>, that is ongoing at some point between 8am on 29th November and 5pm on 7th December.</p>
+</li>
+<li>
+<p><code>find event project tag/CS2103 from/15 nov 10am `
+Returns list of events matching the keyword `project</code>, having the tag <code>CS2103</code>, that is ongoing at some point after 10am on 15th November.</p>
+</li>
+<li>
+<p><code>find event tag/cs2103 tag/lecture</code>
+Returns list of events having both the tags 'CS2103' and 'Lecture' (i.e. events with only the <code>CS2103</code> tag but not the <code>Lecture</code> tag would be excluded).</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">Redoing the previously undone command : <code>redo</code></a></h3>
-<div class="paragraph">
-<p>Reverses the most recent <code>undo</code> command.<br>
-Format: <code>redo</code></p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>delete event 1</code><br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete event 1</code> command)<br></p>
-</li>
-<li>
-<p><code>delete event 1</code><br>
-<code>redo</code><br>
-The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
-</li>
-<li>
-<p><code>delete event 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete event 1</code> command)<br>
-<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">Encrypting data files <code>[coming in v2.0]</code></a></h3>
-<div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
 </div>
 </div>
@@ -238,168 +253,98 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">Undo/Redo feature</a></h3>
+<h3 id="fuzzy-search-and-filter-by-date-time-and-tags"><a class="link" href="#fuzzy-search-and-filter-by-date-time-and-tags">Fuzzy Search and Filter by Date/Time and Tags</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="sect4">
+<h5 id="overview-2"><a class="link" href="#overview-2">Overview</a></h5>
 <div class="paragraph">
-<p>The undo/redo mechanism is facilitated by <code>VersionedScheduler</code>.
-It extends <code>Scheduler</code> with an undo/redo history, stored internally as an <code>SchedulerStateList</code> and <code>currentStatePointer</code>.
-Additionally, it implements the following operations:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>VersionedScheduler#commit()</code>&#8201;&#8212;&#8201;Saves the current venue book state in its history.</p>
-</li>
-<li>
-<p><code>VersionedScheduler#undo()</code>&#8201;&#8212;&#8201;Restores the previous venue book state from its history.</p>
-</li>
-<li>
-<p><code>VersionedScheduler#redo()</code>&#8201;&#8212;&#8201;Restores a previously undone venue book state from its history.</p>
-</li>
-</ul>
+<p>The Fuzzy Search enhancement for the <code>find event</code> command is achieved by modifying the <code>Predicate</code> used to filter the <code>FilteredList</code> already present in the <code>ModelManager</code>, by using a fuzzy match algorithm to check the similarity of the event&#8217;s <code>Title</code>, <code>Description</code> and <code>Venue</code> text with each input keywords, and seeing if it exceeds a given threshold.</p>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface as <code>Model#commitScheduler()</code>, <code>Model#undoScheduler()</code> and <code>Model#redoScheduler()</code> respectively.</p>
+<p>The Filter by Date/Time and Tags feature is achieved by allowing the aforementioned <code>FilteredList</code> to accept multiple predicates at a time, by taking the logical AND of all the input predicates.</p>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
+<p>The feature to show the most relevant search results first is achieved by sorting the <code>FilteredList</code>, by wrapping it with a <code>SortedList</code>, and changing the <code>Comparator</code> used based on the input command.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user launches the application for the first time.
-The <code>VersionedAddressBook</code> will be initialized with the initial
-Scheduler state, and the <code>currentStatePointer</code> pointing to that
-single Scheduler state.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoStartingStateListDiagram.png" alt="UndoRedoStartingStateListDiagram" width="800">
-</div>
+<p>The <code>FindEventCommandParser</code> and the <code>ArgumentTokenizer</code> were modified to accept commands that may or may not have keywords (i.e. preamble), and handle having varying numbers of prefixes in each command.</p>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>delete event 5</code> command to delete the 5th CalendarEvent in the Scheduler. The <code>delete</code> command calls <code>Model#commitScheduler()</code>, causing the modified state of the Scheduler after the <code>delete 5</code> command executes to be saved in the <code>schedulerStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted Scheduler state.</p>
+<p>Finally, the GUI <code>CalendarPanel</code> was modified to access the new <code>SortedList</code> instead of the <code>FilteredList</code> so as to display the most relevant results first.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand1StateListDiagram.png" alt="UndoRedoNewCommand1StateListDiagram" width="800">
 </div>
+<div class="sect4">
+<h5 id="model-predicates-comparators-and-sortedlist"><a class="link" href="#model-predicates-comparators-and-sortedlist">Model - Predicates, Comparators and SortedList</a></h5>
+<div class="paragraph">
+<p>To allow for fuzzy matching, the <code>fuzzywuzzy</code> API was used. This allows us to compare strings using using a fuzzy algorithm based on Levenshtein distance between the strings. It assigns an integer match score from 0-100 for each pair of strings. If this score was above the threshold of 70, the retooled <code>FuzzySearchFilterPredicate</code> would allow it to be seen. This score was also used to compare events in our <code>FuzzySearchComparator</code>.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>add t/CS2103 Lecture &#8230;&#8203;</code> to add a new CalendarEvent. The <code>add event</code> command also calls <code>Model#commitScheduler()</code>, causing another modified Scheduler state to be saved into the <code>schedulerStateList</code>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand2StateListDiagram.png" alt="UndoRedoNewCommand2StateListDiagram" width="800">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If a command fails its execution, it will not call <code>Model#commitScheduler()</code>, so the Scheduler state will not be saved into the <code>schedulerStateList</code>.
-</td>
-</tr>
-</table>
+<p>To implement the extra filters in conjunction with the fuzzy search, the <code>UpdateFilteredCalendarEventList</code> method was modified to allow for variable number (at least 1) of input <code>Predicate&lt;CalendarEvent&gt;</code> arguments. The method would then combine the input <code>Predicates</code> into a single <code>Predicate</code> by taking their logical AND. The combined <code>Predicate</code> would then be used to filter the <code>FilteredList</code>.</p>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that adding the CalendarEvent was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoScheduler()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous Scheduler state, and restores the Scheduler to that state.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoExecuteUndoStateListDiagram.png" alt="UndoRedoExecuteUndoStateListDiagram" width="800">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If the <code>currentStatePointer</code> is at index 0, pointing to the initial Scheduler state, then there are no previous Scheduler states to restore. The <code>undo</code> command uses <code>Model#canUndoScheduler()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
-</td>
-</tr>
-</table>
+<p>To allow users to filter by date/time, a new predicate, <code>DateTimePredicate</code> was created with 2 <code>DateTime</code> objects to set the <code>dateFrom</code> and <code>dateTo</code> for the filter. The <code>DateTime</code> objects were allowed to be null - this allowed for only 1 <code>DateTime</code> (either from or to) to be specified, so as to reduce the restrictions on users. If both <code>DateTime</code> objects were null, it would always return true - allowing it to be AND-ed with the other <code>Predicates</code> by the <code>ModelManager</code> without interfering with the filters.</p>
 </div>
 <div class="paragraph">
-<p>The following sequence diagram shows how the undo operation works:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
-</div>
+<p>To allow users to filter by tags, a new predicate, <code>TagsPredicate</code> was created. This stored a <code>Set</code> of input tag <code>Strings</code>, and if all of them had a full (but case-insensitive) match with at least one of the event&#8217;s <code>Tags</code>, then the event would be shown. The <code>Set</code> is allowed to be empty - similar to the implementation of the <code>DatePredicate</code>, this case would always return true.</p>
 </div>
 <div class="paragraph">
-<p>The <code>redo</code> command does the opposite&#8201;&#8212;&#8201;it calls <code>Model#redoScheduler()</code>, which shifts the <code>currentStatePointer</code> once to the right, pointing to the previously undone state, and restores the Scheduler to that state.</p>
+<p>The existing <code>ModelManager</code> attributes and methods were insufficient to show the most relevant search results first, as this would require sorting. As a result, we created a new <code>FuzzySearchComparator</code> to sort the <code>CalendarEvents</code> based on the aforementioned fuzzy match score, in descending order. In order to let users see this, we created a new <code>SortedList</code> to the <code>ModelManager</code>, to sort the existing <code>FilteredList</code> based on the <code>FuzzySearchComparator</code>.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If the <code>currentStatePointer</code> is at index <code>schedulerStateList.size() - 1</code>, pointing to the latest Scheduler state, then there are no undone Scheduler states to restore. The <code>redo</code> command uses <code>Model#canRedoScheduler()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-</td>
-</tr>
-</table>
+</div>
+<div class="sect4">
+<h5 id="logic-argumenttokenizer-and-parser"><a class="link" href="#logic-argumenttokenizer-and-parser">Logic - ArgumentTokenizer and Parser</a></h5>
+<div class="paragraph">
+<p>The new <code>FindEventCommand</code> required modifications to the parser to allow for commands with varying levels of inputs - it could have preamble and prefixes, only preamble with no prefixes or no preamble and only prefixes. In the latter case, we noticed that the <code>ArgumentTokenizer</code> would end up capturing the initial prefix as the "preamble". In order to correctly detect the absence of a preamble, the <code>ArgumentTokenizer</code> was modified, so as to correctly detect the absence of a preamble (i.e. when a prefix is at index 0 of the input), and accordingly not add the 'preamble' (actually the first prefix) to the <code>ArgumentMultimap</code>.</p>
 </div>
 <div class="paragraph">
-<p>Step 5. The user then decides to execute the command <code>list event</code>. Commands that do not modify the Scehduler, such as <code>list</code>, will usually not call <code>Model#commitScheduler()</code>, <code>Model#undoScheduler()</code> or <code>Model#redoScheduler()</code>. Thus, the <code>schedulerStateList</code> remains unchanged.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand3StateListDiagram.png" alt="UndoRedoNewCommand3StateListDiagram" width="800">
-</div>
+<p>After modifying the <code>ArgumentTokenizer</code>, the <code>FindEventCommandParser</code> also needed to be modified to generate the correct <code>FindEventCommand</code> from the inputs. As mentioned earlier, for each of the <code>Predicates</code> and <code>Comparators</code>, we implemented a 'default case', when the <code>Predicate</code> always returned true and the <code>Comparator</code> always returned zero - e.g. when both the <code>DateTime</code> for the <code>DatePredicate</code> are null, or when the <code>List</code> of keywords for the <code>FuzzySearchFilterPredicate</code> and <code>FuzzySearchComparator</code> are empty.</p>
 </div>
 <div class="paragraph">
-<p>Step 6. The user executes <code>clear calendar</code>, which calls <code>Model#commitScheduler()</code>. Since the <code>currentStatePointer</code> is not pointing at the end of the <code>schedulerStateList</code>, all venue book states after the <code>currentStatePointer</code> will be purged. We designed it this way because it no longer makes sense to redo the <code>add n/CS2103 Lecture &#8230;&#8203;</code> command. This is the behavior that most modern desktop applications follow.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoNewCommand4StateListDiagram.png" alt="UndoRedoNewCommand4StateListDiagram" width="800">
+<p>This allowed us to deal with the cases where some of the inputs were missing. If the user did not enter any <code>tag/</code> prefix, then the <code>FindEventCommand</code> created by the <code>FindEventCommandParser</code> will have a <code>TagPredicate</code> containing an empty <code>Set</code> of tag strings.</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="gui"><a class="link" href="#gui">GUI</a></h5>
 <div class="paragraph">
-<p>The following activity diagram summarizes what happens when a user executes a new command:</p>
+<p>In order for the new search features to be visible to the user, the <code>getFilteredAndSortedCalendarEventList</code> method was modified to allow the GUI <code>CalendarPanel</code> to access the <code>SortedList</code> rather than the <code>FilteredList</code> when initializing its <code>ListView</code>.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="650">
+<div class="sect5">
+<h6 id="tabbed-interface"><a class="link" href="#tabbed-interface">Tabbed Interface</a></h6>
+<div class="paragraph">
+<p>Since the left panel would be shared between the <code>TaskListPanel</code> and the <code>CalendarPanel</code>, we realised that sometimes the panel would be showing the wrong list when a command is entered. Hence, after updating the <code>FilteredList</code> and <code>SortedList</code>, we made the <code>execute</code> method of the <code>FindEventCommand</code> post a <code>SwitchToSearchTabEvent</code> to the <code>EventsCenter</code>. The <code>MainWindow</code> handles the <code>SwitchToSearchTabEvent</code> and switches to the Calendar Events tab, so that the user can see the search results.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
+<h5 id="aspect-how-predicates-are-managed-and-applied-to-the-filteredlist"><a class="link" href="#aspect-how-predicates-are-managed-and-applied-to-the-filteredlist">Aspect: How Predicates are Managed and Applied to the FilteredList</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire venue book.</p>
+<p><strong>Alternative 1 (current choice):</strong> Use a simple rule (AND) to combine all the <code>Predicates</code> into a single one, then apply them to the <code>FilteredList</code> as normal.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement.</p>
+<p>Pros: Easy to implement, since it mostly leverages existing functionality (only need to modify 1 method). As such it is also less likely to lead to regression errors.</p>
 </li>
 <li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
+<p>Cons: Only capable of limited functionality</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Individual command knows how to undo/redo by itself.</p>
+<p><strong>Alternative 2:</strong> Use a separate class to store and manage the <code>Predicates</code>, combine them in the desired fashion and apply the resulting <code>Predicate</code> to the <code>FilteredList</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the calendarEvent being deleted).</p>
+<p>Pros: Will be capable of combining multiple <code>Predicates</code> in various different ways, allowing for more complex boolean expressions (see the next section for possible implementations)</p>
 </li>
 <li>
-<p>Cons: We must ensure that the implementation of each individual command are correct.</p>
+<p>Cons: More difficult to implement, since it would add an extra layer of integration between the new class and the ModelManager. Would also need to ensure that the list of predicates is appropriately reset when each new command is entered.</p>
 </li>
 </ul>
 </div>
@@ -408,31 +353,31 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-data-structure-to-support-the-undo-redo-commands"><a class="link" href="#aspect-data-structure-to-support-the-undo-redo-commands">Aspect: Data structure to support the undo/redo commands</a></h5>
+<h5 id="aspect-how-best-to-show-the-user-the-most-relevant-search-result"><a class="link" href="#aspect-how-best-to-show-the-user-the-most-relevant-search-result">Aspect: How Best to Show the User the Most Relevant Search Result</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use a list to store the history of venue book states.</p>
+<p><strong>Alternative 1 (current choice):</strong> Sort the <code>FilteredList</code> of <code>CalendarEvents</code> in descending order of fuzzy match score</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
+<p>Pros: More reliable, has high chance of achieving the desired goal</p>
 </li>
 <li>
-<p>Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both <code>HistoryManager</code> and <code>VersionedAddressBook</code>.</p>
+<p>Cons: Slower (since it needs to sort), more complicated to implement</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo</p>
+<p><strong>Alternative 2:</strong> Apply a more aggressive filter (with higher threshold for acceptance) to hide less relevant results</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.</p>
+<p>Pros: Faster than sorting</p>
 </li>
 <li>
-<p>Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two different things.</p>
+<p>Cons: Can be difficult to calibrate the filters properly to achieve the desired result. May end up being too aggressive, and could remove correct/desired results in some scenarios.</p>
 </li>
 </ul>
 </div>
@@ -441,12 +386,24 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">[Proposed] Data Encryption</a></h3>
+<div class="sect3">
+<h4 id="further-extensions"><a class="link" href="#further-extensions">Further Extensions</a></h4>
+<div class="sect4">
+<h5 id="additional-filters"><a class="link" href="#additional-filters">Additional Filters</a></h5>
 <div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<p>The <code>FindEventCommand</code> could be enhanced by including more <code>Predicates</code> to further filter the events based on other properties. For instance, we could allow users to specifically filter based on whether <code>Venue</code> or <code>Description</code> matched an input keyword, e.g. <code>find event v/COM2</code> or <code>find event d/Wear formal clothes</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="custom-filters-using-boolean-logic"><a class="link" href="#custom-filters-using-boolean-logic">Custom Filters using Boolean Logic</a></h5>
+<div class="paragraph">
+<p>The <code>FindEventCommand</code> could be modified to allow users to specify custom filters using boolean logic, e.g. a possible command could be <code>find event t/exam &amp;&amp; v/MPSH5</code> or <code>find event t/lecture || d/lecture</code>. This would allow users to perform much more fine-grained searches. It is likely to appeal to our users, since they are more tech-savvy university students who are comfortable with CLI, and thus are probably somewhat familiar with boolean logic.</p>
+</div>
+<div class="paragraph">
+<p>In order to implement this feature, we could create a new class specifically to take in the list of input <code>Predicates</code> as well as the specific rules by which to apply the AND/OR, and then to generate the appropriate predicate based on those instructions. This could then be fed to the <code>ModelManager</code> to update the <code>FilteredList</code>.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:22:48 UTC</div></div></div></body></html>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:41:10 UTC</div></div></div></body></html>

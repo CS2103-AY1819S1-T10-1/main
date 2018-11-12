@@ -30,11 +30,11 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#todolist-feature">3.1. ToDoList feature</a></li>
-<li><a href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></li>
+<li><a href="#fuzzy-search-and-filter-by-date-time-and-tags">3.2. Fuzzy Search and Filter by Date/Time and Tags</a></li>
 <li><a href="#calendar-model">3.3. Calendar Model</a></li>
 <li><a href="#calendar-display">3.4. Calendar Display</a></li>
 <li><a href="#calendar-display-navigation">3.5. Calendar Display Navigation</a></li>
-<li><a href="#further-extensions">3.6. Further Extensions</a></li>
+<li><a href="#further-extensions-2">3.6. Further Extensions</a></li>
 <li><a href="#schedulerparser">3.7. SchedulerParser</a></li>
 <li><a href="#undo-redo-feature">3.8. Undo/Redo feature</a></li>
 <li><a href="#proposed-data-encryption">3.9. [Proposed] Data Encryption</a></li>
@@ -991,71 +991,154 @@ Prefixes t/, d/ and p/ respectively allow user to input <code>Title</code>, <cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="fuzzy-search-and-filter-by-tags-for-find-event-command"><a class="link" href="#fuzzy-search-and-filter-by-tags-for-find-event-command">3.2. Fuzzy Search and Filter by Tags for Find Event Command</a></h3>
+<h3 id="fuzzy-search-and-filter-by-date-time-and-tags"><a class="link" href="#fuzzy-search-and-filter-by-date-time-and-tags">3.2. Fuzzy Search and Filter by Date/Time and Tags</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
 <div class="sect4">
-<h5 id="model"><a class="link" href="#model">Model</a></h5>
+<h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
 <div class="paragraph">
-<p>The Fuzzy Search enhancement for the <code>find event</code> command is achieved using the <code>fuzzywuzzy</code> API. The existing
-<code>TitleContainsKeywordsPredicate</code> was modified such that the <code>test</code> method checks if the <code>keyword</code> matches the <code>Title</code>
-of the <code>CalendarEvent</code> using a fuzzy algorithm based on Levenshtein distance between strings, and assigns an integer
-score to the match. If this score is under the <code>threshold</code> of 70, the <code>Predicate</code> will filter out the <code>CalendarEvent</code>
-from the <code>ObservableList</code>.</p>
+<p>The Fuzzy Search enhancement for the <code>find event</code> command is achieved by modifying the <code>Predicate</code> used to filter the <code>FilteredList</code> already present in the <code>ModelManager</code>, by using a fuzzy match algorithm to check the similarity of the event&#8217;s <code>Title</code>, <code>Description</code> and <code>Venue</code> text with each input keywords, and seeing if it exceeds a given threshold.</p>
 </div>
 <div class="paragraph">
-<p>The Filter by Tags enhancement is achieved using a second <code>Predicate</code>, the <code>TagsPredicate</code>. This <code>Predicate</code> will <code>test</code>
-the <code>CalendarEvent</code> by checking if any of its <code>Tags</code> matches with any of the user input <code>tags</code>. The <code>Predicate</code> will
-filter out all events that do not contain any of the specified tags.</p>
+<p>The Filter by Date/Time and Tags feature is achieved by allowing the aforementioned <code>FilteredList</code> to accept multiple predicates at a time, by taking the logical AND of all the input predicates.</p>
 </div>
 <div class="paragraph">
-<p>Finally, the <code>FilteredList</code> is wrapped in a <code>SortedList</code>, and sorted based on <code>FuzzySearchComparator</code>. This comparator
-uses the aforementioned fuzzy match score, and sorts the <code>CalendarEvents</code> in descending order of match score.</p>
+<p>The feature to show the most relevant search results first is achieved by sorting the <code>FilteredList</code>, by wrapping it with a <code>SortedList</code>, and changing the <code>Comparator</code> used based on the input command.</p>
+</div>
+<div class="paragraph">
+<p>The <code>FindEventCommandParser</code> and the <code>ArgumentTokenizer</code> were modified to accept commands that may or may not have keywords (i.e. preamble), and handle having varying numbers of prefixes in each command.</p>
+</div>
+<div class="paragraph">
+<p>Finally, the GUI <code>CalendarPanel</code> was modified to access the new <code>SortedList</code> instead of the <code>FilteredList</code> so as to display the most relevant results first.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="model-predicates-comparators-and-sortedlist"><a class="link" href="#model-predicates-comparators-and-sortedlist">Model - Predicates, Comparators and SortedList</a></h5>
+<div class="paragraph">
+<p>To allow for fuzzy matching, the <code>fuzzywuzzy</code> API was used. This allows us to compare strings using using a fuzzy algorithm based on Levenshtein distance between the strings. It assigns an integer match score from 0-100 for each pair of strings. If this score was above the threshold of 70, the retooled <code>FuzzySearchFilterPredicate</code> would allow it to be seen. This score was also used to compare events in our <code>FuzzySearchComparator</code>.</p>
+</div>
+<div class="paragraph">
+<p>To implement the extra filters in conjunction with the fuzzy search, the <code>UpdateFilteredCalendarEventList</code> method was modified to allow for variable number (at least 1) of input <code>Predicate&lt;CalendarEvent&gt;</code> arguments. The method would then combine the input <code>Predicates</code> into a single <code>Predicate</code> by taking their logical AND. The combined <code>Predicate</code> would then be used to filter the <code>FilteredList</code>.</p>
+</div>
+<div class="paragraph">
+<p>To allow users to filter by date/time, a new predicate, <code>DateTimePredicate</code> was created with 2 <code>DateTime</code> objects to set the <code>dateFrom</code> and <code>dateTo</code> for the filter. The <code>DateTime</code> objects were allowed to be null - this allowed for only 1 <code>DateTime</code> (either from or to) to be specified, so as to reduce the restrictions on users. If both <code>DateTime</code> objects were null, it would always return true - allowing it to be AND-ed with the other <code>Predicates</code> by the <code>ModelManager</code> without interfering with the filters.</p>
+</div>
+<div class="paragraph">
+<p>To allow users to filter by tags, a new predicate, <code>TagsPredicate</code> was created. This stored a <code>Set</code> of input tag <code>Strings</code>, and if all of them had a full (but case-insensitive) match with at least one of the event&#8217;s <code>Tags</code>, then the event would be shown. The <code>Set</code> is allowed to be empty - similar to the implementation of the <code>DatePredicate</code>, this case would always return true.</p>
+</div>
+<div class="paragraph">
+<p>The existing <code>ModelManager</code> attributes and methods were insufficient to show the most relevant search results first, as this would require sorting. As a result, we created a new <code>FuzzySearchComparator</code> to sort the <code>CalendarEvents</code> based on the aforementioned fuzzy match score, in descending order. In order to let users see this, we created a new <code>SortedList</code> to the <code>ModelManager</code>, to sort the existing <code>FilteredList</code> based on the <code>FuzzySearchComparator</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="logic-argumenttokenizer-and-parser"><a class="link" href="#logic-argumenttokenizer-and-parser">Logic - ArgumentTokenizer and Parser</a></h5>
+<div class="paragraph">
+<p>The new <code>FindEventCommand</code> required modifications to the parser to allow for commands with varying levels of inputs - it could have preamble and prefixes, only preamble with no prefixes or no preamble and only prefixes. In the latter case, we noticed that the <code>ArgumentTokenizer</code> would end up capturing the initial prefix as the "preamble". In order to correctly detect the absence of a preamble, the <code>ArgumentTokenizer</code> was modified, so as to correctly detect the absence of a preamble (i.e. when a prefix is at index 0 of the input), and accordingly not add the 'preamble' (actually the first prefix) to the <code>ArgumentMultimap</code>.</p>
+</div>
+<div class="paragraph">
+<p>After modifying the <code>ArgumentTokenizer</code>, the <code>FindEventCommandParser</code> also needed to be modified to generate the correct <code>FindEventCommand</code> from the inputs. As mentioned earlier, for each of the <code>Predicates</code> and <code>Comparators</code>, we implemented a 'default case', when the <code>Predicate</code> always returned true and the <code>Comparator</code> always returned zero - e.g. when both the <code>DateTime</code> for the <code>DatePredicate</code> are null, or when the <code>List</code> of keywords for the <code>FuzzySearchFilterPredicate</code> and <code>FuzzySearchComparator</code> are empty.</p>
+</div>
+<div class="paragraph">
+<p>This allowed us to deal with the cases where some of the inputs were missing. If the user did not enter any <code>tag/</code> prefix, then the <code>FindEventCommand</code> created by the <code>FindEventCommandParser</code> will have a <code>TagPredicate</code> containing an empty <code>Set</code> of tag strings.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="gui"><a class="link" href="#gui">GUI</a></h5>
+<div class="paragraph">
+<p>In order for the new search features to be visible to the user, the <code>getFilteredAndSortedCalendarEventList</code> method was modified to allow the GUI <code>CalendarPanel</code> to access the <code>SortedList</code> rather than the <code>FilteredList</code> when initializing its <code>ListView</code>.</p>
+</div>
+<div class="sect5">
+<h6 id="tabbed-interface"><a class="link" href="#tabbed-interface">Tabbed Interface</a></h6>
+<div class="paragraph">
+<p>Since the left panel would be shared between the <code>TaskListPanel</code> and the <code>CalendarPanel</code>, we realised that sometimes the panel would be showing the wrong list when a command is entered. Hence, after updating the <code>FilteredList</code> and <code>SortedList</code>, we made the <code>execute</code> method of the <code>FindEventCommand</code> post a <code>SwitchToSearchTabEvent</code> to the <code>EventsCenter</code>. The <code>MainWindow</code> handles the <code>SwitchToSearchTabEvent</code> and switches to the Calendar Events tab, so that the user can see the search results.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="gui"><a class="link" href="#gui">3.2.2. GUI</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="tabbed-interface"><a class="link" href="#tabbed-interface">Tabbed Interface</a></h5>
-<div class="paragraph">
-<p>Since the existing <code>ObservableList</code> of <code>CalendarEvents</code> was not used in the GUI, we needed to figure out an alternative
-way to display the results for the <code>find event</code> command. We achieved this by incorporating a tabbed interface where the
-<code>TaskList</code> and the <code>CalendarEvent</code> list for the search results were shown in separate tabs.</p>
+<h5 id="aspect-how-predicates-are-managed-and-applied-to-the-filteredlist"><a class="link" href="#aspect-how-predicates-are-managed-and-applied-to-the-filteredlist">Aspect: How Predicates are Managed and Applied to the FilteredList</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use a simple rule (AND) to combine all the <code>Predicates</code> into a single one, then apply them to the <code>FilteredList</code> as normal.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement, since it mostly leverages existing functionality (only need to modify 1 method). As such it is also less likely to lead to regression errors.</p>
+</li>
+<li>
+<p>Cons: Only capable of limited functionality</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>To aid our target user, who mainly uses CLI, we incorporated functionality to automatically switch to the most relevant
-tab based on the command input by the user. When the user inputs a todo list command, a <code>SwitchToTasksTabEvent</code> is
-posted to the <code>EventsCenter</code>; while when the user inputs a <code>find event</code> or <code>list event</code> command, a
-<code>SwitchToSearchTabEvent</code> is posted.</p>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use a separate class to store and manage the <code>Predicates</code>, combine them in the desired fashion and apply the resulting <code>Predicate</code> to the <code>FilteredList</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Will be capable of combining multiple <code>Predicates</code> in various different ways, allowing for more complex boolean expressions (see the next section for possible implementations)</p>
+</li>
+<li>
+<p>Cons: More difficult to implement, since it would add an extra layer of integration between the new class and the ModelManager. Would also need to ensure that the list of predicates is appropriately reset when each new command is entered.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>The <code>MainWindow</code> handles the <code>SwitchToTasksTabEvent</code> and <code>SwitchToSearchTabEvent</code> - it switches to the appropriate tab
-when it receives either <code>Event</code>.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="updating-filteredlist-sortedlist"><a class="link" href="#updating-filteredlist-sortedlist">Updating FilteredList/SortedList</a></h5>
+<h5 id="aspect-how-best-to-show-the-user-the-most-relevant-search-result"><a class="link" href="#aspect-how-best-to-show-the-user-the-most-relevant-search-result">Aspect: How Best to Show the User the Most Relevant Search Result</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Sort the <code>FilteredList</code> of <code>CalendarEvents</code> in descending order of fuzzy match score</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More reliable, has high chance of achieving the desired goal</p>
+</li>
+<li>
+<p>Cons: Slower (since it needs to sort), more complicated to implement</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Apply a more aggressive filter (with higher threshold for acceptance) to hide less relevant results</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Faster than sorting</p>
+</li>
+<li>
+<p>Cons: Can be difficult to calibrate the filters properly to achieve the desired result. May end up being too aggressive, and could remove correct/desired results in some scenarios.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="further-extensions"><a class="link" href="#further-extensions">3.2.3. Further Extensions</a></h4>
+<div class="sect4">
+<h5 id="additional-filters"><a class="link" href="#additional-filters">Additional Filters</a></h5>
 <div class="paragraph">
-<p>In the original implementation, the main list of <code>CalendarEvent</code> that is shown on the GUI is implemented using a single,
-final <code>FilteredList</code> and changing the <code>Predicate</code> as needed. The <code>FilteredList</code> itself does not change unless the
-underlying <code>List</code> of <code>CalendarEvent</code> is changed (in which case the entire <code>Model</code> is reinitialised).</p>
+<p>The <code>FindEventCommand</code> could be enhanced by including more <code>Predicates</code> to further filter the events based on other properties. For instance, we could allow users to specifically filter based on whether <code>Venue</code> or <code>Description</code> matched an input keyword, e.g. <code>find event v/COM2</code> or <code>find event d/Wear formal clothes</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="custom-filters-using-boolean-logic"><a class="link" href="#custom-filters-using-boolean-logic">Custom Filters using Boolean Logic</a></h5>
+<div class="paragraph">
+<p>The <code>FindEventCommand</code> could be modified to allow users to specify custom filters using boolean logic, e.g. a possible command could be <code>find event t/exam &amp;&amp; v/MPSH5</code> or <code>find event t/lecture || d/lecture</code>. This would allow users to perform much more fine-grained searches. It is likely to appeal to our users, since they are more tech-savvy university students who are comfortable with CLI, and thus are probably somewhat familiar with boolean logic.</p>
 </div>
 <div class="paragraph">
-<p>However, in our current implementation, we only need to display the list of <code>CalendarEvent</code> when we show the results for
-the <code>find event</code> or <code>list event</code> commands. Furthermore, since we use multiple <code>Predicates</code> as well as a <code>Comparator</code>,
-the original implementation is not usable.</p>
-</div>
-<div class="paragraph">
-<p>Hence, we modified the <code>ModelManager</code> by allowing the <code>FilteredList</code> to be changed as need be. Hence whenever an
-additional <code>Predicate</code> needs to be added, we would wrap the original <code>FilteredList</code> with a new <code>FilteredList</code> using the
-new <code>Predicate</code>. Similarly, when we needed to sort based on a <code>Comparator</code>, we would wrap the <code>FilteredList</code> with a new
-<code>SortedList</code> using the required <code>Comparator</code> using the current <code>FilteredList</code> as a base.</p>
-</div>
-<div class="paragraph">
-<p>Since this update would only occur during <code>find event</code> or <code>list event</code> commands, we modified the handling of the
-<code>SwitchToSearchTabEvent</code> by the <code>MainWindow</code> to also trigger the GUI to reload the <code>ObservableList</code>/<code>FilteredList</code>
-backing the search result panel.</p>
+<p>In order to implement this feature, we could create a new class specifically to take in the list of input <code>Predicates</code> as well as the specific rules by which to apply the AND/OR, and then to generate the appropriate predicate based on those instructions. This could then be fed to the <code>ModelManager</code> to update the <code>FilteredList</code>.</p>
 </div>
 </div>
 </div>
@@ -1113,7 +1196,7 @@ New prefixes d/, s/, e/ and v/ respectively allow user to input <code>Descriptio
 <div class="sect3">
 <h4 id="implementation-3"><a class="link" href="#implementation-3">3.4.1. Implementation</a></h4>
 <div class="sect4">
-<h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
+<h5 id="overview-2"><a class="link" href="#overview-2">Overview</a></h5>
 <div class="paragraph">
 <p>The Calendar Display is implemented using <code>jfxtras.Agenda</code>.
 <code>jfxtras</code> is a third-party library
@@ -1167,7 +1250,7 @@ to navigate the calendar.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="updating-the-calendar"><a class="link" href="#updating-the-calendar">Updating the Calendar</a></h5>
 <div class="paragraph">
@@ -1243,7 +1326,7 @@ set <code>Agenda</code> to display the target date and time.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.3. Design considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.3. Design considerations</a></h4>
 <div class="sect4">
 <h5 id="keyboard-navigation"><a class="link" href="#keyboard-navigation">Keyboard Navigation</a></h5>
 <div class="paragraph">
@@ -1278,7 +1361,7 @@ the calendar display.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="further-extensions"><a class="link" href="#further-extensions">3.6. Further Extensions</a></h3>
+<h3 id="further-extensions-2"><a class="link" href="#further-extensions-2">3.6. Further Extensions</a></h3>
 <div class="sect3">
 <h4 id="command-line-navigation"><a class="link" href="#command-line-navigation">3.6.1. Command Line Navigation</a></h4>
 <div class="paragraph">
@@ -1348,7 +1431,7 @@ be returned, for both models.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.7.2. Design Considerations</a></h4>
 <div class="paragraph">
 <p>The parser should be flexible enough to at least support commands which are identified by one word and those
 identified by two words. Some commands such as <code>help</code> and <code>exit</code> are not specific to a model, while others act on one
@@ -1496,7 +1579,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.8.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -3098,4 +3181,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:22:48 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:41:09 UTC</div></div></div></body></html>

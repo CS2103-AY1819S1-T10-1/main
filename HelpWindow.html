@@ -17,7 +17,7 @@
 <li><a href="#adding-code-add-code">3.2. Adding: <code>add</code></a></li>
 <li><a href="#listing-code-list-code">3.3. Listing: <code>list</code></a></li>
 <li><a href="#editing-code-edit-code">3.4. Editing: <code>edit</code></a></li>
-<li><a href="#locating-code-find-code">3.5. Locating: <code>find</code></a></li>
+<li><a href="#searching-for-events-code-find-event-code">3.5. Searching for events: <code>find event</code></a></li>
 <li><a href="#deleting-code-delete-code">3.6. Deleting: <code>delete</code></a></li>
 <li><a href="#selecting-code-select-code">3.7. Selecting: <code>select</code></a></li>
 <li><a href="#showing-description-code-showdescription-code">3.8. Showing description: <code>showDescription</code></a></li>
@@ -85,6 +85,9 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </li>
 <li>
 <p><strong><code>add todo</code></strong><code>t/CS2103 Assignment d/Version Control p/H</code> : adds a todo item titled <code>CS2103 Assignment</code> to the todo list.</p>
+</li>
+<li>
+<p>**<code>find event cs2103</code> : shows all events with title, description or venue matching <code>cs2103</code></p>
 </li>
 <li>
 <p><strong><code>delete event</code></strong><code>3</code> : deletes the calendar event marked <code>3</code>.</p>
@@ -201,7 +204,7 @@ A calendar event can have any number of tags. (including 0)
 <div class="ulist">
 <ul>
 <li>
-<p><code>add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture</code></p>
+<p><code>add event t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/16 oct 2pm e/16 oct 4pm v/i3 Auditorium tag/lecture</code></p>
 </li>
 <li>
 <p><code>add todo t/CS2103 Assignment d/Version Control p/L</code></p>
@@ -262,21 +265,21 @@ Edits the name of the 2nd calendar event to be <code>CS2103 Project Meetup</code
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-code-find-code"><a class="link" href="#locating-code-find-code">3.5. Locating: <code>find</code></a></h3>
+<h3 id="searching-for-events-code-find-event-code"><a class="link" href="#searching-for-events-code-find-event-code">3.5. Searching for events: <code>find event</code></a></h3>
 <div class="paragraph">
 <p>Finds calendar events whose title, venue or description match any of the given keywords.
-Also optionally filters the search by the specified date &amp; time interval as well as tags.<br>
-Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; TIME] [to/DATE &amp; TIME] [tag/TAG] [tag/MORE_TAGS]</code></p>
+Also optionally filters the search by the specified date &amp; time interval as well as the specified tags.<br>
+Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; TIME] [to/DATE &amp; TIME] [tag/TAG] [tag/MORE_TAGS]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Shows all events that match the keywords and obey the filter rules.</p>
+<p>Shows list of events that match the keywords and fulfil the filter rules.</p>
 </li>
 <li>
-<p>The most relevant search results are shown at the top.</p>
+<p>The most relevant results are shown at the top.</p>
 </li>
 <li>
 <p>At least one of the optional fields must be provided.</p>
@@ -286,13 +289,13 @@ Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; 
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive for both keywords. e.g <code>lecture</code> will match <code>Lecture</code></p>
+<p>The search is <strong>case insensitive</strong> for both keywords. e.g <code>lecture</code> will match <code>Lecture</code></p>
 </li>
 <li>
 <p>The order of the keywords does not matter. e.g. <code>CS2103 Lecture</code> will match <code>Lecture CS2103</code></p>
 </li>
 <li>
-<p>The fuzzy search allows for partial matches for keywords. e.g. <code>2103 lec</code> will match <code>CS2103 Lecture</code>.</p>
+<p>The fuzzy search allows for <strong>partial matches for keywords</strong>. e.g. <code>2103 lec</code> will match <code>CS2103 Lecture</code>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -309,7 +312,27 @@ Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; 
 <div class="ulist">
 <ul>
 <li>
-<p>Shows events that occur in the interval from the <code>from/</code> date and time, to the <code>before/</code> date and time</p>
+<p>Shows events that occur in the interval from the <code>from</code> date &amp; time, to the <code>to</code> date &amp; time.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>i.e. the event must be ongoing at some point in the time interval starting at the <code>from</code> date and ending at the <code>to</code> date</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You can choose to include only one of the 2 (<code>from</code> or <code>to</code>) date &amp; times</p>
+</li>
+<li>
+<p>Date &amp; time are parsed using Natural Language Parsing, thus they can be input in most human-readable formats, e.g. <code>16 nov 8am</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Note: sometimes date &amp; time inputs may be parsed unexpectedly - see Question 3 in the <a href="#faq">FAQ</a></p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -319,10 +342,10 @@ Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; 
 <div class="ulist">
 <ul>
 <li>
-<p>In order for an event to be shown, it must have a tag that is exactly matching (although case-insensitive) with the input tag.</p>
+<p>In order for an event to be shown, it must have a tag that is <strong>exactly matching</strong> (although case-insensitive) with the input tag.</p>
 </li>
 <li>
-<p>If multiple tags are input, the filter will only show the events with ALL the input tags. e.g. <code>tag/cs2103 tag/lecture</code> would not match an event without tag <code>Lecture</code>, even if it has the tag <code>CS2103</code></p>
+<p>If multiple tags are input, the filter will only show the events with ALL the input tags.</p>
 </li>
 </ul>
 </div>
@@ -338,14 +361,23 @@ Format: <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; 
 <ul>
 <li>
 <p><code>find event lecture</code><br>
-Returns <code>CS2103 Lecture</code> and <code>Lecture</code></p>
+Returns list of events whose title, venue or description matches the keyword <code>lecture</code>.</p>
 </li>
 <li>
 <p><code>find event cs2103 assignment tag/Project</code><br>
-Returns any event with the tag <code>Project</code>, whose title, venue or description matches the keywords <code>CS2103</code> or <code>assignment</code>.</p>
+Returns list of events matching the keywords <code>cs2103</code> and <code>assignment</code>, and having the tag <code>Project</code></p>
 </li>
 <li>
-<p>`find event exam from/29 nov 8am to/7 dec 5pm</p>
+<p><code>find event exam from/29 nov 8am to/7 dec 5pm</code>
+Returns list of events matching the keyword <code>exam</code>, that is ongoing at some point between 8am on 29th November and 5pm on 7th December.</p>
+</li>
+<li>
+<p><code>find event project tag/CS2103 from/15 nov 10am `
+Returns list of events matching the keyword `project</code>, having the tag <code>CS2103</code>, that is ongoing at some point after 10am on 15th November.</p>
+</li>
+<li>
+<p><code>find event tag/cs2103 tag/lecture</code>
+Returns list of events having both the tags 'CS2103' and 'Lecture' (i.e. events with only the <code>CS2103</code> tag but not the <code>Lecture</code> tag would be excluded).</p>
 </li>
 </ul>
 </div>
@@ -709,8 +741,8 @@ e.g. <code>delete event 3</code></p>
 e.g. <code>edit event 1 d/Abstraction v/i3 Auditorium</code></p>
 </li>
 <li>
-<p><strong>Find</strong> : <code>find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]</code><br>
-e.g. <code>find event CS2103 Lecture</code></p>
+<p><strong>Find</strong> : <code>find event [KEYWORD MORE_KEYWORDS&#8230;&#8203;] [from/DATE &amp; TIME] [to/DATE &amp; TIME] [tag/TAG] [tag/MORE_TAGS]</code><br>
+e.g. <code>find event CS2103 Lecture from/16 Nov 8am tag/PE</code></p>
 </li>
 <li>
 <p><strong>List</strong> : <code>list {event/todo}</code></p>
@@ -741,4 +773,4 @@ e.g.<code>show todo 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:22:48 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 14:41:09 UTC</div></div></div></body></html>
