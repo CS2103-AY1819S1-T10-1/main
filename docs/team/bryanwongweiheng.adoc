@@ -15,25 +15,28 @@ Software Engineering. The user interacts with it using a CLI, and it has a GUI c
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+* *Major enhancement*: added ability to have both two and one word commands
+** What it does: allows the app to have commands with one word and commands with two words
+** Justification: this feature allows the app to have more specific commands
 * https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=bryanwongweiheng[Code Contributed]
 
 * *Other contributions*:
 
 ** Project management:
 *** Review issues created from PE dry run
-*** Reviewed PRs (with non-trivial review comments)
+*** Reviewed PRs (with non-trivial review comments) e.g.
+https://github.com/CS2103-AY1819S1-T10-1/main/pull/16[#16]
+https://github.com/CS2103-AY1819S1-T10-1/main/pull/37[#37]
 *** Labeled issues in the tracker
 ** Enhancements to existing features:
-*** Changed GUI layout and color scheme
+*** Changed GUI layout and color scheme https://github.com/CS2103-AY1819S1-T10-1/main/pull/38[#38]
+https://github.com/CS2103-AY1819S1-T10-1/main/pull/40[#40] https://github.com/CS2103-AY1819S1-T10-1/main/pull/41[#41]
 *** Update Test Data https://github.com/CS2103-AY1819S1-T10-1/main/pull/112[#112]
-*** Changed the regex to support two worded commands
-*** Change model from person to calendar event
+*** Change model from person to calendar event https://github.com/CS2103-AY1819S1-T10-1/main/pull/20[#20]
 ** Documentation:
 *** Managed user guide through the project
+*** Updated README
+*** Updated AboutUs
 
 == Contributions to the User Guide
 
@@ -56,3 +59,7 @@ include::../UserGuide.adoc[tag=select]
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
+
+include::../DeveloperGuide.adoc[tag=parsing]
+
+include::../DeveloperGuide.adoc[tag=CalendarModel]

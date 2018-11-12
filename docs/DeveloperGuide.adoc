@@ -617,7 +617,7 @@ identified by two words. Some commands such as `help` and `exit` are not specifi
 One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (`-`) e
 .g. `add-event`. However this is assumed to be less natural to the end user.
 
-//end::parsing
+// end::parsing
 
 // tag::undoredo[]
 === Undo/Redo feature
