@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.FsList;
 
 /**
  * The API of the Model component.
@@ -15,6 +14,7 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<CalendarEvent> PREDICATE_SHOW_ALL_CALENDAR_EVENTS = unused -> true;
+    Comparator<CalendarEvent> COMPARATOR_DEFAULT_SORT_CALENDAR_EVENTS = (var1, var2) -> 0;
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -33,13 +33,13 @@ public interface Model {
 
     /**
      * Deletes the given calendar event.
-     * The calendar event must exist in the scheduler.
+     * {@code target} must exist in the scheduler.
      */
     void deleteCalendarEvent(CalendarEvent target);
 
     /**
      * Adds the given calendar event.
-     * {@code calendarevent} must not already exist in the scheduler.
+     * {@code calendarEvent} must not already exist in the scheduler.
      */
     void addCalendarEvent(CalendarEvent calendarEvent);
 
@@ -57,31 +57,16 @@ public interface Model {
     ObservableList<CalendarEvent> getFullCalendarEventList();
 
     /**
-     * Returns an unmodifiable view of the FsList of calendar events
+     * Returns an unmodifiable view of the filtered and sorted of calendar events
      */
-    ObservableList<CalendarEvent> getFilteredCalendarEventList();
+    ObservableList<CalendarEvent> getFilteredAndSortedCalendarEventList();
 
     /**
-     * Updates the filter of the filtered calendar event list to filter by the given {@code predicate}.
-     *
+     * Updates the filter of the filtered calendar event list to filter by all of the given {@code predicates}.
+     * Note: if multiple predicates are passed, it will filter by the logical AND of all the predicates
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate);
-
-    /**
-     * Filters the {@code FsList} calendar event list by an additional {@code predicate}.
-     */
-    void addPredicate(Predicate<CalendarEvent> predicate);
-
-    /**
-     * Removes all predicates from the {@code FsList} of calendar events.
-     */
-    void clearAllPredicatesAndComparators();
-
-    /**
-     * Return a defensive copy of the {@code FsList}.
-     */
-    FsList getFsList();
+    void updateFilteredCalendarEventList(Predicate<CalendarEvent>... predicates);
 
     /**
      * Sorts the filtered calendar event list by the given {@code comparator}.
@@ -89,6 +74,21 @@ public interface Model {
      * @throws NullPointerException if {@code comparator} is null.
      */
     void sortFilteredCalendarEventList(Comparator<CalendarEvent> comparator);
+
+    /**
+     * Removes all predicates from the {@code FilteredList} and {@code SortedList} of calendar events.
+     */
+    void clearAllPredicatesAndComparators();
+
+    /**
+     * Returns the predicate currently used to filter the {@code FilteredList} of calendar events.
+     */
+    Predicate<? super CalendarEvent> getPredicate();
+
+    /**
+     * Returns the comparator currently used to sort the {@code SortedList} of calendar events.
+     */
+    Comparator<? super CalendarEvent> getComparator();
 
     /**
      * Returns true if the model has previous scheduler states to restore.

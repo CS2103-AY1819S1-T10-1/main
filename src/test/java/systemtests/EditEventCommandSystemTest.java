@@ -16,20 +16,20 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE_2;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_LECTURE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SEMINAR;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 
-import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
 import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
@@ -43,6 +43,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.DateTimeInfo;
 import seedu.address.model.calendarevent.Description;
 import seedu.address.model.calendarevent.Title;
 import seedu.address.model.calendarevent.Venue;
@@ -64,8 +65,8 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         Index index = INDEX_FIRST_ELEMENT;
         String command = " " + EditEventCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
             + TITLE_DESC_TUTORIAL + "  " + DESCRIPTION_DESC_TUTORIAL + " " + START_DESC_TUTORIAL + " "
-            + END_DESC_TUTORIAL + " " + VENUE_DESC_TUTORIAL + " " + TAG_DESC_HUSBAND + " ";
-        CalendarEvent editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_HUSBAND).build();
+            + END_DESC_TUTORIAL + " " + VENUE_DESC_TUTORIAL + " " + TAG_DESC_LECTURE + " ";
+        CalendarEvent editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTags(VALID_TAG_LECTURE).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
         /* Case: undo editing the last calendar event in the list -> last calendar event restored */
@@ -76,24 +77,24 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         /* Case: redo editing the last calendar event in the list -> last calendar event edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updateCalendarEvent(
-                getModel().getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased()), editedCalendarEvent);
+        model.updateCalendarEvent(getModel().getFilteredAndSortedCalendarEventList()
+                                            .get(INDEX_FIRST_ELEMENT.getZeroBased()), editedCalendarEvent);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a calendar event with new values same as existing values -> edited */
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
-            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+            + TAG_DESC_TUTORIAL + TAG_DESC_LECTURE;
         assertCommandSuccess(command, index, TUTORIAL);
 
         /* Case: edit a calendar event with new values same as another calendar event's values but with different title
         -> edited */
         assertTrue(getModel().getScheduler().getCalendarEventList().contains(TUTORIAL));
         index = INDEX_SECOND_ELEMENT;
-        assertNotEquals(getModel().getFilteredCalendarEventList().get(index.getZeroBased()), TUTORIAL);
+        assertNotEquals(getModel().getFilteredAndSortedCalendarEventList().get(index.getZeroBased()), TUTORIAL);
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
-            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+            + TAG_DESC_TUTORIAL + TAG_DESC_LECTURE;
         editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withTitle(VALID_TITLE_LECTURE).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
@@ -104,7 +105,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         index = INDEX_SECOND_ELEMENT;
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_TUTORIAL
-            + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+            + TAG_DESC_TUTORIAL + TAG_DESC_LECTURE;
         editedCalendarEvent = new CalendarEventBuilder(TUTORIAL).withStart(VALID_START_DATETIME_LECTURE)
                 .withEnd(VALID_END_DATETIME_LECTURE).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
@@ -112,7 +113,8 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_ELEMENT;
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TAG_EMPTY;
-        CalendarEvent calendarEventToEdit = getModel().getFilteredCalendarEventList().get(index.getZeroBased());
+        CalendarEvent calendarEventToEdit =
+                getModel().getFilteredAndSortedCalendarEventList().get(index.getZeroBased());
         editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withTags().build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
@@ -123,9 +125,9 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
 
         showCalendarEventsWithTitle(VALID_TITLE_SEMINAR);
         index = INDEX_FIRST_ELEMENT;
-        assertTrue(index.getZeroBased() < getModel().getFilteredCalendarEventList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredAndSortedCalendarEventList().size());
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TITLE_DESC_LECTURE;
-        calendarEventToEdit = getModel().getFilteredCalendarEventList().get(index.getZeroBased());
+        calendarEventToEdit = getModel().getFilteredAndSortedCalendarEventList().get(index.getZeroBased());
         editedCalendarEvent = new CalendarEventBuilder(calendarEventToEdit).withTitle(VALID_TITLE_LECTURE).build();
         assertCommandSuccess(command, index, editedCalendarEvent);
 
@@ -133,7 +135,6 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         calendar event list
          * -> rejected
          */
-        //showCalendarEventsWithTitle(KEYWORD_MATCHING_EXACT_TUTORIAL);
         showCalendarEventsWithTitle(VALID_TITLE_SEMINAR);
         int invalidIndex = getModel().getScheduler().getCalendarEventList().size();
         assertCommandFailure(EditEventCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_TUTORIAL,
@@ -148,7 +149,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         selectCalendarEvent(index);
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_TUTORIAL
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_TUTORIAL + END_DESC_TUTORIAL
-            + VENUE_DESC_TUTORIAL + TAG_DESC_HUSBAND + TAG_DESC_FRIEND;
+            + VENUE_DESC_TUTORIAL + TAG_DESC_LECTURE + TAG_DESC_TUTORIAL;
         assertCommandSuccess(command, index, TUTORIAL, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -162,7 +163,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredCalendarEventList().size() + 1;
+        invalidIndex = getModel().getFilteredAndSortedCalendarEventList().size() + 1;
         assertCommandFailure(EditEventCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_TUTORIAL,
             Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 
@@ -195,28 +196,33 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a calendar event with new values same as another calendar event's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(LECTURE));
-        assertTrue(getModel().getScheduler().getCalendarEventList().contains(LECTURE));
+        executeCommand(PersonUtil.getAddCommand(CS2103_LECTURE));
+        assertTrue(getModel().getScheduler().getCalendarEventList().contains(CS2103_LECTURE));
         index = INDEX_FIRST_ELEMENT;
-        assertFalse(getModel().getFilteredCalendarEventList().get(index.getZeroBased()).equals(LECTURE));
+        assertFalse(getModel().getFilteredAndSortedCalendarEventList().get(index.getZeroBased())
+                                            .equals(CS2103_LECTURE));
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
             + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE_2 + END_DESC_LECTURE_2
-            + VENUE_DESC_LECTURE + TAG_DESC_FRIEND;
+            + VENUE_DESC_LECTURE + TAG_DESC_TUTORIAL;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: edit a calendar event with new values same as another calendar event's values but with different tags
         -> rejected */
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
             + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE_2 + END_DESC_LECTURE_2
-            + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
+            + VENUE_DESC_LECTURE + TAG_DESC_LECTURE;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
-        /* Case: edit a calendarevent with new values same as another calendarevent's values but with different
+        /* Case: edit a calendar event with new values same as another calendar event's values but with different
         description -> rejected */
         command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_LECTURE
             + DESCRIPTION_DESC_TUTORIAL + START_DESC_LECTURE_2 + END_DESC_LECTURE_2
-            + VENUE_DESC_LECTURE + TAG_DESC_HUSBAND;
+            + VENUE_DESC_LECTURE + TAG_DESC_LECTURE;
         assertCommandFailure(command, EditEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
+
+        /* Case: edit a calendar event with new start date/time after the new end date/time -> rejected */
+        command = EditEventCommand.COMMAND_WORD + " " + index.getOneBased() + START_DESC_TUTORIAL + END_DESC_LECTURE;
+        assertCommandFailure(command, DateTimeInfo.MESSAGE_DATETIMEINFO_CONSTRAINTS);
 
     }
 
@@ -245,7 +251,7 @@ public class EditEventCommandSystemTest extends SchedulerSystemTest {
         Model expectedModel = getModel();
 
         expectedModel.updateCalendarEvent(
-            expectedModel.getFilteredCalendarEventList().get(toEdit.getZeroBased()), editedCalendarEvent);
+            expectedModel.getFilteredAndSortedCalendarEventList().get(toEdit.getZeroBased()), editedCalendarEvent);
 
         assertCommandSuccess(command, expectedModel,
             String.format(EditEventCommand.MESSAGE_EDIT_CALENDAR_EVENT_SUCCESS, editedCalendarEvent),

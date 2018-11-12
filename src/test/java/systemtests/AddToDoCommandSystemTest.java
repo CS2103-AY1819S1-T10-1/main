@@ -1,18 +1,33 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_1;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_1_WITH_PREFIX;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_2;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_2_WITH_PREFIX;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_3;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_3_WITH_PREFIX;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TODO_COMMAND_WORD;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_1;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_1_WITH_PREFIX;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_3;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_3_WITH_PREFIX;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_1;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_1_WITH_PREFIX;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_2;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_2_WITH_PREFIX;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_3;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_3_WITH_PREFIX;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ASSIGNMENT;
-import static seedu.address.testutil.TypicalTodoListEvents.ASSIGNMENT;
-import static seedu.address.testutil.TypicalTodoListEvents.MIDTERM;
+
+import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddToDoCommand;
@@ -26,60 +41,61 @@ import seedu.address.testutil.ToDoListEventUtil;
 
 public class AddToDoCommandSystemTest extends SchedulerSystemTest {
 
-    //@Test
-
-    /**
-     * TODO to pass it
-     */
+    @Test
     public void add() {
-        ModelToDo modelToDo = getModelToDo();
-
-        /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
-
-        /* Case: add a todolist event to a non-empty todolist, command with leading spaces and trailing
-         spaces
-         * -> added
-         */
-        ToDoListEvent toAdd = ASSIGNMENT;
-        String command =
-                "   " + AddToDoCommand.COMMAND_WORD + "  " + TITLE_DESC_ASSIGNMENT + "  " + DESCRIPTION_DESC_ASSIGNMENT
-                        + " " + PRIORITY_DESC_ASSIGNMENT + " ";
+        /* Case: add a ToDoListEvent to a non-empty toDoList, command with leading spaces and trailing spaces
+        -> added */
+        ToDoListEvent toAdd = new ToDoListEventBuilder()
+            .withTitle(TITLE_1)
+            .withDescription(DESCRIPTION_1)
+            .withPriority(PRIORITY_1).build();
+        String command = "   " + AddToDoCommand.COMMAND_WORD + "  " + TITLE_1_WITH_PREFIX + "  "
+            + DESCRIPTION_1_WITH_PREFIX + " " + PRIORITY_1_WITH_PREFIX + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a todolist event with all fields same as another todolist event in the todolist except name ->
-        added */
-        toAdd = new ToDoListEventBuilder(ASSIGNMENT).withTitle(VALID_TITLE_ASSIGNMENT).build();
-        command = AddToDoCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_ASSIGNMENT
-                + PRIORITY_DESC_ASSIGNMENT;
+        /* Case: add a ToDoListEvent with all fields same as another ToDoListEvent in the toDoList except title
+        -> added */
+        toAdd = new ToDoListEventBuilder(toAdd).withTitle(TITLE_2).build();
+        command = "   " + AddToDoCommand.COMMAND_WORD + "  " + TITLE_2_WITH_PREFIX + "  " + DESCRIPTION_1_WITH_PREFIX
+                + " " + PRIORITY_1_WITH_PREFIX + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a todolistevent, command with parameters in random order -> added */
-        toAdd = ASSIGNMENT;
-        command =
-                AddToDoCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + PRIORITY_DESC_ASSIGNMENT
-                        + DESCRIPTION_DESC_ASSIGNMENT;
+        /* Case: add a ToDoListEvent with all fields same as another ToDoListEvent in the toDoList except description
+        -> added */
+        toAdd = new ToDoListEventBuilder(toAdd).withDescription(DESCRIPTION_2).build();
+        command = AddToDoCommand.COMMAND_WORD + "     " + TITLE_2_WITH_PREFIX + "  " + DESCRIPTION_2_WITH_PREFIX
+            + " " + PRIORITY_1_WITH_PREFIX + "    ";
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a ToDoListEvent, command having parameters in random order -> added */
+        toAdd = new ToDoListEventBuilder()
+            .withTitle(TITLE_3)
+            .withDescription(DESCRIPTION_3)
+            .withPriority(PRIORITY_3).build();
+        command = "   " + AddToDoCommand.COMMAND_WORD + "  " + DESCRIPTION_3_WITH_PREFIX
+                + " " + PRIORITY_3_WITH_PREFIX + "          " + TITLE_3_WITH_PREFIX;
         assertCommandSuccess(command, toAdd);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
-        /* Case: add a duplicate todolistevent -> rejected */
-        command = ToDoListEventUtil.getAddToDoCommand(MIDTERM);
+        /* Case: add a duplicate ToDoListEvent -> rejected */
+        command = ToDoListEventUtil.getAddToDoCommand(toAdd);
         assertCommandFailure(command, AddToDoCommand.MESSAGE_DUPLICATE_TODO_EVENT);
 
-        /* Case: missing name -> rejected */
+        /* Case: command missing name -> rejected */
         command = AddToDoCommand.COMMAND_WORD + DESCRIPTION_DESC_ASSIGNMENT + PRIORITY_DESC_ASSIGNMENT;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
 
-        /* Case: missing description -> rejected */
+        /* Case: command missing description -> rejected */
         command = AddToDoCommand.COMMAND_WORD + TITLE_DESC_ASSIGNMENT + PRIORITY_DESC_ASSIGNMENT;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
 
-        /* Case: missing priority -> rejected */
+        /* Case: command missing priority -> rejected */
         command = AddToDoCommand.COMMAND_WORD + TITLE_DESC_ASSIGNMENT + DESCRIPTION_DESC_ASSIGNMENT;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + ToDoListEventUtil.getToDoListEventDetails(toAdd);
+        command = INVALID_TODO_COMMAND_WORD + ToDoListEventUtil.getToDoListEventDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */

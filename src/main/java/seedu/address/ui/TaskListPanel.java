@@ -59,7 +59,6 @@ public class TaskListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     /**

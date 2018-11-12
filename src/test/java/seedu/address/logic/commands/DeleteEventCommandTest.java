@@ -32,7 +32,7 @@ public class DeleteEventCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         CalendarEvent calendarEventToDelete =
-            model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredAndSortedCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_ELEMENT);
 
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS,
@@ -47,7 +47,7 @@ public class DeleteEventCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size() + 1);
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteEventCommand, model, commandHistory,
@@ -59,7 +59,7 @@ public class DeleteEventCommandTest {
         showCalendarEventAtIndex(model, INDEX_FIRST_ELEMENT);
 
         CalendarEvent calendarEventToDelete =
-            model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredAndSortedCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_ELEMENT);
 
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_CALENDAR_EVENT_SUCCESS,
@@ -90,7 +90,7 @@ public class DeleteEventCommandTest {
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         CalendarEvent calendarEventToDelete =
-            model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredAndSortedCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_ELEMENT);
         Model expectedModel = new ModelManager(model.getScheduler(), new UserPrefs());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
@@ -110,7 +110,7 @@ public class DeleteEventCommandTest {
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size() + 1);
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(outOfBoundIndex);
 
         // execution failed -> address book state not added into model
@@ -136,7 +136,7 @@ public class DeleteEventCommandTest {
 
         showCalendarEventAtIndex(model, INDEX_SECOND_ELEMENT);
         CalendarEvent calendarEventToDelete =
-            model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
+            model.getFilteredAndSortedCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased());
         expectedModel.deleteCalendarEvent(calendarEventToDelete);
         expectedModel.commitScheduler();
 
@@ -149,7 +149,7 @@ public class DeleteEventCommandTest {
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(calendarEventToDelete,
-            model.getFilteredCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased()));
+            model.getFilteredAndSortedCalendarEventList().get(INDEX_FIRST_ELEMENT.getZeroBased()));
         // redo -> deletes same second calendar event in unfiltered calendar event list
         expectedModel.redoScheduler();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -183,6 +183,6 @@ public class DeleteEventCommandTest {
     private void showNoCalendarEvent(Model model) {
         model.updateFilteredCalendarEventList(p -> false);
 
-        assertTrue(model.getFilteredCalendarEventList().isEmpty());
+        assertTrue(model.getFilteredAndSortedCalendarEventList().isEmpty());
     }
 }

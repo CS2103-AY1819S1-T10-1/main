@@ -63,7 +63,7 @@ public class DeleteEventCommandSystemTest extends SchedulerSystemTest {
         deleted */
         showCalendarEventsWithTitle("Choir");
         Index index = INDEX_FIRST_ELEMENT;
-        assertTrue(index.getZeroBased() < getModel().getFilteredCalendarEventList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredAndSortedCalendarEventList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered calendarevent list, delete index within bounds of address book but out of bounds of

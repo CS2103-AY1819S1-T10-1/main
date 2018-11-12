@@ -6,8 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +91,7 @@ public class SchedulerParserTest {
             FindEventCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindEventCommand(new FuzzySearchFilterPredicate(keywords),
             new FuzzySearchComparator(keywords), new DatePredicate(null, null),
-            new TagsPredicate(new ArrayList<>())), command);
+            new TagsPredicate(Collections.emptySet())), command);
     }
 
     @Test

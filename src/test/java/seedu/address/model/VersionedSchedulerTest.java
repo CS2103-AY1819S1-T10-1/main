@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.TypicalEvents.AMY;
-import static seedu.address.testutil.TypicalEvents.CARL;
+import static seedu.address.testutil.TypicalEvents.CS2040_LAB;
+import static seedu.address.testutil.TypicalEvents.LECTURE;
 import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import java.util.Arrays;
@@ -18,9 +18,9 @@ import seedu.address.testutil.SchedulerBuilder;
 
 public class VersionedSchedulerTest {
 
-    private final ReadOnlyScheduler addressBookWithAmy = new SchedulerBuilder().withCalendarEvent(AMY).build();
+    private final ReadOnlyScheduler addressBookWithAmy = new SchedulerBuilder().withCalendarEvent(LECTURE).build();
     private final ReadOnlyScheduler addressBookWithBob = new SchedulerBuilder().withCalendarEvent(TUTORIAL).build();
-    private final ReadOnlyScheduler addressBookWithCarl = new SchedulerBuilder().withCalendarEvent(CARL).build();
+    private final ReadOnlyScheduler addressBookWithCarl = new SchedulerBuilder().withCalendarEvent(CS2040_LAB).build();
     private final ReadOnlyScheduler emptyAddressBook = new SchedulerBuilder().build();
 
     @Test

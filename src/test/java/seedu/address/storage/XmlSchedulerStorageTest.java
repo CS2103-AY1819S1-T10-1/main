@@ -2,9 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalEvents.HOON;
-import static seedu.address.testutil.TypicalEvents.IDA;
-import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
+import static seedu.address.testutil.TypicalEvents.GEQ1000_LECTURE;
+import static seedu.address.testutil.TypicalEvents.LUNCH;
 import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 
 import java.io.IOException;
@@ -85,14 +85,14 @@ public class XmlSchedulerStorageTest {
         assertEquals(original, new Scheduler(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addCalendarEvent(HOON);
-        original.removeCalendarEvent(LECTURE);
+        original.addCalendarEvent(GEQ1000_LECTURE);
+        original.removeCalendarEvent(CS2103_LECTURE);
         xmlSchedulerStorage.saveScheduler(original, filePath);
         readBack = xmlSchedulerStorage.readScheduler(filePath).get();
         assertEquals(original, new Scheduler(readBack));
 
         //Save and read without specifying file path
-        original.addCalendarEvent(IDA);
+        original.addCalendarEvent(LUNCH);
         xmlSchedulerStorage.saveScheduler(original); //file path not specified
         readBack = xmlSchedulerStorage.readScheduler().get(); //file path not specified
         assertEquals(original, new Scheduler(readBack));

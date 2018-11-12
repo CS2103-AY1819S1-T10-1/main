@@ -1,6 +1,6 @@
 package seedu.address.model.calendarevent;
 
-import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
@@ -9,16 +9,16 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code CalendarEvent}'s {@code Tags} match all of the tags given.
  */
 public class TagsPredicate implements Predicate<CalendarEvent> {
-    private final List<String> tags;
+    private final Set<String> tags;
 
-    public TagsPredicate(List<String> tags) {
+    public TagsPredicate(Set<String> tags) {
         this.tags = tags;
     }
 
     @Override
     public boolean test(CalendarEvent calendarEvent) {
-        return tags.stream()
-            .allMatch(tag -> StringUtil.containsIgnoreCase(calendarEvent.getTagStrings(), tag));
+        return !hasTags()
+                || tags.stream().allMatch(tag -> StringUtil.containsIgnoreCase(calendarEvent.getTagStrings(), tag));
     }
 
     @Override
@@ -28,6 +28,9 @@ public class TagsPredicate implements Predicate<CalendarEvent> {
             && tags.equals(((TagsPredicate) other).tags)); // state check
     }
 
+    /**
+     * Returns whether {@code TagsPredicate} has any {@code tags}
+     */
     public boolean hasTags() {
         return !tags.isEmpty();
     }

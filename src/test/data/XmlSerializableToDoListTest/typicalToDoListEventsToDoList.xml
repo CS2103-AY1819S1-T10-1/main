@@ -21,4 +21,34 @@
         <description>remember to buy gifts</description>
         <priority>M</priority>
     </toDoListEvents>
+    <toDoListEvents>
+        <title>CS1000</title>
+        <description>teach to friends</description>
+        <priority>L</priority>
+    </toDoListEvents>
+    <toDoListEvents>
+        <title>CS2000</title>
+        <description>teach to friends</description>
+        <priority>M</priority>
+    </toDoListEvents>
+    <toDoListEvents>
+        <title>CS3000</title>
+        <description>teach to friends</description>
+        <priority>H</priority>
+    </toDoListEvents>
+    <toDoListEvents>
+        <title>CS4000</title>
+        <description>seek help from prof</description>
+        <priority>L</priority>
+    </toDoListEvents>
+    <toDoListEvents>
+        <title>CS5000</title>
+        <description>seek help from prof</description>
+        <priority>M</priority>
+    </toDoListEvents>
+    <toDoListEvents>
+        <title>CS6000</title>
+        <description>seek help from prof</description>
+        <priority>H</priority>
+    </toDoListEvents>
 </toDoList>

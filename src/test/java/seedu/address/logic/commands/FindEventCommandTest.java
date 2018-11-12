@@ -5,14 +5,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalEvents.CARL;
-import static seedu.address.testutil.TypicalEvents.ELLE;
-import static seedu.address.testutil.TypicalEvents.FIONA;
+import static seedu.address.testutil.TypicalEvents.CAREER_FAIR;
+import static seedu.address.testutil.TypicalEvents.CHOIR_PRACTICE;
+import static seedu.address.testutil.TypicalEvents.CS2040_LAB;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
+import static seedu.address.testutil.TypicalEvents.CS2104_TUTORIAL;
+import static seedu.address.testutil.TypicalEvents.FIN3101_SEMINAR;
+import static seedu.address.testutil.TypicalEvents.GOOGLE_INTERVIEW;
 import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -46,20 +50,24 @@ public class FindEventCommandTest {
             new FuzzySearchComparator(Collections.singletonList("first"));
         FuzzySearchComparator secondComparator =
             new FuzzySearchComparator(Collections.singletonList("second"));
-        DatePredicate datePredicate = new DatePredicate(null, null);
-        TagsPredicate tagsPredicate = new TagsPredicate(new ArrayList<String>());
+        DatePredicate firstDatePredicate =
+            new DatePredicate(new DateTime("2018-11-10 20:00"), new DateTime("2018-11-10 22:00"));
+        DatePredicate secondDatePredicate =
+            new DatePredicate(new DateTime("2018-11-11 20:00"), new DateTime("2018-11-11 22:00"));
+        TagsPredicate firstTagsPredicate = new TagsPredicate(new HashSet<>(Arrays.asList("tag1", "tag2")));
+        TagsPredicate secondTagsPredicate = new TagsPredicate(new HashSet<>(Arrays.asList("tag3", "tag4")));
 
         FindEventCommand findFirstCommand =
-                new FindEventCommand(firstPredicate, firstComparator, datePredicate, tagsPredicate);
+                new FindEventCommand(firstPredicate, firstComparator, firstDatePredicate, firstTagsPredicate);
         FindEventCommand findSecondCommand =
-                new FindEventCommand(secondPredicate, secondComparator, datePredicate, tagsPredicate);
+                new FindEventCommand(secondPredicate, secondComparator, secondDatePredicate, secondTagsPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
         FindEventCommand findFirstCommandCopy =
-                new FindEventCommand(firstPredicate, firstComparator, datePredicate, tagsPredicate);
+                new FindEventCommand(firstPredicate, firstComparator, firstDatePredicate, firstTagsPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -68,49 +76,116 @@ public class FindEventCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different calendarevent -> returns false
+        // different find event command -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noCalendarEventFound() {
-        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 0);
-        FuzzySearchFilterPredicate predicate = preparePredicate(" ");
-        FuzzySearchComparator comparator = prepareComparator(" ");
-        DatePredicate datePredicate = prepareDatePredicate(" ", " ");
-        TagsPredicate tagsPredicate = prepareTagsPredicate(" ");
-        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
-        expectedModel.updateFilteredCalendarEventList(predicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredCalendarEventList());
-    }
-
-    @Test
-    public void execute_multipleKeywords_multipleCalendarEventsFound() {
+    public void execute_onlyKeywords_multipleCalendarEventsFound() {
         String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 3);
         FuzzySearchFilterPredicate predicate = preparePredicate("Lab Practice Fair");
         FuzzySearchComparator comparator = prepareComparator("Lab Practice Fair");
-        DatePredicate datePredicate = prepareDatePredicate(" ", " ");
+        DatePredicate datePredicate = prepareDatePredicate("", "");
         TagsPredicate tagsPredicate = prepareTagsPredicate("");
         FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
-        expectedModel.updateFilteredCalendarEventList(predicate);
-        expectedModel.sortFilteredCalendarEventList(comparator); // added because FindEventCommand sorts as well
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredCalendarEventList());
+        assertEquals(Arrays.asList(CS2040_LAB, CHOIR_PRACTICE, CAREER_FAIR),
+                                model.getFilteredAndSortedCalendarEventList());
+    }
+
+    @Test
+    public void execute_onlyDates_multipleCalendarEventsFound() {
+        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 3);
+        FuzzySearchFilterPredicate predicate = preparePredicate("");
+        FuzzySearchComparator comparator = prepareComparator("");
+        DatePredicate datePredicate = prepareDatePredicate("16 nov 2018 0800", "");
+        TagsPredicate tagsPredicate = prepareTagsPredicate("");
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(FIN3101_SEMINAR, CHOIR_PRACTICE, CAREER_FAIR),
+                                model.getFilteredAndSortedCalendarEventList());
+    }
+
+    @Test
+    public void execute_onlyTag_singleCalendarEventFound() {
+        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 1);
+        FuzzySearchFilterPredicate predicate = preparePredicate("");
+        FuzzySearchComparator comparator = prepareComparator("");
+        DatePredicate datePredicate = prepareDatePredicate("", "");
+        TagsPredicate tagsPredicate = prepareTagsPredicate("Lecture");
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CS2103_LECTURE), model.getFilteredAndSortedCalendarEventList());
+    }
+
+    @Test
+    public void execute_keywordsAndDates_multipleCalendarEventFound() {
+        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 2);
+        FuzzySearchFilterPredicate predicate = preparePredicate("lecture Tutorial lab");
+        FuzzySearchComparator comparator = prepareComparator("lecture Tutorial lab");
+        DatePredicate datePredicate = prepareDatePredicate("", "14 nov 2018 9am");
+        TagsPredicate tagsPredicate = prepareTagsPredicate("");
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CS2104_TUTORIAL, CS2040_LAB), model.getFilteredAndSortedCalendarEventList());
+    }
+
+    @Test
+    public void execute_keywordsAndTag_singleCalendarEventFound() {
+        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 1);
+        FuzzySearchFilterPredicate predicate = preparePredicate("CS2104");
+        FuzzySearchComparator comparator = prepareComparator("CS2104");
+        DatePredicate datePredicate = prepareDatePredicate("", "");
+        TagsPredicate tagsPredicate = prepareTagsPredicate("tutorial");
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CS2104_TUTORIAL), model.getFilteredAndSortedCalendarEventList());
+    }
+
+    @Test
+    public void execute_keywordsDatesAndTag_singleCalendarEventFound() {
+        String expectedMessage = String.format(MESSAGE_CALENDAR_EVENTS_LISTED_OVERVIEW, 1);
+        FuzzySearchFilterPredicate predicate = preparePredicate("google");
+        FuzzySearchComparator comparator = prepareComparator("google");
+        DatePredicate datePredicate = prepareDatePredicate("11 nov 18 5pm", "18 nov 18 5pm");
+        TagsPredicate tagsPredicate = prepareTagsPredicate("interview");
+        FindEventCommand command = new FindEventCommand(predicate, comparator, datePredicate, tagsPredicate);
+        expectedModel.updateFilteredCalendarEventList(predicate, datePredicate, tagsPredicate);
+        expectedModel.sortFilteredCalendarEventList(comparator);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(GOOGLE_INTERVIEW), model.getFilteredAndSortedCalendarEventList());
     }
 
     /**
      * Parses {@code userInput} into a {@code FuzzySearchFilterPredicate}.
      */
     private FuzzySearchFilterPredicate preparePredicate(String userInput) {
-        return new FuzzySearchFilterPredicate(Arrays.asList(userInput.split("\\s+")));
+        if (!userInput.isEmpty()) {
+            return new FuzzySearchFilterPredicate(Arrays.asList(userInput.split("\\s+")));
+        } else {
+            return new FuzzySearchFilterPredicate(Collections.emptyList());
+        }
     }
 
     /**
      * Parses {@code userInput} into a {@code FuzzySearchComparator}.
      */
     private FuzzySearchComparator prepareComparator(String userInput) {
-        return new FuzzySearchComparator(Arrays.asList(userInput.split("\\s+")));
+        if (!userInput.isEmpty()) {
+            return new FuzzySearchComparator(Arrays.asList(userInput.split("\\s+")));
+        } else {
+            return new FuzzySearchComparator(Collections.emptyList());
+        }
     }
 
     /**
@@ -137,10 +212,11 @@ public class FindEventCommandTest {
      * Parses {@code userInput} into a {@code TagsPredicate}.
      */
     private TagsPredicate prepareTagsPredicate(String userInput) {
+        userInput = userInput.trim();
         if (userInput.isEmpty()) {
-            return new TagsPredicate(new ArrayList<>());
+            return new TagsPredicate(Collections.emptySet());
         } else {
-            return new TagsPredicate(Arrays.asList(userInput.split("\\s+")));
+            return new TagsPredicate(new HashSet<>(Arrays.asList(userInput.split("\\s+"))));
         }
     }
 }

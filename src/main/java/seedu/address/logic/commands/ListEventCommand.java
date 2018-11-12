@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.RefreshCalendarPanelEvent;
 import seedu.address.commons.events.ui.SwitchToSearchTabEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,7 +25,6 @@ public class ListEventCommand extends Command {
 
         model.clearAllPredicatesAndComparators();
 
-        EventsCenter.getInstance().post(new RefreshCalendarPanelEvent());
         EventsCenter.getInstance().post(new SwitchToSearchTabEvent());
 
         return new CommandResult(MESSAGE_SUCCESS);

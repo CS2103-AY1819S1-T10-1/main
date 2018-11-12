@@ -15,7 +15,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<ToDoListEvent>> {
 
     public static final String TODOLIST_VIEW_ID = "#toDoListView";
 
-    private static final String CARD_PANE_ID = "#cardPane";
+    private static final String CARD_PANE_ID = "#cardPaneToDo";
 
     private Optional<ToDoListEvent> lastRememberedSelectedToDoListEventCard;
 

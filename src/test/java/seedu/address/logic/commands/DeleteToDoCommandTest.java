@@ -61,7 +61,6 @@ public class DeleteToDoCommandTest {
             toDoListEventToDelete);
 
         ModelToDo expectedModel = new ModelManagerToDo(model.getToDoList(), new UserPrefs());
-        System.out.printf(toDoListEventToDelete.toString());
         expectedModel.deleteToDoListEvent(toDoListEventToDelete);
         expectedModel.commitToDoList();
         showNoToDoListEvent(expectedModel);
@@ -74,7 +73,7 @@ public class DeleteToDoCommandTest {
         showToDoListEventAtIndex(model, INDEX_FIRST_ELEMENT);
 
         Index outOfBoundIndex = INDEX_SECOND_ELEMENT;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of todolist
         assertTrue(outOfBoundIndex.getZeroBased() < model.getToDoList().getToDoList().size());
 
         DeleteToDoCommand deleteToDoCommand = new DeleteToDoCommand(outOfBoundIndex);

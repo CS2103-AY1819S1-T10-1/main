@@ -1,0 +1,58 @@
+= Sleepy Li Yi Xin - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: U-Schedule
+
+---
+
+== Overview
+
+*U-Schedule* is a desktop calendar application for university students written for the project for the module CS2103
+Software Engineering. The user interacts with it using a CLI, and it has a GUI created with JavaFX for user feedback.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ToDoList feature*
+** What it does: It allows users to record the tasks with different priorities that need to be completed and delete if completed.
+** Justification: This feature improves the product significantly because in addition to those events that occur at specific times, users also need to record tasks that do not have a specific time. These tasks can be assignments, projects or some simple plans. And they can do tasks according to priority.
+** Highlights: This enhancement uses a different model from calendar events and it need re-construct logic, storage and ui conponents.
+
+* *Minor enhancement*:
+** Add a showDescriptionCommand to show description of task with a popup window.
+** Make priorities displayed in different colors.
+
+* *Code contributed*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=sleepysanjinli
+
+* *Other contributions*:
+
+** Project management:
+*** Set up some issues.
+*** Managing milestones.
+** Enhancements to existing features:
+*** Implement GUI for todo lisk (Pull requests https://github.com/CS2103-AY1819S1-T10-1/main/pull/64)
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide and Developer Guide: https://github.com/CS2103-AY1819S1-T10-1/main/pull/120
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S1-T10-1/main/pull/130
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=showDes]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=ToDoList]
+
+*And modify diagrams in Design parts, including Architecture, UI Component, Logic Component and Storage Component.*

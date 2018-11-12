@@ -38,21 +38,21 @@ public class TestUtil {
      * Returns the middle index of the calendarevent in the {@code model}'s calendarevent list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getFilteredCalendarEventList().size() / 2);
+        return Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size() / 2);
     }
 
     /**
      * Returns the last index of the calendarevent in the {@code model}'s calendarevent list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getFilteredCalendarEventList().size());
+        return Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size());
     }
 
     /**
      * Returns the calendarevent in the {@code model}'s calendarevent list at {@code index}.
      */
     public static CalendarEvent getPerson(Model model, Index index) {
-        return model.getFilteredCalendarEventList().get(index.getZeroBased());
+        return model.getFilteredAndSortedCalendarEventList().get(index.getZeroBased());
     }
 
     /**

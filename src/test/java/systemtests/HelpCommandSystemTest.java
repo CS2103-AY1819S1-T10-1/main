@@ -41,7 +41,8 @@ public class HelpCommandSystemTest extends SchedulerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertCalendarEventListMatching(getCalendarEventListPanel(), getModel().getFilteredCalendarEventList());
+        assertCalendarEventListMatching(getCalendarEventListPanel(),
+                                        getModel().getFilteredAndSortedCalendarEventList());
 
         // assert that the status bar too is updated correctly while the help window is open
         // note: the select command tested above does not update the status bar

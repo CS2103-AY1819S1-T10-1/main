@@ -11,7 +11,7 @@ We are a team of NUS students and students on exchange at NUS.
 
 === Vighnesh Ramesh Iyer
 image::vig42.png[width="150", align="left"]
-{empty}[https://github.com/vig42] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/vig42] [<<vighneshrameshiyer#, portfolio>>]
 
 Role: Team Lead, Developer +
 Responsibilities: Dev Ops, Integration, Travis expert +
@@ -31,7 +31,7 @@ In Charge Of: UI
 
 === Li Yixin
 image::sleepysanjinli.png[width="150", align="left"]
-{empty}[https://github.com/SleepySanjinLi] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/SleepySanjinLi] [<<sleepyliyixin#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Code Quality, Deliverables and deadlines, Gradle expert +

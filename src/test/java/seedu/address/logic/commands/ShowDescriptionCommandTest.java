@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandToDoSucc
 import static seedu.address.logic.commands.CommandTestUtil.showToDoListEventAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ELEMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ELEMENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_ELEMENT;
 import static seedu.address.testutil.TypicalTodoListEvents.getTypicalToDoList;
 
 import org.junit.Rule;
@@ -33,34 +32,11 @@ public class ShowDescriptionCommandTest {
     private ModelToDo expectedModelToDo = new ModelManagerToDo(getTypicalToDoList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
-    //@Test
-    /**
-     * TODO pass it
-     */
-    public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(modelToDo.getFilteredToDoListEventList().size());
-
-        assertExecutionSuccess(INDEX_FIRST_ELEMENT);
-        assertExecutionSuccess(INDEX_THIRD_ELEMENT);
-        assertExecutionSuccess(lastPersonIndex);
-    }
-
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(modelToDo.getFilteredToDoListEventList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TODOLIST_EVENTS_DISPLAYED_INDEX);
-    }
-
-    //@Test
-    /**
-     * TODO pass it
-     */
-    public void execute_validIndexFilteredList_success() {
-        showToDoListEventAtIndex(modelToDo, INDEX_FIRST_ELEMENT);
-        showToDoListEventAtIndex(expectedModelToDo, INDEX_FIRST_ELEMENT);
-
-        assertExecutionSuccess(INDEX_FIRST_ELEMENT);
     }
 
     @Test

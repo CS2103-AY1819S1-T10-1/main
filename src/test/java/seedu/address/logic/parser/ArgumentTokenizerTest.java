@@ -77,6 +77,18 @@ public class ArgumentTokenizerTest {
         assertPreambleEmpty(argMultimap);
         assertArgumentPresent(argMultimap, pSlash, "Argument value");
 
+        // No preamble, no starting whitespace
+        argsString = "p/   Argument value ";
+        argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        assertPreambleEmpty(argMultimap);
+        assertArgumentPresent(argMultimap, pSlash, "Argument value");
+
+        // Only prefix
+        argsString = "p/";
+        argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        assertPreambleEmpty(argMultimap);
+        assertArgumentPresent(argMultimap, pSlash, "");
+
     }
 
     @Test
@@ -124,6 +136,12 @@ public class ArgumentTokenizerTest {
         assertArgumentPresent(argMultimap, pSlash, "pSlash value");
         assertArgumentPresent(argMultimap, dashT, "dashT-Value", "another dashT value", "");
         assertArgumentPresent(argMultimap, hatQ, "", "");
+
+        // Repeated prefixes without preamble or whitespace at the start
+        argsString = "p/  pSlash value1    \t  p/    pSlash value2";
+        argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        assertArgumentPresent(argMultimap, pSlash, "pSlash value1", "pSlash value2");
+
     }
 
     @Test

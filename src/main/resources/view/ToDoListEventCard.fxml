@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1" id="cardPane" fx:id="cardPane" prefHeight="25.0" prefWidth="400.0"
+<HBox xmlns:fx="http://javafx.com/fxml/1" id="cardPaneToDo" fx:id="cardPaneToDo" prefHeight="25.0" prefWidth="400.0"
       styleClass="container" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8">
     <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="16.0" styleClass="button-bar"
               stylesheets="@DarkTheme.css" HBox.hgrow="ALWAYS"/>

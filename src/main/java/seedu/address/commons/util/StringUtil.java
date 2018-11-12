@@ -121,9 +121,7 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        preppedWord = preppedWord.toLowerCase();
+        String preppedWord = word.trim().toLowerCase();
 
         String preppedSentence = sentence.toLowerCase();
 

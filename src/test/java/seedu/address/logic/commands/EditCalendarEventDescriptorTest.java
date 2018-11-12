@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
 
@@ -49,7 +49,7 @@ public class EditCalendarEventDescriptorTest {
         assertFalse(DESC_LECTURE.equals(editedAmy));
 
         // different tags -> returns false
-        editedAmy = new EditCalendarEventDescriptorBuilder(DESC_LECTURE).withTags(VALID_TAG_HUSBAND).build();
+        editedAmy = new EditCalendarEventDescriptorBuilder(DESC_LECTURE).withTags(VALID_TAG_LECTURE).build();
         assertFalse(DESC_LECTURE.equals(editedAmy));
     }
 }

@@ -16,11 +16,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ModelManagerToDo;
 import seedu.address.model.ModelToDo;
 import seedu.address.model.ReadOnlyScheduler;
+import seedu.address.model.ReadOnlyToDoList;
 import seedu.address.model.Scheduler;
 import seedu.address.model.ToDoList;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableScheduler;
+import seedu.address.storage.XmlSerializableToDoList;
 import seedu.address.testutil.TestUtil;
 
 
@@ -31,25 +33,39 @@ import seedu.address.testutil.TestUtil;
 public class TestApp extends MainApp {
 
     public static final Path SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final Path SAVE_LOCATION_FOR_TESTING_TODO = TestUtil.getFilePathInSandboxFolder("sampleDataToDo.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
         TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected Supplier<ReadOnlyScheduler> initialDataSupplier = () -> null;
-    protected Path saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected Supplier<ReadOnlyScheduler> initialDataSupplierCalendarEvent = () -> null;
+    protected Supplier<ReadOnlyToDoList> initialDataSupplierToDo = () -> null;
+    protected Path saveFileLocationCalendarEvent = SAVE_LOCATION_FOR_TESTING;
+    protected Path saveFileLocationToDo = SAVE_LOCATION_FOR_TESTING_TODO;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyScheduler> initialDataSupplier, Path saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyScheduler> initialDataSupplierCalendarEvent,
+                   Supplier<ReadOnlyToDoList> initialDataSupplierToDo,
+                   Path saveFileLocationCalendarEvent,
+                   Path saveFileLocationToDo) {
         super();
-        this.initialDataSupplier = initialDataSupplier;
-        this.saveFileLocation = saveFileLocation;
+        this.initialDataSupplierCalendarEvent = initialDataSupplierCalendarEvent;
+        this.saveFileLocationCalendarEvent = saveFileLocationCalendarEvent;
 
-        // If some initial local data has been provided, write those to the file
-        if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableScheduler(this.initialDataSupplier.get()),
-                this.saveFileLocation);
+        this.initialDataSupplierToDo = initialDataSupplierToDo;
+        this.saveFileLocationToDo = saveFileLocationToDo;
+
+        // If some initial local data has been provided, write those to the files
+        if (initialDataSupplierCalendarEvent.get() != null) {
+            createDataFileWithData(new XmlSerializableScheduler(this.initialDataSupplierCalendarEvent.get()),
+                this.saveFileLocationCalendarEvent);
+        }
+
+        if (initialDataSupplierCalendarEvent.get() != null) {
+            createDataFileWithData(new XmlSerializableToDoList(this.initialDataSupplierToDo.get()),
+                this.saveFileLocationToDo);
         }
     }
 
@@ -71,7 +87,8 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setSchedulerFilePath(saveFileLocation);
+        userPrefs.setSchedulerFilePath(saveFileLocationCalendarEvent);
+        userPrefs.setToDoListFilePath(saveFileLocationToDo);
         return userPrefs;
     }
 
@@ -118,20 +135,18 @@ public class TestApp extends MainApp {
 
     /**
      * Returns a defensive copy of the model.
-     * The new Model has the same predicates and comparator from FsList and thus the same ordering of FsList.
+     * The new Model has the same predicate and comparator, and thus the same filters and sorting
+     * as the original {@code ObservableList}.
      */
     public Model getModel() {
-        Model copy = new ModelManager(model.getScheduler(), new UserPrefs(), model.getFsList());
-        return copy;
+        return new ModelManager(model.getScheduler(), new UserPrefs(), model.getPredicate(), model.getComparator());
     }
 
     /**
      * Returns a defensive copy of the modelToDo.
-     * The new Model has the same predicates and comparator from FsList and thus the same ordering of FsList.
      */
     public ModelToDo getModelToDo() {
-        ModelToDo copy = new ModelManagerToDo(modelToDo.getToDoList(), new UserPrefs());
-        return copy;
+        return new ModelManagerToDo(modelToDo.getToDoList(), new UserPrefs());
     }
 
     @Override

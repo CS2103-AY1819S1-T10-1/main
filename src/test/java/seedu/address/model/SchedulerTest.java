@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_LECTURE;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
 import static seedu.address.testutil.TypicalEvents.getTypicalScheduler;
 
 import java.util.Arrays;
@@ -50,9 +50,9 @@ public class SchedulerTest {
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two calendarEvents with the same identity fields
         CalendarEvent editedLecture =
-            new CalendarEventBuilder(LECTURE).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(CS2103_LECTURE).withTags(VALID_TAG_LECTURE)
                 .build();
-        List<CalendarEvent> newCalendarEvents = Arrays.asList(LECTURE, editedLecture);
+        List<CalendarEvent> newCalendarEvents = Arrays.asList(CS2103_LECTURE, editedLecture);
         SchedulerStub newData = new SchedulerStub(newCalendarEvents);
 
         thrown.expect(DuplicateCalendarEventException.class);
@@ -67,20 +67,20 @@ public class SchedulerTest {
 
     @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(scheduler.hasCalendarEvent(LECTURE));
+        assertFalse(scheduler.hasCalendarEvent(CS2103_LECTURE));
     }
 
     @Test
     public void hasPerson_personInAddressBook_returnsTrue() {
-        scheduler.addCalendarEvent(LECTURE);
-        assertTrue(scheduler.hasCalendarEvent(LECTURE));
+        scheduler.addCalendarEvent(CS2103_LECTURE);
+        assertTrue(scheduler.hasCalendarEvent(CS2103_LECTURE));
     }
 
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        scheduler.addCalendarEvent(LECTURE);
+        scheduler.addCalendarEvent(CS2103_LECTURE);
         CalendarEvent editedLecture =
-            new CalendarEventBuilder(LECTURE).withTags(VALID_TAG_HUSBAND)
+            new CalendarEventBuilder(CS2103_LECTURE).withTags(VALID_TAG_LECTURE)
                 .build();
         assertTrue(scheduler.hasCalendarEvent(editedLecture));
     }

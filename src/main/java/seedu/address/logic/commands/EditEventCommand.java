@@ -97,7 +97,7 @@ public class EditEventCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<CalendarEvent> lastShownList = model.getFilteredCalendarEventList();
+        List<CalendarEvent> lastShownList = model.getFilteredAndSortedCalendarEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);

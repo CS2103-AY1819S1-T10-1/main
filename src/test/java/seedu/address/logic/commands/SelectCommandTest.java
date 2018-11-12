@@ -36,7 +36,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size());
+        Index lastPersonIndex = Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size());
 
         assertExecutionSuccess(INDEX_FIRST_ELEMENT);
         assertExecutionSuccess(INDEX_THIRD_ELEMENT);
@@ -45,7 +45,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredAndSortedCalendarEventList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
     }

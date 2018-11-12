@@ -68,7 +68,7 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
         /* Case: filtered calendar event list, select index within bounds of scheduler and calendar event list ->
         selected */
         Index validIndex = Index.fromOneBased(1);
-        assertTrue(validIndex.getZeroBased() < getModel().getFilteredCalendarEventList().size());
+        assertTrue(validIndex.getZeroBased() < getModel().getFilteredAndSortedCalendarEventList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
@@ -84,7 +84,7 @@ public class SelectCommandSystemTest extends SchedulerSystemTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredCalendarEventList().size() + 1;
+        invalidIndex = getModel().getFilteredAndSortedCalendarEventList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
             MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
 

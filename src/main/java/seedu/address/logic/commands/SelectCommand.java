@@ -8,6 +8,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToSearchTabEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -38,12 +39,12 @@ public class SelectCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        List<CalendarEvent> filteredCalendarEventList = model.getFilteredCalendarEventList();
+        List<CalendarEvent> filteredCalendarEventList = model.getFilteredAndSortedCalendarEventList();
 
         if (targetIndex.getZeroBased() >= filteredCalendarEventList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CALENDAR_EVENTS_DISPLAYED_INDEX);
         }
-
+        EventsCenter.getInstance().post(new SwitchToSearchTabEvent());
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_CALENDAR_EVENT_SUCCESS, targetIndex.getOneBased()));
 

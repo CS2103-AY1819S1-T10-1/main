@@ -13,8 +13,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_TUTORIAL;
@@ -22,8 +22,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_LE
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_TUTORIAL;
@@ -108,24 +108,24 @@ public class EditEventCommandParserTest {
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code CalendarEvent} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
+        assertParseFailure(parser, "1" + TAG_DESC_TUTORIAL + TAG_DESC_LECTURE + TAG_EMPTY,
             Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
+        assertParseFailure(parser, "1" + TAG_DESC_TUTORIAL + TAG_EMPTY + TAG_DESC_LECTURE,
             Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
+        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_TUTORIAL + TAG_DESC_LECTURE,
             Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_ELEMENT;
-        String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE + TAG_DESC_HUSBAND
-            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TITLE_DESC_LECTURE + TAG_DESC_FRIEND;
+        String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE + TAG_DESC_LECTURE
+            + START_DESC_LECTURE + END_DESC_LECTURE + VENUE_DESC_LECTURE + TITLE_DESC_LECTURE + TAG_DESC_TUTORIAL;
 
         EditCalendarEventDescriptor descriptor = new EditCalendarEventDescriptorBuilder().withTitle(VALID_TITLE_LECTURE)
             .withDescription(VALID_DESCRIPTION_LECTURE).withStart(VALID_START_DATETIME_LECTURE)
             .withEnd(VALID_END_DATETIME_LECTURE).withVenue(VALID_VENUE_LECTURE)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+            .withTags(VALID_TAG_LECTURE, VALID_TAG_TUTORIAL).build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -179,8 +179,8 @@ public class EditEventCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
-        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditCalendarEventDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        userInput = targetIndex.getOneBased() + TAG_DESC_TUTORIAL;
+        descriptor = new EditCalendarEventDescriptorBuilder().withTags(VALID_TAG_TUTORIAL).build();
         expectedCommand = new EditEventCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -189,14 +189,14 @@ public class EditEventCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_ELEMENT;
         String userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_LECTURE + VENUE_DESC_LECTURE
-            + TAG_DESC_FRIEND + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE + END_DESC_LECTURE
+            + TAG_DESC_TUTORIAL + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE + END_DESC_LECTURE
             + VENUE_DESC_LECTURE + START_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL + VENUE_DESC_TUTORIAL
-            + TAG_DESC_HUSBAND + END_DESC_TUTORIAL;
+            + TAG_DESC_LECTURE + END_DESC_TUTORIAL;
 
         EditCalendarEventDescriptor descriptor =
             new EditCalendarEventDescriptorBuilder().withDescription(VALID_DESCRIPTION_TUTORIAL)
                 .withStart(VALID_START_DATETIME_TUTORIAL).withEnd(VALID_END_DATETIME_TUTORIAL)
-                .withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+                .withVenue(VALID_VENUE_TUTORIAL).withTags(VALID_TAG_TUTORIAL, VALID_TAG_LECTURE)
                 .build();
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
 

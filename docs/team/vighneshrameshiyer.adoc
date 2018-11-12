@@ -1,0 +1,68 @@
+= Vighnesh Ramesh Iyer - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: U-Schedule
+
+---
+
+== Overview
+
+U-Schedule is a desktop calendar application for university students written for the project for the module CS2103
+Software Engineering. The user interacts with it using a CLI, and it has a GUI created with JavaFX for user feedback. It
+ is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *fuzzy search with filters*
+** What it does: Allows the user to search for commands without having to type the exact matching words - e.g. "find event proj" to find a calendar event with "Project" in its name. Also allows the user to filter their search by date and time, and by tags, for more precise searching. Finally, it displays the results in decreasing order of relevance (i.e. the most relevant results first).
+** Justification: This feature improves the product significantly because it allows users to search for events more conveniently and more precisely. This would help to significantly improve the ease of use and navigation for our users.
+** Highlights: This enhancement is extensible - it has the potential to be
+This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** Credits: Uses third party library https://github.com/xdrop/fuzzywuzzy[fuzzywuzzy] for the fuzzy search
+
+* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+
+* https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=vig42[Code Contributed]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]

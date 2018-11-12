@@ -19,10 +19,18 @@ public class FuzzySearchFilterPredicate implements Predicate<CalendarEvent> {
 
     @Override
     public boolean test(CalendarEvent calendarEvent) {
-        return keywords.stream()
-            .anyMatch(keyword -> StringUtil.containsWordFuzzy(calendarEvent.getTitle().value, keyword, tolerance)
+        return !hasKeywords()
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordFuzzy(calendarEvent.getTitle().value, keyword, tolerance)
                                 || StringUtil.containsWordFuzzy(calendarEvent.getDescription(), keyword, tolerance)
                                 || StringUtil.containsWordFuzzy(calendarEvent.getVenue().value, keyword, tolerance));
+    }
+
+    /**
+     * Returns whether  {@code FuzzySearchFilterPredicate} has any {@code keywords}
+     */
+    public boolean hasKeywords() {
+        return !keywords.isEmpty();
     }
 
     @Override

@@ -2,9 +2,9 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalEvents.BENSON;
-import static seedu.address.testutil.TypicalEvents.ELLE;
-import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.CHOIR_PRACTICE;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
+import static seedu.address.testutil.TypicalEvents.CS2104_TUTORIAL;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -30,25 +30,25 @@ public class ModelManagerTest {
 
     @Test
     public void hasCalendarEvent_calendarEventNotInScheduler_returnsFalse() {
-        assertFalse(modelManager.hasCalendarEvent(LECTURE));
+        assertFalse(modelManager.hasCalendarEvent(CS2103_LECTURE));
     }
 
     @Test
     public void hasCalendarEvent_calendarEventInScheduler_returnsTrue() {
-        modelManager.addCalendarEvent(LECTURE);
-        assertTrue(modelManager.hasCalendarEvent(LECTURE));
+        modelManager.addCalendarEvent(CS2103_LECTURE);
+        assertTrue(modelManager.hasCalendarEvent(CS2103_LECTURE));
     }
 
     @Test
     public void getFilteredCalendarEventList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredCalendarEventList().remove(0);
+        modelManager.getFilteredAndSortedCalendarEventList().remove(0);
     }
 
     @Test
     public void equals() {
-        Scheduler scheduler =
-            new SchedulerBuilder().withCalendarEvent(LECTURE).withCalendarEvent(BENSON).withCalendarEvent(ELLE).build();
+        Scheduler scheduler = new SchedulerBuilder().withCalendarEvent(CS2103_LECTURE)
+                                    .withCalendarEvent(CS2104_TUTORIAL).withCalendarEvent(CHOIR_PRACTICE).build();
         Scheduler differentScheduler = new Scheduler();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -69,10 +69,10 @@ public class ModelManagerTest {
         // different scheduler -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentScheduler, userPrefs)));
 
-        // different filteredList -> returns true
-        String[] keywords = LECTURE.getTitle().value.split("\\s+");
+        // different filteredList -> returns false
+        String[] keywords = CS2103_LECTURE.getTitle().value.split("\\s+");
         modelManager.updateFilteredCalendarEventList(new FuzzySearchFilterPredicate(Arrays.asList(keywords)));
-        assertTrue(modelManager.equals(new ModelManager(scheduler, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(scheduler, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.clearAllPredicatesAndComparators();

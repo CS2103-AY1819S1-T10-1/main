@@ -13,8 +13,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.START_DESC_TUTORIAL;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_LECTURE;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_TUTORIAL;
@@ -23,12 +23,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_LECTURE;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_TUTORIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalEvents.AMY;
-import static seedu.address.testutil.TypicalEvents.CARL;
-import static seedu.address.testutil.TypicalEvents.HOON;
-import static seedu.address.testutil.TypicalEvents.IDA;
+import static seedu.address.testutil.TypicalEvents.CS2040_LAB;
+import static seedu.address.testutil.TypicalEvents.CS2103_LECTURE;
+import static seedu.address.testutil.TypicalEvents.GEQ1000_LECTURE;
 import static seedu.address.testutil.TypicalEvents.KEYWORD_MATCHING_LECTURE;
 import static seedu.address.testutil.TypicalEvents.LECTURE;
+import static seedu.address.testutil.TypicalEvents.LUNCH;
 import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import org.junit.Test;
@@ -60,10 +60,10 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
          spaces
          * -> added
          */
-        CalendarEvent toAdd = AMY;
+        CalendarEvent toAdd = LECTURE;
         String command =
             "   " + AddEventCommand.COMMAND_WORD + "  " + TITLE_DESC_LECTURE + "  " + DESCRIPTION_DESC_LECTURE + " "
-                + START_DESC_LECTURE + " " + END_DESC_LECTURE + " " + VENUE_DESC_LECTURE + "   " + TAG_DESC_FRIEND
+                + START_DESC_LECTURE + " " + END_DESC_LECTURE + " " + VENUE_DESC_LECTURE + "   " + TAG_DESC_TUTORIAL
                 + " ";
         assertCommandSuccess(command, toAdd);
 
@@ -80,38 +80,38 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
 
         /* Case: add a calendar event with all fields same as another calendar event in the scheduler except name ->
         added */
-        toAdd = new CalendarEventBuilder(AMY).withTitle(VALID_TITLE_TUTORIAL).build();
+        toAdd = new CalendarEventBuilder(LECTURE).withTitle(VALID_TITLE_TUTORIAL).build();
         command = AddEventCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + DESCRIPTION_DESC_LECTURE + START_DESC_LECTURE
-            + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_FRIEND;
+            + END_DESC_LECTURE + VENUE_DESC_LECTURE + TAG_DESC_TUTORIAL;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a calendar event with all fields same as another calendar event in the scheduler except
          * start and end date/time -> added
          */
-        toAdd = new CalendarEventBuilder(AMY).withStart(VALID_START_DATETIME_TUTORIAL)
+        toAdd = new CalendarEventBuilder(LECTURE).withStart(VALID_START_DATETIME_TUTORIAL)
             .withEnd(VALID_END_DATETIME_TUTORIAL).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
         deleteAllCalendarEvents();
-        assertCommandSuccess(LECTURE);
+        assertCommandSuccess(CS2103_LECTURE);
 
         /* Case: add a calendarevent with tags, command with parameters in random order -> added */
         toAdd = TUTORIAL;
         command =
-            AddEventCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + TAG_DESC_FRIEND + DESCRIPTION_DESC_TUTORIAL
-                + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL + TAG_DESC_HUSBAND;
+            AddEventCommand.COMMAND_WORD + TITLE_DESC_TUTORIAL + TAG_DESC_TUTORIAL + DESCRIPTION_DESC_TUTORIAL
+                + START_DESC_TUTORIAL + END_DESC_TUTORIAL + VENUE_DESC_TUTORIAL + TAG_DESC_LECTURE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a calendarevent, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(GEQ1000_LECTURE);
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the calendarevent list before adding -> added */
         showCalendarEventsWithTitle(KEYWORD_MATCHING_LECTURE);
-        assertCommandSuccess(IDA);
+        assertCommandSuccess(LUNCH);
 
         /* ------------------------ Perform add operation while a calendarevent card is selected
         --------------------------- */
@@ -119,16 +119,16 @@ public class AddEventCommandSystemTest extends SchedulerSystemTest {
         /* Case: selects first card in the calendarevent list, add a calendarevent -> added, card selection remains
         unchanged */
         selectCalendarEvent(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(CS2040_LAB);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate calendarevent -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
+        command = PersonUtil.getAddCommand(GEQ1000_LECTURE);
         assertCommandFailure(command, AddEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: add a duplicate calendarevent except with different tags -> rejected */
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = PersonUtil.getAddCommand(GEQ1000_LECTURE) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddEventCommand.MESSAGE_DUPLICATE_CALENDAR_EVENT);
 
         /* Case: missing name -> rejected */

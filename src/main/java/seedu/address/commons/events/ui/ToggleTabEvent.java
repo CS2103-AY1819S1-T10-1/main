@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to refresh the calendar event panel view
+ * An event requesting to switch to the To Do List tab
  */
-public class RefreshCalendarPanelEvent extends BaseEvent {
+public class ToggleTabEvent extends BaseEvent {
 
     @Override
     public String toString() {

@@ -38,7 +38,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list event`* : lists all calendar events
 * *`list todo`* : lists all todo items
-* **`add event`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/2018-10-16 14:00 e/2018-10-16 16:00 v/i3 Auditorium tag/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
+* **`add event`**`t/CS2103 Lecture d/Abstraction, IntelliJ, Gradle s/16 nov 4pm e/16 nov 6pm v/i3 Auditorium tag/lecture` : adds a calendar event titled `CS2103 Lecture` to the calendar.
 * **`add todo`**`t/CS2103 Assignment d/Version Control p/H` : adds a todo item titled `CS2103 Assignment` to the todo list.
 * **`delete event`**`3` : deletes the calendar event marked `3`.
 * **`delete todo`**`3` : deletes the todo item marked `3`.
@@ -129,24 +129,33 @@ Edits the name of the 2nd calendar event to be `CS2103 Project Meetup`.
 // tag::find[]
 === Locating: `find`
 
-Finds calendar events whose names contain any of the given keywords.
-Also optionally filters the search by the specified tags. +
-Format: `find event KEYWORD [MORE_KEYWORDS] [tag/TAG] [tag/MORE_TAGS]`
+Finds calendar events whose title, venue or description match any of the given keywords.
+Also optionally filters the search by the specified date & time interval as well as tags. +
+Format: `find event [KEYWORD MORE_KEYWORDS...] [from/DATE & TIME] [to/DATE & TIME] [tag/TAG] [tag/MORE_TAGS]`
 
 ****
-* The search is case insensitive for both keywords and tags. e.g `lecture` will match `Lecture`
-* The order of the keywords does not matter. e.g. `CS2103 Lecture` will match `Lecture CS2103`
-* Currently only the title will be searched.
-* The search does not look for only exact matches; slight differences and typos will attempt to be matched
-* `CS2103 Lecture` will match 'CS210X Lectures', or 'Lecture CS'
-* However, tags must be an exact (albeit case-insensitive) match.
+* Shows all events that match the keywords and obey the filter rules.
+* The most relevant search results are shown at the top.
+* At least one of the optional fields must be provided.
+* Fuzzy Keyword Search
+** The search is case insensitive for both keywords. e.g `lecture` will match `Lecture`
+** The order of the keywords does not matter. e.g. `CS2103 Lecture` will match `Lecture CS2103`
+** The fuzzy search allows for partial matches for keywords. e.g. `2103 lec` will match `CS2103 Lecture`.
+*** Slight differences and typos will also usually be matched. e.g. `s2130 Lecutre` will match 'CS2103 Lecture'
+* Filter by Date & Time
+** Shows events that occur in the interval from the `from/` date and time, to the `before/` date and time
+* Filter by Tags
+** In order for an event to be shown, it must have a tag that is exactly matching (although case-insensitive) with the input tag.
+** If multiple tags are input, the filter will only show the events with ALL the input tags. e.g. `tag/cs2103 tag/lecture` would not match an event without tag `Lecture`, even if it has the tag `CS2103`
+
 ****
 Examples:
 
 * `find event lecture` +
 Returns `CS2103 Lecture` and `Lecture`
 * `find event cs2103 assignment tag/Project` +
-Returns any event with the tag `Project` having `CS2103` or `assignment` in the title.
+Returns any event with the tag `Project`, whose title, venue or description matches the keywords `CS2103` or `assignment`.
+* `find event exam from/29 nov 8am to/7 dec 5pm
 // end::find[]
 
 // tag::delete[]
@@ -196,6 +205,7 @@ Selects the 2nd calendar event in the calendar.
 Selects the 1st calendar event in the results of the `find event` command.
 // end::select[]
 
+// tag::showDes[]
 === Showing description: `showDescription`
 
 Shows description of the specified todo item from the todo list. +
@@ -212,6 +222,7 @@ Examples:
 * `list todo` +
 `show todo 1` +
 Shows description of the 1st todo item in the todo list.
+// end::showDes[]
 
 === Listing entered commands : `history`
 

@@ -21,7 +21,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyScheduler;
 import seedu.address.model.Scheduler;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.FsList;
 import seedu.address.testutil.CalendarEventBuilder;
 
 public class AddEventCommandTest {
@@ -126,17 +125,12 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
+        public ObservableList<CalendarEvent> getFilteredAndSortedCalendarEventList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void addPredicate(Predicate<CalendarEvent> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
+        public void updateFilteredCalendarEventList(Predicate<CalendarEvent>... predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -151,7 +145,12 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public FsList getFsList() {
+        public Predicate<? super CalendarEvent> getPredicate() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Comparator<? super CalendarEvent> getComparator() {
             throw new AssertionError("This method should not be called.");
         }
 

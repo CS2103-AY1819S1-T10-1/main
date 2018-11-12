@@ -51,7 +51,8 @@ public class ArgumentTokenizer {
         while (prefixPosition != -1) {
             PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
             positions.add(extendedPrefix);
-            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(),
+                                        prefixPosition + prefix.getPrefix().length());
         }
 
         return positions;
@@ -70,6 +71,10 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
+        // If fromIndex is 0, checks if prefix is found starting at index 0
+        if (fromIndex == 0 && argsString.regionMatches(0, prefix, 0, prefix.length())) {
+            return 0;
+        }
         int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
         return prefixIndex == -1 ? -1
             : prefixIndex + 1; // +1 as offset for whitespace
@@ -89,9 +94,15 @@ public class ArgumentTokenizer {
         // Sort by start position
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
-        // Insert a PrefixPosition to represent the preamble
-        PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
-        prefixPositions.add(0, preambleMarker);
+        // Check if there is a preamble:
+        // i.e. if there are either no prefixes or the first prefix does not start at position 0
+        boolean hasPreamble = prefixPositions.isEmpty() || (prefixPositions.get(0).getStartPosition() != 0);
+
+        // If there is a preamble, insert a PrefixPosition to represent the preamble
+        if (hasPreamble) {
+            PrefixPosition preambleMarker = new PrefixPosition(new Prefix(""), 0);
+            prefixPositions.add(0, preambleMarker);
+        }
 
         // Add a dummy PrefixPosition to represent the end of the string
         PrefixPosition endPositionMarker = new PrefixPosition(new Prefix(""), argsString.length());

@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedCalendarEvent.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.TypicalEvents.BENSON;
+import static seedu.address.testutil.TypicalEvents.CS2104_TUTORIAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +25,19 @@ public class XmlAdaptedCalendarEventTest {
     private static final String INVALID_END = "20000-15-42 13:45";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_TITLE = BENSON.getTitle().toString();
-    private static final String VALID_DESCRIPTION = BENSON.getDescriptionObject().toString();
-    private static final String VALID_START = BENSON.getStart().toInputFormat();
-    private static final String VALID_END = BENSON.getEnd().toInputFormat();
-    private static final String VALID_LOCATION = BENSON.getVenue().toString();
-    private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
+    private static final String VALID_TITLE = CS2104_TUTORIAL.getTitle().toString();
+    private static final String VALID_DESCRIPTION = CS2104_TUTORIAL.getDescriptionObject().toString();
+    private static final String VALID_START = CS2104_TUTORIAL.getStart().toInputFormat();
+    private static final String VALID_END = CS2104_TUTORIAL.getEnd().toInputFormat();
+    private static final String VALID_LOCATION = CS2104_TUTORIAL.getVenue().toString();
+    private static final List<XmlAdaptedTag> VALID_TAGS = CS2104_TUTORIAL.getTags().stream()
         .map(XmlAdaptedTag::new)
         .collect(Collectors.toList());
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
-        XmlAdaptedCalendarEvent person = new XmlAdaptedCalendarEvent(BENSON);
-        assertEquals(BENSON, person.toModelType());
+        XmlAdaptedCalendarEvent person = new XmlAdaptedCalendarEvent(CS2104_TUTORIAL);
+        assertEquals(CS2104_TUTORIAL, person.toModelType());
     }
 
     @Test

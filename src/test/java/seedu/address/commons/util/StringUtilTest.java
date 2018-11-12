@@ -73,6 +73,13 @@ public class StringUtilTest {
         StringUtil.containsWordIgnoreCase(sentence, word);
     }
 
+    private void assertExceptionThrownFuzzy(Class<? extends Throwable> exceptionClass, String sentence, String word,
+                                       Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.fuzzyMatchScore(sentence, word);
+    }
+
     @Test
     public void containsWordIgnoreCase_emptyWord_throwsIllegalArgumentException() {
         assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",

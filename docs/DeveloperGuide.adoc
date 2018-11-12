@@ -130,7 +130,8 @@ The rest of the App consists of four components.
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
+* <<Design-Model,*`Model`*>>: Holds the calendar events data of the App in-memory.
+* <<Design-Model,*`ModelToDo`*>>: Holds the todolist events data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
 Each of the four components
@@ -172,14 +173,14 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/venue/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `CalendarPanel`, 'CalendarDisplay', etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `CalendarPanel`, `TaskListPanel`, `CalendarDisplay`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/venue/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Binds itself to some data in the `Model`/`ModelToDo` so that the UI can auto-update when data in the `Model`/`ModelToDo` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 The CalendarDisplay Component uses `jfxtras.Agenda` to render the calendar events as a time table. The CalendarDisplay
@@ -481,7 +482,7 @@ backing the search result panel.
 
 // end::FuzzySearch[]
 
-
+// tag:CalendarModel[]
 === Calendar Model
 ==== Implementation
 
@@ -510,8 +511,9 @@ Step 4: Then, `ParserUtil` checks that the input strings are valid, and initiali
 Step 5: Subsequently, `AddCommandParser` calls `DateTimeInfo` to validate that the start date/time is not chronologically after the end `DateTime`, before wrapping the start and end `DateTime` in a `DateTimeInfo` object.
 
 Step 6: Following that, a new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
+// end::CalendarModel[]
 
-
+// tag::CalendarDisplay[]
 === Calendar Display
 
 ==== Current Implementation
@@ -536,8 +538,11 @@ The user can:
 1. Double click on displayed events to open a dialog box containing the details of the event.
 
 2. Jump to the time period containing an event by selecting the event in the list of calendar events.
+// end::CalendarDisplay[]
 
+// tag::Navigation[]
 === Calendar Navigation Feature
+
 ==== Current Implementation
 
 The navigation features included are:
@@ -588,6 +593,7 @@ Step 3. `ChangePeriodCommand#executes` called with `EventIsInThisPeriodPredicate
 Step 4. `filteredCalendarEvents` is updated.
 
 Step 5. `CalendarPanel#filteredCalendarEventsListener` repopulates the calendar UI.
+// end::Navigation[]
 
 // tag::undoredo[]
 === Undo/Redo feature
