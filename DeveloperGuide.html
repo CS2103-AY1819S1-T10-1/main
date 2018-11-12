@@ -34,10 +34,11 @@
 <li><a href="#calendar-model">3.3. Calendar Model</a></li>
 <li><a href="#calendar-display">3.4. Calendar Display</a></li>
 <li><a href="#calendar-navigation-feature">3.5. Calendar Navigation Feature</a></li>
-<li><a href="#undo-redo-feature">3.6. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
+<li><a href="#schedulerparser">3.6. SchedulerParser</a></li>
+<li><a href="#undo-redo-feature">3.7. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1087,6 +1088,10 @@ backing the search result panel.</p>
 calendar, such as the title, description, start and end date/time, venue and tags.</p>
 </div>
 <div class="paragraph">
+<p><code>Title</code>, <code>Description</code> and <code>Venue</code> now inherit from a <code>TextField</code> parent class, to represent fields in the model that
+store string data.</p>
+</div>
+<div class="paragraph">
 <p><code>DateTime</code> stores and validates the input start and end date/time of each event in the calendar.</p>
 </div>
 <div class="paragraph">
@@ -1246,9 +1251,33 @@ would also be sufficient in most cases.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.6. Undo/Redo feature</a></h3>
+<h3 id="schedulerparser"><a class="link" href="#schedulerparser">3.6. SchedulerParser</a></h3>
 <div class="sect3">
 <h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.6.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>Commands are now required for both models <code>CalendarEvent</code> and <code>ToDoListEvent</code>. Hence it is beneficial for the parser to
+support both one and two-worded commands which would specify the action (e.g. <code>add</code>, <code>delete</code>) as well as the model
+it is updating (<code>event</code> or <code>todo</code>). The parser still retains the responsibility of resolving which <code>Command</code> should
+be returned, for both models.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>The parser should be flexible enough to at least support commands which are identified by one word and those
+identified by two words. Some commands such as <code>help</code> and <code>exit</code> are not specific to a model, while others act on one
+ of the two models and are hence appropriately identified by another word.</p>
+</div>
+<div class="paragraph">
+<p>One other alternative is to keep the commands to one word and split these words by a delimiter such as a dash (<code>-</code>) e
+.g. <code>add-event</code>. However this is assumed to be less natural to the end user.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.7. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by <code>VersionedScheduler</code>.
 It extends <code>Scheduler</code> with an undo/redo history, stored internally as an <code>SchedulerStateList</code> and <code>currentStatePointer</code>.
@@ -1381,7 +1410,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -1451,20 +1480,20 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1495,7 +1524,7 @@ If the <code>currentStatePointer</code> is at index <code>schedulerStateList.siz
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App title, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2983,4 +3012,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 10:06:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 12:44:09 UTC</div></div></div></body></html>
